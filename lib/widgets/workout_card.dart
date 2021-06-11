@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:full_workout/database/workoutlist.dart';
-import 'package:full_workout/pages/main/training_page/training_page.dart';
+import 'package:full_workout/helper/light_dark_mode.dart';
+import '../pages/training_page/exercise_list_page.dart';
 
 class WorkOutCard extends StatelessWidget {
   final String title;
   final String image;
-  final String tag;
-  final Function press;
 
   const WorkOutCard({
-    @required this.tag,
     @required this.title,
     @required this.image,
-    @required this.press,
   });
 
   @override
@@ -59,14 +57,14 @@ class WorkOutCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 10),
-          child: Text(title),
+          padding: const EdgeInsets.only(left: 28.0,top: 16,bottom: 8),
+          child: Text(title,style: textTheme.headline2.copyWith(fontSize: 18,fontWeight: FontWeight.w800),),
         ),
         Container(
           height: 250,
-          margin: EdgeInsets.all(15),
+          margin: EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-              color: Colors.blue,
+            color: Colors.blue,
               image: DecorationImage(
                   image: AssetImage(image),
                   fit: BoxFit.cover,
@@ -76,33 +74,50 @@ class WorkOutCard extends StatelessWidget {
           child: ListView.separated(
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                print(" $title ${type[index]} ");
                 return Column(
                   children: [
                     ListTile(
                       title: Text(
-                        " $title ${type[index]}",style: TextStyle(backgroundColor: Colors.black),
+                        "$title ${type[index]}",
+                        style: textTheme.bodyText1.copyWith(color: Colors.white,fontSize: 17),
                         //   style: titleStyle,
                       ),
                       trailing: Container(
-                        height: 30,
-                        width: 30,
-                        child: Row(
-                          children: [Icon(Icons.star)],
+
+                        width: 50,
+                        child: ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          scrollDirection:Axis.horizontal,
+                          itemCount: index+1,
+                          itemBuilder: (context,index){
+                            return  Row(
+                              children: [
+                                Icon(Icons.flash_on,color: Colors.white,size: 16,)],
+                            );
+                          },
                         ),
                       ),
                       onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>TrainingPage( workOutList: getPage("$title ${type[index]}"),)));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ExerciseListScreen(
+                                  workOutList:
+                                      getPage("$title ${type[index]}"),
+                                  tag: type[index],
+                                  title :"$title ${type[index]}",
+                                  stars: 2)),
+                        );
                       },
                       subtitle: Container(
-                        width: 50,
-                        height: 30,
+
                         child: Row(children: [
-                          Text("12 Exercise",style: TextStyle(backgroundColor: Colors.black),),
-                          SizedBox(
-                            width: 10,
+                          Text(
+                            "12 Exercise | ",
+                            style: textTheme.bodyText2.copyWith(color: Colors.white)
                           ),
-                          Text("25 Minute"),
+
+                          Text("25 Minute",style: textTheme.bodyText2.copyWith(color: Colors.white)),
                         ]),
                       ),
                     ),

@@ -24,7 +24,7 @@ class Achievement extends StatelessWidget {
           backgroundColor: Colors.white,
           radius: 30,
           child: Text(
-            value.toString(),
+            value.toString(),style: TextStyle(color: Colors.black),
           ),
         ),
         SizedBox(

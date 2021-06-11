@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:full_workout/pages/login/login_splash_page.dart';
 import 'package:full_workout/pages/main_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:full_workout/helper/light_dark_mode.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
-  // VisibilityMode  visi;
-  // var theme =  visi.getUserPrefrence(0);
-  // print(theme);
+
   runApp(MyApp());
 }
 
@@ -20,7 +17,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       // darkTheme:
-      //
       // ThemeData(
       //     brightness: Brightness.dark,
       //     primarySwatch: Colors.blue,
@@ -52,7 +48,7 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(color: Colors.transparent)),
           )),
-      initialRoute: "/",
+      initialRoute: "/main",
       builder: EasyLoading.init(),
       onGenerateRoute: generateRoute,
       debugShowCheckedModeBanner: false,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/constants/constants.dart';
-import 'package:full_workout/navigation/navigation_service.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 import 'onboarding_page.dart';

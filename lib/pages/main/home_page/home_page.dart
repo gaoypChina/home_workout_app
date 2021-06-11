@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:full_workout/helper/light_dark_mode.dart';
 import 'package:full_workout/widgets/achivement.dart';
 import 'package:full_workout/widgets/workout_card.dart';
 
@@ -16,15 +15,39 @@ class _HomePageState extends State<HomePage>
   ScrollController _scrollController;
   TabController tabController;
 
+  bool lastStatus = true;
+
+  _scrollListener() {
+    if (isShrink != lastStatus) {
+      setState(() {
+        lastStatus = isShrink;
+      });
+    }
+  }
+
+  bool get isShrink {
+    return _scrollController.hasClients &&
+        _scrollController.offset > (200 - kToolbarHeight);
+  }
+
   @override
   void initState() {
-    _scrollController = new ScrollController();
+    _scrollController = ScrollController();
     tabController = new TabController(
       vsync: this,
       length: 1,
     );
+    _scrollController.addListener(_scrollListener);
     super.initState();
   }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
+  }
+
+
 
   Future<bool> _onBackPressed() {
     return showDialog(
@@ -53,9 +76,9 @@ class _HomePageState extends State<HomePage>
     List<String> bodyPart = ["Abs", "Chest", "Shoulder", "Legs", "Arms"];
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     List<String> cover = [
-      "assets/cover/abs-cover.jpg",
+      "assets/bg_cover/abs-cover.png",
       "assets/cover/chest.jpg",
-      "assets/cover/back-cover.jpg",
+      "assets/bg_cover/back-cover.png",
       "assets/cover/leg-cover.jpg",
       "assets/cover/arm-cover.jpg",
     ];
@@ -63,39 +86,40 @@ class _HomePageState extends State<HomePage>
     return WillPopScope(
         onWillPop: _onBackPressed,
         child: Scaffold(
-          body: SafeArea(
+          backgroundColor: isShrink ? Colors.white : Colors.blue,
+
+          body:
+          SafeArea(
               child: NestedScrollView(
             controller: _scrollController,
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
-                  title: Text(
-                    "Home Workout",
-                    style: TextStyle(
-                        //   color: Colors.black,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 22),
-                    textAlign: TextAlign.start,
-                    textScaleFactor: 1,
-                  ),
-                  //collapsedHeight: 55,
-                  backgroundColor: isDark ? Colors.black : Colors.white,
-                  elevation: 0,
-                  brightness: Brightness.dark,
+                  elevation: 10,
                   automaticallyImplyLeading: false,
                   centerTitle: false,
-                  titleSpacing: 010,
-                  expandedHeight: 210.0,
+                  expandedHeight: 190.0,
+                    collapsedHeight: 60,
                   pinned: true,
                   floating: false,
                   forceElevated: innerBoxIsScrolled,
+                  backgroundColor: isShrink ? Colors.white : Colors.blue,
+
+                  title: Text("Home Workout",
+                      style: textTheme.headline1.copyWith(
+                          fontSize: 22,
+                          color: Colors.black,
+
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: -1)),
+                  //collapsedHeight: 55,
+
                   flexibleSpace: FlexibleSpaceBar(
                     background: Stack(children: <Widget>[
                       Column(
                         children: [
                           Container(
-                            // child: Text("akash"),
                             height: 50,
                           ),
                           Container(
@@ -112,14 +136,12 @@ class _HomePageState extends State<HomePage>
                                   fit: BoxFit.cover,
                                   image: AssetImage(""),
                                 ),
-                                color: Colors.black,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(12)
                                         // bottomLeft: Radius.circular(40),
                                         // bottomRight: Radius.circular(40))
                                         )),
                             height: MediaQuery.of(context).size.height / 5,
-                            width: MediaQuery.of(context).size.width * .99,
                           ),
                         ],
                       )
@@ -129,20 +151,17 @@ class _HomePageState extends State<HomePage>
               ];
             },
             body: Scaffold(
-              backgroundColor:isDark ?Colors.black:Colors.white,
               body: TabBarView(
                 controller: tabController,
                 children: [
                   ListView.builder(
                     itemBuilder: (context, index) {
                       return WorkOutCard(
-                          tag: "abc",
-                          title: bodyPart[index],
-                          image: cover[index],
-                          press: () {});
+                        title: bodyPart[index],
+                        image: cover[index],
+                      );
                     },
                     physics: BouncingScrollPhysics(),
-
                     itemCount: bodyPart.length,
                   )
                 ],
