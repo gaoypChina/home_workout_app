@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:full_workout/database/workoutlist.dart';
+import 'package:full_workout/helper/light_dark_mode.dart';
 import 'package:full_workout/widgets/achivement.dart';
 import 'package:full_workout/widgets/custom_exercise_card.dart';
 
@@ -57,24 +58,27 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
             alignment: Alignment.bottomCenter,
             child: FloatingActionButton.extended(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => InstructionScreen(
-                      title: widget.title,
-                      rap: time,
-                      workOutList: widget.workOutList,
-                      stars: widget.stars,
-                    ),
-                  ),
-                );
+                widget.tag == "continue"
+                    ? Navigator.of(context).pop()
+                    : Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InstructionScreen(
+                            title: widget.title,
+                            rap: time,
+                            workOutList: widget.workOutList,
+                            stars: widget.stars,
+                          ),
+                        ),
+                      );
               },
               icon: Icon(
-                Icons.play_arrow,
-                size: 40,
+                widget.tag == "continue" ?   Icons.play_arrow:Icons.local_fire_department_sharp,
+                size: 30,
               ),
               label: Text(
-                "Start Workout",
+                widget.tag == "continue" ? "Continue" : "Start Workout",
+                style: textTheme.button.copyWith(fontSize: 16),
                 textAlign: TextAlign.end,
               ),
             ),
@@ -87,19 +91,27 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
             return [
               SliverAppBar(
                 leading: IconButton(
-
-                  icon: Icon(Icons.arrow_back),
+                  icon: Icon(widget.tag == "continue"
+                      ? Icons.close_rounded
+                      : Icons.arrow_back),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
+                actions: [
+                  widget.tag == "continue" ?     Padding(
+                    padding: const EdgeInsets.only(top: 18.0, right: 8),
+                    child: Text(
+                      "2/3",
+                      style: textTheme.bodyText1
+                          .copyWith(fontSize: 16, color: Colors.amber),
+                    ),
+                  ):Text("")
+                ],
                 title: Expanded(
                     child: Text(
-                  widget.tag,
-                  style: TextStyle(
-
-                      fontWeight: FontWeight.w800,
-                      fontSize: 22),
+                  widget.title,
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 22),
                   textAlign: TextAlign.start,
                   textScaleFactor: 1,
                 )),
@@ -164,11 +176,8 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                       padding: EdgeInsets.all(10),
                       child:
                       CustomExerciseCard(
-                        title: widget.workOutList[index].title,
-                        imgUrl: widget.workOutList[index].imageSrc,
-                        time: time,
-                        steps: widget.workOutList[index].steps,
-                        link: widget.workOutList[index].videoLink,
+                       index: index,
+                        workOutList: widget.workOutList,
                       ),
                     );
                   },

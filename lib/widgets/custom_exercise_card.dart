@@ -1,26 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:full_workout/database/workoutlist.dart';
 
 import 'my_dialog_box.dart';
 
 
 class CustomExerciseCard extends StatefulWidget {
-
-  final String title;
-  final String imgUrl;
-  final int time;
-  final Function tap;
-  final List steps;
-  final String link;
-
-  CustomExerciseCard(
-      {
-      this.title,
-      this.imgUrl,
-      this.time,
-      this.tap,
-      this.steps,
-      this.link});
+  final List<WorkoutList> workOutList;
+  final int index;
+  CustomExerciseCard({this.workOutList, this.index});
 
   @override
   _CustomExerciseCardState createState() => _CustomExerciseCardState();
@@ -32,17 +20,14 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
 
   @override
   Widget build(BuildContext context) {
-
-
+    var item = widget.workOutList[widget.index];
     return GestureDetector(
       onTap: () {
         showDialog(
             context: context,
             builder: (context) => MyDialog(
-                  title: widget.title,
-                  imgUrl: widget.imgUrl,
-                  link: widget.link,
-                  steps: widget.steps,
+                 workoutList: widget.workOutList,
+              index: widget.index,
                 ));
       },
       child: Card(
@@ -65,7 +50,7 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                     height: 100,
                     child: Center(
                       child: Image.asset(
-                        widget.imgUrl,
+                        item.imageSrc,
                         fit: BoxFit.scaleDown,
                       ),
                     ),
@@ -84,7 +69,7 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                     Padding(
                       padding: const EdgeInsets.only(left: 18.0),
                       child: Text(
-                        widget.title,
+                        item.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -102,23 +87,13 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                             Icons.access_time,
                           ),
                           SizedBox(width: 10),
-                          Text(widget.time.toString()),
+                          Text(item.duration.toString()),
                         ],
                       ),
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    // Row(
-                    //   children: <Widget>[
-                    //     Icon(
-                    //       Icons.calendar_today,
-                    //       color: Colors.red,
-                    //     ),
-                    //     SizedBox(width: 10),
-                    //     //   Text(widget.complete),
-                    //   ],
-                    // ),
                   ],
                 ),
               ),
