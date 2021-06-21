@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/pages/login/login_splash_page.dart';
+import 'package:full_workout/pages/main/home_page/home_page.dart';
+import 'package:full_workout/pages/main/progress_page/details_screen.dart';
+import 'package:full_workout/pages/main/progress_page/health_report.dart';
+import 'package:full_workout/pages/main/setting_page/profile_settings_screen.dart';
+import 'package:full_workout/pages/main/setting_page/reminder_tab.dart';
+import 'package:full_workout/pages/main/setting_page/sound_settings_screen.dart';
+import 'package:full_workout/pages/main/setting_page/training_settings_screen.dart';
 import 'package:full_workout/pages/main_page.dart';
+import 'package:full_workout/pages/training_page/report_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -49,6 +57,17 @@ class MyApp extends StatelessWidget {
                 borderSide: BorderSide(color: Colors.transparent)),
           )),
       initialRoute: "/main",
+      routes:  {
+        '/': (ctx) => HomePage(),
+        DetailsScreen.routeName: (ctx) => DetailsScreen(),
+        ReminderTab.routeName: (ctx) => ReminderTab(),
+        HealthReport.routeName: (ctx) => HealthReport(),
+        //  CalenderEvent.routeName: (ctx) => CalenderEvent(),
+      //  SettingPage.routeName: (ctx) => SettingPage(),
+        ProfileSettingScreen.routeName:(ctx) => ProfileSettingScreen(),
+        SoundSettingsScreen.routeName: (ctx) =>SoundSettingsScreen(),
+        TrainingSettingsScreen.routeName:(ctx)=>TrainingSettingsScreen(),
+      },
       builder: EasyLoading.init(),
       onGenerateRoute: generateRoute,
       debugShowCheckedModeBanner: false,
