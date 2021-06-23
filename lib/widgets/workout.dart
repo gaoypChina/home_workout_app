@@ -3,14 +3,14 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/workoutlist.dart';
+import 'package:full_workout/database/workout_list.dart';
 
 class SecondScreen extends StatelessWidget {
   static const String routeName = '/second-screen';
   final String title;
-  final List<WorkoutList> beginner;
-  final List<WorkoutList> intermediate;
-  final List<WorkoutList> advance;
+  final List<Workout> beginner;
+  final List<Workout> intermediate;
+  final List<Workout> advance;
 
   SecondScreen({
     @required this.title,
