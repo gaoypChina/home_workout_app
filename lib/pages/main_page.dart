@@ -1,11 +1,12 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/pages/main/home_page/home_page.dart';
-import 'package:full_workout/pages/main/progress_page/progress_page.dart';
-import 'package:full_workout/pages/main/setting_page/setting_page.dart';
-import 'main/explore_page/second_page.dart';
+import 'main/explore_page/explore_page.dart';
+import 'main/progress_page/details_screen.dart';
+import 'main/progress_page/report_screen.dart';
+import 'main/setting_page/setting_screen.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key, this.title}) : super(key: key);
@@ -29,8 +30,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
 
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
-    List<String> bodyPart =["Abs","Shoulder","Arms","Chest","Legs"];
     return Scaffold(
         bottomNavigationBar: BottomNavigationBarTheme(
           data: BottomNavigationBarThemeData(
@@ -50,16 +49,17 @@ class _MainPageState extends State<MainPage> {
                   activeIcon: Icon(EvaIcons.home),
                   label: "Home"),
               BottomNavigationBarItem(
-                  icon: Icon(EvaIcons.globeOutline),
-                  activeIcon: Icon(EvaIcons.globe),
+                  icon: Icon(MaterialCommunityIcons.notebook_outline),
+                  activeIcon: Icon(MaterialCommunityIcons.notebook),
                   label: "Explore"),
               BottomNavigationBarItem(
-                  icon: Icon(EvaIcons.messageCircleOutline),
-                  activeIcon: Icon(EvaIcons.messageCircle),
-                  label: "Profile"),
+                  icon: Icon(Entypo.bar_graph),
+                  activeIcon: Icon(Entypo.bar_graph),
+                  label: "Report"),
+
               BottomNavigationBarItem(
-                  icon: Icon(EvaIcons.flashOutline),
-                  activeIcon: Icon(EvaIcons.flash),
+                  icon: Icon(Icons.settings_outlined),
+                  activeIcon: Icon(Icons.settings),
                   label: "Settings"),
 
             ],
@@ -81,7 +81,7 @@ class _MainPageState extends State<MainPage> {
         onBack: onBack,
       );
     } else if (currentIndex == 2) {
-      return ProgressPage();
+      return ReportScreen();
     } else if (currentIndex == 3) {
       return SettingPage();
     } else {

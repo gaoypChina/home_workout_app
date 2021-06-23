@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/helper/light_dark_mode.dart';
+import 'package:full_workout/models/main_page_item.dart';
 import 'package:full_workout/widgets/achivement.dart';
 import 'package:full_workout/widgets/workout_card.dart';
 
@@ -73,20 +74,19 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    List<String> bodyPart = ["Abs", "Chest", "Shoulder", "Legs", "Arms"];
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
-    List<String> cover = [
-      "assets/bg_cover/abs-cover.png",
-      "assets/cover/chest.jpg",
-      "assets/bg_cover/back-cover.png",
-      "assets/cover/leg-cover.jpg",
-      "assets/cover/arm-cover.jpg",
-    ];
+
+    getTitle(String title){
+      return Padding(
+        padding: EdgeInsets.only(left: 12,right: 12,top: 24,bottom: 6),
+        child: Text(title,style: textTheme.bodyText1.copyWith(fontWeight: FontWeight.w600,fontSize: 18),),
+      );
+    }
 
     return WillPopScope(
         onWillPop: _onBackPressed,
         child: Scaffold(
-          backgroundColor: isShrink ? Colors.white : Colors.blue,
+          backgroundColor:
+          isShrink ? Colors.white : Colors.blue,
 
           body:
           SafeArea(
@@ -154,15 +154,29 @@ class _HomePageState extends State<HomePage>
               body: TabBarView(
                 controller: tabController,
                 children: [
-                  ListView.builder(
-                    itemBuilder: (context, index) {
-                      return WorkOutCard(
-                        title: bodyPart[index],
-                        image: cover[index],
-                      );
-                    },
+                  ListView(
                     physics: BouncingScrollPhysics(),
-                    itemCount: bodyPart.length,
+                    children: [
+                      getTitle(exerciseName[0]),
+                      for(int i=0; i<3; i++)
+                        WorkoutCard(title: absExercise[i].title, workoutList: absExercise[i].workoutList, star: i, imaUrl: absExercise[i].imageUrl,tag:  absExercise[i].tag,),
+
+                      getTitle(exerciseName[1]),
+                      for(int i=0; i<3; i++)
+                      WorkoutCard(title: chestExercise[i].title, workoutList: chestExercise[i].workoutList, star: i, imaUrl: chestExercise[i].imageUrl,tag: chestExercise[i].tag,),
+
+                      getTitle(exerciseName[2]),
+                      for(int i=0; i<3; i++)
+                        WorkoutCard(title: shoulderExercise[i].title, workoutList: shoulderExercise[i].workoutList, star: i, imaUrl: shoulderExercise[i].imageUrl,tag: shoulderExercise[i].tag,),
+
+                      getTitle(exerciseName[3]),
+                      for(int i=0; i<3; i++)
+                        WorkoutCard(title: legsExercise[i].title, workoutList: legsExercise[i].workoutList, star: i, imaUrl: legsExercise[i].imageUrl,tag:legsExercise[i].tag ,),
+
+                      getTitle(exerciseName[4]),
+                      for(int i=0; i<3; i++)
+                        WorkoutCard(title: armsExercise[i].title, workoutList: armsExercise[i].workoutList, star: i, imaUrl: armsExercise[i].imageUrl,tag: armsExercise[i].tag,),
+                    ],
                   )
                 ],
               ),

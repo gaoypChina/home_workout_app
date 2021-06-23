@@ -7,6 +7,7 @@ class Achievement extends StatelessWidget {
   final int timeValue;
   final String caloriesTitle;
   final int caloriesValue;
+  final Color bgColor;
 
   Achievement({
     @required this.exerciseTitle,
@@ -15,22 +16,23 @@ class Achievement extends StatelessWidget {
     @required this.timeValue,
     @required this.caloriesTitle,
     @required this.caloriesValue,
+    this.bgColor =Colors.white,
   });
 
   Widget circulerCard(int value, String title) {
     return Column(
       children: [
         CircleAvatar(
-          backgroundColor: Colors.white,
+          backgroundColor: bgColor,
           radius: 30,
           child: Text(
-            value.toString(),style: TextStyle(color: Colors.black),
+            value.toString(),style: TextStyle(color: Colors.blue),
           ),
         ),
         SizedBox(
           height: 5,
         ),
-Text(title)
+Text(title,style: TextStyle(color: Colors.white),)
       ],
     );
   }

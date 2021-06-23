@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/helper/light_dark_mode.dart';
-import 'package:full_workout/pages/training_page/quit_page.dart';
-import 'package:full_workout/widgets/info_button.dart';
+import 'package:full_workout/pages/workout_page/quit_page.dart';
 
 class StopPage extends StatelessWidget {
   @override
@@ -11,7 +10,8 @@ class StopPage extends StatelessWidget {
         String title,
         Color textColor,
         Color backgroundColor}) {
-      return Container(
+      return
+        Container(
         height: 50,
         width: double.infinity,
         margin: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
@@ -48,11 +48,14 @@ class StopPage extends StatelessWidget {
           children: [
             Row(
               children: [
-                InfoButton(
-                  icon: Icons.arrow_back,
-                  tooltip: "Back",
-                  onPress: () => Navigator.of(context).pop(),
-                ),
+                ElevatedButton(
+                  onPressed: () => Navigator.pop(context,"resume"),
+                  child: Icon(Icons.arrow_back),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    shape: CircleBorder(),
+                  ),
+                )
               ],
             ),
             Spacer(),
@@ -74,18 +77,21 @@ class StopPage extends StatelessWidget {
                 textColor: defaultTextColor),
             getButton(
                 title: "Restart this exercise",
-                onPress: () {},
+                onPress: () =>Navigator.pop(context,"restart"),
                 backgroundColor: defaultBackgroundColor,
                 textColor: defaultTextColor),
             getButton(
                 title: "Quit",
-                onPress: () => showDialog(
-                    context: context, builder: (builder) => QuitPage()),
+             onPress: () async {
+               bool value = await    showDialog(
+                    context: context, builder: (builder) => QuitPage());
+               value == true ?? Navigator.of(context).pop();
+                },
                 backgroundColor: defaultBackgroundColor,
                 textColor: defaultTextColor),
             getButton(
                 title: "Resume",
-                onPress: () {},
+                onPress: () =>Navigator.pop(context,"resume"),
                 backgroundColor: Colors.blue,
                 textColor: Colors.white),
             SizedBox(

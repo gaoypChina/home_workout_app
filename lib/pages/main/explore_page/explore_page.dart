@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:full_workout/database/workout_list.dart';
+import 'package:full_workout/database/workout_plan/abs_challenges.dart';
+import 'package:full_workout/database/workout_plan/arm_challenges.dart';
+import 'package:full_workout/database/workout_plan/chest_challenge.dart';
+import 'package:full_workout/database/workout_plan/full_body_challenge.dart';
 import 'package:full_workout/helper/light_dark_mode.dart';
 import 'package:full_workout/pages/main/explore_page/workout_time_line.dat.dart';
 
@@ -10,13 +15,13 @@ class ExplorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height * .8;
     int i = 0;
     List<ChallengesModel> challenges = [
       ChallengesModel(
         title: "Full Body Challenge",
         currentDay: i,
         imageUrl: "assets/bg_cover/back-cover.png",
+        challengeList: fullBodyChallenge,
         color1: Color(0xff603813),
         color2: Color(0xffb29f94),
       ),
@@ -24,18 +29,22 @@ class ExplorePage extends StatelessWidget {
           title: "Abs Challenge",
           currentDay: i,
           imageUrl: "assets/all-workouts/cobraStratch.png",
+          challengeList: absChallenges,
           color1: Colors.blue,
           color2: Color(0xffb31217)),
+
       ChallengesModel(
           title: "Chest Challenge",
           currentDay: i,
           imageUrl: "assets/all-workouts/cobraStratch.png",
+          challengeList: chestChallenge,
           color1: Colors.amber,
           color2: Colors.teal),
       ChallengesModel(
           title: "Arm Challenge",
           currentDay: i,
           imageUrl: "assets/all-workouts/cobraStratch.png",
+          challengeList: armChallenges,
           color1: Colors.red,
           color2: Colors.purple),
     ];
@@ -45,7 +54,7 @@ class ExplorePage extends StatelessWidget {
       return GestureDetector(
         onTap: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => WorkoutTimeLine(challengesModel: item,)));
+              MaterialPageRoute(builder: (context) => WorkoutTimeLine(challengesModel: item,challengeList: item.challengeList,)));
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -175,12 +184,14 @@ class ChallengesModel {
   final int currentDay;
   final Color color1;
   final Color color2;
+  final List<List<Workout>> challengeList;
 
-  ChallengesModel({
+  ChallengesModel( {
     this.title,
     this.imageUrl,
     this.currentDay,
     this.color1,
     this.color2,
+    this.challengeList,
   });
 }

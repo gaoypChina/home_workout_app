@@ -1,36 +1,37 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:full_workout/database/workoutlist.dart';
+import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/light_dark_mode.dart';
-import 'package:full_workout/helper/text_to_speech.dart';
-import 'package:full_workout/pages/training_page/sound_option.dart';
-import 'package:full_workout/pages/training_page/workout_screen.dart';
+import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
+import 'package:full_workout/pages/workout_page/pause_page.dart';
+import 'package:full_workout/pages/workout_page/workout_page.dart';
+import 'package:full_workout/widgets/info_button.dart';
 import 'package:full_workout/widgets/timer.dart';
 import 'package:full_workout/widgets/youtube_player.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+
+import 'exercise_list_page.dart';
 
 class InstructionScreen extends StatefulWidget {
-  final List<WorkoutList> workOutList;
-  final int rap;
+  final List<Workout> workOutList;
   final String title;
-  final int stars;
+  final List<int> rapList;
 
   InstructionScreen({
     @required this.workOutList,
-    @required this.rap,
     @required this.title,
-    @required this.stars,
+    @required this.rapList
   });
 
   @override
   _InstructionScreenState createState() => _InstructionScreenState();
 }
 
-Speaker _speaker = new Speaker();
-
 class _InstructionScreenState extends State<InstructionScreen>
     with TickerProviderStateMixin {
   AnimationController controller;
+  FlutterTts flutterTts = FlutterTts();
 
   String get timerString {
     Duration duration = controller.duration * controller.value;
@@ -44,14 +45,43 @@ class _InstructionScreenState extends State<InstructionScreen>
     //duration.inSeconds % 60;
   }
 
+  _onComplete() {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => WorkoutPage(
+              rapList: widget.rapList,
+                  title: widget.title,
+                  workOutList: widget.workOutList,
+                  index: 0,
+              currTime: DateTime.now().toIso8601String(),
+                )));
+
+  }
+
   // Future<AudioPlayer> playLocalAsset() async {
   //   AudioCache cache = new AudioCache();
   //   return await cache.play("sound/note.mp3");
   // }
 
+
+ Future introMessage() async {
+   await
+    flutterTts.speak(widget.workOutList[0].steps.toString());
+  }
+
+
+  @override
+  void dispose() {
+    controller.dispose();
+   // flutterTts.stop();
+    super.dispose();
+  }
+
   @override
   void initState() {
     print(AnimationStatus.values);
+    introMessage();
     super.initState();
     controller = AnimationController(
       vsync: this,
@@ -62,15 +92,7 @@ class _InstructionScreenState extends State<InstructionScreen>
     controller.addStatusListener((status) {
       print(status);
       if (status == AnimationStatus.dismissed) {
-        // Navigator.pushReplacement(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => WorkoutScreen(
-        //               title: widget.title,
-        //               workOutList: widget.workOutList,
-        //               rap: widget.rap,
-        //               stars: widget.stars,
-        //             )));
+       // _onComplete();
       }
     });
   }
@@ -83,7 +105,6 @@ class _InstructionScreenState extends State<InstructionScreen>
     Widget getImage() {
       return Stack(
         children: [
-
           Container(
             height: height / 2,
             child: Image.asset(item.imageSrc),
@@ -96,7 +117,8 @@ class _InstructionScreenState extends State<InstructionScreen>
               left: 10,
               top: 20,
               child: ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => showDialog(
+                    context: context, builder: (context) => StopPage()),
                 child: Icon(Icons.arrow_back),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blue.shade200,
@@ -112,20 +134,29 @@ class _InstructionScreenState extends State<InstructionScreen>
                     icon: Icons.list_alt_outlined,
                     tooltip: "Exercise Plane",
                     onPress: () {
-
+                      showDialog(
+                          context: context,
+                          builder: (builder) {
+                            return ExerciseListScreen(
+                                workOutList: widget.workOutList,
+                                tag: "continue",
+                                stars: 2,
+                                title: "title");
+                          });
                     },
                   ),
                   InfoButton(
                     icon: Icons.ondemand_video_outlined,
                     tooltip: "Video",
                     onPress: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => YoutubeTutorial(
-                                  link: item.videoLink,
-                                  title: item.title,
-                                  steps: item.steps)));
+                      showDialog(
+                          context: context,
+                          builder: (builder) {
+                            return YoutubeTutorial(
+                                link: item.videoLink,
+                                title: item.title,
+                                steps: item.steps);
+                          });
                     },
                   ),
                   InfoButton(
@@ -135,7 +166,7 @@ class _InstructionScreenState extends State<InstructionScreen>
                       showDialog(
                           context: context,
                           builder: (builder) {
-                            return SoundOption();
+                            return SoundSetting();
                           });
                     },
                   ),
@@ -217,19 +248,19 @@ class _InstructionScreenState extends State<InstructionScreen>
 
                                       if (timerValue <= 5000 &&
                                           timerValue > 4950) {
-                                        _speaker.speak('Ready to go');
+                                        flutterTts.speak('Ready to go');
                                       }
                                       if (timerValue <= 3000 &&
                                           timerValue > 2950) {
-                                        _speaker.speak('Three');
+                                        flutterTts.speak('Three');
                                       }
                                       if (timerValue <= 2000 &&
                                           timerValue > 1950) {
-                                        _speaker.speak('Two');
+                                        flutterTts.speak('Two');
                                       }
                                       if (timerValue <= 1000 &&
                                           timerValue > 950) {
-                                        _speaker.speak('One');
+                                        flutterTts.speak('One');
                                       }
                                       if (timerValue <= 200 &&
                                           timerValue > 150) {
@@ -254,15 +285,7 @@ class _InstructionScreenState extends State<InstructionScreen>
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => WorkoutScreen(
-                                    title: widget.title,
-                                    workOutList: widget.workOutList,
-                                    rap: widget.rap,
-                                    stars: widget.stars,
-                                  )));
+                      _onComplete();
                     },
                     child: Text('Skip'),
                     style: ElevatedButton.styleFrom(shape: StadiumBorder()),
@@ -281,41 +304,22 @@ class _InstructionScreenState extends State<InstructionScreen>
       );
     }
 
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            getImage(),
-            getTimer(),
-          ],
+    return WillPopScope(
+      onWillPop: () async =>
+          showDialog(context: context, builder: (context) => StopPage()),
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              getImage(),
+              getTimer(),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class InfoButton extends StatelessWidget {
-  final IconData icon;
-  final Function onPress;
-  final String tooltip;
 
-  InfoButton({this.icon, this.onPress, this.tooltip});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 5.0,right: 8,bottom: 5),
-      child: Container(
-        height: 35,
-        width: 35,
-        child: FloatingActionButton(
-          backgroundColor: Colors.blue.shade200,
-          onPressed: onPress,
-          child: Icon(icon),
-          tooltip: tooltip,
-        ),
-      ),
-    );
-  }
-}

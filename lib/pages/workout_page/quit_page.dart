@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/helper/light_dark_mode.dart';
-import 'package:full_workout/widgets/info_button.dart';
 
 class QuitPage extends StatefulWidget {
 
@@ -28,21 +27,17 @@ class _QuitPageState extends State<QuitPage> {
               ),
               backgroundColor: backgroundColor,
               side: BorderSide(
-                  color: Colors.blue, style: BorderStyle.solid, width: 0),
+                  color: backgroundColor, style: BorderStyle.solid, width: 2),
             ),
             onPressed: () {
-
               onPress();
               setState(() {
-                
               });
             },
             child: Text(
               title,
-              style: Theme.of(context)
-                  .textTheme
-                  .button
-                  .merge(TextStyle(color: textColor)),
+              style: Theme.of(context).textTheme.button.merge(TextStyle(
+                  color: textColor, fontSize: title == "Quit" ? 18 : 14)),
             )),
       );
     }
@@ -63,17 +58,19 @@ class _QuitPageState extends State<QuitPage> {
                 children: [
                   Row(
                     children: [
-                      InfoButton(
-                        icon: Icons.arrow_back,
-                        onPress: () {print(index);
-                          //    Navigator.of(context).pop();
-                        },
-                      ),
+                      ElevatedButton(
+                        onPressed: () => Navigator.of(context).pop(true),
+                        child: Icon(Icons.arrow_back),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue,
+                          shape: CircleBorder(),
+                        ),
+                      )
                     ],
                   ),
                   Spacer(),
                   Text(
-                    "Pause",
+                    "Quit",
                     style: textTheme.headline1.copyWith(
                         color: Colors.white,
                         fontSize: 40,
@@ -100,7 +97,7 @@ class _QuitPageState extends State<QuitPage> {
                   getButton(
                       title: "Don't know how to do it",
                       onPress: () {
-index = 2;
+                        index = 2;
                       },
                       backgroundColor: index == 2
                           ? defaultTextColor
@@ -111,7 +108,7 @@ index = 2;
                   getButton(
                       title: "Not enough time",
                       onPress: () {
-index = 3;
+                        index = 3;
                       },
                       backgroundColor: index == 3
                           ? defaultTextColor
@@ -137,15 +134,11 @@ index =4;
               ),
             ),
           ),
-          Container(
-            height: 70,
-            color: Colors.white,
-            child: getButton(
-                title: "Quite",
-                onPress: () {},
-                backgroundColor: Colors.blue,
-                textColor: Colors.white),
-          ),
+          getButton(
+              title: "Quit",
+              onPress: () {},
+              backgroundColor: Colors.blue,
+              textColor: Colors.white),
         ],
       ),
     );

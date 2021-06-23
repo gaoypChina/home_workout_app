@@ -70,7 +70,7 @@ class ResultScreen extends StatelessWidget {
                 height: 16,
               ),
               Container(
-                child: FlatButton.icon(
+                child: ElevatedButton.icon(
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -79,8 +79,7 @@ class ResultScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                   label: Text("LET CALCULATE AGAIN"),
-                  textColor: Colors.white,
-                  color: Colors.pink,
+
                 ),
                 width: double.infinity,
                 padding: EdgeInsets.only(left: 16, right: 16),

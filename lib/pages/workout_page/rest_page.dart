@@ -4,9 +4,9 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/light_dark_mode.dart';
-import 'package:full_workout/pages/training_page/sound_option.dart';
-import 'package:full_workout/pages/training_page/pause_page.dart';
-import 'package:full_workout/pages/training_page/workout_screen.dart';
+import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
+import 'package:full_workout/pages/workout_page/pause_page.dart';
+import 'package:full_workout/pages/workout_page/workout_page.dart';
 import 'package:full_workout/widgets/info_button.dart';
 import 'package:full_workout/widgets/youtube_player.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -77,7 +77,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => WorkoutScreenNew(
+            builder: (context) => WorkoutPage(
               currTime: widget.currTime,
                 rapList: widget.rapList,
                 workOutList: widget.workOutList,
@@ -267,7 +267,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                             showDialog(
                                 context: context,
                                 builder: (builder) {
-                                  return SoundOption();
+                                  return SoundSetting();
                                 });
                           },
                         ),

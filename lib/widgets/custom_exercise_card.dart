@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/workoutlist.dart';
+import 'package:full_workout/database/workout_list.dart';
+import 'package:full_workout/pages/workout_page/detail_dialog_page.dart';
 
-import 'my_dialog_box.dart';
 
 
 class CustomExerciseCard extends StatefulWidget {
-  final List<WorkoutList> workOutList;
+  final List<Workout> workOutList;
   final int index;
-  CustomExerciseCard({this.workOutList, this.index});
+  final int time;
+  CustomExerciseCard({this.workOutList, this.index, this.time});
 
   @override
   _CustomExerciseCardState createState() => _CustomExerciseCardState();
@@ -31,8 +32,9 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                 ));
       },
       child: Card(
+        elevation: 5,
         margin: EdgeInsets.only(bottom: 0),
-        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.blue),
+        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.white),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
@@ -58,7 +60,7 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                 ),
               ),
             ),
-            Container(width: 1,height: 100, color: Colors.blue,),
+            Container(width: 1,height: 100, color: Colors.white,),
             Expanded(
               flex: 3,
               child: Container(
@@ -87,7 +89,7 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                             Icons.access_time,
                           ),
                           SizedBox(width: 10),
-                          Text(item.duration.toString()),
+                          Text(widget.time.toString()),
                         ],
                       ),
                     ),

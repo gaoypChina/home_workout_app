@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //1615
-class WorkoutList {
+class Workout {
   String title;
   String imageSrc;
   String videoLink;
@@ -12,7 +12,7 @@ class WorkoutList {
   int advanceRap;
   int duration;
 
-  WorkoutList({
+  Workout({
     @required this.title,
     @required this.imageSrc,
     @required this.steps,
@@ -26,7 +26,7 @@ class WorkoutList {
 }
 //Arm
 
-WorkoutList armCurlsCrunchLeft = WorkoutList(
+Workout armCurlsCrunchLeft = Workout(
   title: 'Arm Curls Crunch Left',
   steps: [
     'Lie on your left side with your knees bent and lifted.',
@@ -40,7 +40,7 @@ WorkoutList armCurlsCrunchLeft = WorkoutList(
   imageSrc: 'assets/all-workouts/armCurlsCrunchLeft.gif',
 );
 
-WorkoutList armCurlsCrunchLeft2 = WorkoutList(
+Workout armCurlsCrunchLeft2 = Workout(
   title: 'Arm Curls Crunch Left',
   steps: [
     'Lie on your left side with your knees bent and lifted.',
@@ -54,7 +54,7 @@ WorkoutList armCurlsCrunchLeft2 = WorkoutList(
   imageSrc: 'assets/all-workouts/armCurlsCrunchLeft.gif',
 );
 
-WorkoutList armCurlsCrunchRight = WorkoutList(
+Workout armCurlsCrunchRight = Workout(
     title: 'Arm Curls Crunch Right',
     steps: [
       'Lie on your right side with your knees bent and lifted.',
@@ -67,7 +67,7 @@ WorkoutList armCurlsCrunchRight = WorkoutList(
     showTimer: null,
     imageSrc: 'assets/all-workouts/armCurlsCrunchRight.gif');
 
-WorkoutList armCurlsCrunchRight2 = WorkoutList(
+Workout armCurlsCrunchRight2 = Workout(
     title: 'Arm Curls Crunch Right',
     steps: [
       'Lie on your right side with your knees bent and lifted.',
@@ -80,7 +80,7 @@ WorkoutList armCurlsCrunchRight2 = WorkoutList(
     showTimer: null,
     imageSrc: 'assets/all-workouts/armCurlsCrunchRight.gif');
 
-WorkoutList skippingWithOutRope = WorkoutList(
+Workout skippingWithOutRope = Workout(
   title: 'Skipping Without Rope',
   steps: [
     'Stand in a straight position with your feet together and facing forward and hands positioned to look as if holding a rope.',
@@ -93,7 +93,7 @@ WorkoutList skippingWithOutRope = WorkoutList(
   imageSrc: 'assets/all-workouts/skippingWithOutRope.gif',
 );
 
-WorkoutList tricepsPushUp = WorkoutList(
+Workout tricepsPushUp = Workout(
   title: 'Triceps Push-ups',
   steps: [
     'Get into a plank position with your hands directly below shoulders, your neck and spine neutral, and your feet together.',
@@ -106,7 +106,7 @@ WorkoutList tricepsPushUp = WorkoutList(
   imageSrc: 'assets/all-workouts/tricepsPushUp.gif',
 );
 
-WorkoutList tricepsPushUp2 = WorkoutList(
+Workout tricepsPushUp2 = Workout(
   title: 'Triceps Push-ups',
   steps: [
     'Get into a plank position with your hands directly below shoulders, your neck and spine neutral, and your feet together.',
@@ -119,7 +119,7 @@ WorkoutList tricepsPushUp2 = WorkoutList(
   imageSrc: 'assets/all-workouts/tricepsPushUp.gif',
 );
 
-WorkoutList armCircleClockWise = WorkoutList(
+Workout armCircleClockWise = Workout(
   title: 'Arm Circle ClockWise',
   steps: [
     'Stand straight up with your arms extended out to each side, parallel to the ground.',
@@ -133,7 +133,7 @@ WorkoutList armCircleClockWise = WorkoutList(
   imageSrc: 'assets/all-workouts/armCircleClockWIse.gif',
 );
 
-WorkoutList armCircleCounterClockWise = WorkoutList(
+Workout armCircleCounterClockWise = Workout(
     title: 'Arm Circle Counterclockwise',
     steps: [
       'Stand on the floor with your arms extended straight out to the sides at shoulder height',
@@ -145,7 +145,7 @@ WorkoutList armCircleCounterClockWise = WorkoutList(
     showTimer: null,
     imageSrc: 'assets/all-workouts/armCircleCounterClowk.gif');
 
-WorkoutList diagonalPlank = WorkoutList(
+Workout diagonalPlank = Workout(
     title: 'Diagonal Plank',
     steps: [
       'Start in the straight arm plank position',
@@ -157,7 +157,7 @@ WorkoutList diagonalPlank = WorkoutList(
     showTimer: null,
     imageSrc: 'assets/all-workouts/digonalPlank.gif');
 
-WorkoutList bodySaw = WorkoutList(
+Workout bodySaw = Workout(
   title: 'Body Saw',
   steps: [
     'Place the restraints so they are about 6 inches off the ground.'
@@ -170,7 +170,7 @@ WorkoutList bodySaw = WorkoutList(
   imageSrc: 'assets/all-workouts/bodySaw.gif',
 );
 
-WorkoutList punches = WorkoutList(
+Workout punches = Workout(
   title: 'Punches',
   steps: [
     'Stand with your feet hip-width apart, your knees slightly bent.',
@@ -184,7 +184,7 @@ WorkoutList punches = WorkoutList(
   imageSrc: 'assets/all-workouts/punches.gif',
 );
 
-WorkoutList punches2 = WorkoutList(
+Workout punches2 = Workout(
   title: 'Punches',
   steps: [
     'Stand with your feet hip-width apart, your knees slightly bent.',
@@ -198,7 +198,7 @@ WorkoutList punches2 = WorkoutList(
   imageSrc: 'assets/all-workouts/punches.gif',
 );
 
-WorkoutList wallPushUps = WorkoutList(
+Workout wallPushUps = Workout(
   title: 'Wall Push-Ups',
   steps: [
     'Assume the starting position with feet and legs together, standing about 2 feet from a wall with your arms straight out in front of you.',
@@ -213,7 +213,7 @@ WorkoutList wallPushUps = WorkoutList(
   imageSrc: 'assets/all-workouts/wallPushUps.gif',
 );
 
-WorkoutList tricepsStretchLeft = WorkoutList(
+Workout tricepsStretchLeft = Workout(
     title: 'Triceps Stretch Left',
     steps: [
       'Standing up straight with a tight core, extend your left arm straight into the air.',
@@ -225,7 +225,7 @@ WorkoutList tricepsStretchLeft = WorkoutList(
     showTimer: null,
     imageSrc: 'assets/all-workouts/tricepsStretchLeft.gif');
 
-WorkoutList tricepsStretchRight = WorkoutList(
+Workout tricepsStretchRight = Workout(
   title: 'Triceps Stretch Right',
   steps: [
     'Standing up straight with a tight core , extend your',
@@ -239,7 +239,7 @@ WorkoutList tricepsStretchRight = WorkoutList(
   imageSrc: 'assets/all-workouts/tricepsStretchRight.gif',
 );
 
-WorkoutList standingBicepsStretchRight = WorkoutList(
+Workout standingBicepsStretchRight = Workout(
     title: 'Standing Biceps Stretch Right',
     steps: [
       'Stand with your right arm close to a wall.',
@@ -251,7 +251,7 @@ WorkoutList standingBicepsStretchRight = WorkoutList(
     showTimer: null,
     imageSrc: 'assets/all-workouts/standingBicepsStretchRight.jpg');
 
-WorkoutList standingBicepsStretchLeft = WorkoutList(
+Workout standingBicepsStretchLeft = Workout(
     title: 'Standing Biceps Stretch Left',
     steps: [
       'Stand with your left arm close to a wall.',
@@ -265,7 +265,7 @@ WorkoutList standingBicepsStretchLeft = WorkoutList(
 
 //Legs
 
-WorkoutList kneeToChestStretch = WorkoutList(
+Workout kneeToChestStretch = Workout(
   title: 'Knee Hugs',
   steps: [
     'Stand with your feet shoulder-width apart. Maintain a tight core throughout.',
@@ -280,7 +280,7 @@ WorkoutList kneeToChestStretch = WorkoutList(
   imageSrc: 'assets/all-workouts/kneeToChestStretch.gif',
 );
 
-WorkoutList squats = WorkoutList(
+Workout squats = Workout(
   title: 'Squats',
   steps: [
     'Stand with feet a little wider than hip width, toes facing front.',
@@ -296,7 +296,7 @@ WorkoutList squats = WorkoutList(
   imageSrc: 'assets/all-workouts/squarts.gif',
 );
 
-WorkoutList buttBridge = WorkoutList(
+Workout buttBridge = Workout(
   title: 'Butt Bridge',
   steps: [
     'Lie on your back with your hands at your sides, knees bent, and feet flat on the floor under your knees.',
@@ -312,7 +312,7 @@ WorkoutList buttBridge = WorkoutList(
   imageSrc: 'assets/all-workouts/buttBridge.gif',
 );
 
-WorkoutList curtsyLunges = WorkoutList(
+Workout curtsyLunges = Workout(
   title: 'Curtsy Lunges',
   steps: [
     'Stand with your feet hip-distance apart and let your arms fall at your sides.',
@@ -329,7 +329,7 @@ WorkoutList curtsyLunges = WorkoutList(
   imageSrc: 'assets/all-workouts/curtsyLunges.gif',
 );
 
-WorkoutList bottomLegLiftLeft = WorkoutList(
+Workout bottomLegLiftLeft = Workout(
   title: 'Bottom Leg Lift Left',
   steps: [
     'Lift your ribs and prop your head up on your hand. Be sure that you keep your back and neck in good alignment.',
@@ -347,7 +347,7 @@ WorkoutList bottomLegLiftLeft = WorkoutList(
   imageSrc: 'assets/all-workouts/bottomLegLift_L.gif',
 );
 
-WorkoutList bottomLegLiftRight = WorkoutList(
+Workout bottomLegLiftRight = Workout(
     title: 'Bottom Leg Lift Right',
     steps: [
       'Lift your ribs and prop your head up on your hand. Be sure that you keep your back and neck in good alignment.',
@@ -364,7 +364,7 @@ WorkoutList bottomLegLiftRight = WorkoutList(
     intermediateRap: 12,
     imageSrc: 'assets/all-workouts/bottomLegLift_R.gif');
 
-WorkoutList sumoSquat = WorkoutList(
+Workout sumoSquat = Workout(
   title: 'Sumo Squat',
   steps: [
     'Stand with your feet slightly wider than hip-width apart and turn your feet out, externally rotating your hips.',
@@ -381,7 +381,7 @@ WorkoutList sumoSquat = WorkoutList(
   imageSrc: 'assets/all-workouts/sumoSquat.gif',
 );
 
-WorkoutList fireHydrantLeft = WorkoutList(
+Workout fireHydrantLeft = Workout(
   title: 'Fire Hydrant Left',
   steps: [
     'Start on your hands and knees. Place your shoulders above your hands and your hips above your knees. Tighten your core and look down.',
@@ -397,7 +397,7 @@ WorkoutList fireHydrantLeft = WorkoutList(
   imageSrc: 'assets/all-workouts/fire_hydrant_L.gif',
 );
 
-WorkoutList fireHydrantRight = WorkoutList(
+Workout fireHydrantRight = Workout(
   title: 'Fire Hydrant Left',
   steps: [
     'Start on your hands and knees. Place your shoulders above your hands and your hips above your knees. Tighten your core and look down.',
@@ -413,7 +413,7 @@ WorkoutList fireHydrantRight = WorkoutList(
   imageSrc: 'assets/all-workouts/fire_hydrant_R.gif',
 );
 
-WorkoutList jumpingSquats = WorkoutList(
+Workout jumpingSquats = Workout(
   title: 'Jumping Squats',
   steps: [
     'Stand with your feet shoulder-width apart.',
@@ -428,7 +428,7 @@ WorkoutList jumpingSquats = WorkoutList(
   imageSrc: 'assets/all-workouts/jumpingSquats.gif',
 );
 
-WorkoutList gluteKickBackLeft = WorkoutList(
+Workout gluteKickBackLeft = Workout(
   title: 'Glute Kick Back Left',
   steps: [
     'Kneel on the floor or on an exercise mat with your arms extended in front of you.',
@@ -446,8 +446,8 @@ WorkoutList gluteKickBackLeft = WorkoutList(
   imageSrc: 'assets/all-workouts/gluteKickBackLeft.gif',
 );
 
-WorkoutList gluteKickBackRight = WorkoutList(
-  title: 'Glute Kick Back Left',
+Workout gluteKickBackRight = Workout(
+  title: 'Glute Kick Back Right',
   steps: [
     'Kneel on the floor or on an exercise mat with your arms extended in front of you.',
     'You should be in a kneeling push-up position with your arms shoulder width apart.',
@@ -459,10 +459,12 @@ WorkoutList gluteKickBackRight = WorkoutList(
       'https://www.youtube.com/watch?v=BNDw4ciQoQI&ab_channel=NuffieldHealth',
   showTimer: false,
   advanceRap: 14,
+  beginnerRap: 10,
+  intermediateRap: 12,
   imageSrc: 'assets/all-workouts/gluteKickBackRight.gif',
 );
 
-WorkoutList wallSit = WorkoutList(
+Workout wallSit = Workout(
     title: 'Wall Sit',
     steps: [
       'Make sure your back is flat against the wall.',
@@ -477,7 +479,7 @@ WorkoutList wallSit = WorkoutList(
     duration: 30,
     imageSrc: 'assets/all-workouts/wallUp.jpg');
 
-WorkoutList leftQuadStretch = WorkoutList(
+Workout leftQuadStretch = Workout(
   title: 'Left Quad Stretch',
   steps: [
     'Stand up tall and shift your weight to the right leg.',
@@ -490,7 +492,7 @@ WorkoutList leftQuadStretch = WorkoutList(
   imageSrc: 'assets/all-workouts/left quad stretch with wall.jpg',
 );
 
-WorkoutList rightQuadStretch = WorkoutList(
+Workout rightQuadStretch = Workout(
   title: 'Right Quad Stretch',
   steps: [
     'Stand up tall and shift your weight to the left leg.',
@@ -503,7 +505,7 @@ WorkoutList rightQuadStretch = WorkoutList(
   imageSrc: 'assets/all-workouts/rightQuadStretchWithWall.jpg',
 );
 
-WorkoutList wallResistingSingleLegLeft = WorkoutList(
+Workout wallResistingSingleLegLeft = Workout(
   title: 'Wall Resisting Single Leg Left',
   steps: [
     'Stand tall facing a wall with back and legs straight and hands resting lightly on the wall for balance.',
@@ -519,7 +521,7 @@ WorkoutList wallResistingSingleLegLeft = WorkoutList(
   imageSrc: 'assets/all-workouts/wallResistingSingleLegCalfRaise_L.gif',
 );
 
-WorkoutList wallResistingSingleLegRight = WorkoutList(
+Workout wallResistingSingleLegRight = Workout(
   title: 'Wall Resisting Single Leg Right',
   steps: [
     'Stand tall facing a wall with back and legs straight and hands resting lightly on the wall for balance.',
@@ -535,7 +537,7 @@ WorkoutList wallResistingSingleLegRight = WorkoutList(
   imageSrc: 'assets/all-workouts/wallResistingSingleLegCalfRaise_R.gif',
 );
 
-WorkoutList lyingButterFlyStretch = WorkoutList(
+Workout lyingButterFlyStretch = Workout(
     title: 'Lying ButterFly Stretch',
     steps: [
       'Sit on the floor or a prop with the soles of your feet pressing into each other.',
@@ -550,7 +552,7 @@ WorkoutList lyingButterFlyStretch = WorkoutList(
     duration: 30,
     imageSrc: 'assets/all-workouts/lyingButterFlyStretch.jpg');
 
-WorkoutList walkingLunges = WorkoutList(
+Workout walkingLunges = Workout(
   title: 'Walking Lunges',
   steps: [
     'To begin, start by standing upright with your feet together.',
@@ -567,7 +569,7 @@ WorkoutList walkingLunges = WorkoutList(
   imageSrc: 'assets/all-workouts/walking-lunge.gif',
 );
 
-WorkoutList lateralSquat = WorkoutList(
+Workout lateralSquat = Workout(
   title: 'Lateral Squat',
   steps: [
     'Stand up and place your feet double shoulder-width apart.',
@@ -584,7 +586,7 @@ WorkoutList lateralSquat = WorkoutList(
   imageSrc: 'assets/all-workouts/lateralSquat.gif',
 );
 
-WorkoutList calfStretchLeft = WorkoutList(
+Workout calfStretchLeft = Workout(
   title: 'Calf Stretch Left',
   steps: [
     'Stand near a wall with one foot in front of the other, front knee slightly bent.',
@@ -598,7 +600,7 @@ WorkoutList calfStretchLeft = WorkoutList(
   imageSrc: 'assets/all-workouts/calfStretchLeft.png',
 );
 
-WorkoutList calfStretchRight = WorkoutList(
+Workout calfStretchRight = Workout(
   title: 'Calf Stretch Right',
   steps: [
     'Stand near a wall with one foot in front of the other, front knee slightly bent.',
@@ -614,7 +616,7 @@ WorkoutList calfStretchRight = WorkoutList(
 
 //----------------------------------SHOULDER--------------------------------------
 
-WorkoutList rhomboidPulls = WorkoutList(
+Workout rhomboidPulls = Workout(
   title: 'Rhomboid Pulls',
   steps: [
     ' In this exercise, you have to stand width your feet shoulder with apart.',
@@ -628,7 +630,7 @@ WorkoutList rhomboidPulls = WorkoutList(
   imageSrc: 'assets/all-workouts/rhomboidPulls.gif',
 );
 
-WorkoutList sideArmRaise = WorkoutList(
+Workout sideArmRaise = Workout(
   title: 'Side Arm Raise',
   steps: [
     'Stand tall, position your feet roughly hip-distance apart.',
@@ -645,7 +647,7 @@ WorkoutList sideArmRaise = WorkoutList(
   imageSrc: 'assets/all-workouts/side arm raise.gif',
 );
 
-WorkoutList reclinedRhomboidSqueezes = WorkoutList(
+Workout reclinedRhomboidSqueezes = Workout(
   title: 'Reclined Rhomboid Squeezes',
   steps: [
     'In this exercise, you have to sit with your knees bent.',
@@ -659,7 +661,7 @@ WorkoutList reclinedRhomboidSqueezes = WorkoutList(
   imageSrc: 'assets/all-workouts/reclinedRomboidSqueeze.gif',
 );
 
-WorkoutList armScissors = WorkoutList(
+Workout armScissors = Workout(
   title: 'Arm Scissors',
   steps: [
     'you have to stand upright with your feet shoulder-width apart.',
@@ -673,7 +675,7 @@ WorkoutList armScissors = WorkoutList(
   imageSrc: 'assets/all-workouts/armScissor.gif',
 );
 
-WorkoutList rhomboidPulls2 = WorkoutList(
+Workout rhomboidPulls2 = Workout(
   title: 'Rhomboid Pulls',
   steps: [
     ' In this exercise, you have to stand width your feet shoulder with apart.',
@@ -687,7 +689,7 @@ WorkoutList rhomboidPulls2 = WorkoutList(
   imageSrc: 'assets/all-workouts/rhomboidPulls.gif',
 );
 
-WorkoutList sideArmRaise2 = WorkoutList(
+Workout sideArmRaise2 = Workout(
   title: 'Side Arm Raise',
   steps: [
     'Stand tall, position your feet roughly hip-distance apart.',
@@ -704,7 +706,7 @@ WorkoutList sideArmRaise2 = WorkoutList(
   imageSrc: 'assets/all-workouts/side arm raise.gif',
 );
 
-WorkoutList reclinedRhomboidSqueezes2 = WorkoutList(
+Workout reclinedRhomboidSqueezes2 = Workout(
   title: 'Reclined Rhomboid Squeezes',
   steps: [
     'In this exercise, you have to sit with your knees bent.',
@@ -718,7 +720,7 @@ WorkoutList reclinedRhomboidSqueezes2 = WorkoutList(
   imageSrc: 'assets/all-workouts/reclinedRomboidSqueeze.gif',
 );
 
-WorkoutList floorTricepsDips = WorkoutList(
+Workout floorTricepsDips = Workout(
   title: 'Floor Triceps Dips',
   steps: [
     'Sit on the floor and grip the edge next to your hips. Your fingers should be pointed at your feet.',
@@ -734,7 +736,7 @@ WorkoutList floorTricepsDips = WorkoutList(
   imageSrc: 'assets/all-workouts/floorTricepsDipes.gif',
 );
 
-WorkoutList pikePushUps = WorkoutList(
+Workout pikePushUps = Workout(
   title: 'Pike Push Ups',
   imageSrc: 'assets/all-workouts/pikePushUps_.gif',
   steps: [
@@ -749,7 +751,7 @@ WorkoutList pikePushUps = WorkoutList(
   showTimer: false,
 );
 
-WorkoutList reversePushUps = WorkoutList(
+Workout reversePushUps = Workout(
   title: 'Reverse Push Ups',
   steps: [
     'Start with your body straight and your arms bent, holding yourself an inch or two off the floor, like the halfway point of a regular pushup.',
@@ -764,7 +766,7 @@ WorkoutList reversePushUps = WorkoutList(
   imageSrc: 'assets/all-workouts/reversePushups.gif.gif',
 );
 
-WorkoutList threadTheNeedleL = WorkoutList(
+Workout threadTheNeedleL = Workout(
   title: 'Thread The Needle Left',
   steps: [
     'Begin on your hands and knees. Place your wrists directly under your shoulders and your knees directly under your hips.',
@@ -780,7 +782,7 @@ WorkoutList threadTheNeedleL = WorkoutList(
   imageSrc: 'assets/all-workouts/threadTheNeedleLeft.png',
 );
 
-WorkoutList threadTheNeedleR = WorkoutList(
+Workout threadTheNeedleR = Workout(
   title: 'Thread The Needle Right',
   steps: [
     'Begin on your hands and knees. Place your wrists directly under your shoulders and your knees directly under your hips.',
@@ -796,7 +798,7 @@ WorkoutList threadTheNeedleR = WorkoutList(
   imageSrc: 'assets/all-workouts/threadTheNeedleRight.png',
 );
 
-WorkoutList floorTricepsDips2 = WorkoutList(
+Workout floorTricepsDips2 = Workout(
   title: 'Floor Triceps Dips',
   steps: [
     'Sit on the floor and grip the edge next to your hips. Your fingers should be pointed at your feet.',
@@ -812,7 +814,7 @@ WorkoutList floorTricepsDips2 = WorkoutList(
   imageSrc: 'assets/all-workouts/floorTricepsDipes.gif',
 );
 
-WorkoutList pikePushUps2 = WorkoutList(
+Workout pikePushUps2 = Workout(
   title: 'Pike Push Ups',
   imageSrc: 'assets/all-workouts/pikePushUps_.gif',
   steps: [
@@ -827,7 +829,7 @@ WorkoutList pikePushUps2 = WorkoutList(
   showTimer: false,
 );
 
-WorkoutList reversePushUps2 = WorkoutList(
+Workout reversePushUps2 = Workout(
   title: 'Reverse Push Ups',
   steps: [
     'Start with your body straight and your arms bent, holding yourself an inch or two off the floor, like the halfway point of a regular pushup.',
@@ -842,7 +844,7 @@ WorkoutList reversePushUps2 = WorkoutList(
   imageSrc: 'assets/all-workouts/reversePushups.gif.gif',
 );
 
-WorkoutList catCowPose = WorkoutList(
+Workout catCowPose = Workout(
   title: 'Cat Cow Pose',
   steps: [
     'On all fours, your knees should be hip width distance and your hands should be directly below your shoulders. Your spine is neutral here.',
@@ -856,7 +858,7 @@ WorkoutList catCowPose = WorkoutList(
   imageSrc: 'assets/all-workouts/catCowPose_.gif',
 );
 
-WorkoutList plankUp = WorkoutList(
+Workout plankUp = Workout(
     title: 'Plank Up',
     steps: [
       'Get down on the ground on the ground in plank position (only forearms and toes touching the ground).',
@@ -872,7 +874,7 @@ WorkoutList plankUp = WorkoutList(
     advanceRap: 16,
     imageSrc: 'assets/all-workouts/plankUp.gif');
 
-WorkoutList inchWorm = WorkoutList(
+Workout inchWorm = Workout(
   title: 'Inch Worm',
   steps: [
     'Stand tall and roll down until your hands reach the floor.',
@@ -887,7 +889,7 @@ WorkoutList inchWorm = WorkoutList(
   imageSrc: 'assets/all-workouts/Inchworm.gif',
 );
 
-WorkoutList plankUp2 = WorkoutList(
+Workout plankUp2 = Workout(
   title: 'Plank Up',
   steps: [
     'Get down on the ground on the ground in plank position (only forearms and toes touching the ground).',
@@ -904,7 +906,7 @@ WorkoutList plankUp2 = WorkoutList(
   imageSrc: 'assets/all-workouts/plankUp.gif',
 );
 
-WorkoutList reverseSnowAngle = WorkoutList(
+Workout reverseSnowAngle = Workout(
   title: 'Reverse Snow Angle',
   steps: [
     'Place your forehead on the thick part of a mat or folded towel.',
@@ -920,7 +922,7 @@ WorkoutList reverseSnowAngle = WorkoutList(
   imageSrc: 'assets/all-workouts/reverseSnowAngel.gif',
 );
 
-WorkoutList childPose = WorkoutList(
+Workout childPose = Workout(
   title: 'Child\'s Pose',
   steps: [
     'Sit on your heels on a yoga mat or on the floor.',
@@ -937,7 +939,7 @@ WorkoutList childPose = WorkoutList(
   imageSrc: 'assets/all-workouts/child\'sPose.jpg',
 );
 
-WorkoutList inchWorm2 = WorkoutList(
+Workout inchWorm2 = Workout(
   title: 'Inch Worm',
   steps: [
     'Stand tall and roll down until your hands reach the floor.',
@@ -953,7 +955,7 @@ WorkoutList inchWorm2 = WorkoutList(
 
 // ABS
 
-WorkoutList abdominalCrunches = WorkoutList(
+Workout abdominalCrunches = Workout(
     title: 'Abdominal Crunches',
     videoLink:
         'https://www.youtube.com/watch?v=_YVhhXc2pSY&ab_channel=WahooFitness',
@@ -969,7 +971,7 @@ WorkoutList abdominalCrunches = WorkoutList(
     advanceRap: 20,
     imageSrc: 'assets/all-workouts/abdominalCrunches.gif');
 
-WorkoutList russianTwist = WorkoutList(
+Workout russianTwist = Workout(
   title: 'Russian Twist',
   videoLink:
       'https://www.youtube.com/watch?v=BlJQtdcCzeA&ab_channel=StephanieSequeira',
@@ -987,7 +989,7 @@ WorkoutList russianTwist = WorkoutList(
   imageSrc: 'assets/all-workouts/russianTwist.gif',
 );
 
-WorkoutList flutterKikes = WorkoutList(
+Workout flutterKikes = Workout(
   title: 'Flutter Kikes',
   videoLink:
       'https://www.youtube.com/watch?v=BlJQtdcCzeA&ab_channel=StephanieSequeira',
@@ -1005,7 +1007,7 @@ WorkoutList flutterKikes = WorkoutList(
   imageSrc: 'assets/all-workouts/flutterKikes.gif',
 );
 
-WorkoutList pulseUp = WorkoutList(
+Workout pulseUp = Workout(
   title: 'Pulse Up',
   videoLink: 'https://www.youtube.com/watch?v=wzhQMdkMzyA&ab_channel=Sears',
   steps: [
@@ -1020,7 +1022,7 @@ WorkoutList pulseUp = WorkoutList(
   imageSrc: 'assets/all-workouts/pulseUp.gif',
 );
 
-WorkoutList mountainClimbing = WorkoutList(
+Workout mountainClimbing = Workout(
   title: 'Mountain Climbing',
   videoLink: 'https://www.youtube.com/watch?v=UOGvtqv856A&ab_channel=Howcast',
   steps: [
@@ -1035,7 +1037,7 @@ WorkoutList mountainClimbing = WorkoutList(
   imageSrc: 'assets/all-workouts/mountainClimbing.gif',
 );
 
-WorkoutList russianTwist2 = WorkoutList(
+Workout russianTwist2 = Workout(
   title: 'Russian Twist',
   videoLink:
       'https://www.youtube.com/watch?v=BlJQtdcCzeA&ab_channel=StephanieSequeira',
@@ -1053,7 +1055,7 @@ WorkoutList russianTwist2 = WorkoutList(
   imageSrc: 'assets/all-workouts/russianTwist.gif',
 );
 
-WorkoutList elbowPlanks = WorkoutList(
+Workout elbowPlanks = Workout(
   title: 'Elbow Planks',
   videoLink: 'https://www.youtube.com/watch?v=zuHZyVg3zRA&ab_channel=PFITtv',
   steps: [
@@ -1066,7 +1068,7 @@ WorkoutList elbowPlanks = WorkoutList(
   imageSrc: 'assets/all-workouts/elbowPlank.gif',
 );
 
-WorkoutList advanceElbowPlanks = WorkoutList(
+Workout advanceElbowPlanks = Workout(
   title: 'Elbow Planks',
   videoLink: 'https://www.youtube.com/watch?v=zuHZyVg3zRA&ab_channel=PFITtv',
   steps: [
@@ -1079,7 +1081,7 @@ WorkoutList advanceElbowPlanks = WorkoutList(
   imageSrc: 'assets/all-workouts/elbowPlank.gif',
 );
 
-WorkoutList abdominalCrunches2 = WorkoutList(
+Workout abdominalCrunches2 = Workout(
   title: 'Abdominal Crunches',
   videoLink:
       'https://www.youtube.com/watch?v=_YVhhXc2pSY&ab_channel=WahooFitness',
@@ -1096,7 +1098,7 @@ WorkoutList abdominalCrunches2 = WorkoutList(
   imageSrc: 'assets/all-workouts/abdominalCrunches.gif',
 );
 
-WorkoutList flutterKikes2 = WorkoutList(
+Workout flutterKikes2 = Workout(
   title: 'Flutter Kikes',
   videoLink:
       'https://www.youtube.com/watch?v=BlJQtdcCzeA&ab_channel=StephanieSequeira',
@@ -1114,7 +1116,7 @@ WorkoutList flutterKikes2 = WorkoutList(
   imageSrc: 'assets/all-workouts/flutterKikes.gif',
 );
 
-WorkoutList mountainClimbing2 = WorkoutList(
+Workout mountainClimbing2 = Workout(
     title: 'Mountain Climbing',
     videoLink: 'https://www.youtube.com/watch?v=UOGvtqv856A&ab_channel=Howcast',
     steps: [
@@ -1127,7 +1129,7 @@ WorkoutList mountainClimbing2 = WorkoutList(
     beginnerRap: 16,
     imageSrc: 'assets/all-workouts/mountainClimbing.gif');
 
-WorkoutList pulseUp2 = WorkoutList(
+Workout pulseUp2 = Workout(
     title: 'Pulse Up',
     videoLink: 'https://www.youtube.com/watch?v=wzhQMdkMzyA&ab_channel=Sears',
     steps: [
@@ -1141,7 +1143,7 @@ WorkoutList pulseUp2 = WorkoutList(
     intermediateRap: 16,
     imageSrc: 'assets/all-workouts/pulseUp.gif');
 
-WorkoutList wipers = WorkoutList(
+Workout wipers = Workout(
     title: 'Wipers',
     steps: [
       'Lie on your back with your arms straight out to the sides.',
@@ -1154,7 +1156,7 @@ WorkoutList wipers = WorkoutList(
     duration: 30,
     imageSrc: 'assets/all-workouts/wipers.gif');
 
-WorkoutList reverseCrunches = WorkoutList(
+Workout reverseCrunches = Workout(
   title: 'Reverse Crunches',
   showTimer: true,
   steps: [
@@ -1170,7 +1172,7 @@ WorkoutList reverseCrunches = WorkoutList(
   imageSrc: 'assets/all-workouts/reverseCrunches.gif',
 );
 
-WorkoutList vUps = WorkoutList(
+Workout vUps = Workout(
   title: 'V-Ups',
   steps: [
     'Lie down on a flat surface or mat.',
@@ -1186,7 +1188,7 @@ WorkoutList vUps = WorkoutList(
   imageSrc: 'assets/all-workouts/VUps.gif',
 );
 
-WorkoutList sidePlankRight = WorkoutList(
+Workout sidePlankRight = Workout(
     title: 'Side Plank Right',
     steps: [
       'Lie on your right side, legs extended and stacked from hip to feet.',
@@ -1199,7 +1201,7 @@ WorkoutList sidePlankRight = WorkoutList(
     duration: 30,
     imageSrc: 'assets/all-workouts/sidePlankRight.gif');
 
-WorkoutList sidePlankLeft = WorkoutList(
+Workout sidePlankLeft = Workout(
     title: 'Side Plank Left',
     steps: [
       'Lie on your left side, legs extended and stacked from hip to feet.',
@@ -1212,7 +1214,7 @@ WorkoutList sidePlankLeft = WorkoutList(
     duration: 30,
     imageSrc: 'assets/all-workouts/sidePlankLeft.gif');
 
-WorkoutList vUps2 = WorkoutList(
+Workout vUps2 = Workout(
     title: 'V-Ups',
     steps: [
       'Lie down on a flat surface or mat.',
@@ -1227,7 +1229,7 @@ WorkoutList vUps2 = WorkoutList(
     advanceRap: 20,
     imageSrc: 'assets/all-workouts/VUps.gif');
 
-WorkoutList reverseCrunches2 = WorkoutList(
+Workout reverseCrunches2 = Workout(
   title: 'Reverse Crunches',
   showTimer: true,
   steps: [
@@ -1243,7 +1245,7 @@ WorkoutList reverseCrunches2 = WorkoutList(
   imageSrc: 'assets/all-workouts/reverseCrunches.gif',
 ); //
 
-WorkoutList sidePlankRight2 = WorkoutList(
+Workout sidePlankRight2 = Workout(
   title: 'Side Plank Right',
   steps: [
     'Lie on your right side, legs extended and stacked from hip to feet.',
@@ -1257,7 +1259,7 @@ WorkoutList sidePlankRight2 = WorkoutList(
   imageSrc: 'assets/all-workouts/sidePlankRight.gif',
 );
 
-WorkoutList sidePlankLeft2 = WorkoutList(
+Workout sidePlankLeft2 = Workout(
     title: 'Side Plank Left',
     steps: [
       'Lie on your left side, legs extended and stacked from hip to feet.',
@@ -1270,7 +1272,7 @@ WorkoutList sidePlankLeft2 = WorkoutList(
     duration: 20,
     imageSrc: 'assets/all-workouts/sidePlankLeft.gif');
 
-WorkoutList pushUpsRotation = WorkoutList(
+Workout pushUpsRotation = Workout(
   title: 'Push-Ups & Rotation',
   steps: [
     'Start out on the mat in a push-up positions, hands and feet on the floor with your body off the mat.',
@@ -1284,7 +1286,7 @@ WorkoutList pushUpsRotation = WorkoutList(
   imageSrc: 'assets/all-workouts/pushUpsRotation.gif',
 );
 
-WorkoutList pushUpsRotation2 = WorkoutList(
+Workout pushUpsRotation2 = Workout(
   title: 'Push-Ups & Rotation',
   steps: [
     'Start out on the mat in a push-up positions, hands and feet on the floor with your body off the mat.',
@@ -1298,7 +1300,7 @@ WorkoutList pushUpsRotation2 = WorkoutList(
   imageSrc: 'assets/all-workouts/pushUpsRotation.gif',
 );
 
-WorkoutList spineLumberL = WorkoutList(
+Workout spineLumberL = Workout(
     title: 'Spine Lumber(L)',
     steps: [
       'Begin lying comfortably on the back. Bend your knees in to your chest and extend your arms out alongside the body in a “T” formation, with your palms facing up toward the ceiling.',
@@ -1313,7 +1315,7 @@ WorkoutList spineLumberL = WorkoutList(
     duration: 30,
     imageSrc: 'assets/all-workouts/spineLumberL.png');
 
-WorkoutList spineLumberR = WorkoutList(
+Workout spineLumberR = Workout(
   title: 'Spine Lumber(R)',
   steps: [
     'Begin lying comfortably on the back. Bend your knees in to your chest and extend your arms out alongside the body in a “T” formation, with your palms facing up toward the ceiling.',
@@ -1331,7 +1333,7 @@ WorkoutList spineLumberR = WorkoutList(
 
 // Chest
 
-WorkoutList jumpingJacks = WorkoutList(
+Workout jumpingJacks = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=iSSAk4XCsRA&ab_channel=RedefiningStrength',
   title: 'Jumping Jacks',
@@ -1347,7 +1349,7 @@ WorkoutList jumpingJacks = WorkoutList(
   imageSrc: 'assets/all-workouts/jumpingJacks.gif',
 );
 
-WorkoutList kneePushUps = WorkoutList(
+Workout kneePushUps = Workout(
     title: 'Knee Push-ups',
     steps: [
       '  Place the knees on the floor, the hands below the shoulders and cross your feet.',
@@ -1362,7 +1364,7 @@ WorkoutList kneePushUps = WorkoutList(
     intermediateRap: 12,
     imageSrc: 'assets/all-workouts/kneePushUps.gif');
 
-WorkoutList inclinePushUps = WorkoutList(
+Workout inclinePushUps = Workout(
   title: 'Incline Push-ups',
   steps: [
     'Assume a standard push-up position. But rather than placing your hands on the ground find a raised platform, bench or even a step to place your hands.',
@@ -1377,7 +1379,7 @@ WorkoutList inclinePushUps = WorkoutList(
   imageSrc: 'assets/all-workouts/inclinePushUps.gif',
 );
 
-WorkoutList inclinePushUps2 = WorkoutList(
+Workout inclinePushUps2 = Workout(
   title: 'Incline Push-ups',
   steps: [
     'Assume a standard push-up position. But rather than placing your hands on the ground find a raised platform, bench or even a step to place your hands.',
@@ -1391,7 +1393,7 @@ WorkoutList inclinePushUps2 = WorkoutList(
   imageSrc: 'assets/all-workouts/inclinePushUps.gif',
 );
 
-WorkoutList tricepsDips = WorkoutList(
+Workout tricepsDips = Workout(
   title: 'Triceps Dips',
   steps: [
     'Grip the front edges of a chair or bench with your hand.',
@@ -1407,7 +1409,7 @@ WorkoutList tricepsDips = WorkoutList(
   imageSrc: 'assets/all-workouts/tricepsdips.gif',
 );
 
-WorkoutList pushUps = WorkoutList(
+Workout pushUps = Workout(
   title: 'Push-Ups',
   steps: [
     'Get down on all fours, placing your hands slightly wider than your shoulders.',
@@ -1423,7 +1425,7 @@ WorkoutList pushUps = WorkoutList(
   imageSrc: 'assets/all-workouts/pushUp.gif',
 );
 
-WorkoutList kneePushUps2 = WorkoutList(
+Workout kneePushUps2 = Workout(
   title: 'Knee Push-ups',
   steps: [
     '  Place the knees on the floor, the hands below the shoulders and cross your feet.',
@@ -1438,7 +1440,7 @@ WorkoutList kneePushUps2 = WorkoutList(
   imageSrc: 'assets/all-workouts/kneePushUps.gif',
 );
 
-WorkoutList tricepsDips2 = WorkoutList(
+Workout tricepsDips2 = Workout(
   title: 'Triceps Dips',
   steps: [
     'Grip the front edges of a chair or bench with your hand.',
@@ -1454,7 +1456,7 @@ WorkoutList tricepsDips2 = WorkoutList(
   imageSrc: 'assets/all-workouts/tricepsdips.gif',
 );
 
-WorkoutList pushUps2 = WorkoutList(
+Workout pushUps2 = Workout(
   title: 'Push-Ups',
   steps: [
     'Get down on all fours, placing your hands slightly wider than your shoulders.',
@@ -1470,7 +1472,7 @@ WorkoutList pushUps2 = WorkoutList(
   imageSrc: 'assets/all-workouts/pushUp.gif',
 );
 
-WorkoutList cobraStretch = WorkoutList(
+Workout cobraStretch = Workout(
   title: 'Cobra Stretch',
   videoLink:
       'https://www.youtube.com/watch?v=JDcdhTuycOI&ab_channel=FitnessBlender',
@@ -1486,7 +1488,7 @@ WorkoutList cobraStretch = WorkoutList(
   imageSrc: 'assets/all-workouts/cobraStratch.png',
 );
 
-WorkoutList chestStretch = WorkoutList(
+Workout chestStretch = Workout(
   title: 'Chest Stretch',
   steps: [
     'Stand in an open doorway. Raise each arm up to the side, bent at 90-degree angles with palms forward. Rest your palms on the door frame.',
@@ -1500,7 +1502,7 @@ WorkoutList chestStretch = WorkoutList(
   imageSrc: 'assets/all-workouts/ChestStretches.jpg',
 );
 
-WorkoutList hinduPushUps = WorkoutList(
+Workout hinduPushUps = Workout(
   title: 'Hindu Push-ups',
   steps: [
     'Assume a push-up position with your feet hip-width apart. Keep your core tight and back flat.',
@@ -1515,7 +1517,7 @@ WorkoutList hinduPushUps = WorkoutList(
   imageSrc: 'assets/all-workouts/hinduPushUps.gif',
 );
 
-WorkoutList wideArmPushUps = WorkoutList(
+Workout wideArmPushUps = Workout(
     title: 'Wide Arm Push-ups',
     steps: [
       'Keep your shoulders, spine, and hips in a straight line.',
@@ -1531,7 +1533,7 @@ WorkoutList wideArmPushUps = WorkoutList(
     advanceRap: 16,
     imageSrc: 'assets/all-workouts/wideArmPushUps.gif');
 
-WorkoutList staggeredPushUps = WorkoutList(
+Workout staggeredPushUps = Workout(
   title: 'Staggered Push-ups',
   steps: [
     'Assume a standard push-up position with legs and arms straight. Hands under shoulders.',
@@ -1546,7 +1548,7 @@ WorkoutList staggeredPushUps = WorkoutList(
   imageSrc: 'assets/all-workouts/staggeredPushUps.gif',
 );
 
-WorkoutList ployMetricPushUps = WorkoutList(
+Workout ployMetricPushUps = Workout(
   title: 'PloyMetric Push-ups',
   steps: [
     'Start in a high plank, or at the top of pushup position. Your torso should be in a straight line, core engaged (tightened), and palms directly under your shoulders.',
@@ -1562,7 +1564,7 @@ WorkoutList ployMetricPushUps = WorkoutList(
   imageSrc: 'assets/all-workouts/ploymetricPushUps.gif',
 );
 
-WorkoutList hinduPushUps2 = WorkoutList(
+Workout hinduPushUps2 = Workout(
   title: 'Hindu Push-ups',
   steps: [
     'Assume a push-up position with your feet hip-width apart. Keep your core tight and back flat.',
@@ -1577,7 +1579,7 @@ WorkoutList hinduPushUps2 = WorkoutList(
   imageSrc: 'assets/all-workouts/hinduPushUps.gif',
 );
 
-WorkoutList staggeredPushUps2 = WorkoutList(
+Workout staggeredPushUps2 = Workout(
     title: 'Staggered Push-ups',
     steps: [
       'Assume a standard push-up position with legs and arms straight. Hands under shoulders.',
@@ -1591,7 +1593,7 @@ WorkoutList staggeredPushUps2 = WorkoutList(
     advanceRap: 12,
     imageSrc: 'assets/all-workouts/staggeredPushUps.gif');
 
-WorkoutList ployMetricPushUps2 = WorkoutList(
+Workout ployMetricPushUps2 = Workout(
   title: 'PloyMetric Push-ups',
   steps: [
     'Start in a high plank, or at the top of pushup position. Your torso should be in a straight line, core engaged (tightened), and palms directly under your shoulders.',
@@ -1607,7 +1609,7 @@ WorkoutList ployMetricPushUps2 = WorkoutList(
   imageSrc: 'assets/all-workouts/ploymetricPushUps.gif',
 );
 
-WorkoutList declinePushUps = WorkoutList(
+Workout declinePushUps = Workout(
     title: 'Decline Push-Ups',
     steps: [
       'Kneel down with your back to the bench. Put your hands on the floor, shoulders over your wrists and elbows at 45 degrees.',
@@ -1623,7 +1625,7 @@ WorkoutList declinePushUps = WorkoutList(
     advanceRap: 16,
     imageSrc: 'assets/all-workouts/declinePushUps.gif');
 
-WorkoutList walkingPlank = WorkoutList(
+Workout walkingPlank = Workout(
     title: 'Walking Plank',
     steps: [
       'Get into high plank position with hands directly under the shoulders.',
@@ -1637,7 +1639,7 @@ WorkoutList walkingPlank = WorkoutList(
     intermediateRap: 12,
     imageSrc: 'assets/all-workouts/walkingPlank.gif');
 
-WorkoutList shoulderStretch = WorkoutList(
+Workout shoulderStretch = Workout(
   title: 'Shoulder Stretch',
   steps: [
     'Bring one arm across your upper body and hold it straight.',
@@ -1650,7 +1652,7 @@ WorkoutList shoulderStretch = WorkoutList(
   duration: 30,
 );
 
-WorkoutList burpee = WorkoutList(
+Workout burpee = Workout(
   title: 'Burpee',
   steps: [
     'Bend over or squat down and place your hands on the ground in front of you, shoulder-width apart.',
@@ -1666,7 +1668,7 @@ WorkoutList burpee = WorkoutList(
   imageSrc: 'assets/all-workouts/burpee.gif',
 );
 
-WorkoutList legBurpee = WorkoutList(
+Workout legBurpee = Workout(
   title: 'Burpee',
   steps: [
     'Bend over or squat down and place your hands on the ground in front of you, shoulder-width apart.',
@@ -1682,7 +1684,7 @@ WorkoutList legBurpee = WorkoutList(
   imageSrc: 'assets/all-workouts/burpee.gif',
 );
 
-WorkoutList diamond2 = WorkoutList(
+Workout diamond2 = Workout(
   title: 'Diamond Push-Ups',
   steps: [
     'Get on all fours with your hands together under your chest.',
@@ -1696,7 +1698,7 @@ WorkoutList diamond2 = WorkoutList(
   imageSrc: 'assets/all-workouts/diamond.gif',
 );
 
-WorkoutList diamond = WorkoutList(
+Workout diamond = Workout(
   title: 'Diamond Push-Ups',
   steps: [
     'Get on all fours with your hands together under your chest.',
@@ -1710,7 +1712,7 @@ WorkoutList diamond = WorkoutList(
   imageSrc: 'assets/all-workouts/diamond.gif',
 );
 
-WorkoutList spiderManPushUps = WorkoutList(
+Workout spiderManPushUps = Workout(
   title: 'Spider-Man Push-Ups',
   imageSrc: 'assets/all-workouts/spiderMan.gif',
   steps: [
@@ -1727,7 +1729,7 @@ WorkoutList spiderManPushUps = WorkoutList(
 );
 
 // -----------------------------------CHEST------------------------------------------
-List<WorkoutList> chestBeginner = [
+List<Workout> chestBeginner = [
   jumpingJacks,
   kneePushUps,
   inclinePushUps,
@@ -1741,7 +1743,7 @@ List<WorkoutList> chestBeginner = [
   cobraStretch,
 ];
 
-List<WorkoutList> chestIntermediate = [
+List<Workout> chestIntermediate = [
   jumpingJacks,
   armCircleClockWise,
   pushUps,
@@ -1759,7 +1761,7 @@ List<WorkoutList> chestIntermediate = [
   chestStretch
 ];
 
-List<WorkoutList> chestAdvance = [
+List<Workout> chestAdvance = [
   jumpingJacks,
   armCircleClockWise,
   shoulderStretch,
@@ -1782,7 +1784,7 @@ List<WorkoutList> chestAdvance = [
 
 //-------------------------------------ABS--------------------------------------
 
-List<WorkoutList> absBeginner = [
+List<Workout> absBeginner = [
   jumpingJacks,
   abdominalCrunches,
   russianTwist,
@@ -1799,7 +1801,7 @@ List<WorkoutList> absBeginner = [
   cobraStretch,
 ];
 
-List<WorkoutList> absIntermediate = [
+List<Workout> absIntermediate = [
   jumpingJacks,
   reverseCrunches,
   russianTwist,
@@ -1821,7 +1823,7 @@ List<WorkoutList> absIntermediate = [
   cobraStretch,
 ];
 
-List<WorkoutList> absAdvance = [
+List<Workout> absAdvance = [
   jumpingJacks,
   tricepsDips,
   sidePlankLeft,
@@ -1848,7 +1850,7 @@ List<WorkoutList> absAdvance = [
 
 //------------------------------------Shoulder----------------------------------
 
-List<WorkoutList> shoulderBeginner = [
+List<Workout> shoulderBeginner = [
   jumpingJacks,
   armCircleClockWise,
   rhomboidPulls,
@@ -1867,7 +1869,7 @@ List<WorkoutList> shoulderBeginner = [
   childPose,
 ];
 
-List<WorkoutList> shoulderIntermediate = [
+List<Workout> shoulderIntermediate = [
   jumpingJacks,
   tricepsDips,
   inclinePushUps,
@@ -1886,7 +1888,7 @@ List<WorkoutList> shoulderIntermediate = [
   childPose,
 ];
 
-List<WorkoutList> shoulderAdvance = [
+List<Workout> shoulderAdvance = [
   jumpingJacks,
   floorTricepsDips,
   pikePushUps,
@@ -1910,7 +1912,7 @@ List<WorkoutList> shoulderAdvance = [
 
 //-----------------------------------Legs---------------------------------------
 
-List<WorkoutList> legsBeginner = [
+List<Workout> legsBeginner = [
   jumpingJacks,
   squats,
   squats,
@@ -1936,7 +1938,7 @@ List<WorkoutList> legsBeginner = [
   calfStretchRight,
 ];
 
-List<WorkoutList> legsIntermediate = [
+List<Workout> legsIntermediate = [
   jumpingJacks,
   squats,
   squats,
@@ -1972,7 +1974,7 @@ List<WorkoutList> legsIntermediate = [
   calfStretchRight
 ];
 
-List<WorkoutList> legsAdvance = [
+List<Workout> legsAdvance = [
   jumpingJacks,
   curtsyLunges,
   curtsyLunges,
@@ -2024,27 +2026,27 @@ List<WorkoutList> legsAdvance = [
 //---------------------------------Arms-----------------------------------------\
 
 //  Body saw -->>>  leg barbell curl
-List<WorkoutList> armsBeginner = [
-  // jumpingJacks,
-  // sideArmRaise,
-  // tricepsDips,
-  // armCircleClockWise,
-  // armCircleCounterClockWise,
-  // diamond,
-  // sideArmRaise2,
-  // bodySaw,
-  // diagonalPlank,
-  // punches,
-  // pushUps,
-  // inchWorm,
-  // wallPushUps,
-  // tricepsStretchLeft,
+List<Workout> armsBeginner = [
+  jumpingJacks,
+  sideArmRaise,
+  tricepsDips,
+  armCircleClockWise,
+  armCircleCounterClockWise,
+  diamond,
+  sideArmRaise2,
+  bodySaw,
+  diagonalPlank,
+  punches,
+  pushUps,
+  inchWorm,
+  wallPushUps,
+  tricepsStretchLeft,
   tricepsStretchRight,
   standingBicepsStretchLeft,
   standingBicepsStretchRight
 ];
 
-List<WorkoutList> armsIntermediate = [
+List<Workout> armsIntermediate = [
   armCircleClockWise,
   armCircleCounterClockWise,
   tricepsPushUp,
@@ -2071,41 +2073,42 @@ List<WorkoutList> armsIntermediate = [
   standingBicepsStretchRight,
 ];
 
-List<WorkoutList> armsAdvance = [
+List<Workout> armsAdvance = [
   //militry push ups --> Triceps push-up
   //sholder gators -->Push-and-stretch elbow
   //legbarbellcurl --> decline pushups
-  armCircleClockWise,
-  armCircleCounterClockWise,
-  skippingWithOutRope,
-  burpee,
-  armCurlsCrunchLeft,
-  armCurlsCrunchRight,
-  declinePushUps,
-  floorTricepsDips,
-  punches,
-  tricepsPushUp,
-  tricepsDips,
-  floorTricepsDips2,
-  declinePushUps,
-  punches2,
-  burpee,
-  armCurlsCrunchLeft2,
-  armCurlsCrunchRight2,
-  tricepsPushUp2,
-  tricepsDips2,
-  threadTheNeedleL,
-  threadTheNeedleR,
-  wideArmPushUps,
-  bodySaw,
-  pushUpsRotation,
-  tricepsStretchLeft,
+  // armCircleClockWise,
+  // armCircleCounterClockWise,
+  // skippingWithOutRope,
+  // burpee,
+  // armCurlsCrunchLeft,
+  // armCurlsCrunchRight,
+  // declinePushUps,
+  // floorTricepsDips,
+  // punches,
+  // tricepsPushUp,
+  // tricepsDips,
+  // floorTricepsDips2,
+  // declinePushUps,
+  // punches2,
+  // burpee,
+  // armCurlsCrunchLeft2,
+  // armCurlsCrunchRight2,
+  // tricepsPushUp2,
+  // tricepsDips2,
+  // threadTheNeedleL,
+  // threadTheNeedleR,
+  // wideArmPushUps,
+  // bodySaw,
+  // pushUpsRotation,
+  // tricepsStretchLeft,
   tricepsStretchRight,
   standingBicepsStretchLeft,
-  standingBicepsStretchRight,
+  standingBicepsStretchRight
 ];
 
-List<WorkoutList> allWorkOut = [
+
+List<Workout> allWorkOut = [
   ...absAdvance,
   ...absBeginner,
   ...absIntermediate,

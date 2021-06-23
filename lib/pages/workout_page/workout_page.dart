@@ -4,37 +4,37 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/light_dark_mode.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/helper/text_to_speech.dart';
-import 'package:full_workout/pages/training_page/report_screen.dart';
-import 'package:full_workout/pages/training_page/sound_option.dart';
-import 'package:full_workout/pages/training_page/stop_page.dart';
-import 'package:full_workout/pages/training_page/timer_screen.dart';
+import 'package:full_workout/pages/workout_page/exercise_detail_page.dart';
+import 'package:full_workout/pages/workout_page/report_page.dart';
+import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
+import 'package:full_workout/pages/workout_page/pause_page.dart';
+import 'package:full_workout/pages/workout_page/rest_page.dart';
 import 'package:full_workout/widgets/info_button.dart';
 import 'package:full_workout/widgets/youtube_player.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'exercise_list_page.dart';
 
-class WorkoutScreenNew extends StatefulWidget {
+class WorkoutPage extends StatefulWidget {
   final List<Workout> workOutList;
-  final int rap;
   final String title;
-  final int stars;
   final int index;
+  final List<int> rapList;
+  final String currTime;
 
-  WorkoutScreenNew({
+  WorkoutPage({
     @required this.workOutList,
-    @required this.rap,
     @required this.title,
-    @required this.stars,
     @required this.index,
+    @required this.rapList,
+    @required this.currTime,
   });
 
   @override
-  _WorkoutScreenNewState createState() => _WorkoutScreenNewState();
+  _WorkoutPageState createState() => _WorkoutPageState();
 }
 
-class _WorkoutScreenNewState extends State<WorkoutScreenNew>
+class _WorkoutPageState extends State<WorkoutPage>
     with SingleTickerProviderStateMixin {
   int currIndex = 0;
   SpKey spKey = SpKey();
@@ -42,7 +42,8 @@ class _WorkoutScreenNewState extends State<WorkoutScreenNew>
   AnimationController controller;
   DateTime currentTime;
 
-FlutterTts flutterTts;
+  FlutterTts flutterTts;
+
   String get timerString {
     Duration duration = controller.duration * controller.value;
     return '${duration.inSeconds}';
@@ -50,54 +51,48 @@ FlutterTts flutterTts;
 
   Workout item;
 
-  @override
-  void dispose() {
-    flutterTts.stop();
-    controller.dispose();
-    super.dispose();
-  }
-
-
-
-  _speakIntroMessage(int index) async{
-    String rapType = widget.workOutList[index].showTimer == true?"seconds" :"";
+  _speakIntroMessage(int index) async {
+    String rapType =
+        widget.workOutList[index].showTimer == true ? "seconds" : "";
     String exerciseName = widget.workOutList[index].title;
-    String totalRap = widget.rap.toString();
+    String totalRap = 12.toString();
     print("Start $totalRap $rapType $exerciseName ");
-  await  flutterTts.speak("Start $totalRap $rapType $exerciseName ");
+    await flutterTts.speak("Start $totalRap $rapType $exerciseName ");
   }
 
-  _showTimer(){
+  _onComplete(int currIndex) async {
+    await flutterTts
+        .speak('next ${30} second ${widget.workOutList[currIndex].title}');
+    print("currentIndex :  $currIndex");
+    if (currIndex + 1 == widget.workOutList.length) {
+      return Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ReportScreen(
+                    title: widget.title,
+                    dateTime: widget.currTime,
+                    totalExercise: widget.workOutList.length,
+                  )));
+    }
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      return RestScreen(
+        currTime: widget.currTime,
+        workOutList: widget.workOutList,
+        exerciseNumber: currIndex,
+        totalNumberOfExercise: widget.workOutList.length,
+        rapList: widget.rapList,
+      );
+    }));
+  }
+
+  _showTimer() {
     controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
     controller.addStatusListener((status) {
       if (status == AnimationStatus.dismissed) {
-
-        print(widget.workOutList.length);
-        print(screenTime.toString());
-       _onComplete(currIndex);
+        _onComplete(currIndex);
       }
     });
   }
-
-
-  @override
-  void initState() {
-    print("hell");
-   item = widget.workOutList[widget.index];
-   currIndex = widget.index;
-   flutterTts = FlutterTts();
-  _speakIntroMessage(currIndex);
-    currentTime = DateTime.now();
-    controller = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: screenTime),
-    );
-   super.initState();
-   if(item.showTimer == true){
-     _showTimer();
-   }
-  }
-
 
   getTime() async {
     await spHelper.loadDouble(spKey.trainingRest).then((value) {
@@ -108,18 +103,27 @@ FlutterTts flutterTts;
     });
   }
 
-  _onComplete(int currIndex) async {
-   await flutterTts
-        .speak('next ${30} second ${widget.workOutList[currIndex].title}');
-    currIndex++;
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return RestScreen(
-        workOutList: widget.workOutList,
-        exerciseNumber: currIndex,
-        totalNumberOfExercise: widget.workOutList.length,
-      );
-    }));
+  @override
+  void initState() {
+    item = widget.workOutList[widget.index];
+    currIndex = widget.index;
+    flutterTts = FlutterTts();
+    _speakIntroMessage(currIndex);
+    currentTime = DateTime.now();
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: screenTime),
+    );
+    super.initState();
+    if (item.showTimer == true) {
+      _showTimer();
+    }
+  }
 
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   Widget getImage(double height, Workout item, int currIndex) {
@@ -141,47 +145,88 @@ FlutterTts flutterTts;
                 InfoButton(
                   icon: Icons.list_alt_outlined,
                   tooltip: "Exercise Plane",
-                  onPress: () {
-                    showDialog(
-                        context: context,
-                        builder: (builder) {
-                          return ExerciseListScreen(
+                  onPress: () async {
+                    print(controller.status);
+                    bool value = true;
+                    if (controller.isAnimating) {
+                      controller.stop(canceled: true);
+                      value = await showDialog(
+                          context: context,
+                          builder: (builder) => ExerciseListScreen(
                               workOutList: widget.workOutList,
                               tag: "continue",
                               stars: 2,
-                              title: "title");
-                        });
+                              title: "title"));
+                    }
+                    if (value == true) {
+                      controller.reverse(
+                          from:
+                              controller.value == 0.0 ? 1.0 : controller.value);
+                    }
                   },
                 ),
                 InfoButton(
                   icon: Icons.ondemand_video_outlined,
                   tooltip: "Video",
-                  onPress: () {
-                    showDialog(
-                        context: context,
-                        builder: (builder) {
-                          return YoutubeTutorial(
+                  onPress: () async {
+                    print(controller.status);
+                    bool value = true;
+                    if (controller.isAnimating) {
+                      controller.stop(canceled: true);
+                      value = await showDialog(
+                          context: context,
+                          builder: (builder) => YoutubeTutorial(
                               link: item.videoLink,
                               title: item.title,
-                              steps: item.steps);
-                        });
+                              steps: item.steps));
+                    }
+                    if (value == true) {
+                      controller.reverse(
+                          from:
+                              controller.value == 0.0 ? 1.0 : controller.value);
+                    }
                   },
                 ),
                 InfoButton(
                   icon: Icons.volume_up_outlined,
                   tooltip: "Sound",
-                  onPress: () {
-                    showDialog(
-                        context: context,
-                        builder: (builder) {
-                          return SoundOption();
-                        });
+                  onPress: () async {
+                    print(controller.status);
+                    bool value = true;
+                    if (controller.isAnimating) {
+                      controller.stop(canceled: true);
+                      value = await showDialog(
+                          context: context,
+                          builder: (builder) => SoundSetting());
+                    }
+                    if (value == true) {
+                      controller.reverse(
+                          from:
+                              controller.value == 0.0 ? 1.0 : controller.value);
+                    }
                   },
                 ),
                 InfoButton(
                   icon: FontAwesome5.question_circle,
                   tooltip: "Steps",
-                  onPress: () {},
+                  onPress: () async {
+                    print(controller.status);
+                    bool value = true;
+                    if (controller.isAnimating) {
+                      controller.stop(canceled: true);
+                      value = await showDialog(
+                          context: context,
+                          builder: (builder) => DetailPage(
+                                workout: item,
+                                rapCount: widget.rapList[currIndex],
+                              ));
+                    }
+                    if (value == true) {
+                      controller.reverse(
+                          from:
+                              controller.value == 0.0 ? 1.0 : controller.value);
+                    }
+                  },
                 ),
               ],
             )),
@@ -217,15 +262,17 @@ FlutterTts flutterTts;
               style:
                   textTheme.caption.copyWith(fontSize: 16, color: Colors.grey),
             ),
+            SizedBox(
+              height: 10,
+            ),
             Text(
               item.title,
+              textAlign: TextAlign.center,
               style: textTheme.headline1.copyWith(
-                  fontSize: 30,
+                  fontSize: item.title.length > 15 ? 25 : 30,
                   fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2,
                   color: Colors.black87),
-            ),
-            SizedBox(
-              height: 20,
             ),
           ],
         ),
@@ -236,21 +283,22 @@ FlutterTts flutterTts;
           child: item.showTimer == true
               ? Container(
                   height: 50,
-                //  width: double.infinity,
+                  //  width: double.infinity,
                   child: AnimatedBuilder(
                       animation: controller,
-                      builder: (BuildContext context,
-                          Widget child) {
-                      String timerValue =  timerString.length ==1 ? "0"+timerString: timerString;
+                      builder: (BuildContext context, Widget child) {
+                        String timerValue = timerString.length == 1
+                            ? "0" + timerString
+                            : timerString;
                         return Text(
-                          "00:" +  timerValue,
+                          "00:" + timerValue,
                           style: TextStyle(fontSize: 40),
                           //    style: themeData.textTheme.display4,
                         );
                       }),
                 )
               : Text(
-                  "X ${item.duration}",
+                  "X ${widget.rapList[currIndex]}",
                   style: TextStyle(fontSize: 44, fontWeight: FontWeight.w300),
                 ),
         ),
@@ -288,16 +336,21 @@ FlutterTts flutterTts;
               TextButton(
                   onPressed: () async {
                     print(controller.status);
-                    bool value = true;
+                    String value = "";
                     if (controller.isAnimating) {
                       controller.stop(canceled: true);
                       value = await showDialog(
                           context: context, builder: (builder) => StopPage());
                     }
-                    if (value == true) {
+                    if (value == "resume") {
                       controller.reverse(
                           from:
                               controller.value == 0.0 ? 1.0 : controller.value);
+                    }
+                    if (value == "restart") {
+                      setState(() {
+                        if (currIndex != 0) currIndex--;
+                      });
                     }
                   },
                   child: Row(
@@ -321,7 +374,7 @@ FlutterTts flutterTts;
               Container(
                 height: 20,
                 color: Colors.grey,
-                width: 1,
+                width: 2.5,
               ),
               TextButton(
                   onPressed: () {
