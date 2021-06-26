@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:full_workout/helper/light_dark_mode.dart';
 
 class Achievement extends StatelessWidget {
   final String exerciseTitle;
@@ -23,16 +24,16 @@ class Achievement extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
-          backgroundColor: bgColor,
+          backgroundColor: Color(0xffF6F6F6),
           radius: 30,
           child: Text(
-            value.toString(),style: TextStyle(color: Colors.blue),
+            value.toString(),style: textTheme.subtitle1.copyWith(fontSize: 14,color: Colors.black,fontWeight: FontWeight.w700),
           ),
         ),
         SizedBox(
           height: 5,
         ),
-Text(title,style: TextStyle(color: Colors.white),)
+Text(title,style: textTheme.subtitle2.copyWith(fontSize: 16,color: Colors.white),)
       ],
     );
   }
@@ -40,7 +41,7 @@ Text(title,style: TextStyle(color: Colors.white),)
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(18.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,

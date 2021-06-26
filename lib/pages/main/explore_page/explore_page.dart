@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/database/workout_plan/abs_challenges.dart';
 import 'package:full_workout/database/workout_plan/arm_challenges.dart';
@@ -64,7 +65,7 @@ class ExplorePage extends StatelessWidget {
                 gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [item.color1, item.color2]),
+                   colors: [Colors.blue,item.color2,item.color2,Colors.blue],),
                 borderRadius: BorderRadius.all(Radius.circular(12))),
             child:
             Container(
@@ -160,7 +161,20 @@ class ExplorePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Explore"),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              FontAwesome.calendar,
+            ),
+            color: Colors.blue,
+            tooltip: "History",
+          ),
+        ],
+        title: Text("Explore",style: TextStyle(color: Colors.black),),
+        centerTitle: false,
       ),
       body: ListView.builder(
           physics: BouncingScrollPhysics(),
