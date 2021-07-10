@@ -5,16 +5,17 @@ import 'package:full_workout/widgets/height_weightSelector.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class BMIPicker extends StatefulWidget {
+  final double height;
+  final double weight;
+
+  BMIPicker({@required this.height, @required this.weight});
   @override
   _BMIPickerState createState() => _BMIPickerState();
 }
 
 class _BMIPickerState extends State<BMIPicker> {
-  TextEditingController _cmController = TextEditingController();
-  TextEditingController _feetController = TextEditingController();
-  TextEditingController _inchController = TextEditingController();
-  TextEditingController _kgController = TextEditingController();
-  TextEditingController _lbsController = TextEditingController();
+
+
 
   int weightIndex = 0;
   int heightIndex = 0;
@@ -23,6 +24,21 @@ class _BMIPickerState extends State<BMIPicker> {
 
   @override
   Widget build(BuildContext context) {
+
+    double rawInch =widget.height/2.54;
+    int feet =rawInch ~/12;
+    double inch = rawInch - feet*12;
+
+    double lbsWeight = widget.weight * 2.205;
+
+
+        TextEditingController _cmController = TextEditingController(text: widget.height.toStringAsFixed(0));
+    TextEditingController _feetController = TextEditingController();
+    TextEditingController _inchController = TextEditingController();
+    TextEditingController _kgController = TextEditingController(text: widget.weight.toStringAsFixed(0));
+    TextEditingController _lbsController = TextEditingController();
+
+
     showToast(String msg) {
       return Fluttertoast.showToast(
           msg: msg,
@@ -38,7 +54,7 @@ class _BMIPickerState extends State<BMIPicker> {
       if (heightIndex == 0) {
         height = double.tryParse(_cmController.text);
         if (height == null) {
-          showToast("Please enter valid height value 1");
+          showToast("Please enter valid height value");
         }
       }
 
@@ -46,7 +62,7 @@ class _BMIPickerState extends State<BMIPicker> {
         double feet = double.tryParse(_feetController.text);
         double inch = double.tryParse(_inchController.text);
         if (feet == null || inch == null) {
-          showToast("Please enter valid height value 2");
+          showToast("Please enter valid height value");
         } else {
           double inchHeight = (feet * 12) + inch;
           height = inchHeight * 2.54;
@@ -69,8 +85,10 @@ class _BMIPickerState extends State<BMIPicker> {
           print(weight);
         }
       }
-      if (height != null && weight != null)
+      if (height != null && weight != null){
         Navigator.pop(context, [height, weight]);
+      }
+
     }
 
     return Scaffold(
@@ -93,25 +111,32 @@ class _BMIPickerState extends State<BMIPicker> {
             SizedBox(
               height: 10,
             ),
-            ToggleSwitch(
-              initialLabelIndex: heightIndex,
-              cornerRadius: 20.0,
-              activeFgColor: Colors.white,
-              inactiveBgColor: Colors.grey,
-              inactiveFgColor: Colors.white,
-              totalSwitches: 2,
-              labels: ['Cm', 'Feet'],
-              //   icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
-              activeBgColors: [
-                [Colors.blue.shade700],
-                [Colors.blue.shade700]
-              ],
-              onToggle: (index) {
-                setState(() {
-                  heightIndex = index;
-                });
-              },
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ToggleSwitch(
+                  initialLabelIndex: heightIndex,
+                  cornerRadius: 20.0,
+                  activeFgColor: Colors.white,
+                  inactiveBgColor: Colors.grey,
+                  inactiveFgColor: Colors.white,
+                  totalSwitches: 2,
+                  labels: ['Cm', 'Feet'],
+                  //   icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
+                  activeBgColors: [
+                    [Colors.blue.shade700],
+                    [Colors.blue.shade700]
+                  ],
+                  onToggle: (index) {
+                    setState(() {
+                      heightIndex = index;
+                    });
+                  },
+                ),
+              ),
             ),
+
             SizedBox(
               height: 10,
             ),
@@ -189,26 +214,35 @@ class _BMIPickerState extends State<BMIPicker> {
             SizedBox(
               height: 10,
             ),
-            ToggleSwitch(
-              minWidth: 90.0,
-              initialLabelIndex: weightIndex,
-              cornerRadius: 20.0,
-              activeFgColor: Colors.white,
-              inactiveBgColor: Colors.grey,
-              inactiveFgColor: Colors.white,
-              totalSwitches: 2,
-              labels: ['Kg', 'Lbs'],
-              activeBgColors: [
-                [Colors.blue.shade700],
-                [Colors.blue.shade700]
-              ],
-              onToggle: (index) {
-                print(index);
-                setState(() {
-                  weightIndex = index;
-                });
-              },
+
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ToggleSwitch(
+                  minWidth: 90.0,
+                  initialLabelIndex: weightIndex,
+                  cornerRadius: 20.0,
+                  activeFgColor: Colors.white,
+                  inactiveBgColor: Colors.grey,
+                  inactiveFgColor: Colors.white,
+                  totalSwitches: 2,
+                  labels: ['Kg', 'Lbs'],
+                  activeBgColors: [
+                    [Colors.blue.shade700],
+                    [Colors.blue.shade700]
+                  ],
+                  onToggle: (index) {
+                    print(index);
+                    setState(() {
+                      weightIndex = index;
+                    });
+                  },
+                ),
+              ),
             ),
+
+
             SizedBox(
               height: 10,
             ),
