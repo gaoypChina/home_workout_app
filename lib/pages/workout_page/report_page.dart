@@ -14,7 +14,6 @@ import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/models/BMIModel.dart';
 import 'package:full_workout/models/recent_workout.dart';
 import 'package:full_workout/widgets/achivement.dart';
-import 'package:full_workout/widgets/bmi_result.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share/share.dart';
 
@@ -22,11 +21,15 @@ class ReportScreen extends StatefulWidget {
   final String title;
   final String dateTime;
   final int totalExercise;
+  final String tag;
+  final int tagValue;
 
   ReportScreen(
       {@required this.title,
       @required this.dateTime,
-      @required this.totalExercise});
+      @required this.totalExercise,
+      @required this.tag,
+      @required this.tagValue});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -34,7 +37,6 @@ class ReportScreen extends StatefulWidget {
 
 SpHelper spHelper = SpHelper();
 SpKey spKey = SpKey();
-BMIModel _bmiModel = BMIModel(comments: "hello", isNormal: false, bmi: 22);
 DatabaseHelper dbHelper = DatabaseHelper();
 
 class _MyAppState extends State<ReportScreen> {
@@ -44,71 +46,42 @@ class _MyAppState extends State<ReportScreen> {
   ConfettiController _controllerTopCenter;
   ConfettiController _controllerBottomCenter;
 
-  double _bmi;
-  double _heightOfUser = 121;
-  double _weightOfUser;
 
-  void getBmiValue() async {
-    await spHelper.loadDouble(spKey.height).then((value) {
-      if (value == null) {
-        _bmi = 0.0;
-        return _bmi;
-      } else {
-        setState(() {
-          _heightOfUser = value;
-        });
-      }
-    });
-
-    await spHelper.loadDouble(spKey.weight).then((value) {
-      if (value == null) {
-        _bmi = 0.0;
-        return _bmi;
-      } else {
-        setState(() {
-          _weightOfUser = value;
-        });
-      }
-    });
-
-    print(_heightOfUser);
-    print(_weightOfUser);
-    _bmi = _weightOfUser / ((_heightOfUser / 100) * (_heightOfUser / 100));
-    setState(() {
-      if (_bmi >= 18.5 && _bmi <= 25) {
-        _bmiModel =
-            BMIModel(bmi: _bmi, isNormal: true, comments: "You are Totaly Fit");
-      } else if (_bmi < 18.5) {
-        _bmiModel = BMIModel(
-            bmi: _bmi, isNormal: false, comments: "You are Underweighted");
-      } else if (_bmi > 25 && _bmi <= 30) {
-        _bmiModel = BMIModel(
-            bmi: _bmi, isNormal: false, comments: "You are Overweighted");
-      } else {
-        _bmiModel =
-            BMIModel(bmi: _bmi, isNormal: false, comments: "You are Obesed");
-      }
-    });
-  }
 
   saveWorkoutData() async {
+    print(widget.tag);
+    print(widget.tagValue);
     DateTime startTime = DateTime.parse(widget.dateTime);
-    DateTime timeAfterWorkOut = DateTime.now();
-    int activeTime = timeAfterWorkOut.difference(startTime).inSeconds;
+    DateTime currDate =
+        DateTime(startTime.year, startTime.month, startTime.day);
+    int activeTime = DateTime.now().difference(startTime).inSeconds;
     RecentWorkout recentWorkout = RecentWorkout(
-      timeAfterWorkOut.toIso8601String(),
+      currDate.toIso8601String(),
       widget.title,
       activeTime,
       3,
       12.0,
       widget.totalExercise,
     );
+    if (widget.tag == spKey.fullBodyChallenge ||
+        widget.tag == spKey.absChallenge ||
+        widget.tag == spKey.armChallenge ||
+        widget.tag == spKey.chestChallenge) {
+      print(widget.tag);
+      try {
+        spHelper.saveInt(widget.tag, widget.tagValue);
+      } catch (e) {
+        print(e);
+      }
+    }
+
     int a = await dbHelper.saveWorkOut(recentWorkout);
     print(a);
   }
 
   @override
   void initState() {
+    saveWorkoutData();
     _controllerCenter =
         ConfettiController(duration: const Duration(seconds: 10));
     _controllerCenterRight =
@@ -123,7 +96,6 @@ class _MyAppState extends State<ReportScreen> {
     _controllerCenterLeft.play();
     _controllerCenterRight.play();
     //_controllerBottomCenter.play();
-    getBmiValue();
     super.initState();
   }
 
@@ -410,6 +382,7 @@ class _MyAppState extends State<ReportScreen> {
                   height: safeHeight,
                   color: Colors.white,
                 ),
+
                 Container(
                   height: height * .5 - safeHeight,
                   width: width,
