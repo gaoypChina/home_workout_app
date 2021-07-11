@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+
 import '../models/weight_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -60,6 +62,23 @@ class WeightDatabaseHelper {
     return result.toList();
   }
 
+  Future<List> getRangeData(DateTime currDate) async{
+    var dbClient = await db;
+    String fromDate = "${currDate.year}-${currDate.month}";
+    String toDate = "${currDate.year}-${currDate.month+1}";
+    var result = await dbClient
+        .rawQuery("SELECT * FROM $tableName WHERE $columnDate BETWEEN  $fromDate AND $toDate");
+    return result.toList();
+  }
+
+  Future<double> getMaxWeight() async{
+    var dbClient = await db;
+    var result = await dbClient.rawQuery("SELECT MAX($columnWeight) FROM $tableName");
+
+    print("max"+result.toString());
+  }
+
+
   Future<int> getCount(String key) async {
     var dbClient = await db;
    var result =  Sqflite.firstIntValue(
@@ -86,10 +105,7 @@ class WeightDatabaseHelper {
   Future<int> addWeight(double value, WeightModel weightModel, String key) async {
     var dbClient = await db;
     int count =1;
-    print("...............................................$count");
-
     await getCount(key).then((value) => count = value);
-    print("...............................................$count");
     if(count > 0){
      return await dbClient.rawUpdate('''
       UPDATE $tableName SET $columnWeight = ? 

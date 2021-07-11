@@ -60,17 +60,17 @@ List<ExerciseCard> chestExercise = [
 
 List<ExerciseCard> shoulderExercise = [
   ExerciseCard(
-      workoutList: absBeginner,
+      workoutList: shoulderBeginner,
       imageUrl: "imageUrl",
       title: "Abs Beginner",
       tag: "Beginner"),
   ExerciseCard(
-      workoutList: absIntermediate,
+      workoutList: shoulderIntermediate,
       imageUrl: "imageUrl",
       title: "Abs Intermediate",
       tag: "Intermediate"),
   ExerciseCard(
-      workoutList: absAdvance,
+      workoutList: shoulderAdvance,
       imageUrl: "imageUrl",
       title: "Abs Advance",
       tag: "Advance")
@@ -78,17 +78,17 @@ List<ExerciseCard> shoulderExercise = [
 
 List<ExerciseCard> legsExercise = [
   ExerciseCard(
-      workoutList: absBeginner,
+      workoutList: legsBeginner,
       imageUrl: "imageUrl",
       title: "Legs Beginner",
       tag: "Beginner"),
   ExerciseCard(
-      workoutList: absIntermediate,
+      workoutList: legsIntermediate,
       imageUrl: "imageUrl",
       title: "Legs Intermediate",
       tag: "Intermediate"),
   ExerciseCard(
-      workoutList: absAdvance,
+      workoutList: legsAdvance,
       imageUrl: "imageUrl",
       title: "Legs Advance",
       tag: "Advance")
@@ -96,17 +96,17 @@ List<ExerciseCard> legsExercise = [
 
 List<ExerciseCard> armsExercise = [
   ExerciseCard(
-      workoutList: absBeginner,
+      workoutList: armsBeginner,
       imageUrl: "imageUrl",
       title: "Arms Beginner",
       tag: "Beginner"),
   ExerciseCard(
-      workoutList: absIntermediate,
+      workoutList: armsIntermediate,
       imageUrl: "imageUrl",
       title: "Arms Intermediate",
       tag: "Intermediate"),
   ExerciseCard(
-      workoutList: absAdvance,
+      workoutList: armsAdvance,
       imageUrl: "imageUrl",
       title: "Arms Advance",
       tag: "Advance")

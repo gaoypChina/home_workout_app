@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/database/weight_db_helper.dart';
+import 'package:full_workout/helper/light_dark_mode.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/models/weight_model.dart';
 import 'package:full_workout/widgets/height_weightSelector.dart';
@@ -107,27 +108,38 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
       }
     }
 
-    var textStyle = TextStyle(fontWeight: FontWeight.w600, fontSize: 14);
-    var titleStyle = TextStyle(
-        fontWeight: FontWeight.w800, fontSize: 16, color: Colors.black);
-    Icon trailingIcon =  Icon(Icons.arrow_forward_ios);
+
+
+    List<Color> iconColor = [
+      Colors.blue.shade700,
+      Colors.blue.shade700,
+      Colors.blue.shade700,
+      Colors.blue.shade700,
+      Colors.blue.shade700,
+      Colors.blue.shade700,
+      // Colors.red.shade700,
+      // Colors.green.shade700,
+      // Colors.cyan.shade700,
+      // Colors.teal.shade700,
+      // Colors.orangeAccent.shade700,
+    ];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit Profile",style: TextStyle(color: Colors.black),),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        actions: [TextButton(
-          child: Text("Save"),
-          onPressed: () => Navigator.of(context).pop(),
-        ),],
-        leading: TextButton(
-          child: Icon(
-            Icons.keyboard_backspace_sharp,
-            color: Colors.black,
-          ),
-          onPressed: Navigator.of(context).pop,
+        title: Text(
+          "Edit Profile",
         ),
+        backgroundColor: constants.appBarColor,
+        elevation: 5,
+        actions: [
+          TextButton(
+            child: Text(
+              "Save",
+              style: TextStyle(color: constants.appBarColor),
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -137,26 +149,17 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Text("Add your profile details and get more relevante exercise "),
+                child: Text(
+                    "Add your profile details and get more relevant exercise "),
               ),
-              SizedBox(height: 10,),
-              ListTile(
-                tileColor: constants.tileColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
-                title: Text("Name",style: titleStyle,),
-                leading:  Icon(Icons.edit),
-                trailing: trailingIcon,
-                subtitle: (name != null)
-                    ? Text(
-                        name,
-                        style: textStyle,
-                      )
-                    : Text(
-                        "",
-                        style: textStyle,
-                      ),
-                onTap: () async {
+              SizedBox(
+                height: 10,
+              ),
+              CustomTile(
+                backgroundColor: constants.tileColor,
+                title: "Name",
+                subTitle: (name != null) ? name : "",
+                onPressed: () async {
                   String previousValue = name;
                   String a = await showDialog(
                       context: context,
@@ -169,47 +172,32 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                     name = toSave;
                   });
                 },
+                icon: Icons.edit,
+                iconColor: iconColor[0],
               ),
-            SizedBox(height: 10,),
-              ListTile(
-                tileColor: constants.tileColor,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
-                title:Text("Birthday",style: titleStyle,) ,
-                  leading: Icon(Icons.calendar_today_rounded),
-                  trailing: trailingIcon,
-                  subtitle: (date == null)
-                      ? Text(
-                          "",
-                          style: textStyle,
-                        )
-                      : Text(
-                          date,
-                          style: textStyle,
-                        ),
-                  onTap: () {
+              Theme(
+                data: Theme.of(context)
+                    .copyWith(primaryColor: Colors.blue.shade700),
+                child: CustomTile(
+                  backgroundColor: constants.tileColor,
+                  title: "Birthday",
+                  subTitle: (date == null) ? "" : date,
+                  onPressed: () {
                     _selectDate(context);
-                  }),
-              SizedBox(height: 10,),
-              ListTile(
-                tileColor: constants.tileColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
-                title: Text("Gender",style: titleStyle,),
-                leading: Icon(Icons.male),
-                trailing: trailingIcon,
-                subtitle: (gender == null)
-                    ? Text("")
+                  },
+                  icon: Icons.cake,
+                  iconColor: iconColor[1],
+                ),
+              ),
+              CustomTile(
+                backgroundColor: constants.tileColor,
+                title: "Gender",
+                subTitle: (gender == null)
+                    ? ""
                     : (gender == 0)
-                        ? Text(
-                            "Male",
-                            style: textStyle,
-                          )
-                        : Text(
-                            "Female",
-                            style: textStyle,
-                          ),
-                onTap: () async {
+                        ? "Male"
+                        : "Female",
+                onPressed: () async {
                   int previousValue = gender;
                   int selectedGender = await showDialog(
                       context: context,
@@ -219,36 +207,25 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                             radio2: "Female",
                             value: gender,
                           ));
-                  int toSave = (selectedGender == null)
-                      ? previousValue
-                      : selectedGender;
+                  int toSave =
+                      (selectedGender == null) ? previousValue : selectedGender;
                   await spHelper.saveInt(spKey.gender, toSave);
                   setState(() {
                     gender = toSave;
                   });
                 },
+                icon: Icons.male,
+                iconColor: iconColor[2],
               ),
-              SizedBox(height: 10,),
-              ListTile(
-                tileColor: constants.tileColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
-                title: Text("Unit",style: titleStyle,),
-                leading: Icon(Icons.linear_scale_sharp),
-                trailing: trailingIcon,
-
-                subtitle: (unit == null)
-                    ? Text("")
+              CustomTile(
+                backgroundColor: constants.tileColor,
+                title: "Unit",
+                subTitle: (unit == null)
+                    ? ""
                     : (unit == 0)
-                        ? Text(
-                            "cm/kg",
-                            style: textStyle,
-                          )
-                        : Text(
-                            "in/lbs",
-                            style: textStyle,
-                          ),
-                onTap: () async {
+                        ? "cm/kg"
+                        : "in/lbs",
+                onPressed: () async {
                   int previousValue = unit;
                   int selectedUnit = await showDialog(
                       context: context,
@@ -258,40 +235,29 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                             radio1: "cm/kg",
                             value: unit,
                           ));
-                  int toSave = (selectedUnit == null)
-                      ? previousValue
-                      : selectedUnit;
+                  int toSave =
+                      (selectedUnit == null) ? previousValue : selectedUnit;
                   await spHelper.saveInt(spKey.unit, toSave);
                   setState(() {
                     unit = toSave;
                   });
                 },
+                icon: Icons.linear_scale_sharp,
+                iconColor: iconColor[3],
               ),
-              SizedBox(height: 10,),
-              ListTile(
-                tileColor: constants.tileColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
-                title: Text("Height",style: titleStyle,),
-                leading: Icon(AntDesign.barchart),
-                trailing: trailingIcon,
-
-                subtitle: (unit == null)
-                    ? Text("")
+              CustomTile(
+                backgroundColor: constants.tileColor,
+                title: "Height",
+                subTitle: (unit == null)
+                    ? ""
                     : (unit == 0)
-                        ? Text(
-                            (heightValue == null)
-                                ? ""
-                                : "$heightValue cm",
-                            style: textStyle,
-                          )
-                        : Text(
-                            (feetHeight == null)
-                                ? ""
-                                : "${feetHeight.round().toString()} feet ${inchHeight.toStringAsFixed(2)} inch",
-                            style: textStyle,
-                          ),
-                onTap: () async {
+                        ? (heightValue == null)
+                            ? ""
+                            : "$heightValue cm"
+                        : (feetHeight == null)
+                            ? ""
+                            : "${feetHeight.round().toString()} feet ${inchHeight.toStringAsFixed(2)} inch",
+                onPressed: () async {
                   double previousValue = heightValue;
                   double initVal = 0;
                   double value = await showDialog(
@@ -300,13 +266,18 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                             title: "Height",
                             label1: "cm",
                             label2: "feet",
-                            controller1:heightValue==null? initVal.toString(): heightValue.toStringAsFixed(2),
-                            controller2:feetHeight==null?initVal.toString(): feetHeight.round().toString(),
-                            controller3:inchHeight==null?initVal.toString(): inchHeight.toStringAsFixed(2),
+                            controller1: heightValue == null
+                                ? initVal.toString()
+                                : heightValue.toStringAsFixed(2),
+                            controller2: feetHeight == null
+                                ? initVal.toString()
+                                : feetHeight.round().toString(),
+                            controller3: inchHeight == null
+                                ? initVal.toString()
+                                : inchHeight.toStringAsFixed(2),
                             selected: unit,
                           ));
-                  double toSave =
-                      (value == null) ? previousValue : value;
+                  double toSave = (value == null) ? previousValue : value;
                   await spHelper.saveDouble(spKey.height, toSave);
                   setState(() {
                     heightValue = toSave;
@@ -314,25 +285,18 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                     inchHeight = (feetHeight - feetHeight.toInt()) * 12;
                   });
                 },
+                icon: AntDesign.barchart,
+                iconColor: iconColor[4],
               ),
-              SizedBox(height: 10,),
-              ListTile(
-                tileColor: constants.tileColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
-                title: Text("Weight",style: titleStyle,),
-                leading: Icon(MaterialCommunityIcons.weight),
-                trailing: trailingIcon,
-
-                subtitle: Text(
-                  (weightValue == null)
-                      ? ""
-                      : (unit == 0)
-                          ? "${weightValue.toStringAsFixed(2)} kg"
-                          : "${lbsWeight.round()} lbs",
-                  style: textStyle,
-                ),
-                onTap: () async {
+              CustomTile(
+                backgroundColor: constants.tileColor,
+                title: "Weight",
+                subTitle: (weightValue == null)
+                    ? ""
+                    : (unit == 0)
+                        ? "${weightValue.toStringAsFixed(2)} kg"
+                        : "${lbsWeight.round()} lbs",
+                onPressed: () async {
                   double previousValue = weightValue;
                   double initVal = 0;
                   double value = await showDialog(
@@ -342,24 +306,32 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                             label1: "kg",
                             label2: "lbs",
                             selected: unit,
-                            controller1:(weightValue==null)?initVal.toString(): weightValue.toStringAsFixed(2),
-                            derivedController1:lbsWeight==null ? initVal.toString():
-                                lbsWeight.round().toString(),
+                            controller1: (weightValue == null)
+                                ? initVal.toString()
+                                : weightValue.toStringAsFixed(2),
+                            derivedController1: lbsWeight == null
+                                ? initVal.toString()
+                                : lbsWeight.round().toString(),
                           ));
                   DateTime selectedDate = DateTime.now();
-                  double toSave =
-                      (value == null) ? previousValue : value;
+                  double toSave = (value == null) ? previousValue : value;
                   await spHelper.saveDouble(spKey.weight, toSave);
                   String key = DateFormat.yMd().format(selectedDate).toString();
-                  WeightModel weightModel = WeightModel(
-                      selectedDate.toIso8601String(), toSave, key);
+                  WeightModel weightModel =
+                      WeightModel(selectedDate.toIso8601String(), toSave, key);
                   if (weightModel.weight == null) return;
-                  await weightDatabaseHelper.addWeight( toSave, weightModel, key);
+                  await weightDatabaseHelper.addWeight(
+                      toSave, weightModel, key);
                   setState(() {
                     weightValue = toSave;
                     lbsWeight = toSave * 2.20462;
                   });
                 },
+                icon: MaterialCommunityIcons.weight,
+                iconColor: iconColor[5],
+              ),
+              SizedBox(
+                height: 50,
               ),
             ],
           ),
@@ -376,23 +348,45 @@ class NameSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color contentColor = Colors.blue.shade700;
     TextEditingController _nameInputController =
         TextEditingController(text: name);
     return AlertDialog(
-      title: Text("Name"),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12))),
+      title: Text("Enter your Name"),
       content: TextField(
+        autofocus: true,
         controller: _nameInputController,
         enabled: true,
+        cursorColor: contentColor,
+        autocorrect: false,
         decoration: InputDecoration(
-          labelText: "Enter your name",
-        ),
-
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: contentColor),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            fillColor: Colors.blue.shade50,
+            enabled: true,
+            labelText: "Name",
+            labelStyle:
+                TextStyle(color: contentColor, fontWeight: FontWeight.w700)),
       ),
       actions: [
-        ElevatedButton(
-            child: Text("Submit"),
-            onPressed: () =>
-                Navigator.of(context).pop(_nameInputController.text.toString()))
+        TextButton(
+            child: Text(
+              "Cancel",
+              style: textTheme.button.copyWith(color: Colors.grey),
+            ),
+            onPressed: () => Navigator.of(context)
+                .pop(_nameInputController.text.toString())),
+        TextButton(
+            child: Text(
+              "Submit",
+              style: textTheme.button.copyWith(color: contentColor),
+            ),
+            onPressed: () => Navigator.of(context)
+                .pop(_nameInputController.text.toString())),
       ],
     );
   }
@@ -437,7 +431,6 @@ class _RadioSelectorState extends State<RadioSelector> {
               groupValue: radioValue,
               value: 0,
               title: Text(widget.radio1),
-              activeColor: Colors.blue,
             ),
             RadioListTile(
               onChanged: (val) {
@@ -449,26 +442,105 @@ class _RadioSelectorState extends State<RadioSelector> {
               groupValue: radioValue,
               value: 1,
               title: Text(widget.radio2),
-              activeColor: Colors.blue,
             ),
           ],
         ),
       ),
       actions: [
-        ElevatedButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text("Cancel"),
+          child: Text("Cancel",
+              style: textTheme.button.copyWith(color: Colors.grey)),
         ),
-        ElevatedButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop(radioValue);
           },
-          child: Text("Submit"),
+          child: Text("Submit",
+              style: textTheme.button.copyWith(color: Colors.blue.shade700)),
         ),
       ],
     );
   }
 }
 
+class CustomTile extends StatelessWidget {
+  final String title;
+  final String subTitle;
+  final Color backgroundColor;
+  final IconData icon;
+  final Function onPressed;
+  final Color iconColor;
+
+  CustomTile(
+      {this.title,
+      this.subTitle,
+      this.backgroundColor,
+      this.icon,
+      this.onPressed,
+      this.iconColor});
+
+  @override
+  Widget build(BuildContext context) {
+    var textStyle = TextStyle(
+        fontWeight: FontWeight.w600, fontSize: 15, color: Colors.grey.shade700);
+    var titleStyle = TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: 16,
+    );
+
+    return Card(
+        elevation: 1,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16))),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            height: 70,
+            color: backgroundColor,
+            child: Row(
+              children: <Widget>[
+                Container(
+                  color: iconColor,
+                  width: 70,
+                  height: 70,
+                  child: Icon(
+                    icon,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+                SizedBox(width: 20),
+                Expanded(
+                  child: InkWell(
+                    onTap: onPressed,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          title,
+                          style: titleStyle,
+                        ),
+                        SizedBox(
+                          height: 2,
+                        ),
+                        Text(subTitle, style: textStyle)
+                      ],
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.black,
+                  size: 22,
+                ),
+                SizedBox(width: 18),
+              ],
+            ),
+          ),
+        ));
+  }
+}

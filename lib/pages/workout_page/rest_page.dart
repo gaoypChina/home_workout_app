@@ -8,7 +8,7 @@ import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
 import 'package:full_workout/pages/workout_page/pause_page.dart';
 import 'package:full_workout/pages/workout_page/workout_page.dart';
 import 'package:full_workout/widgets/info_button.dart';
-import 'package:full_workout/widgets/youtube_player.dart';
+import 'package:full_workout/pages/services/youtube_player.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'exercise_list_page.dart';
@@ -19,6 +19,9 @@ class RestScreen extends StatefulWidget {
   final List<Workout> workOutList;
   final List<int> rapList;
   final String currTime;
+  final String title;
+  final String tag;
+  final int tagValue;
 
   RestScreen({
     @required this.exerciseNumber,
@@ -26,6 +29,9 @@ class RestScreen extends StatefulWidget {
     @required this.workOutList,
     @required this.rapList,
     @required this.currTime,
+    @required this.title,
+    @required this.tag,
+    @required this.tagValue
   });
 
   @override
@@ -78,10 +84,12 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
         context,
         MaterialPageRoute(
             builder: (context) => WorkoutPage(
+                tagValue:widget.tagValue,
+              tag: widget.tag,
               currTime: widget.currTime,
                 rapList: widget.rapList,
                 workOutList: widget.workOutList,
-                title: "title",
+                title: widget.title,
                 index: index)));
   }
 
@@ -241,7 +249,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                                   return ExerciseListScreen(
                                       workOutList: widget.workOutList,
                                       tag: "continue",
-                                      stars: 2,
+                                      tagValue: widget.tagValue,
                                       title: "title");
                                 });
                           },

@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/pages/login/login_splash_page.dart';
-import 'package:full_workout/pages/main/home_page/home_page.dart';
-import 'package:full_workout/pages/main/progress_page/details_screen.dart';
-import 'package:full_workout/pages/main/progress_page/health_report.dart';
+import 'package:flutter/services.dart';
+
+import 'package:full_workout/pages/main/report_page/details_screen.dart';
+import 'package:full_workout/pages/main/report_page/report_page.dart';
 import 'package:full_workout/pages/main/setting_page/profile_settings_screen.dart';
 import 'package:full_workout/pages/main/setting_page/reminder_tab.dart';
-import 'package:full_workout/pages/main/setting_page/sound_settings_screen.dart';
+import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
 import 'package:full_workout/pages/main/setting_page/training_settings_screen.dart';
 import 'package:full_workout/pages/main_page.dart';
-import 'package:full_workout/pages/training_page/report_page.dart';
+import 'package:full_workout/pages/services/faq_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
-
+//  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    // statusBarColor: Colors.blue.shade700,
+    // statusBarIconBrightness: Brightness.light,
+    // statusBarBrightness: Brightness.light,
+    // systemNavigationBarDividerColor: Colors.blue.shade700
+  // ));
   runApp(MyApp());
 }
 
@@ -43,58 +48,43 @@ class MyApp extends StatelessWidget {
       theme:
       //theme[1],
       ThemeData(
-          primarySwatch: Colors.blue,
-          textTheme: textTheme,
-          inputDecorationTheme: InputDecorationTheme(
-            filled: true,
-            fillColor: Colors.grey.shade100,
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.transparent)),
-            contentPadding: EdgeInsets.symmetric(horizontal: 16),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.transparent)),
-          )),
+              //  primarySwatch: Colors.blue,
+              primaryColor: Colors.blue.shade700,
+              textTheme: textTheme,
+              radioTheme: RadioThemeData(
+                  fillColor: MaterialStateProperty.all(Colors.blue.shade700),
+                ),
+
+              inputDecorationTheme: InputDecorationTheme(
+                filled: true,
+                fillColor: Colors.blue.shade50,
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.transparent)),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.transparent)),
+              )),
       initialRoute: "/main",
-      routes:  {
-        '/': (ctx) => HomePage(),
+      routes: {
+        '/': (ctx) => MainPage(),
         DetailsScreen.routeName: (ctx) => DetailsScreen(),
         ReminderTab.routeName: (ctx) => ReminderTab(),
-        HealthReport.routeName: (ctx) => HealthReport(),
-        //  CalenderEvent.routeName: (ctx) => CalenderEvent(),
-      //  SettingPage.routeName: (ctx) => SettingPage(),
-        ProfileSettingScreen.routeName:(ctx) => ProfileSettingScreen(),
-        SoundSettingsScreen.routeName: (ctx) =>SoundSettingsScreen(),
-        TrainingSettingsScreen.routeName:(ctx)=>TrainingSettingsScreen(),
+        FAQPage.routeName: (ctx) => FAQPage(),
+        ReportPage.routeName: (ctx) => ReportPage(),
+        MainPage.routeName: (ctx) => MainPage(),
+        ProfileSettingScreen.routeName: (ctx) => ProfileSettingScreen(),
+        SoundSetting.routeName: (ctx) => SoundSetting(),
+        TrainingSettingsScreen.routeName: (ctx) => TrainingSettingsScreen(),
       },
       builder: EasyLoading.init(),
-      onGenerateRoute: generateRoute,
+
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-Route<dynamic> generateRoute(RouteSettings settings) {
-  switch (settings.name) {
-
-    case '/':
-      return MaterialPageRoute(builder: (_) => LoginSplashPage());
-
-    case '/main':
-      return MaterialPageRoute(builder: (_) => MainPage());
-
-    default:
-      return MaterialPageRoute(builder: (_) {
-        return Scaffold(
-          body: Center(
-            child: Text('No route defined for ${settings.name}'),
-          ),
-        );
-      });
-  }
-
-}
 
 
 
@@ -118,7 +108,10 @@ var textTheme = TextTheme(
   bodyText2: GoogleFonts.montserrat(
       fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
   button: GoogleFonts.montserrat(
-      fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 1.25),
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 1.25,
+      color: Colors.blue.shade700),
   caption: GoogleFonts.montserrat(
       fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
   overline: GoogleFonts.montserrat(

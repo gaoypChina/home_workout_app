@@ -10,7 +10,7 @@ import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
 import 'package:full_workout/pages/workout_page/pause_page.dart';
 import 'package:full_workout/pages/workout_page/rest_page.dart';
 import 'package:full_workout/widgets/info_button.dart';
-import 'package:full_workout/widgets/youtube_player.dart';
+import 'package:full_workout/pages/services/youtube_player.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'exercise_list_page.dart';
@@ -21,6 +21,8 @@ class WorkoutPage extends StatefulWidget {
   final int index;
   final List<int> rapList;
   final String currTime;
+  final int tagValue;
+  final String tag;
 
   WorkoutPage({
     @required this.workOutList,
@@ -28,6 +30,8 @@ class WorkoutPage extends StatefulWidget {
     @required this.index,
     @required this.rapList,
     @required this.currTime,
+    @required this.tagValue,
+    @required this.tag
   });
 
   @override
@@ -69,6 +73,8 @@ class _WorkoutPageState extends State<WorkoutPage>
           context,
           MaterialPageRoute(
               builder: (context) => ReportScreen(
+                tag: widget.tag,
+                    tagValue: widget.tagValue,
                     title: widget.title,
                     dateTime: widget.currTime,
                     totalExercise: widget.workOutList.length,
@@ -76,11 +82,14 @@ class _WorkoutPageState extends State<WorkoutPage>
     }
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
       return RestScreen(
+        tagValue:widget.tagValue,
+        tag: widget.tag,
         currTime: widget.currTime,
         workOutList: widget.workOutList,
         exerciseNumber: currIndex,
         totalNumberOfExercise: widget.workOutList.length,
         rapList: widget.rapList,
+        title: widget.title,
       );
     }));
   }
@@ -155,7 +164,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                           builder: (builder) => ExerciseListScreen(
                               workOutList: widget.workOutList,
                               tag: "continue",
-                              stars: 2,
+                              tagValue: widget.tagValue,
                               title: "title"));
                     }
                     if (value == true) {
@@ -310,7 +319,7 @@ class _WorkoutPageState extends State<WorkoutPage>
             _onComplete(currIndex);
           },
           child: Text(
-            "Done",
+            "Done"+widget.tagValue.toString(),
             style: textTheme.button.copyWith(
                 fontSize: 22,
                 letterSpacing: 2,

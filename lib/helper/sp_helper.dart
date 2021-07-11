@@ -43,16 +43,15 @@ class SpHelper {
       int value = preferences.getInt(key);
       return value;
     }
-    return null;
+    return 0;
   }
 
   Future<double> loadDouble(String key) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    if (preferences.getDouble(key) != null) {
-      double value = preferences.getDouble(key);
-      return value;
-    }
-    return null;
+    print(preferences.getDouble("weight"));
+      return preferences.getDouble(key);
+
+   // return null;
   }
 
   Future<bool> loadBool(String key) async {

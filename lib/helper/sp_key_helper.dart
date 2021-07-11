@@ -21,4 +21,11 @@ class SpKey {
   String voice = "voice";
   String coach = "coach";
   String effect = "effect";
+
+  /// Challenges list
+  String fullBodyChallenge = "fullBodyChallenge";
+  String absChallenge = "absChallenge";
+  String chestChallenge = "chestChallenge";
+  String armChallenge = "armChallenge";
+
 }

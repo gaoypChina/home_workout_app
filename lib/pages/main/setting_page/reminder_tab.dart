@@ -105,25 +105,16 @@ class _ReminderTabState extends State<ReminderTab> {
 
     var titleStyle = TextStyle(
         fontWeight: FontWeight.w800, fontSize: 16, color: Colors.black);
-    var timeStyle = TextStyle(fontWeight: FontWeight.w600, fontSize: 14);
+    var timeStyle = TextStyle(
+        fontWeight: FontWeight.w600, fontSize: 14, color: Colors.grey.shade800);
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         title: Text(
           "Reminder",
-          style: TextStyle(color: Colors.black),
-        ),
-        leading: TextButton(
-          child: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-          style: TextButton.styleFrom(
-            primary: Colors.black,
-          ),
         ),
       ),
       backgroundColor: Colors.white,
-
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
@@ -143,92 +134,111 @@ class _ReminderTabState extends State<ReminderTab> {
           Container(
             child: Column(
               children: [
-                ListTile(
-                  tileColor: Color(0xffF2F2F2),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
-                  title: Text(
-                    "Show Notification",
-                    style: titleStyle,
-                  ),
-                  subtitle: Text("On/Off reminder",style: timeStyle,),
-                  trailing: Switch(
-                    value: isChecked,
-                    activeColor: Colors.blue,
-                    onChanged: (value) {
-                      setState(() {
-                        isChecked = value;
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                ListTile(
-                  tileColor: Color(0xffF2F2F2),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
-                  title: Text(
-                    "Workout Time",
-                    style: titleStyle,
-                  ),
-                  trailing: Icon(Icons.edit),
-                  subtitle: (notificationTime.hour <= 12)
-                      ? Text(
-                          '0${notificationTime.hour}'.substring(1) +
-                              ' : ${notificationTime.minute}  AM',
-                          style: timeStyle,
-                        )
-                      : Text(
-                          '0${notificationTime.hour}'.substring(1) +
-                              ' : ${notificationTime.minute}  PM',
+                    Material(
+                      elevation: 1,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                      child: SwitchListTile(
+                        tileColor: constants.tileColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12))),
+                        title: Text(
+                          "Show Notification",
+                          style: titleStyle,
+                        ),
+                        subtitle: Text(
+                          isChecked ? "Reminder is on" : "Reminder is off",
                           style: timeStyle,
                         ),
-                  onTap:  () async {
-                    await _pickTime();
-                    if (isChecked) if (selector[DateTime.now().weekday - 1].activate)
-                      await _showNotification(time);
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                ListTile(
-                  tileColor: Color(0xffF2F2F2),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
-                  title: Text(
-                    "Workout Day",
-                    style: titleStyle,
-                  ),
-                  trailing: Icon(
-                    Icons.edit,
-                  ),
-                  onTap: () async {
-                    await showDialog(
-                        context: context,
-                        builder: (context) => DaySelector(selector));
-                    setState(() {});
-                  },
-                  subtitle: Container(
-                    padding: EdgeInsets.only(top: 10),
-                    height: 30,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: selector.length,
-                        itemBuilder: (context, index) {
-                          return (selector[index].activate == true)
-                              ? Text(
-                                  '${selector[index].day.substring(0, 3)}    ',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600),
-                                )
-                              : Text('');
-                        }),
-                  ),
-                ),
-              ],
+                        value: isChecked,
+                        onChanged: (value) {
+                          setState(() {
+                            isChecked = value;
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Material(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12))),
+                      child: ListTile(
+                        tileColor: constants.tileColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12))),
+                        title: Text(
+                          "Workout Time",
+                          style: titleStyle,
+                        ),
+                        trailing: Icon(Icons.edit),
+                        subtitle: (notificationTime.hour <= 12)
+                            ? Text(
+                                '0${notificationTime.hour}'.substring(1) +
+                                    ' : ${notificationTime.minute}  AM',
+                                style: timeStyle,
+                              )
+                            : Text(
+                                '0${notificationTime.hour}'.substring(1) +
+                                    ' : ${notificationTime.minute}  PM',
+                                style: timeStyle,
+                              ),
+                        onTap: () async {
+                          await _pickTime();
+                          if (isChecked) if (selector[
+                                  DateTime.now().weekday - 1]
+                              .activate) await _showNotification(time);
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Material(
+                        elevation: 1,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12))),
+                        child: ListTile(
+                          tileColor: constants.tileColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12))),
+                          title: Text(
+                            "Workout Day",
+                            style: titleStyle,
+                          ),
+                          trailing: Icon(
+                            Icons.edit,
+                          ),
+                          onTap: () async {
+                            await showDialog(
+                                context: context,
+                                builder: (context) => DaySelector(selector));
+                            setState(() {});
+                          },
+                          subtitle: Container(
+                            padding: EdgeInsets.only(top: 10),
+                            height: 30,
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: selector.length,
+                                itemBuilder: (context, index) {
+                                  return (selector[index].activate == true)
+                                      ? Text(
+                                          '${selector[index].day.substring(0, 3)}    ',
+                                          style: timeStyle,
+                                        )
+                                      : Text('');
+                                }),
+                          ),
+                        )),
+                  ],
             ),
           ),
         ],
@@ -359,6 +369,7 @@ class _DaySelectorState extends State<DaySelector> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+
     return AlertDialog(
       contentPadding: const EdgeInsets.fromLTRB(12.0, 20.0, 24.0, 12.0),
       title: Text("Select Day"),

@@ -1641,6 +1641,7 @@ Workout walkingPlank = Workout(
 
 Workout shoulderStretch = Workout(
   title: 'Shoulder Stretch',
+
   steps: [
     'Bring one arm across your upper body and hold it straight.',
     'Grasp the elbow with the other arm and gently pull toward your chest.',

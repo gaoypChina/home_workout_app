@@ -34,7 +34,7 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
       child: Card(
         elevation: 5,
         margin: EdgeInsets.only(bottom: 0),
-        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.white),
+        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.blue.shade700),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
@@ -43,7 +43,8 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
               flex: 2,
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(20,),
+
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(16),bottomLeft: Radius.circular(16) ),
@@ -60,7 +61,7 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                 ),
               ),
             ),
-            Container(width: 1,height: 100, color: Colors.white,),
+            Container(width: 1,height: 100, color: Colors.blue.shade700,),
             Expanded(
               flex: 3,
               child: Container(

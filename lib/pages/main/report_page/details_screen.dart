@@ -27,14 +27,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     int indexAt = 10;
-
-    for (int i = 0; i < 28; i++) {
-      if (i <= (indexAt * 2)) {
-        isDone.add(false);
-      } else {
-        isDone.add(true);
-      }
-    }
     var size = MediaQuery.of(context).size;
     String restart = "";
     Timer(

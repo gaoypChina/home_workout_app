@@ -2,61 +2,96 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/helper/light_dark_mode.dart';
 import 'package:full_workout/pages/main/home_page/home_page.dart';
 import 'main/explore_page/explore_page.dart';
-import 'main/progress_page/details_screen.dart';
-import 'main/progress_page/report_screen.dart';
+import 'main/report_page/report_page.dart';
 import 'main/setting_page/setting_screen.dart';
 
 class MainPage extends StatefulWidget {
-  MainPage({Key key, this.title}) : super(key: key);
+  static const routeName = "main-page";
 
-  final String title;
+  final int index;
+
+  MainPage({this.index});
 
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-
   int currentIndex = 0;
   String title = "WinkWack";
+
   onBack() {
     setState(() {
       currentIndex = 0;
     });
   }
 
+  Future<bool> _onBackPressed(BuildContext context) {
+    return showDialog(
+            context: context,
+            builder: (context) => new AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(16))),
+                  title: new Text('Are you sure?'),
+                  content: new Text('Do you want to exit Home Workout App'),
+                  actions: <Widget>[
+                    new TextButton(
+                      onPressed: () => Navigator.of(context).pop(true),
+                      child: Text("YES"),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: Text("NO"),
+                    ),
+                  ],
+                )) ??
+        false;
+  }
+
+  @override
+  void initState() {
+    currentIndex =widget.index!=null? widget.index:0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-
+    Constants constants = Constants();
     return Scaffold(
         bottomNavigationBar: BottomNavigationBarTheme(
           data: BottomNavigationBarThemeData(
-           //   backgroundColor: isDark ? Colors.black : Colors.white
-        ),
+              //   backgroundColor: isDark ? Colors.black : Colors.white
+              ),
           child: BottomNavigationBar(
-            elevation: 10,
-            showSelectedLabels: false,
-            selectedItemColor: Colors.blue,
-            iconSize: 28,
+            selectedLabelStyle: textTheme.bodyText1
+                .copyWith(fontWeight: FontWeight.bold, fontSize: 14),
+            elevation: 010,
+            showSelectedLabels: true,
+            unselectedLabelStyle: textTheme.subtitle1.copyWith(fontSize: 14),
+            selectedItemColor: constants.widgetColor,
+            iconSize: 22,
+            backgroundColor: constants.bottomNavigationColor,
             unselectedItemColor: Colors.grey.shade500,
-            showUnselectedLabels: false,
+            showUnselectedLabels: true,
             currentIndex: currentIndex,
             items: [
               BottomNavigationBarItem(
-                  icon: Icon(EvaIcons.homeOutline),
-                  activeIcon: Icon(EvaIcons.home),
-                  label: "Home"),
+                icon: Icon(EvaIcons.homeOutline),
+                activeIcon: Icon(EvaIcons.home),
+                label: "Home",
+              ),
               BottomNavigationBarItem(
-                  icon: Icon(MaterialCommunityIcons.notebook_outline),
-                  activeIcon: Icon(MaterialCommunityIcons.notebook),
+                  icon: Icon(AntDesign.appstore_o),
+                  activeIcon: Icon(AntDesign.appstore1),
                   label: "Explore"),
               BottomNavigationBarItem(
-                  icon: Icon(Entypo.bar_graph),
+                  icon: Icon(SimpleLineIcons.chart),
                   activeIcon: Icon(Entypo.bar_graph),
                   label: "Report"),
-
               BottomNavigationBarItem(
                   icon: Icon(Icons.settings_outlined),
                   activeIcon: Icon(Icons.settings),
@@ -81,7 +116,7 @@ class _MainPageState extends State<MainPage> {
         onBack: onBack,
       );
     } else if (currentIndex == 2) {
-      return ReportScreen();
+      return ReportPage();
     } else if (currentIndex == 3) {
       return SettingPage();
     } else {

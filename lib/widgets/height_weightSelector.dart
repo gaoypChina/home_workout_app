@@ -60,126 +60,122 @@ class _HeightWeightSelectorState extends State<HeightWeightSelector> {
     return Container(
       child: AlertDialog(
         title: Text(widget.title),
-        content: Container(
-          height: 110,
-          child: Column(
-            children: [
-              ToggleSwitch(
-                initialLabelIndex: unitType,
-                minWidth: 90.0,
-                cornerRadius: 20.0,
-                activeFgColor: Colors.white,
-                inactiveBgColor: Colors.grey,
-                inactiveFgColor: Colors.white,
-                labels: [widget.label1, widget.label2],
-                // icons: [
-                //   FontAwesomeIcons.balanceScale,
-                //   FontAwesomeIcons.unity,
-                // ],
-                activeBgColors: [Colors.purple, Colors.purple],
-                onToggle: (index) {
+        content: ListView(
+          shrinkWrap: true,
+          children: [
+            ToggleSwitch(
+              totalSwitches: 2,
+              initialLabelIndex: unitType,
+              minWidth: 90.0,
+              cornerRadius: 20.0,
+              activeFgColor: Colors.white,
+              inactiveBgColor: Colors.grey,
+              inactiveFgColor: Colors.white,
+              labels: [widget.label1, widget.label2],
+
+              activeBgColors: [[Colors.blue.shade700], [Colors.blue.shade700]],
+              onToggle: (index) {
+                setState(() {
+                  unitType = index;
+                  _controller1.clear();
+                  _controller2.clear();
+                  _controller3.clear();
+                });
+                print('switched to: $index');
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            (unitType == 1 && widget.label2 == "feet")
+                ? Container(
+              //   height: 50,
+              width: double.infinity,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 100,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        suffix: Text("feet"),
+                        labelText: "feet",
+                        border: new OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide:
+                            new BorderSide(color: Colors.teal)),
+                      ),
+                      controller: _controller2,
+                      keyboardType: TextInputType.numberWithOptions(
+                          decimal: true),
+                      onChanged: (value) {
+                        setState(() {
+                          enteredValue = value as double;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Container(
+                    width: 100,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        suffix: Text("inch"),
+                        labelText: "inch",
+                        border: new OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide:
+                            new BorderSide(color: Colors.teal)),
+                      ),
+                      controller: _controller3,
+                      keyboardType: TextInputType.numberWithOptions(
+                          decimal: true),
+                      onChanged: (value) {
+                        setState(() {
+                          enteredValue = value as double;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            )
+                : Container(
+              width: 200,
+              child: TextField(
+                decoration: InputDecoration(
+                  suffix: Text(
+                      (unitType == 0) ? widget.label1 : widget.label2),
+                  labelText:
+                  (unitType == 0) ? widget.label1 : widget.label2,
+                  border: new OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide:
+                      new BorderSide(color: Colors.blueGrey)),
+                ),
+                controller: _controller1,
+                keyboardType:
+                TextInputType.numberWithOptions(decimal: true),
+                onChanged: (value) {
                   setState(() {
-                    unitType = index;
-                    _controller1.clear();
-                    _controller2.clear();
-                    _controller3.clear();
+                    enteredValue = value as double;
                   });
-                  print('switched to: $index');
                 },
               ),
-              SizedBox(
-                height: 10,
-              ),
-              (unitType == 1 && widget.label2 == "feet")
-                  ? Container(
-                //   height: 50,
-                width: double.infinity,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: 100,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          suffix: Text("feet"),
-                          labelText: "feet",
-                          border: new OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide:
-                              new BorderSide(color: Colors.teal)),
-                        ),
-                        controller: _controller2,
-                        keyboardType: TextInputType.numberWithOptions(
-                            decimal: true),
-                        onChanged: (value) {
-                          setState(() {
-                            enteredValue = value as double;
-                          });
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Container(
-                      width: 100,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          suffix: Text("inch"),
-                          labelText: "inch",
-                          border: new OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide:
-                              new BorderSide(color: Colors.teal)),
-                        ),
-                        controller: _controller3,
-                        keyboardType: TextInputType.numberWithOptions(
-                            decimal: true),
-                        onChanged: (value) {
-                          setState(() {
-                            enteredValue = value as double;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              )
-                  : Container(
-                width: 200,
-                child: TextField(
-                  decoration: InputDecoration(
-                    suffix: Text(
-                        (unitType == 0) ? widget.label1 : widget.label2),
-                    labelText:
-                    (unitType == 0) ? widget.label1 : widget.label2,
-                    border: new OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                        new BorderSide(color: Colors.blueGrey)),
-                  ),
-                  controller: _controller1,
-                  keyboardType:
-                  TextInputType.numberWithOptions(decimal: true),
-                  onChanged: (value) {
-                    setState(() {
-                      enteredValue = value as double;
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
         actions: [
-          FlatButton(
-            child: Text("Cancel"),
+          TextButton(
+            child: Text("Cancel",style: TextStyle(color: Colors.grey),),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text("Save"),
             onPressed: () async {
               double value = await _calc();

@@ -8,14 +8,14 @@ import 'package:full_workout/widgets/height_weightSelector.dart';
 import 'package:intl/intl.dart';
 
 
-class HealthReport extends StatefulWidget {
+class WeightReportDetail extends StatefulWidget {
   static const routeName = "health-report";
 
   @override
-  _HealthReportState createState() => _HealthReportState();
+  _WeightReportDetailState createState() => _WeightReportDetailState();
 }
 
-class _HealthReportState extends State<HealthReport>
+class _WeightReportDetailState extends State<WeightReportDetail>
     with SingleTickerProviderStateMixin {
   var weightDb = WeightDatabaseHelper();
   SpHelper spHelper = SpHelper();
@@ -43,14 +43,12 @@ class _HealthReportState extends State<HealthReport>
 
   _readWeightData() async {
     print(weight.length);
-
     List items = await weightDb.getAllWeight();
     items.forEach((element) {
       setState(() {
         weight.add(WeightModel.map(element));
       });
     });
-
     print(weight.length);
   }
 
@@ -120,7 +118,7 @@ class _HealthReportState extends State<HealthReport>
             });
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HealthReport()),
+              MaterialPageRoute(builder: (context) => WeightReportDetail()),
             );
             //  initState();
           },
@@ -176,7 +174,8 @@ class _HealthReportState extends State<HealthReport>
                          (context, index){
                            return Container(
                              height: (MediaQuery.of(context).size.height / .35),
-                             child: ListView.builder(itemCount: weight.length, itemBuilder: (BuildContext context,int index){
+                             child:
+                             ListView.builder(itemCount: weight.length, itemBuilder: (BuildContext context,int index){
                                String formatedDay = DateFormat.yMMMd().format(DateTime.parse(weight[index].date));
                                double wd =0;
                                if(index ==weight.length-1){

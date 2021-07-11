@@ -4,7 +4,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/light_dark_mode.dart';
 import 'package:full_workout/widgets/info_button.dart';
-import 'package:full_workout/widgets/youtube_player.dart';
+import 'package:full_workout/pages/services/youtube_player.dart';
 
 class MyDialog extends StatefulWidget {
   final List<Workout> workoutList;

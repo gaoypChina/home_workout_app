@@ -8,7 +8,7 @@ import 'package:full_workout/pages/workout_page/pause_page.dart';
 import 'package:full_workout/pages/workout_page/workout_page.dart';
 import 'package:full_workout/widgets/info_button.dart';
 import 'package:full_workout/widgets/timer.dart';
-import 'package:full_workout/widgets/youtube_player.dart';
+import 'package:full_workout/pages/services/youtube_player.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 import 'exercise_list_page.dart';
@@ -17,11 +17,15 @@ class InstructionScreen extends StatefulWidget {
   final List<Workout> workOutList;
   final String title;
   final List<int> rapList;
+  final String tag;
+  final int tagValue;
 
   InstructionScreen({
     @required this.workOutList,
     @required this.title,
-    @required this.rapList
+    @required this.rapList,
+    @required this.tagValue,
+    @required this.tag
   });
 
   @override
@@ -50,6 +54,8 @@ class _InstructionScreenState extends State<InstructionScreen>
         context,
         MaterialPageRoute(
             builder: (context) => WorkoutPage(
+              tagValue: widget.tagValue,
+              tag: widget.tag,
               rapList: widget.rapList,
                   title: widget.title,
                   workOutList: widget.workOutList,
@@ -140,7 +146,7 @@ class _InstructionScreenState extends State<InstructionScreen>
                             return ExerciseListScreen(
                                 workOutList: widget.workOutList,
                                 tag: "continue",
-                                stars: 2,
+                                tagValue: widget.tagValue,
                                 title: "title");
                           });
                     },

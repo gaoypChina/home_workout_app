@@ -11,12 +11,13 @@ class ExerciseListScreen extends StatefulWidget {
   final List<Workout> workOutList;
   final String tag;
   final String title;
-  final int stars;
+  final int tagValue;
+
 
   ExerciseListScreen(
       {@required this.workOutList,
       @required this.tag,
-      @required this.stars,
+      @required this.tagValue,
       @required this.title});
 
   @override
@@ -90,39 +91,37 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
           padding: EdgeInsets.only(bottom: 0.0),
           child: Align(
             alignment: Alignment.bottomCenter,
-            child: AnimatedBuilder(
-                animation: _controller,
-                builder: (context, child) {
-                  return FloatingActionButton.extended(
-                    backgroundColor: _colorAnim.value,
-                    onPressed: () {
-                      widget.tag == "continue"
-                          ? Navigator.of(context).pop()
-                          : Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => InstructionScreen(
-                                  title: widget.title,
-                                  workOutList: widget.workOutList,
-                                  rapList:rapList,
-                                ),
-                              ),
-                            );
-                    },
-                    icon: Icon(
-                      widget.tag == "continue"
-                          ? Icons.play_arrow
-                          : Icons.local_fire_department_sharp,
-                      color: Colors.white,
-                      size: 30,
+            child:FloatingActionButton.extended(
+              backgroundColor: Colors.blue.shade700,
+              onPressed: () {
+                widget.tag == "continue"
+                    ? Navigator.of(context).pop()
+                    : Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => InstructionScreen(
+                      tag: widget.tag,
+                      tagValue: widget.tagValue,
+                      title: widget.title,
+                      workOutList: widget.workOutList,
+                      rapList:rapList,
                     ),
-                    label: Text(
-                      widget.tag == "continue" ? "Continue" : "Start Workout",
-                      style: textTheme.button.copyWith(fontSize: 16),
-                      textAlign: TextAlign.end,
-                    ),
-                  );
-                }),
+                  ),
+                );
+              },
+              icon: Icon(
+                widget.tag == "continue"
+                    ? Icons.play_arrow
+                    : Icons.local_fire_department_sharp,
+                color: Colors.white,
+                size: 30,
+              ),
+              label: Text(
+                widget.tag == "continue" ? "Continue" : "Start Workout",
+                style: textTheme.button.copyWith(fontSize: 16),
+                textAlign: TextAlign.end,
+              ),
+            ),
           ),
         ),
         body: SafeArea(

@@ -84,23 +84,22 @@ class _SoundSettingState extends State<SoundSetting> {
   @override
   Widget build(BuildContext context) {
     getSwitch(String title, IconData icon, bool value, Function onToggle) {
-      return
-          ListTile(
-            tileColor: constants.tileColor,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12))),
-            leading:
-            Icon(icon),
-            title:  Text(title,style: constants.contentTextStyle.copyWith(fontSize: 16),),
-            trailing:
-            Switch(
-            value: value,
-            onChanged: (newVal) => onToggle(newVal),
-          ),
-
-
-          );
-
+      return ListTile(
+        tileColor: constants.tileColor,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12))),
+        leading: CircleAvatar(
+          child: Icon(icon),
+        ),
+        title: Text(
+          title,
+          style: constants.contentTextStyle.copyWith(fontSize: 16),
+        ),
+        trailing: Switch(
+          value: value,
+          onChanged: (newVal) => onToggle(newVal),
+        ),
+      );
     }
 
     return Scaffold(

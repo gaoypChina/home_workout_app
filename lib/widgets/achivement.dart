@@ -23,9 +23,13 @@ class Achievement extends StatelessWidget {
   Widget circulerCard(int value, String title) {
     return Column(
       children: [
-        CircleAvatar(
-          backgroundColor: Color(0xffF6F6F6),
-          radius: 30,
+        Container(
+        padding: EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Color(0xffF6F6F6),
+          borderRadius: BorderRadius.all(Radius.circular(16))
+        ),
+        //  radius: 30,
           child: Text(
             value.toString(),style: textTheme.subtitle1.copyWith(fontSize: 14,color: Colors.black,fontWeight: FontWeight.w700),
           ),
