@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:full_workout/helper/light_dark_mode.dart';
-import 'package:full_workout/widgets/height_weightSelector.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+
+import '../../../main.dart';
 
 class BMIPicker extends StatefulWidget {
   final double height;

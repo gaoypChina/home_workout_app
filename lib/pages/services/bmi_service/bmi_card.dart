@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/weight_db_helper.dart';
+import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/models/bmi_remark.dart';
@@ -238,7 +238,7 @@ class _BmiCardState extends State<BmiCard> {
                 });
 
             DateTime selectedDate = DateTime.now();
-            double toSave = (res[0] == null) ? weight : res[0];
+            double toSave = (res[1] == null) ? weight : res[1];
             await spHelper.saveDouble(spKey.weight, toSave);
             String key = DateFormat.yMd().format(selectedDate).toString();
             WeightModel weightModel =
