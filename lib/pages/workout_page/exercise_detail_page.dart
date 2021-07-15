@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+
 import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/helper/light_dark_mode.dart';
+
+import '../../main.dart';
 
 class DetailPage extends StatelessWidget {
   final Workout workout;

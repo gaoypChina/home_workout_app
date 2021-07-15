@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/helper/light_dark_mode.dart';
 import 'package:full_workout/widgets/achivement.dart';
 import 'package:full_workout/widgets/custom_exercise_card.dart';
 
+import '../../main.dart';
 import 'exercise_instruction_screen.dart';
 
 class ExerciseListScreen extends StatefulWidget {
@@ -171,14 +171,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                         ),
                         Container(
                           child: Achievement(
-                            timeTitle: "Time",
-                            timeValue: Duration(
-                                    seconds: (widget.workOutList.length * 30))
-                                .inMinutes,
-                            caloriesTitle: "Calories",
-                            caloriesValue: 14,
-                            exerciseTitle: "Exercise",
-                            exerciseValue: widget.workOutList.length,
+
                           ),
                           decoration: BoxDecoration(
                               color: Colors.transparent,

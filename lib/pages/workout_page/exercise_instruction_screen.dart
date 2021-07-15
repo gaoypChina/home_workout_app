@@ -2,7 +2,6 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/helper/light_dark_mode.dart';
 import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
 import 'package:full_workout/pages/workout_page/pause_page.dart';
 import 'package:full_workout/pages/workout_page/workout_page.dart';
@@ -11,6 +10,7 @@ import 'package:full_workout/widgets/timer.dart';
 import 'package:full_workout/pages/services/youtube_player.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
+import '../../main.dart';
 import 'exercise_list_page.dart';
 
 class InstructionScreen extends StatefulWidget {
@@ -34,9 +34,9 @@ class InstructionScreen extends StatefulWidget {
 
 class _InstructionScreenState extends State<InstructionScreen>
     with TickerProviderStateMixin {
-  AnimationController controller;
-  FlutterTts flutterTts = FlutterTts();
 
+  FlutterTts flutterTts = FlutterTts();
+  AnimationController controller;
   String get timerString {
     Duration duration = controller.duration * controller.value;
     return '${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
@@ -188,7 +188,8 @@ class _InstructionScreenState extends State<InstructionScreen>
     }
 
     Widget getTimer() {
-      return Container(
+      return
+        Container(
         height: height * .45,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
