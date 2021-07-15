@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/constants/constants.dart';
-import 'package:full_workout/helper/light_dark_mode.dart';
+
+import '../../main.dart';
 
 class FAQPage extends StatelessWidget {
   static const routeName = "FAQ-page";
