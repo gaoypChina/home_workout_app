@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 
 import '../models/weight_model.dart';
 import 'package:path/path.dart';
@@ -58,33 +57,56 @@ class WeightDatabaseHelper {
     print("here");
     var dbClient = await db;
     var result = await dbClient
-        .rawQuery("SELECT * FROM $tableName ORDER BY $columnId DESC");
+        .rawQuery("SELECT * FROM $tableName ORDER BY $columnId");
     return result.toList();
   }
 
-  Future<List> getRangeData(DateTime currDate) async{
+  Future<List> getRangeData(DateTime selectedFromDate, selectedToDate) async {
+    String twoDigitDate(String date) {
+      if (date.length <= 1) {
+        return "0$date";
+      }
+      return date;
+    }
+
+    String fromDate =
+        "${selectedFromDate.year}-${twoDigitDate(selectedFromDate.month.toString())}-${twoDigitDate(selectedFromDate.day.toString())}";
+    String toDate =
+        "${selectedToDate.year}-${twoDigitDate(selectedToDate.month.toString())}-${twoDigitDate(selectedToDate.day.toString())}";
+    print("fromDate: $fromDate, toDate: $toDate");
+
     var dbClient = await db;
-    String fromDate = "${currDate.year}-${currDate.month}";
-    String toDate = "${currDate.year}-${currDate.month+1}";
+    var result = await dbClient.rawQuery(
+        "SELECT * FROM $tableName WHERE $columnDate >= '$fromDate' AND $columnDate <= '$toDate' ORDER BY $columnDate DESC");
+    return result.toList();
+  }
+
+  Future<List> getMaxWeight() async {
+    var dbClient = await db;
+    var result =
+        await dbClient.rawQuery("SELECT MAX($columnWeight) FROM $tableName");
+    return result.toList();
+  }
+
+  Future<List> getMinWeight() async {
+    var dbClient = await db;
+    var result =
+        await dbClient.rawQuery("SELECT MIN($columnWeight) FROM $tableName");
+    return result.toList();
+  }
+
+  Future<List> getCurrWeight() async {
+    var dbClient = await db;
     var result = await dbClient
-        .rawQuery("SELECT * FROM $tableName WHERE $columnDate BETWEEN  $fromDate AND $toDate");
+        .rawQuery("SELECT * FROM $tableName ORDER BY $columnId DESC LIMIT 1");
     return result.toList();
   }
-
-  Future<double> getMaxWeight() async{
-    var dbClient = await db;
-    var result = await dbClient.rawQuery("SELECT MAX($columnWeight) FROM $tableName");
-
-    print("max"+result.toString());
-  }
-
 
   Future<int> getCount(String key) async {
     var dbClient = await db;
-   var result =  Sqflite.firstIntValue(
-     await dbClient.rawQuery("SELECT COUNT(*) FROM $tableName WHERE $columnKey =?",[key])
-   );
-   return result;
+    var result = Sqflite.firstIntValue(await dbClient.rawQuery(
+        "SELECT COUNT(*) FROM $tableName WHERE $columnKey =?", [key]));
+    return result;
   }
 
   Future<WeightModel> getWeight(int id) async {
@@ -95,10 +117,10 @@ class WeightDatabaseHelper {
     return WeightModel.fromMap(result.first);
   }
 
-  Future<int> deleteWeight(int id) async {
+  Future<int> deleteWeight(String key) async {
     var dbClient = await db;
     return await dbClient
-        .delete(tableName, where: "$columnId = ?", whereArgs: [id]);
+        .delete(tableName, where: "$columnKey = ?", whereArgs: [key]);
   }
 
 

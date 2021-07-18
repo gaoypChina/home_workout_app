@@ -1,7 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/weight_db_helper.dart';
+import 'package:full_workout/helper/weight_db_helper.dart';
+import 'package:full_workout/models/weight_list_model.dart';
+import 'package:full_workout/models/weight_model.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 
@@ -10,21 +12,40 @@ class WeightChart extends StatefulWidget {
   _WeightChartState createState() => _WeightChartState();
 }
 
+bool isLoading = true;
+
 class _WeightChartState extends State<WeightChart> {
   WeightDatabaseHelper weightDatabaseHelper = WeightDatabaseHelper();
 
-  List weightData;
+  List<WeightList> weightDataList = [];
 
-  loadData(DateTime currDate) async {
-    weightData = await weightDatabaseHelper.getRangeData(currDate);
-    return weightData;
+  _loadRangeData(DateTime startDate, DateTime endDate) async {
+    DateTime parsedStartDate =
+    DateTime(startDate.year, startDate.month, startDate.day + 1);
+    DateTime parsedEndDate = DateTime(
+        endDate.year, endDate.month, endDate.day + 1);
+    List items = await weightDatabaseHelper.getRangeData(
+        parsedStartDate, parsedEndDate);
+    for (int idx = 0; idx < items.length; idx++) {
+      weightDataList.add(
+          WeightList(weightModel: WeightModel.map(items[idx]), index: idx));
+    }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   void initState() {
-    print(weightData);
-    //  loadData();
-    print(weightData);
+    _loadRangeData(DateTime(DateTime
+        .now()
+        .year, DateTime
+        .now()
+        .month, 01), DateTime(DateTime
+        .now()
+        .year, DateTime
+        .now()
+        .month + 1, 01));
     super.initState();
   }
 
@@ -33,13 +54,11 @@ class _WeightChartState extends State<WeightChart> {
     const Color(0xff02d39a),
   ];
 
-  bool showAvg = false;
-
   DateTime currDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return isLoading ? Center(child: CircularProgressIndicator(),) : Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
       height: 350,
       child: Stack(
@@ -60,11 +79,15 @@ class _WeightChartState extends State<WeightChart> {
                     if (selectedMonth == null) {
                       return;
                     }
-                    currDate = selectedMonth;
-                    setState(() {});
-                    print(selectedMonth);
-                    List data = await loadData(selectedMonth);
-                    print(data.toString());
+                    setState(() {
+                      currDate = selectedMonth;
+                      _loadRangeData(
+                          DateTime(selectedMonth.year, selectedMonth.month, 01),
+                          DateTime(
+                              selectedMonth.year, selectedMonth.month + 1, 01));
+                      isLoading = true;
+                    });
+
                   },
                   child: Row(
                     children: [
@@ -78,26 +101,41 @@ class _WeightChartState extends State<WeightChart> {
     );
   }
 
-  LineChartData mainData() {
-    List<FlSpot> dataList = [];
-    double currWeight = 60;
 
-    List<FlSpot> getData() {
-      for (int i = 1; i <= 30; i++) {
-        for (int j = 0; j < 0; j++) {}
-        if (i % 3 == 0) {
-          dataList.add(FlSpot(i.toDouble(), currWeight - 3));
-        } else {
-          dataList.add(FlSpot(i.toDouble(), currWeight + i + 1));
-        }
-      }
-      return dataList;
+
+  LineChartData mainData() {
+    double presentValue = 0;
+    if (weightDataList.length > 0) {
+      presentValue =
+          weightDataList[weightDataList.length - 1].weightModel.weight;
     }
 
-    getData();
+
+    List<FlSpot> dataList = [];
+    getData() {
+
+      for (int i = 1; i <= DateTime
+          .now()
+          .day; i++) {
+        for (int j = 0; j < weightDataList.length; j++) {
+          if (i == DateTime
+              .parse(weightDataList[j].weightModel.date)
+              .day) {
+            presentValue = weightDataList[j].weightModel.weight;
+          }
+        }
+        dataList.add(FlSpot(i.toDouble(), presentValue));
+      }
+  return dataList;
+    }
+
+
     return LineChartData(
-      backgroundColor: Colors.white70,
+      // showingTooltipIndicators: [
+      //   ShowingTooltipIndicators(lineBarSpot),
+      // ],
       gridData: FlGridData(
+
         show: true,
         drawVerticalLine: true,
         horizontalInterval: 5,
@@ -116,10 +154,12 @@ class _WeightChartState extends State<WeightChart> {
       ),
       titlesData: FlTitlesData(
         show: true,
-        bottomTitles: SideTitles(
+        bottomTitles:
+        SideTitles(
           showTitles: true,
           reservedSize: 22,
-          getTextStyles: (value) => const TextStyle(
+          getTextStyles: (value) =>
+          const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.w600,
               fontSize: 12),
@@ -157,27 +197,23 @@ class _WeightChartState extends State<WeightChart> {
       maxY: 100,
       lineBarsData: [
         LineChartBarData(
-          spots: [
-            FlSpot(1, 60),
-            FlSpot(8, 40),
-            FlSpot(13, 70),
-            FlSpot(19, 60),
-            FlSpot(30, 70)
-          ],
+          spots: getData(),
           isCurved: true,
           colors: gradientColors,
-          barWidth: 2,
+          barWidth: 1.5,
           isStrokeCapRound: true,
+
           dotData: FlDotData(
             show: false,
           ),
           belowBarData: BarAreaData(
             show: true,
             colors:
-                gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+            gradientColors.map((color) => color.withOpacity(0.3)).toList(),
           ),
         ),
       ],
     );
   }
 }
+

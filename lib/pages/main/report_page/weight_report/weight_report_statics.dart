@@ -6,14 +6,13 @@ class WeightReportStatics extends StatefulWidget {
   _WeightReportStaticsState createState() => _WeightReportStaticsState();
 }
 
+bool isLoading = true;
 class _WeightReportStaticsState extends State<WeightReportStatics> {
-  bool isLoading = true;
   WeightDatabaseHelper _databaseHelper = WeightDatabaseHelper();
   String minWeight = "";
   String maxWeight = "";
   String currWeight = "";
   loadData() async {
-
   List<dynamic> minWeightDB = await  _databaseHelper.getMinWeight();
   print(minWeightDB);
   minWeight = minWeightDB.length == 0?"NaN": minWeightDB[0]["MIN(weight)"].toString();
@@ -28,16 +27,18 @@ class _WeightReportStaticsState extends State<WeightReportStatics> {
 
   print(minWeight);
   print(maxWeight);
-    print(currWeight);
+  print(currWeight);
+
+  setState(() {
+    isLoading = false;
+  });
   }
 
   @override
   void initState() {
     loadData();
 
-    setState(() {
-      isLoading = false;
-    });
+
     super.initState();
   }
 
@@ -50,7 +51,7 @@ class _WeightReportStaticsState extends State<WeightReportStatics> {
           children: [
             Icon(
               Icons.circle,
-              size: 12.0,
+              size: 14.0,
               color: color,
             ),
             SizedBox(
