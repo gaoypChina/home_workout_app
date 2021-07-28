@@ -143,10 +143,10 @@ List<Workout> fullBodyDay19 = [
   kneePushUps,
   inchWorm,
   reclinedRhomboidSqueezes,
-  gluteKickBackLeft,
-  gluteKickBackRight,
-  gluteKickBackLeft,
-  gluteKickBackRight,
+  fireHydrantLeft,
+  fireHydrantRight,
+  fireHydrantLeft,
+  fireHydrantRight,
   calfStretchLeft,
   calfStretchRight
 ];

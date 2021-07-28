@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constants.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 import 'onboarding_page.dart';
@@ -51,14 +50,13 @@ class _LoginSplashPageState extends State<LoginSplashPage>
                   text: "By Click continue, you are agree to our ",
                   style: Theme.of(context).textTheme.bodyText2.merge(TextStyle(
                       height: 1.5,
-                      color: Constants.secondaryTextColor,
                       fontSize: 13)),
                   children: [
                     TextSpan(
                         text: "Terms and conditions.",
                         style: Theme.of(context).textTheme.subtitle2.merge(
                             TextStyle(
-                                color: Constants.primaryColor, fontSize: 13)))
+                                color: Theme.of(context).primaryColorLight, fontSize: 13)))
                   ])),
         ));
   }

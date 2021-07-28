@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:full_workout/pages/main/report_page/details_screen.dart';
 import 'package:full_workout/pages/main/report_page/report_page.dart';
+import 'package:full_workout/pages/main/report_page/weight_report/weight_report_detail.dart';
+import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/pages/main/setting_page/profile_settings_screen.dart';
 import 'package:full_workout/pages/main/setting_page/reminder_tab.dart';
+import 'package:full_workout/pages/main/setting_page/setting_screen.dart';
 import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
 import 'package:full_workout/pages/main/setting_page/training_settings_screen.dart';
 import 'package:full_workout/pages/main_page.dart';
@@ -12,19 +14,20 @@ import 'package:full_workout/pages/services/faq_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-void main() {
-//  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    // statusBarColor: Colors.blue.shade700,
-    // statusBarIconBrightness: Brightness.light,
-    // statusBarBrightness: Brightness.light,
-    // systemNavigationBarDividerColor: Colors.blue.shade700
-  // ));
+Future<void> main() async {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.white70,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.dark,
+  ));
+
+
+
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,31 +48,27 @@ class MyApp extends StatelessWidget {
       //           borderRadius: BorderRadius.circular(8),
       //           borderSide: BorderSide(color: Colors.transparent)),
       //     )),
-      theme:
-      //theme[1],
-      ThemeData(
-              //  primarySwatch: Colors.blue,
-              primaryColor: Colors.blue.shade700,
-              textTheme: textTheme,
-              radioTheme: RadioThemeData(
-                  fillColor: MaterialStateProperty.all(Colors.blue.shade700),
-                ),
+      theme: ThemeData(
+          //  primarySwatch: Colors.blue,
+          primaryColor: Colors.blue.shade700,
+          textTheme: textTheme,
+          radioTheme: RadioThemeData(
+            fillColor: MaterialStateProperty.all(Colors.blue.shade700),
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            fillColor: Colors.blue.shade50,
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.transparent)),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.transparent)),
+          )),
 
-              inputDecorationTheme: InputDecorationTheme(
-                filled: true,
-                fillColor: Colors.blue.shade50,
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.transparent)),
-                contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.transparent)),
-              )),
-      initialRoute: "/main",
       routes: {
         '/': (ctx) => MainPage(),
-        DetailsScreen.routeName: (ctx) => DetailsScreen(),
         ReminderTab.routeName: (ctx) => ReminderTab(),
         FAQPage.routeName: (ctx) => FAQPage(),
         ReportPage.routeName: (ctx) => ReportPage(),
@@ -77,15 +76,15 @@ class MyApp extends StatelessWidget {
         ProfileSettingScreen.routeName: (ctx) => ProfileSettingScreen(),
         SoundSetting.routeName: (ctx) => SoundSetting(),
         TrainingSettingsScreen.routeName: (ctx) => TrainingSettingsScreen(),
+        WeightReportDetail.routeName: (ctx) => WeightReportDetail(),
+        WorkoutDetailReport.routeName: (ctx) => WorkoutDetailReport(),
+        SettingPage.routeName: (ctx) => SettingPage()
       },
       builder: EasyLoading.init(),
-
       debugShowCheckedModeBanner: false,
     );
   }
 }
-
-
 
 
 var textTheme = TextTheme(

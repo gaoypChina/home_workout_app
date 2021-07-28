@@ -62,17 +62,17 @@ List<ExerciseCard> shoulderExercise = [
   ExerciseCard(
       workoutList: shoulderBeginner,
       imageUrl: "imageUrl",
-      title: "Abs Beginner",
+      title: "Shoulder Beginner",
       tag: "Beginner"),
   ExerciseCard(
       workoutList: shoulderIntermediate,
       imageUrl: "imageUrl",
-      title: "Abs Intermediate",
+      title: "Shoulder Intermediate",
       tag: "Intermediate"),
   ExerciseCard(
       workoutList: shoulderAdvance,
       imageUrl: "imageUrl",
-      title: "Abs Advance",
+      title: "Shoulder Advance",
       tag: "Advance")
 ];
 

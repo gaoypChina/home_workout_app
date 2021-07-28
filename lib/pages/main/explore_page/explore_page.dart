@@ -1,27 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/database/workout_plan/abs_challenges.dart';
 import 'package:full_workout/database/workout_plan/arm_challenges.dart';
 import 'package:full_workout/database/workout_plan/chest_challenge.dart';
 import 'package:full_workout/database/workout_plan/full_body_challenge.dart';
-import 'package:full_workout/helper/light_dark_mode.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/pages/main/explore_page/workout_time_line.dat.dart';
-import 'package:full_workout/pages/services/faq_page.dart';
+import 'package:full_workout/pages/main/home_page/leading_widget.dart';
 
-import '../../main_page.dart';
+import '../../../main.dart';
+
 
 class ExplorePage extends StatelessWidget {
   final Function onBack;
-  SpKey _spKey = SpKey();
+
+
+
 
   ExplorePage({this.onBack});
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    SpKey _spKey = SpKey();
     Constants constants = Constants();
     int i = 0;
     List<ChallengesModel> challenges = [
@@ -31,31 +35,30 @@ class ExplorePage extends StatelessWidget {
         currentDay: i,
         imageUrl: "assets/bg_cover/back-cover.png",
         challengeList: fullBodyChallenge,
-        // color1: Color(0xff603813),
-        // color2: Color(0xffb29f94),
+
         color1: Colors.blue.shade700,
         color2: Color(0xffb29f94),
       ),
       ChallengesModel(
-          title: "Abs Challenge",
+          title: "Abs Workout Challenge",
           currentDay: i,
           tag: _spKey.absChallenge,
 
-          imageUrl: "assets/all-workouts/cobraStratch.png",
+          imageUrl: "assets/splash/crunches.gif",
           challengeList: absChallenges,
           // color1: Colors.blue,
           color1: Colors.orange.shade300,
           color2: Colors.blue.shade700),
       ChallengesModel(
         tag: _spKey.chestChallenge,
-          title: "Chest Challenge",
+          title: "Chest Workout Challenge",
           currentDay: i,
           imageUrl: "assets/all-workouts/cobraStratch.png",
           challengeList: chestChallenge,
           color1: Colors.blue.shade700,
           color2: Colors.teal),
       ChallengesModel(
-          title: "Arm Challenge",
+          title: "Arm Workout Challenge",
           tag: _spKey.armChallenge,
           currentDay: i,
           imageUrl: "assets/all-workouts/cobraStratch.png",
@@ -66,7 +69,7 @@ class ExplorePage extends StatelessWidget {
 
     getCard(var item) {
       return Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
+        padding: const EdgeInsets.only(bottom: 12.0),
         child: Ink(
           child: InkWell(
             onTap: () {
@@ -78,7 +81,7 @@ class ExplorePage extends StatelessWidget {
                           )));
             },
             child: Container(
-              height: 150,
+              height: height*.2,
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
@@ -94,8 +97,7 @@ class ExplorePage extends StatelessWidget {
                           topLeft: Radius.circular(16),
                           bottomLeft: Radius.circular(16)),
                       child: Container(
-                        height: 105,
-                        width: 150,
+                      width: width*.45,
                         child: Image.asset(
                           item.imageUrl,
                           fit: BoxFit.fill,
@@ -180,47 +182,27 @@ class ExplorePage extends StatelessWidget {
     }
 
     return Scaffold(
+      
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: constants.appBarColor,
+        backgroundColor: Colors.blue.shade700,
         titleSpacing: 14,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MainPage(index: 2)));
-            },
-            icon: Icon(
-              Feather.calendar,
-            ),
-            color: constants.appBarContentColor,
-            tooltip: "Report",
-          ),
-          IconButton(
-            onPressed: () => Navigator.of(context).pushNamed(FAQPage.routeName),
-            icon: Icon(
-              FontAwesome.question_circle_o,
-            ),
-            color: constants.appBarContentColor,
-            tooltip: "FAQ",
-          ),
-        ],
+      actions:getLeading(context,color: Colors.white),
+
         title: Text(
           "Explore",
-          style: TextStyle(color: constants.appBarContentColor),
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: false,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(14),
         physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 4.0,bottom: 8,left: 8),
-            //   child: Text("4-week workout plan at home",style: textTheme.bodyText1.copyWith(fontSize: 18,fontWeight: FontWeight.w600),),
-            // ),
+
+
 
             ...challenges.map((challenge) => getCard(challenge)).toList(),
             Padding(
