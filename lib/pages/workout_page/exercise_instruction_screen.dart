@@ -1,16 +1,20 @@
+import 'package:audiofileplayer/audiofileplayer.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
+import 'package:full_workout/pages/workout_page/check_list.dart';
 import 'package:full_workout/pages/workout_page/pause_page.dart';
 import 'package:full_workout/pages/workout_page/workout_page.dart';
-import 'package:full_workout/widgets/info_button.dart';
-import 'package:full_workout/widgets/timer.dart';
+import 'package:full_workout/components/info_button.dart';
+import 'package:full_workout/components/timer_painter.dart';
 import 'package:full_workout/pages/services/youtube_player.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:wakelock/wakelock.dart';
 
 import '../../main.dart';
+import 'exercise_detail_page.dart';
 import 'exercise_list_page.dart';
 
 class InstructionScreen extends StatefulWidget {
@@ -19,13 +23,17 @@ class InstructionScreen extends StatefulWidget {
   final List<int> rapList;
   final String tag;
   final int tagValue;
+  final int countDownTime;
+  final int restTime;
 
   InstructionScreen({
     @required this.workOutList,
     @required this.title,
     @required this.rapList,
     @required this.tagValue,
-    @required this.tag
+    @required this.tag,
+    @required this.countDownTime,
+    @required this.restTime
   });
 
   @override
@@ -34,6 +42,7 @@ class InstructionScreen extends StatefulWidget {
 
 class _InstructionScreenState extends State<InstructionScreen>
     with TickerProviderStateMixin {
+
 
   FlutterTts flutterTts = FlutterTts();
   AnimationController controller;
@@ -45,8 +54,6 @@ class _InstructionScreenState extends State<InstructionScreen>
   int get timerValue {
     Duration duration = controller.duration * controller.value;
     return duration.inMilliseconds;
-
-    //duration.inSeconds % 60;
   }
 
   _onComplete() {
@@ -62,43 +69,52 @@ class _InstructionScreenState extends State<InstructionScreen>
                   index: 0,
               currTime: DateTime.now().toIso8601String(),
                 )));
-
   }
 
-  // Future<AudioPlayer> playLocalAsset() async {
-  //   AudioCache cache = new AudioCache();
-  //   return await cache.play("sound/note.mp3");
-  // }
+  _onPopBack(){
+    showDialog(context: context, builder: (context) => StopPage());
+  }
+
 
 
  Future introMessage() async {
-   await
-    flutterTts.speak(widget.workOutList[0].steps.toString());
+  var workout = widget.workOutList[0];
+  String intro = "Ready to go! ";
+    String isSec = workout.showTimer ? "Seconds " : "";
+    String message = "The next ${workout.duration} " + isSec + workout.title;
+    print(message);
+    await
+    flutterTts.speak(intro).then((value) => Future.delayed(Duration(seconds: 1)).then((value) => flutterTts.speak(message)));
+  }
+
+  awakeScreen(){
+    Wakelock.enable();
   }
 
 
   @override
   void dispose() {
     controller.dispose();
-   // flutterTts.stop();
     super.dispose();
   }
 
   @override
   void initState() {
-    print(AnimationStatus.values);
+    print("countdownTime : ${widget.countDownTime}");
+
     introMessage();
+    awakeScreen();
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 35),
+      duration: Duration(seconds: widget.countDownTime),
     );
 
     controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
     controller.addStatusListener((status) {
       print(status);
       if (status == AnimationStatus.dismissed) {
-       // _onComplete();
+        _onComplete();
       }
     });
   }
@@ -139,47 +155,72 @@ class _InstructionScreenState extends State<InstructionScreen>
                   InfoButton(
                     icon: Icons.list_alt_outlined,
                     tooltip: "Exercise Plane",
-                    onPress: () {
-                      showDialog(
+                    onPress: () async {
+                      if (controller.isAnimating) {
+                        controller.stop(canceled: true);
+                      }
+                      await showDialog(
                           context: context,
-                          builder: (builder) {
-                            return ExerciseListScreen(
-                                workOutList: widget.workOutList,
-                                tag: "continue",
-                                tagValue: widget.tagValue,
-                                title: "title");
-                          });
+                          builder: (builder) => CheckListScreen(
+                              workOutList: widget.workOutList,
+                              tag: "continue",
+                              progress: 0,
+                              title: "title"));
+
+                      controller.reverse(
+                          from: controller.value == 0.0 ? 1.0 : controller.value);
                     },
                   ),
                   InfoButton(
                     icon: Icons.ondemand_video_outlined,
                     tooltip: "Video",
-                    onPress: () {
-                      showDialog(
+                    onPress: () async {
+                      if (controller.isAnimating) {
+                        controller.stop(canceled: true);
+                      }
+                      await showDialog(
                           context: context,
-                          builder: (builder) {
-                            return YoutubeTutorial(
-                                link: item.videoLink,
-                                title: item.title,
-                                steps: item.steps);
-                          });
+                          builder: (builder) => YoutubeTutorial(
+                            rapCount:widget.rapList[0],
+                            workout: widget.workOutList[0],
+
+                            ));
+
+                      controller.reverse(
+                          from: controller.value == 0.0 ? 1.0 : controller.value);
                     },
                   ),
                   InfoButton(
                     icon: Icons.volume_up_outlined,
                     tooltip: "Sound",
-                    onPress: () {
-                      showDialog(
-                          context: context,
-                          builder: (builder) {
-                            return SoundSetting();
-                          });
+                    onPress: () async {
+                      if (controller.isAnimating) {
+                        controller.stop(canceled: true);
+                      }
+
+                      await showDialog(
+                          context: context, builder: (builder) => SoundSetting());
+
+                      controller.reverse(
+                          from: controller.value == 0.0 ? 1.0 : controller.value);
                     },
                   ),
                   InfoButton(
                     icon: FontAwesome5.question_circle,
                     tooltip: "Steps",
-                    onPress: () {},
+                    onPress: () async {
+                      if (controller.isAnimating) {
+                        controller.stop(canceled: true);
+                      }
+                      await showDialog(
+                          context: context,
+                          builder: (builder) => DetailPage(
+                            workout: item,
+                            rapCount: widget.rapList[0],
+                          ));
+                      controller.reverse(
+                          from: controller.value == 0.0 ? 1.0 : controller.value);
+                    },
                   ),
                 ],
               )),
@@ -255,10 +296,12 @@ class _InstructionScreenState extends State<InstructionScreen>
 
                                       if (timerValue <= 5000 &&
                                           timerValue > 4950) {
-                                        flutterTts.speak('Ready to go');
                                       }
                                       if (timerValue <= 3000 &&
                                           timerValue > 2950) {
+                                        Audio.load('assets/sound/countdown.wav')
+                                          ..play()
+                                          ..dispose();
                                         flutterTts.speak('Three');
                                       }
                                       if (timerValue <= 2000 &&
@@ -313,7 +356,7 @@ class _InstructionScreenState extends State<InstructionScreen>
 
     return WillPopScope(
       onWillPop: () async =>
-          showDialog(context: context, builder: (context) => StopPage()),
+          _onPopBack(),
       child: Scaffold(
         body: SafeArea(
           child: Column(
@@ -328,5 +371,7 @@ class _InstructionScreenState extends State<InstructionScreen>
     );
   }
 }
+
+
 
 

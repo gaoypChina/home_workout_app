@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/widgets/achivement.dart';
+import 'package:full_workout/helper/sp_helper.dart';
+import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/widgets/custom_exercise_card.dart';
 
 import '../../main.dart';
@@ -26,28 +27,42 @@ class ExerciseListScreen extends StatefulWidget {
 
 class _ExerciseListScreenState extends State<ExerciseListScreen>
     with TickerProviderStateMixin {
+  SpHelper spHelper = SpHelper();
+  SpKey spKey = SpKey();
   AnimationController _controller;
-  Animation<Color> _colorAnim;
   List<int> rapList = [];
+  int countDownTime =30;
+  int restTime = 30;
+  final TextEditingController searchQuery = new TextEditingController();
+  ScrollController _scrollController;
+  List<String> items;
+  TabController tabContoller;
+  double padValue =0;
 
-  @override
-  void initState() {
-    _controller = AnimationController(
-      duration: const Duration(seconds: 5),
-      vsync: this,
-    )
-      ..forward()
-      ..repeat();
-
-    _colorAnim = bgColor.animate(_controller);
-    _scrollController = new ScrollController();
-    tabContoller = new TabController(
-      vsync: this,
-      length: 1,
-    );
-    super.initState();
+  getTime() {
+    int length = widget.workOutList.length;
+    if (length < 15) return length + 2;
+    if (length < 20) return length + 4;
+    return length + 6;
   }
 
+
+  getPadding()async{
+    Future.delayed(Duration(milliseconds: 100)).then((value) {
+      setState(() {
+        padValue = 1;
+      });
+    });
+  }
+  @override
+  void initState() {
+    getPadding();
+    super.initState();
+    getCountDown();
+     _scrollController = new ScrollController();
+    tabContoller = new TabController(vsync: this, length: 1);
+
+  }
   @override
   void dispose() {
     _controller.dispose();
@@ -55,36 +70,22 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
     super.dispose();
   }
 
-  Animatable<Color> bgColor = TweenSequence<Color>([
-    TweenSequenceItem(
-      weight: 1.0,
-      tween: ColorTween(begin: Colors.red, end: Colors.blue),
-    ),
-    TweenSequenceItem(
-      weight: 1.0,
-      tween: ColorTween(begin: Colors.orangeAccent, end: Colors.green),
-    ),
-    TweenSequenceItem(
-      weight: 1.0,
-      tween: ColorTween(begin: Colors.green, end: Colors.amberAccent),
-    ),
-    TweenSequenceItem(
-      weight: 1.0,
-      tween: ColorTween(begin: Colors.amberAccent, end: Colors.red),
-    ),
-  ]);
+  getCountDown() async {
+    countDownTime = await spHelper.loadInt(spKey.countdownTime) ?? 30;
+    restTime = await spHelper.loadInt(spKey.trainingRest) ?? 30;
+    setState(() {
+      print('now tiime : $countDownTime');
+    });
+  }
 
-  final TextEditingController searchQuery = new TextEditingController();
-  ScrollController _scrollController;
-  List<String> items;
-  TabController tabContoller;
 
   @override
   Widget build(BuildContext context) {
 
+
+    print('now time : $countDownTime');
     int time;
     return Scaffold(
-        backgroundColor: Colors.blue,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButton: Container(
@@ -94,9 +95,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
             child:FloatingActionButton.extended(
               backgroundColor: Colors.blue.shade700,
               onPressed: () {
-                widget.tag == "continue"
-                    ? Navigator.of(context).pop()
-                    : Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => InstructionScreen(
@@ -105,84 +104,52 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                       title: widget.title,
                       workOutList: widget.workOutList,
                       rapList:rapList,
+                      countDownTime: countDownTime,
+                      restTime: restTime,
                     ),
                   ),
                 );
               },
               icon: Icon(
-                widget.tag == "continue"
-                    ? Icons.play_arrow
-                    : Icons.local_fire_department_sharp,
+                 Icons.local_fire_department_sharp,
                 color: Colors.white,
                 size: 30,
               ),
               label: Text(
-                widget.tag == "continue" ? "Continue" : "Start Workout",
-                style: textTheme.button.copyWith(fontSize: 16),
+                "Start Workout",
+                style: textTheme.button
+                    .copyWith(fontSize: 16, color: Colors.white),
                 textAlign: TextAlign.end,
               ),
             ),
           ),
         ),
-        body: SafeArea(
-            child: NestedScrollView(
+        body: NestedScrollView(
           controller: _scrollController,
+          physics: BouncingScrollPhysics(),
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverAppBar(
                 leading: IconButton(
-                  icon: Icon(widget.tag == "continue"
-                      ? Icons.close_rounded
-                      : Icons.arrow_back),
+                  icon: Icon(Icons.arrow_back),
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
                 ),
-                actions: [
-                  widget.tag == "continue"
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 18.0, right: 8),
-                          child: Text(
-                            "2/3",
-                            style: textTheme.bodyText1
-                                .copyWith(fontSize: 16, color: Colors.amber),
-                          ),
-                        )
-                      : Text("")
-                ],
-                title: Expanded(
-                    child: Text(
-                  widget.title,
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 22),
-                  textAlign: TextAlign.start,
-                  textScaleFactor: 1,
-                )), titleSpacing: 010,
+
                 automaticallyImplyLeading: false,
-                expandedHeight: 190.0,
+                expandedHeight: 150.0,
                 pinned: true,
                 floating: false,
                 forceElevated: innerBoxIsScrolled,
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Stack(children: <Widget>[
-                    Column(
-                      children: [
-                        Container(
-                          height: 50,
-                        ),
-                        Container(
-                          child: Achievement(
-
-                          ),
-                          decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
-                          height: MediaQuery.of(context).size.height / 5,
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                      ],
-                    )
-                  ]),
+                  title: Text(
+                    widget.title,
+                  ),
+                  background: Image.asset(
+                    "assets/cover/back-cover.jpg",
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ];
@@ -190,7 +157,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
           body: Scaffold(
             body: TabBarView(
               controller: tabContoller,
-
               children: [
                 ListView.builder(
                   itemBuilder: (context, index) {
@@ -201,22 +167,68 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                         time = widget.workOutList[index].intermediateRap;
                       } else
                         time = widget.workOutList[index].advanceRap;
-                    } else if(widget.workOutList[index].showTimer == true) {
+                    } else if (widget.workOutList[index].showTimer == true) {
                       time = widget.workOutList[index].duration;
-                    }else{
+                    } else {
                       time = 69;
                     }
 
                     rapList.add(time);
 
-                    print(time);
-                    return Padding(
-                      padding: EdgeInsets.all(10),
-                      child: CustomExerciseCard(
-                        index: index,
-                        workOutList: widget.workOutList,
-                        time: time,
-                      ),
+                    return Column(
+                      children: [
+                        if (index == 0)
+                          AnimatedPadding(
+                            duration: Duration(milliseconds: 400),
+                            padding:  EdgeInsets.only(
+                                left: padValue*20, right: padValue, top: padValue*8),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 6,
+                                  backgroundColor: Colors.red,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  widget.workOutList.length.toString() +
+                                      " Workouts",
+                                  style: textTheme.headline6.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                CircleAvatar(
+                                  radius: 6,
+                                  backgroundColor: Colors.orange,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  getTime().toString() + " Minutes",
+                                  style: textTheme.headline6.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                        AnimatedPadding(
+                          duration:Duration(milliseconds: 1000),
+curve: Curves.easeOutCubic,
+                          padding:
+                              EdgeInsets.only(top:padValue* 12, left:padValue* 16, right:padValue* 16),
+                          child: CustomExerciseCard(
+                            index: index,
+                            workOutList: widget.workOutList,
+                            time: time,
+                          ),
+                        ),
+                      ],
                     );
                   },
                   padding: EdgeInsets.only(bottom: 70),
@@ -226,6 +238,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
               ],
             ),
           ),
-        )));
+        ));
   }
 }

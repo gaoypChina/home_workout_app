@@ -17,12 +17,15 @@ class DetailPage extends StatelessWidget {
 
     getTopBar() {
       return Container(
+        padding: EdgeInsets.only(top: 10),
         height: 50,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
               icon: Icon(
                 Icons.arrow_back,
                 color: Colors.white,
@@ -30,10 +33,20 @@ class DetailPage extends StatelessWidget {
               label: Text(""),
             ),
             ElevatedButton.icon(
-                onPressed: () {},
-              style: ElevatedButton.styleFrom(primary: Colors.white,padding: EdgeInsets.all(0)),
-                icon: Icon(Icons.videocam,color: Colors.blue,),
-                label:   Text("Video",style: textTheme.button.copyWith(color: Colors.blue,),),
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 4)),
+              icon: Icon(
+                Icons.videocam,
+                color: Colors.blue,
+              ),
+              label: Text(
+                "Video",
+                style: textTheme.button.copyWith(
+                  color: Colors.blue,
+                ),
+              ),
             )
           ],
         ),
@@ -46,7 +59,7 @@ class DetailPage extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
             border: Border.all(
-              color: Colors.red[500],
+              color: Colors.black,
             ),
             borderRadius: BorderRadius.all(Radius.circular(12))        ),
         width: width,
@@ -72,18 +85,20 @@ class DetailPage extends StatelessWidget {
 
     getSteps(Workout workout){
       return Expanded(child: ListView.builder(itemBuilder: (BuildContext context, int index){
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: RichText(
-            text:TextSpan(
-              children: [
-                TextSpan(text: "Step ${index + 1}: ",style: textTheme.bodyText2.copyWith(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w700),),
-
-                TextSpan(text: "${workout.steps[index]}",style: textTheme.bodyText2.copyWith(color: Colors.white,fontSize: 14),)
-        ]
-            )
-        ));
-      },itemCount: workout.steps.length,));
+        return
+               ListTile(
+                 minVerticalPadding: 0,
+                  leading: Text("Step ${index + 1}: ",
+                      style: textTheme.bodyText2.copyWith(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700)),
+                  title: Text(
+                    "${workout.steps[index]}",
+                    style: textTheme.bodyText2
+                        .copyWith(color: Colors.white, fontSize: 14),
+                  ));
+        },itemCount: workout.steps.length,));
     }
 
     return Scaffold(
