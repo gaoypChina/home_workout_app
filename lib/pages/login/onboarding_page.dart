@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/models/onboarding_item.dart';
 
 class OnBoardingPage extends StatefulWidget {
@@ -83,7 +82,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
                       color: pageIndex == position
-                          ? Constants.primaryColor
+                          ? Theme.of(context).primaryColor
                           : Theme.of(context).primaryColorLight),
                 );
               }),
