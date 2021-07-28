@@ -22,10 +22,17 @@ class SpKey {
   String coach = "coach";
   String effect = "effect";
 
+  /// Awake Screen
+  String awakeScreen = "awakeScreen";
+  String initPage = "initPage";
+
   /// Challenges list
   String fullBodyChallenge = "fullBodyChallenge";
   String absChallenge = "absChallenge";
   String chestChallenge = "chestChallenge";
   String armChallenge = "armChallenge";
 
+  /// Week goal
+  String trainingDay = "trainingDay";
+  String firstDay = "firstDay";
 }

@@ -43,7 +43,7 @@ class SpHelper {
       int value = preferences.getInt(key);
       return value;
     }
-    return 0;
+    return null;
   }
 
   Future<double> loadDouble(String key) async {
