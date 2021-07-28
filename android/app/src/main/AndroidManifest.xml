@@ -1,9 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.akash.full_workout">
-   <application
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <application
         android:label="full_workout"
         android:icon="@mipmap/ic_launcher">
+
         <activity
+
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
@@ -28,6 +31,7 @@
               android:name="io.flutter.embedding.android.SplashScreenDrawable"
               android:resource="@drawable/launch_background"
               />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -39,6 +43,7 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+
 </manifest>
 
 
