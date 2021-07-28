@@ -40,18 +40,23 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: constants.appBarColor,
         title: Text(
           "Training Settings",
-          style: TextStyle(color: Colors.black),
         ),
-        leading: TextButton(
-          child: Icon(
-            Icons.keyboard_backspace_sharp,
-            color: Colors.black,
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(padding: EdgeInsets.only(right: 18)),
+            child: Text(
+              "Save",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+              constants.getToast("Training Setting Saved");
+            },
           ),
-          onPressed: Navigator.of(context).pop,
-        ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -74,6 +79,7 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
                     "Training Rest",
                     style: constants.contentTextStyle.copyWith(fontSize: 18),
                   ),
+                  subtitle: Text("To Update Training rest slide the slider"),
                   trailing: Container(
                     decoration: BoxDecoration(
                         color: Colors.blue.shade700,
@@ -139,6 +145,7 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
                      style: constants.contentTextStyle.copyWith(fontSize: 18),
 
     ),
+                  subtitle: Text("To Update Countdown time slide the slider"),
                   trailing: Container(
 
                       decoration: BoxDecoration(
@@ -177,7 +184,7 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
                     max: 180,
                     min: 10,
                     label: countdownTime.toInt().toString(),
-                    divisions: 22,
+                    divisions: 34,
                     activeColor: Colors.blue.shade700,
                     inactiveColor: Colors.white,
                   ),

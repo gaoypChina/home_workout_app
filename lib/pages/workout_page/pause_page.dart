@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/helper/light_dark_mode.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:full_workout/pages/workout_page/quit_page.dart';
+import '../../main.dart';
 
 class StopPage extends StatelessWidget {
   @override
@@ -10,11 +11,10 @@ class StopPage extends StatelessWidget {
         String title,
         Color textColor,
         Color backgroundColor}) {
-      return
-        Container(
-        height: 50,
+      return Container(
+          height: 50,
         width: double.infinity,
-        margin: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+        margin: EdgeInsets.only(left: 25, right: 25, bottom: 10),
         child: OutlinedButton(
             style: OutlinedButton.styleFrom(
               shape: RoundedRectangleBorder(
@@ -22,81 +22,120 @@ class StopPage extends StatelessWidget {
               ),
               backgroundColor: backgroundColor,
               side: BorderSide(
-                  color: Colors.blue, style: BorderStyle.solid, width: 0),
+                  color: Colors.blue.shade700,
+                  style: BorderStyle.solid,
+                  width: 2),
             ),
             onPressed: onPress,
             child: Text(
-              title,
-              style: Theme.of(context)
-                  .textTheme
-                  .button
-                  .merge(TextStyle(color: textColor)),
-            )),
-      );
+                title,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .button
+                    .merge(TextStyle(color: textColor)),
+              )),
+        );
     }
 
-    Color defaultTextColor = Colors.blue;
+    Color defaultTextColor = Colors.blue.shade700;
     Color defaultBackgroundColor = Colors.white;
 
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Padding(
         padding: const EdgeInsets.all(18.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Stack(
           children: [
-            Row(
+
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ElevatedButton(
-                  onPressed: () => Navigator.pop(context,"resume"),
-                  child: Icon(Icons.arrow_back),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
-                    shape: CircleBorder(),
+                Container(
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * .4,
+                  width: double.infinity,
+                  child: SvgPicture.asset(
+                    "assets/other/swing.svg",
                   ),
-                )
+                ),
+                Spacer(),
+                Text(
+                  "Pause",
+                  style: textTheme.headline1.copyWith(
+                      color: Colors.blue.shade700,
+                      fontSize: 40,
+                      letterSpacing: 1.5,
+                      fontWeight: FontWeight.bold),
+                ),
+                Spacer(),
+
+                getButton(
+                    title: "Restart Program",
+                    onPress: () async {
+                      String res = await showDialog(
+                          context: context, builder: (context) {
+                        return AlertDialog(
+                          content: Text("Restart Program form Beginning"),
+                          actions: [
+                            TextButton(onPressed: () =>
+                                Navigator.pop(context, "resume"),
+                                child: Text("Cancel")),
+                            TextButton(onPressed: () =>
+                                Navigator.pop(context, "restart"),
+                                child: Text("Restart"))
+                          ],
+                        );
+                      });
+                      Navigator.pop(context, res);
+                    },
+                    backgroundColor: defaultBackgroundColor,
+                    textColor: defaultTextColor),
+                getButton(
+                    title: "Quit",
+                    onPress: () async {
+                      bool value = await showDialog(
+                          context: context, builder: (builder) => QuitPage());
+                      value == true ?? Navigator.of(context).pop();
+                    },
+                    backgroundColor: defaultBackgroundColor,
+                    textColor: defaultTextColor),
+                Container(
+                  height: 50,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(left: 25, right: 25, bottom: 10),
+
+                  child: ElevatedButton(
+                    child: Text("Resume",),
+                    onPressed: () => Navigator.pop(context, "resume"),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.blue.shade700,
+
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),)
+                    ),
+                  ),
+                ),
+                Spacer(),
               ],
             ),
-            Spacer(),
-            Text(
-              "Pause",
-              style: textTheme.headline1.copyWith(
-                  color: Colors.white,
-                  fontSize: 40,
-                  letterSpacing: 1.5,
-                  fontWeight: FontWeight.bold),
+            Container(
+              height: 50,
+              child: Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () => Navigator.pop(context, "resume"),
+                    child: Icon(Icons.arrow_back),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue.shade700,
+                      shape: CircleBorder(),
+                    ),
+                  )
+                ],
+              ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            getButton(
-                title: "Start from beginning",
-                onPress: () {},
-                backgroundColor: defaultBackgroundColor,
-                textColor: defaultTextColor),
-            getButton(
-                title: "Restart this exercise",
-                onPress: () =>Navigator.pop(context,"restart"),
-                backgroundColor: defaultBackgroundColor,
-                textColor: defaultTextColor),
-            getButton(
-                title: "Quit",
-             onPress: () async {
-               bool value = await    showDialog(
-                    context: context, builder: (builder) => QuitPage());
-               value == true ?? Navigator.of(context).pop();
-                },
-                backgroundColor: defaultBackgroundColor,
-                textColor: defaultTextColor),
-            getButton(
-                title: "Resume",
-                onPress: () =>Navigator.pop(context,"resume"),
-                backgroundColor: Colors.blue,
-                textColor: Colors.white),
-            SizedBox(
-              height: 120,
-            )
           ],
         ),
       ),

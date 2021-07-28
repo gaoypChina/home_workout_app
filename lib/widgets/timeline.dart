@@ -58,7 +58,6 @@ class _MyCustomUIState extends State<MyCustomUI>
             )),
       );
     }
-    double _w = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Color(0xffF5F5F5),
       appBar: AppBar(
@@ -95,12 +94,7 @@ class _MyCustomUIState extends State<MyCustomUI>
 
                 Container(margin: EdgeInsets.symmetric(horizontal: 8),
                   child: Achievement(
-                    timeTitle: "Time",
-                    timeValue: 12,
-                    caloriesTitle: "Calories",
-                    caloriesValue: 14,
-                    exerciseTitle: "Exercise",
-                    exerciseValue: 16,
+
                   ),
                   decoration: BoxDecoration(
                       color: constants.widgetColor,

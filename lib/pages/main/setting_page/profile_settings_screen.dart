@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/constants/constants.dart';
-import 'package:full_workout/database/weight_db_helper.dart';
-import 'package:full_workout/helper/light_dark_mode.dart';
+import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/models/weight_model.dart';
-import 'package:full_workout/widgets/height_weightSelector.dart';
+import 'package:full_workout/components/height_weightSelector.dart';
 import 'package:intl/intl.dart';
 import '../../../helper/sp_helper.dart';
-
+import '../../../main.dart';
 
 class ProfileSettingScreen extends StatefulWidget {
   static const routeName = "profile-settings-screen";
@@ -125,20 +124,30 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Edit Profile",
+      appBar:
+
+      AppBar(
+        leading: IconButton(
+          onPressed:()=> Navigator.of(context).pop(),
+          icon: Icon(Icons.arrow_back,color: constants.appBarContentColor,),
+          color: constants.appBarContentColor,
         ),
+        title: Text(
+          "Profile",
+        style: TextStyle(color: constants.appBarContentColor)),
         backgroundColor: constants.appBarColor,
         elevation: 5,
         actions: [
           TextButton(
-            child: Text(
-              "Save",
-              style: TextStyle(color: constants.appBarColor),
-            ),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
+              style: TextButton.styleFrom(padding: EdgeInsets.only(right: 18)),
+              child: Text(
+                "Save",
+                style: TextStyle(color: constants.appBarContentColor),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                constants.getToast("Profile Saved Successfully");
+              }),
         ],
       ),
       body: SingleChildScrollView(
@@ -158,7 +167,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
               CustomTile(
                 backgroundColor: constants.tileColor,
                 title: "Name",
-                subTitle: (name != null) ? name : "",
+                subTitle: (name != null) ? name : "Enter your name",
                 onPressed: () async {
                   String previousValue = name;
                   String a = await showDialog(
@@ -181,7 +190,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 child: CustomTile(
                   backgroundColor: constants.tileColor,
                   title: "Birthday",
-                  subTitle: (date == null) ? "" : date,
+                  subTitle: (date == null) ? "Select your birthday" : date,
                   onPressed: () {
                     _selectDate(context);
                   },
@@ -193,7 +202,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 backgroundColor: constants.tileColor,
                 title: "Gender",
                 subTitle: (gender == null)
-                    ? ""
+                    ? "Select your gender"
                     : (gender == 0)
                         ? "Male"
                         : "Female",
@@ -221,7 +230,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 backgroundColor: constants.tileColor,
                 title: "Unit",
                 subTitle: (unit == null)
-                    ? ""
+                    ? "Select unit"
                     : (unit == 0)
                         ? "cm/kg"
                         : "in/lbs",
@@ -249,7 +258,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 backgroundColor: constants.tileColor,
                 title: "Height",
                 subTitle: (unit == null)
-                    ? ""
+                    ? "Enter your height"
                     : (unit == 0)
                         ? (heightValue == null)
                             ? ""
@@ -292,7 +301,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 backgroundColor: constants.tileColor,
                 title: "Weight",
                 subTitle: (weightValue == null)
-                    ? ""
+                    ? "Enter your weight"
                     : (unit == 0)
                         ? "${weightValue.toStringAsFixed(2)} kg"
                         : "${lbsWeight.round()} lbs",
@@ -378,8 +387,7 @@ class NameSelector extends StatelessWidget {
               "Cancel",
               style: textTheme.button.copyWith(color: Colors.grey),
             ),
-            onPressed: () => Navigator.of(context)
-                .pop(_nameInputController.text.toString())),
+            onPressed: () => Navigator.of(context).pop()),
         TextButton(
             child: Text(
               "Submit",
@@ -418,7 +426,7 @@ class _RadioSelectorState extends State<RadioSelector> {
     return AlertDialog(
       title: Text(widget.title),
       content: Container(
-        height: 112,
+        height: 120,
         child: Column(
           children: [
             RadioListTile(
