@@ -27,7 +27,6 @@ class _SoundSettingState extends State<SoundSetting> {
     setState(() {
 
     });
-    print("$mute, $voice, $coach $effect");
     super.initState();
   }
 
@@ -35,96 +34,121 @@ class _SoundSettingState extends State<SoundSetting> {
     mute = await spHelper.loadBool(spKey.mute);
     voice = await spHelper.loadBool(spKey.voice);
     coach = await spHelper.loadBool(spKey.coach);
-    effect = await spHelper.loadBool(spKey.effect) ;
+    effect = await spHelper.loadBool(spKey.effect);
 
-    mute = mute==null ? false : mute;
+    print("$mute, $voice, $coach $effect");
+
+
+    mute = mute == null ? false : mute;
     voice = voice == null ? true : voice;
     coach = coach == null ? true : coach;
     effect = effect == null ? true : effect;
+    setState(() {});
   }
 
   onMuteToggle(bool value) {
-    spHelper.saveBool(spKey.mute, value);
     setState(() {
       mute = value;
+      voice = false;
+      coach = false;
+      effect = false;
     });
-    if (value) {
-      setState(() {
-        voice = false;
-        coach = false;
-        effect = false;
-      });
-    } else {
-      intiValue();
-      setState(() {});
-    }
   }
 
   onVoiceToggle(bool value) async{
-   await spHelper.saveBool(spKey.voice, value);
     setState(() {
       voice = value;
+      mute = false;
     });
   }
 
   onCoachToggle(bool value) {
-    spHelper.saveBool(spKey.coach, value);
     setState(() {
       coach = value;
+      mute = false;
     });
   }
 
   onEffectToggle(bool value) {
-    spHelper.saveBool(spKey.effect, value);
     setState(() {
       effect = value;
+      mute = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    getSwitch(String title, IconData icon, bool value, Function onToggle) {
-      return ListTile(
-        tileColor: constants.tileColor,
+    getSwitch(String title, IconData icon, bool value, Function onToggle,
+        String subTile) {
+      return Material(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(12))),
-        leading: CircleAvatar(
-          child: Icon(icon),
-        ),
-        title: Text(
-          title,
-          style: constants.contentTextStyle.copyWith(fontSize: 16),
-        ),
-        trailing: Switch(
+        elevation: 2,
+        child: SwitchListTile(
+          subtitle: Text(subTile),
           value: value,
+          tileColor: constants.tileColor,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12))),
+          secondary: CircleAvatar(
+            child: Icon(icon),
+          ),
+          title: Text(
+            title,
+            style: constants.contentTextStyle.copyWith(fontSize: 16),
+          ),
           onChanged: (newVal) => onToggle(newVal),
         ),
       );
     }
 
+    getSwitchValue(bool val) {
+      return val ? "On" : "Off";
+    }
+
     return Scaffold(
-      appBar:AppBar(backgroundColor: Colors.white,
-        title:Text("Sound Setting",style: TextStyle(color: Colors.black),),leading: TextButton(
-        child: Icon(
-          Icons.keyboard_backspace_sharp,
-          color: Colors.black,
+      appBar: AppBar(
+        actions: [
+          TextButton(
+              onPressed: () {
+                spHelper.saveBool(spKey.mute, mute);
+                spHelper.saveBool(spKey.coach, coach);
+                spHelper.saveBool(spKey.voice, voice);
+                spHelper.saveBool(spKey.effect, effect);
+                Navigator.of(context).pop();
+                constants.getToast("Sound Settings Saved");
+              },
+              child: Text("Save",
+                  style: TextStyle(
+                    color: constants.appBarContentColor,
+                  )))
+        ],
+        title: Text(
+          "Sound Setting",
+          style: TextStyle(color: constants.appBarContentColor),
         ),
-        onPressed: Navigator.of(context).pop,
-      ),) ,
+      ),
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 12),
         shrinkWrap: true,
         children: [
-          getSwitch("Mute", Icons.volume_up, mute, onMuteToggle),
-          SizedBox(height: 10,),
           getSwitch(
-              "Coach Assistant", Icons.record_voice_over, coach, onCoachToggle),
-          SizedBox(height: 10,),
+              "Mute", Icons.volume_up, mute, onMuteToggle, "Mute all Sound"),
+          SizedBox(
+            height: 10,
+          ),
+          getSwitch("Coach Assistant", Icons.record_voice_over, coach,
+              onCoachToggle, "Coach Assistant " + getSwitchValue(coach)),
+          SizedBox(
+            height: 10,
+          ),
           getSwitch("Voice Guid", MaterialCommunityIcons.speaker_wireless,
-              voice, onVoiceToggle),
-          SizedBox(height: 10,),
+              voice, onVoiceToggle, "Voice Guid " + getSwitchValue(voice)),
+          SizedBox(
+            height: 10,
+          ),
           getSwitch("Sound Effect", MaterialCommunityIcons.bell, effect,
-              onEffectToggle)
+              onEffectToggle, "Sound Effect " + getSwitchValue(effect))
         ],
       ),
 
