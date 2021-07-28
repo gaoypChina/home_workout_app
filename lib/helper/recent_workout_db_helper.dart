@@ -6,9 +6,9 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DatabaseHelper {
-  static final DatabaseHelper _instance = new DatabaseHelper.internal();
-  factory DatabaseHelper() => _instance;
+class RecentDatabaseHelper {
+  static final RecentDatabaseHelper _instance = new RecentDatabaseHelper.internal();
+  factory RecentDatabaseHelper() => _instance;
   final String tableName = "Workout";
   final String columnId = "id";
   final String columnDate = "date";
@@ -28,7 +28,7 @@ class DatabaseHelper {
     return _db;
   }
 
-  DatabaseHelper.internal();
+  RecentDatabaseHelper.internal();
 
   initDb() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
@@ -91,6 +91,26 @@ class DatabaseHelper {
     var dbClient = await db;
     return await dbClient.update(tableName, recentWorkout.toMap(),
         where: "$columnId = ?", whereArgs: [recentWorkout.id]);
+  }
+
+  Future<List> getRangeData(DateTime selectedFromDate, selectedToDate) async {
+    String twoDigitDate(String date) {
+      if (date.length <= 1) {
+        return "0$date";
+      }
+      return date;
+    }
+
+    String fromDate =
+        "${selectedFromDate.year}-${twoDigitDate(selectedFromDate.month.toString())}-${twoDigitDate(selectedFromDate.day.toString())}";
+    String toDate =
+        "${selectedToDate.year}-${twoDigitDate(selectedToDate.month.toString())}-${twoDigitDate(selectedToDate.day.toString())}";
+    print("fromDate: $fromDate, toDate: $toDate");
+
+    var dbClient = await db;
+    var result = await dbClient.rawQuery(
+        "SELECT * FROM $tableName WHERE $columnDate >= '$fromDate' AND $columnDate <= '$toDate' ORDER BY $columnDate DESC");
+    return result.toList();
   }
 
   Future close() async {
