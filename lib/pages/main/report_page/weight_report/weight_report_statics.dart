@@ -6,39 +6,47 @@ class WeightReportStatics extends StatefulWidget {
   _WeightReportStaticsState createState() => _WeightReportStaticsState();
 }
 
-bool isLoading = true;
 class _WeightReportStaticsState extends State<WeightReportStatics> {
   WeightDatabaseHelper _databaseHelper = WeightDatabaseHelper();
   String minWeight = "";
   String maxWeight = "";
   String currWeight = "";
+  bool isLoading = true;
+
   loadData() async {
-  List<dynamic> minWeightDB = await  _databaseHelper.getMinWeight();
-  print(minWeightDB);
-  minWeight = minWeightDB.length == 0?"NaN": minWeightDB[0]["MIN(weight)"].toString();
+    setState(() {
+      isLoading = true;
+    });
+    List<dynamic> minWeightDB = await _databaseHelper.getMinWeight();
+    print(minWeightDB);
+    minWeight = minWeightDB[0]["MIN(weight)"] == null
+        ? "NaN"
+        : minWeightDB[0]["MIN(weight)"].toString();
 
-  List<dynamic> maxWeightDB = await  _databaseHelper.getMaxWeight();
-  print(maxWeightDB);
-  maxWeight = maxWeightDB.length == 0?"NaN": maxWeightDB[0]["MAX(weight)"].toString();
+    List<dynamic> maxWeightDB = await _databaseHelper.getMaxWeight();
+    print(maxWeightDB);
+    maxWeight = maxWeightDB[0]["MAX(weight)"] == null
+        ? "NaN"
+        : maxWeightDB[0]["MAX(weight)"].toString();
 
-  List<dynamic> currWeightDB = await _databaseHelper.getCurrWeight();
-  print(currWeightDB);
-  currWeight =minWeight.length==0 ?"NaN": currWeightDB[0]["weight"].toString();
+    List<dynamic> currWeightDB = await _databaseHelper.getCurrWeight();
+    print(currWeightDB.toString() + "error");
+    currWeight = currWeightDB.length ==0
+        ? "NaN"
+        : currWeightDB[0]["weight"].toString();
 
-  print(minWeight);
-  print(maxWeight);
-  print(currWeight);
+    print(minWeight);
+    print(maxWeight);
+    print(currWeight);
 
-  setState(() {
-    isLoading = false;
-  });
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   void initState() {
     loadData();
-
-
     super.initState();
   }
 
@@ -59,6 +67,7 @@ class _WeightReportStaticsState extends State<WeightReportStatics> {
             ),
             Text(title),
             Spacer(),
+            isLoading?CircularProgressIndicator():
             Text(value)
           ],
         ),

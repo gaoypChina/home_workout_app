@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
@@ -10,8 +12,7 @@ import 'package:full_workout/models/weight_model.dart';
 import 'package:full_workout/pages/main/home_page/leading_widget.dart';
 import 'package:full_workout/pages/main/report_page/weight_report/weight_chart.dart';
 import 'package:full_workout/pages/main/report_page/weight_report/weight_report_statics.dart';
-import 'package:full_workout/pages/workout_page/report_page.dart';
-import 'package:full_workout/widgets/height_weightSelector.dart';
+import 'package:full_workout/components/height_weightSelector.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 
@@ -35,7 +36,7 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
   double weightValue;
   double lbsWeight;
   List<String> rangeTypeList = ['Week', 'Month', 'Custom'];
-  String rangeType = "Week";
+  String rangeType = "Month";
   double initWeight = 0.0;
   DateTime selectedMnth;
 
@@ -48,6 +49,17 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
         weightValue = value;
         lbsWeight = value * 2.20462 == null ? 0 : value * 2.20462;
       });
+    });
+
+    DateTime now = DateTime.now();
+    await _loadRangeData(
+        DateTime(now.year, now.month, 1), DateTime(now.year, now.month + 1, 1));
+
+    firstDate = DateFormat.yMMMd().format(DateTime(now.year, now.month - 1, 1));
+    lastDate = DateFormat.yMMMd().format(DateTime.now());
+
+    setState(() {
+      isLoading = false;
     });
   }
 
@@ -125,23 +137,57 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
     }
 
     setState(() {
+      rangeType = value;
       isLoading = false;
     });
   }
 
+  @override
+  void initState() {
+    _loadData();
+    super.initState();
+  }
+
   getDetail() {
-    return Column(children: [
-      ...weight.map((item) {
+    print(weight.length.toString() + ": weight length");
+    return (weight.length == 0)
+        ? getEmptyList()
+        : Column(children: [
+            ...weight.map((item) {
+              onDelete() async {
+                var userRes = await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(16))),
+                        title: Text("Do you want to delete weight record?"),
 
-        onDelete() async {
-          int res = await weightDb.deleteWeight(item.weightModel.key);
-          if (res == 1) {
-            constants.getToast("Weight deleted successfully");
-          }
-          print(res);
-        }
+                        actions: [
+                          TextButton(
+                              onPressed: () => Navigator.pop(context, true),
+                              child: Text("Yes")),
+                          TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: Text("No")),
+                        ],
+                      );
+                    });
 
-        onEdit() async {
+                if (userRes == true) {
+                  int res = await weightDb.deleteWeight(item.weightModel.key);
+                  if (res == 1) {
+                    weight.removeWhere((element) =>
+                        element.weightModel.key == item.weightModel.key);
+                    setState(() {});
+                    constants.getToast("Weight Record deleted successfully");
+                  }
+                } else
+                  return;
+              }
+
+              onEdit() async {
           double value = await showDialog(
               context: context,
               builder: (context) => HeightWeightSelector(
@@ -163,23 +209,29 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
             String key = DateFormat.yMd().format(selectedDate).toString();
             WeightModel weightModel =
                 WeightModel(selectedDate.toIso8601String(), toSave, key);
-            if (weightModel.weight == null) return;
-            await weightDb.addWeight(toSave, weightModel, key);
-            setState(() {
-              weightValue = toSave;
-              lbsWeight = toSave * 2.20462;
-            });
-          }
-          var currModel = item.weightModel;
-          WeightModel weightModel =
-              WeightModel(currModel.date, toSave, currModel.key);
-          int res =
-              await weightDb.addWeight(toSave, weightModel, currModel.key);
-          if (value != null) {
-            constants.getToast("Weight update successfully");
-          }
-          print(weightModel.weight);
-        }
+                  if (weightModel.weight == null) return;
+                  await weightDb.addWeight(toSave, weightModel, key);
+                  setState(() {
+                    weightValue = toSave;
+                    lbsWeight = toSave * 2.20462;
+                  });
+                }
+                var currModel = item.weightModel;
+                WeightModel weightModel =
+                    WeightModel(currModel.date, toSave, currModel.key);
+                await weightDb.addWeight(toSave, weightModel, currModel.key);
+                if (value != null) {
+                  weight.forEach((element) {
+                    if (element.weightModel.key == currModel.key) {
+                      weight.removeAt(element.index);
+                      weight.insert(element.index,
+                          WeightList(weightModel: weightModel, index: 0));
+                      setState(() {});
+                    }
+                  });
+                  constants.getToast("Weight update successfully");
+                }
+              }
 
         String formatedDay =
             DateFormat.yMMMd().format(DateTime.parse(item.weightModel.date));
@@ -329,7 +381,8 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
 
   getDateRange() {
     return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 18, top: 10),
+      padding:
+          const EdgeInsets.only(left: 18.0, right: 18, top: 10, bottom: 10),
       child: Container(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -352,20 +405,42 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
     );
   }
 
-  @override
-  void initState() {
-    onRangeChange(rangeType[0]);
-    _loadData();
-    super.initState();
+  ///widget
+
+  tab2() {
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 18.0),
+            child: Text(
+              "Weight Record",
+              style: textTheme.subtitle1.copyWith(fontWeight: FontWeight.w700),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          WeightChart(),
+          SizedBox(
+            height: 10,
+          ),
+          WeightReportStatics(),
+          SizedBox(
+            height: 100,
+          ),
+        ],
+      ),
+    );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  tab1() {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Weight Tracker"),
-        actions: getLeading(context),
-      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       floatingActionButton: Container(
@@ -399,6 +474,27 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                   WeightModel(selectedDate.toIso8601String(), toSave, key);
               if (weightModel.weight == null) return;
               await weightDb.addWeight(toSave, weightModel, key);
+              if (weight.length == 0) {
+                weight.insert(
+                    0, WeightList(index: 0, weightModel: weightModel));
+              } else {
+                weight.insert(
+                    0, WeightList(index: 0, weightModel: weightModel));
+                setState(() {});
+              }
+
+              if (value != null) {
+                weight.forEach((element) {
+                  if (element.weightModel.key == weight[0].weightModel.key) {
+                    weight.removeAt(element.index);
+                    weight.insert(element.index,
+                        WeightList(weightModel: weightModel, index: 0));
+                  }
+                });
+                setState(() {});
+                constants.getToast("Weight update successfully");
+              }
+
               setState(() {
                 weightValue = toSave;
                 lbsWeight = toSave * 2.20462;
@@ -418,82 +514,100 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
           ),
         ),
       ),
-      body: SafeArea(
-        child: isLoading == true
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 18.0),
-                      child: Text(
-                        "Weight Record",
-                        style: textTheme.subtitle1
-                            .copyWith(fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    WeightChart(),
-                    WeightReportStatics(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    constants.getDivider(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Weight Record",
-                            style: textTheme.subtitle1
-                                .copyWith(fontWeight: FontWeight.w700),
-                          ),
-                          Spacer(),
-                          Container(
-                            padding: const EdgeInsets.all(0.0),
-                            child: DropdownButton<String>(
-                                value: rangeType,
-                                elevation: 5,
-                                style: TextStyle(color: Colors.black),
-                                items: rangeTypeList
-                                    .map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                                hint: Text(
-                                  rangeType,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                onChanged: (String value) =>
-                                    onRangeChange(value)),
-                          )
-                        ],
-                      ),
-                    ),
-                    getDateRange(),
-                    getDetail(),
-                    if (weight.length == 0) getEmptyList(),
-                    SizedBox(
-                      height: 80,
-                    )
-                  ],
-                ),
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              child: Row(
+                children: [
+                  Text(
+                    "Weight Record",
+                    style: textTheme.subtitle1
+                        .copyWith(fontWeight: FontWeight.w700),
+                  ),
+                  Spacer(),
+                  Container(
+                    child: DropdownButton<String>(
+                        value: rangeType,
+                        elevation: 5,
+                        style: TextStyle(color: Colors.black),
+                        items: rangeTypeList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                value,
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        hint: Text(
+                          rangeType,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        onChanged: (String value) => onRangeChange(value)),
+                  )
+                ],
               ),
+            ),
+            getDateRange(),
+            getDetail(),
+            SizedBox(
+              height: 80,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          //  backwardsCompatibility: false,
+          // brightness: Brightness.dark,
+          // systemOverlayStyle:
+          //     SystemUiOverlayStyle(statusBarColor: Colors.blue.shade700),
+
+          title: Text("Weight Tracker"),
+          bottom: TabBar(
+            indicatorColor: Colors.white,
+            tabs: [
+              Tab(
+                icon: Icon(Icons.stacked_line_chart_outlined),
+                child: Text("STATICS"),
+              ),
+              Tab(
+                icon: Icon(Icons.history),
+                child: Text("HISTORY"),
+              ),
+            ],
+          ),
+          actions: getLeading(context, color: Colors.white),
+        ),
+        body: TabBarView(
+          children: [
+            isLoading == true
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : tab1(),
+            tab2()
+          ],
+        ),
       ),
     );
   }
