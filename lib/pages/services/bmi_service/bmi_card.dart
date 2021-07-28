@@ -310,7 +310,7 @@ class _BmiCardState extends State<BmiCard> {
       Row(
             children: [
               Text(
-                  "BMI(Kg/m^2) : 0.0",
+                  "BMI Calculator",
                   style: titleStyle
               ),
               Spacer(),
@@ -330,7 +330,7 @@ class _BmiCardState extends State<BmiCard> {
           Row(
             children: [
               Text(
-                  "BMI(Kg/m^2) : $bmi",
+                  "BMI Calculator",
                   style: titleStyle
               ),
               Spacer(),

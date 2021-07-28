@@ -25,17 +25,20 @@ class _BMIPickerState extends State<BMIPicker> {
   @override
   Widget build(BuildContext context) {
 
-    double rawInch =widget.height/2.54;
-    int feet =rawInch ~/12;
-    double inch = rawInch - feet*12;
+    // double rawInch =widget.height/2.54;
+    // int feet =rawInch ~/12;
+    // double inch = rawInch - feet*12;
+    //
+    // double lbsWeight = widget.weight * 2.205;
 
-    double lbsWeight = widget.weight * 2.205;
+    String heightCm = widget.height == null ? 0.toString() : widget.height.toStringAsFixed(0);
+    String weightKg = widget.weight == null ? 0.toString() : widget.weight.toStringAsFixed(0);
 
 
-        TextEditingController _cmController = TextEditingController(text: widget.height.toStringAsFixed(0));
+        TextEditingController _cmController = TextEditingController(text: heightCm);
     TextEditingController _feetController = TextEditingController();
     TextEditingController _inchController = TextEditingController();
-    TextEditingController _kgController = TextEditingController(text: widget.weight.toStringAsFixed(0));
+    TextEditingController _kgController = TextEditingController(text: weightKg);
     TextEditingController _lbsController = TextEditingController();
 
 
@@ -53,7 +56,7 @@ class _BMIPickerState extends State<BMIPicker> {
     onSubmit() {
       if (heightIndex == 0) {
         height = double.tryParse(_cmController.text);
-        if (height == null) {
+        if (height == null || height <=50) {
           showToast("Please enter valid height value");
         }
       }
@@ -61,7 +64,7 @@ class _BMIPickerState extends State<BMIPicker> {
       if (heightIndex == 1) {
         double feet = double.tryParse(_feetController.text);
         double inch = double.tryParse(_inchController.text);
-        if (feet == null || inch == null) {
+        if (feet == null || inch == null || feet <=2) {
           showToast("Please enter valid height value");
         } else {
           double inchHeight = (feet * 12) + inch;
@@ -71,21 +74,22 @@ class _BMIPickerState extends State<BMIPicker> {
 
       if (weightIndex == 0) {
         weight = double.tryParse(_kgController.text);
-        if (weight == null) {
+        if (weight == null|| weight <=20 ) {
           showToast("Please enter valid weight value");
         }
+
       }
 
       if (weightIndex == 1) {
         double lbsWeight = double.tryParse(_lbsController.text);
-        if (lbsWeight == null) {
+        if (lbsWeight == null || lbsWeight <=50) {
           showToast("Please enter valid weight value");
         } else {
           weight = lbsWeight / 2.205;
           print(weight);
         }
       }
-      if (height != null && weight != null){
+      if (height != null && weight != null && height >50 && weight >20){
         Navigator.pop(context, [height, weight]);
       }
 
@@ -97,8 +101,8 @@ class _BMIPickerState extends State<BMIPicker> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16))),
         contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 16),
-        content: ListView(
-          shrinkWrap: true,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 4.0),
@@ -109,7 +113,7 @@ class _BMIPickerState extends State<BMIPicker> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 16,
             ),
             Align(
               alignment: Alignment.center,
@@ -117,12 +121,13 @@ class _BMIPickerState extends State<BMIPicker> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: ToggleSwitch(
                   initialLabelIndex: heightIndex,
-                  cornerRadius: 20.0,
+                  minWidth: 100,
+                  cornerRadius: 10.0,
                   activeFgColor: Colors.white,
                   inactiveBgColor: Colors.grey,
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
-                  labels: ['Cm', 'Feet'],
+                  labels: ['CM', 'Feet'],
                   //   icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
                   activeBgColors: [
                     [Colors.blue.shade700],
@@ -201,7 +206,7 @@ class _BMIPickerState extends State<BMIPicker> {
                     ),
                   ),
             SizedBox(
-              height: 30,
+              height: 40,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 4.0),
@@ -212,7 +217,7 @@ class _BMIPickerState extends State<BMIPicker> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 16,
             ),
 
             Align(
@@ -220,14 +225,14 @@ class _BMIPickerState extends State<BMIPicker> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: ToggleSwitch(
-                  minWidth: 90.0,
+                  minWidth: 100,
                   initialLabelIndex: weightIndex,
-                  cornerRadius: 20.0,
+                  cornerRadius: 10.0,
                   activeFgColor: Colors.white,
                   inactiveBgColor: Colors.grey,
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
-                  labels: ['Kg', 'Lbs'],
+                  labels: ['KG', 'LBS'],
                   activeBgColors: [
                     [Colors.blue.shade700],
                     [Colors.blue.shade700]
@@ -251,7 +256,7 @@ class _BMIPickerState extends State<BMIPicker> {
                     width: 200,
                     child: TextField(
                       decoration: InputDecoration(
-                        suffix: Text("Kg"),
+                        suffix: Text("KG"),
                         labelText: "Kg",
                         border: new OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
