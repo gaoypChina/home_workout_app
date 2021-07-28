@@ -36,7 +36,10 @@ Workout armCurlsCrunchLeft = Workout(
   ],
   videoLink:
       'https://www.youtube.com/watch?v=pxsOe8MJq68&ab_channel=LeapFitness',
-  showTimer: null,
+  showTimer: false,
+  beginnerRap: 10,
+  intermediateRap: 14,
+  advanceRap: 18,
   imageSrc: 'assets/all-workouts/armCurlsCrunchLeft.gif',
 );
 
@@ -50,7 +53,10 @@ Workout armCurlsCrunchLeft2 = Workout(
   ],
   videoLink:
       'https://www.youtube.com/watch?v=pxsOe8MJq68&ab_channel=LeapFitness',
-  showTimer: null,
+  showTimer: false,
+  beginnerRap: 8,
+  intermediateRap: 12,
+  advanceRap: 14,
   imageSrc: 'assets/all-workouts/armCurlsCrunchLeft.gif',
 );
 
@@ -64,7 +70,10 @@ Workout armCurlsCrunchRight = Workout(
     ],
     videoLink:
         'https://www.youtube.com/watch?v=pxsOe8MJq68&ab_channel=LeapFitness',
-    showTimer: null,
+    showTimer: false,
+    beginnerRap: 10,
+    intermediateRap: 14,
+    advanceRap: 18,
     imageSrc: 'assets/all-workouts/armCurlsCrunchRight.gif');
 
 Workout armCurlsCrunchRight2 = Workout(
@@ -77,7 +86,10 @@ Workout armCurlsCrunchRight2 = Workout(
     ],
     videoLink:
         'https://www.youtube.com/watch?v=pxsOe8MJq68&ab_channel=LeapFitness',
-    showTimer: null,
+    showTimer: false,
+    beginnerRap: 8,
+    intermediateRap: 12,
+    advanceRap: 14,
     imageSrc: 'assets/all-workouts/armCurlsCrunchRight.gif');
 
 Workout skippingWithOutRope = Workout(
@@ -89,7 +101,8 @@ Workout skippingWithOutRope = Workout(
   ],
   videoLink:
       'https://www.youtube.com/watch?v=bTJW3LUwrOA&ab_channel=HarrisonAndFam',
-  showTimer: null,
+  showTimer: true,
+  duration: 30,
   imageSrc: 'assets/all-workouts/skippingWithOutRope.gif',
 );
 
@@ -102,7 +115,10 @@ Workout tricepsPushUp = Workout(
   ],
   videoLink:
       'https://www.youtube.com/watch?v=kZi0j-7rDe8&ab_channel=Well%2BGood',
-  showTimer: null,
+  showTimer: false,
+  beginnerRap: 8,
+  intermediateRap: 12,
+  advanceRap: 16,
   imageSrc: 'assets/all-workouts/tricepsPushUp.gif',
 );
 
@@ -115,7 +131,10 @@ Workout tricepsPushUp2 = Workout(
   ],
   videoLink:
       'https://www.youtube.com/watch?v=kZi0j-7rDe8&ab_channel=Well%2BGood',
-  showTimer: null,
+  showTimer: false,
+  beginnerRap: 6,
+  intermediateRap: 8,
+  advanceRap: 12,
   imageSrc: 'assets/all-workouts/tricepsPushUp.gif',
 );
 
@@ -142,7 +161,8 @@ Workout armCircleCounterClockWise = Workout(
     ],
     videoLink:
         'https://www.youtube.com/watch?v=140RTNMciH8&ab_channel=FitnessBlender',
-    showTimer: null,
+    showTimer: true,
+    duration: 30,
     imageSrc: 'assets/all-workouts/armCircleCounterClowk.gif');
 
 Workout diagonalPlank = Workout(
@@ -154,21 +174,11 @@ Workout diagonalPlank = Workout(
     ],
     videoLink:
         'https://www.youtube.com/watch?v=lsoQDZkmQ0c&ab_channel=BrianAganad',
-    showTimer: null,
+    showTimer: false,
+    beginnerRap: 10,
+    intermediateRap: 14,
+    advanceRap: 18,
     imageSrc: 'assets/all-workouts/digonalPlank.gif');
-
-Workout bodySaw = Workout(
-  title: 'Body Saw',
-  steps: [
-    'Place the restraints so they are about 6 inches off the ground.'
-        'Place your feet in the stirrups so that the tops of your feet are facing downwards.'
-        'Get on your forearms and make your body into a straight line parallel to the floor.'
-        'Keeping your body parallel to the floor push with your forearms and rock your body 6-8 inches slowly backwards and then back.'
-  ],
-  videoLink: 'youtube.com/watch?v=FGLRgxgG084&ab_channel=purplepatchfitness',
-  showTimer: null,
-  imageSrc: 'assets/all-workouts/bodySaw.gif',
-);
 
 Workout punches = Workout(
   title: 'Punches',
@@ -180,7 +190,10 @@ Workout punches = Workout(
     'Switch sides and repeat.',
   ],
   videoLink: 'https://www.youtube.com/watch?v=M_4Vt5lfEUE&ab_channel=DAREBEE',
-  showTimer: null,
+  showTimer: false,
+  beginnerRap: 10,
+  intermediateRap: 14,
+  advanceRap: 18,
   imageSrc: 'assets/all-workouts/punches.gif',
 );
 
@@ -194,7 +207,10 @@ Workout punches2 = Workout(
     'Switch sides and repeat.',
   ],
   videoLink: 'https://www.youtube.com/watch?v=M_4Vt5lfEUE&ab_channel=DAREBEE',
-  showTimer: null,
+  showTimer: false,
+  beginnerRap: 8,
+  intermediateRap: 12,
+  advanceRap: 16,
   imageSrc: 'assets/all-workouts/punches.gif',
 );
 
@@ -209,7 +225,10 @@ Workout wallPushUps = Workout(
   ],
   videoLink:
       'https://www.youtube.com/watch?v=YB0egDzsu18&ab_channel=StylecrazeFitness',
-  showTimer: null,
+  showTimer: false,
+  beginnerRap: 10,
+  intermediateRap: 14,
+  advanceRap: 18,
   imageSrc: 'assets/all-workouts/wallPushUps.gif',
 );
 
@@ -220,9 +239,9 @@ Workout tricepsStretchLeft = Workout(
       'Keep the elbow up as you bend your arm behind your head.',
       'Take the right hand and gently pull the left elbow towards the right.',
     ],
-    videoLink:
-        'https://www.youtube.com/results?search_query=triceps+stretch&ab_channel=Howcast',
-    showTimer: null,
+    videoLink: 'https://youtu.be/nbHOmIYMazk',
+    showTimer: true,
+    duration: 30,
     imageSrc: 'assets/all-workouts/tricepsStretchLeft.gif');
 
 Workout tricepsStretchRight = Workout(
@@ -233,9 +252,9 @@ Workout tricepsStretchRight = Workout(
     'Keep the elbow up as you bend your arm behind your head.',
     'Take the right hand and gently pull the left elbow towards the right.',
   ],
-  videoLink:
-      'https://www.youtube.com/results?search_query=triceps+stretch&ab_channel=Howcast',
-  showTimer: null,
+  videoLink: 'https://youtu.be/nbHOmIYMazk',
+  showTimer: true,
+  duration: 30,
   imageSrc: 'assets/all-workouts/tricepsStretchRight.gif',
 );
 
@@ -246,9 +265,9 @@ Workout standingBicepsStretchRight = Workout(
       'Extend your right arm and put your body right hand on the wall.',
       'Then gently turn your body to the right.',
     ],
-    videoLink:
-        'https://www.youtube.com/results?search_query=standing+biceps+stretch+left&ab_channel=BaptistHealthSF',
-    showTimer: null,
+    videoLink: 'https://youtu.be/QY4gCIYbGQk',
+    showTimer: true,
+    duration: 30,
     imageSrc: 'assets/all-workouts/standingBicepsStretchRight.jpg');
 
 Workout standingBicepsStretchLeft = Workout(
@@ -258,9 +277,9 @@ Workout standingBicepsStretchLeft = Workout(
       'Extend your left arm and put your body left hand on the wall.',
       'Then gently turn your body to the right.',
     ],
-    videoLink:
-        'https://www.youtube.com/results?search_query=standing+biceps+stretch+left&ab_channel=BaptistHealthSF',
-    showTimer: null,
+    videoLink: 'https://youtu.be/QY4gCIYbGQk',
+    showTimer: true,
+    duration: 30,
     imageSrc: 'assets/all-workouts/standingBicepsStretchLeft.jpg');
 
 //Legs
@@ -325,7 +344,7 @@ Workout curtsyLunges = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=Ix_SFZVDy0I&ab_channel=Tone%26Sculpt',
   showTimer: false,
-  advanceRap: 14,
+  advanceRap: 16,
   imageSrc: 'assets/all-workouts/curtsyLunges.gif',
 );
 
@@ -341,7 +360,7 @@ Workout bottomLegLiftLeft = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=upsdqLsXvSY&ab_channel=FastpitchPower',
   showTimer: false,
-  advanceRap: 14,
+  advanceRap: 16,
   beginnerRap: 10,
   intermediateRap: 12,
   imageSrc: 'assets/all-workouts/bottomLegLift_L.gif',
@@ -359,7 +378,7 @@ Workout bottomLegLiftRight = Workout(
     videoLink:
         'https://www.youtube.com/watch?v=upsdqLsXvSY&ab_channel=FastpitchPower',
     showTimer: false,
-    advanceRap: 14,
+    advanceRap: 16,
     beginnerRap: 10,
     intermediateRap: 12,
     imageSrc: 'assets/all-workouts/bottomLegLift_R.gif');
@@ -372,8 +391,7 @@ Workout sumoSquat = Workout(
     'Keeping your back straight and your upper body lifted.',
     'Make sure you’re pushing through your heels and engaging your inner thighs as you come back to your starting position.',
   ],
-  videoLink:
-      'https://www.youtube.com/results?search_query=sumo+squat&ab_channel=SugarySixPack',
+  videoLink: 'https://youtu.be/kjlfpqXnyL8',
   showTimer: false,
   advanceRap: 16,
   beginnerRap: 12,
@@ -391,14 +409,14 @@ Workout fireHydrantLeft = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=ZVfcRHhcBgg&feature=emb_logo&ab_channel=Children%27sHospitalColorado',
   showTimer: false,
-  advanceRap: 14,
+  advanceRap: 16,
   intermediateRap: 12,
   beginnerRap: 10,
   imageSrc: 'assets/all-workouts/fire_hydrant_L.gif',
 );
 
 Workout fireHydrantRight = Workout(
-  title: 'Fire Hydrant Left',
+  title: 'Fire Hydrant Right',
   steps: [
     'Start on your hands and knees. Place your shoulders above your hands and your hips above your knees. Tighten your core and look down.',
     'Lift your left leg away from your body at a 45-degree angle. Keep your knee at 90 degrees.',
@@ -407,7 +425,7 @@ Workout fireHydrantRight = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=ZVfcRHhcBgg&feature=emb_logo&ab_channel=Children%27sHospitalColorado',
   showTimer: false,
-  advanceRap: 14,
+  advanceRap: 16,
   intermediateRap: 12,
   beginnerRap: 10,
   imageSrc: 'assets/all-workouts/fire_hydrant_R.gif',
@@ -428,41 +446,6 @@ Workout jumpingSquats = Workout(
   imageSrc: 'assets/all-workouts/jumpingSquats.gif',
 );
 
-Workout gluteKickBackLeft = Workout(
-  title: 'Glute Kick Back Left',
-  steps: [
-    'Kneel on the floor or on an exercise mat with your arms extended in front of you.',
-    'You should be in a kneeling push-up position with your arms shoulder width apart.',
-    'Lift your right leg until your hamstrings are in line with your back.',
-    'Contract your glutes while performing this part of the exercise and hold the contraction at the top for a second.',
-    'Return to the starting position and repeat the process with your left leg.',
-  ],
-  videoLink:
-      'https://www.youtube.com/watch?v=BNDw4ciQoQI&ab_channel=NuffieldHealth',
-  showTimer: false,
-  advanceRap: 14,
-  beginnerRap: 10,
-  intermediateRap: 12,
-  imageSrc: 'assets/all-workouts/gluteKickBackLeft.gif',
-);
-
-Workout gluteKickBackRight = Workout(
-  title: 'Glute Kick Back Right',
-  steps: [
-    'Kneel on the floor or on an exercise mat with your arms extended in front of you.',
-    'You should be in a kneeling push-up position with your arms shoulder width apart.',
-    'Lift your right leg until your hamstrings are in line with your back.',
-    'Contract your glutes while performing this part of the exercise and hold the contraction at the top for a second.',
-    'Return to the starting position and repeat the process with your left leg.',
-  ],
-  videoLink:
-      'https://www.youtube.com/watch?v=BNDw4ciQoQI&ab_channel=NuffieldHealth',
-  showTimer: false,
-  advanceRap: 14,
-  beginnerRap: 10,
-  intermediateRap: 12,
-  imageSrc: 'assets/all-workouts/gluteKickBackRight.gif',
-);
 
 Workout wallSit = Workout(
     title: 'Wall Sit',
@@ -627,6 +610,7 @@ Workout rhomboidPulls = Workout(
       'https://www.youtube.com/watch?v=KMgAmFD-Z6U&ab_channel=NAWRIHELATHYLIFE',
   showTimer: false,
   beginnerRap: 12,
+  intermediateRap: 16,
   imageSrc: 'assets/all-workouts/rhomboidPulls.gif',
 );
 
@@ -643,6 +627,7 @@ Workout sideArmRaise = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=eEcUyYlf8UI&ab_channel=LeapFitness',
   showTimer: false,
+  intermediateRap: 16,
   beginnerRap: 12,
   imageSrc: 'assets/all-workouts/side arm raise.gif',
 );
@@ -686,6 +671,8 @@ Workout rhomboidPulls2 = Workout(
       'https://www.youtube.com/watch?v=KMgAmFD-Z6U&ab_channel=NAWRIHELATHYLIFE',
   showTimer: false,
   beginnerRap: 10,
+  intermediateRap: 14,
+  advanceRap: 18,
   imageSrc: 'assets/all-workouts/rhomboidPulls.gif',
 );
 
@@ -732,6 +719,7 @@ Workout floorTricepsDips = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=s3Mppxwx1o8&ab_channel=MoveItMonday',
   showTimer: false,
+  intermediateRap: 12,
   advanceRap: 16,
   imageSrc: 'assets/all-workouts/floorTricepsDipes.gif',
 );
@@ -810,6 +798,7 @@ Workout floorTricepsDips2 = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=s3Mppxwx1o8&ab_channel=MoveItMonday',
   showTimer: false,
+  intermediateRap: 10,
   advanceRap: 12,
   imageSrc: 'assets/all-workouts/floorTricepsDipes.gif',
 );
@@ -872,6 +861,7 @@ Workout plankUp = Workout(
         'https://www.youtube.com/watch?v=Sb6z8krZPeI&feature=emb_logo&ab_channel=YSTExercises',
     showTimer: false,
     advanceRap: 16,
+    intermediateRap: 12,
     imageSrc: 'assets/all-workouts/plankUp.gif');
 
 Workout inchWorm = Workout(
@@ -885,6 +875,7 @@ Workout inchWorm = Workout(
   videoLink: 'https://www.youtube.com/watch?v=VSp0z7Mp5IU&ab_channel=Howcast',
   showTimer: false,
   advanceRap: 16,
+  intermediateRap: 12,
   beginnerRap: 10,
   imageSrc: 'assets/all-workouts/Inchworm.gif',
 );
@@ -903,6 +894,7 @@ Workout plankUp2 = Workout(
       'https://www.youtube.com/watch?v=Sb6z8krZPeI&feature=emb_logo&ab_channel=YSTExercises',
   showTimer: false,
   advanceRap: 12,
+  intermediateRap: 10,
   imageSrc: 'assets/all-workouts/plankUp.gif',
 );
 
@@ -949,7 +941,9 @@ Workout inchWorm2 = Workout(
   ],
   videoLink: 'https://www.youtube.com/watch?v=VSp0z7Mp5IU&ab_channel=Howcast',
   showTimer: false,
-  advanceRap: 12,
+  beginnerRap: 10,
+  intermediateRap: 12,
+  advanceRap: 14,
   imageSrc: 'assets/all-workouts/Inchworm.gif',
 );
 
@@ -1158,7 +1152,7 @@ Workout wipers = Workout(
 
 Workout reverseCrunches = Workout(
   title: 'Reverse Crunches',
-  showTimer: true,
+  showTimer: false,
   steps: [
     'Lie on your back with your knees together and your legs bent to 90 degrees,feet planted on the floor.',
     'Place your palms face down on the floor for support.',
@@ -1280,9 +1274,10 @@ Workout pushUpsRotation = Workout(
     'Now rotate your body to the right by lifting your right arm off the mat and pointing it at the ceiling. This should cause you to be in the position of a side plank.',
     'Return your right hand to the mat, back into push-up position and then perform a push-up however repeat the twist with your left hand.'
   ],
-  videoLink: 'httpswww.youtube.comwatchv=SIXuGSOL3_8&ab_channel=BeMilitaryFit',
+  videoLink: 'https://youtu.be/YU0gWh72a3k',
   showTimer: false,
   advanceRap: 24,
+  intermediateRap: 16,
   imageSrc: 'assets/all-workouts/pushUpsRotation.gif',
 );
 
@@ -1294,9 +1289,10 @@ Workout pushUpsRotation2 = Workout(
     'Now rotate your body to the right by lifting your right arm off the mat and pointing it at the ceiling. This should cause you to be in the position of a side plank.',
     'Return your right hand to the mat, back into push-up position and then perform a push-up however repeat the twist with your left hand.'
   ],
-  videoLink: 'httpswww.youtube.comwatchv=SIXuGSOL3_8&ab_channel=BeMilitaryFit',
+  videoLink: 'https://youtu.be/YU0gWh72a3k',
   showTimer: false,
   advanceRap: 20,
+  intermediateRap: 12,
   imageSrc: 'assets/all-workouts/pushUpsRotation.gif',
 );
 
@@ -1346,7 +1342,8 @@ Workout jumpingJacks = Workout(
   ],
   showTimer: true,
   duration: 30,
-  imageSrc: 'assets/all-workouts/jumpingJacks.gif',
+  imageSrc: "assets/splash/sample 2 (1).gif",
+  //imageSrc: 'assets/all-workouts/jumpingJacks.gif',
 );
 
 Workout kneePushUps = Workout(
@@ -1405,7 +1402,8 @@ Workout tricepsDips = Workout(
   videoLink: 'https://www.youtube.com/watch?v=6kALZikXxLc&ab_channel=Howcast',
   showTimer: false,
   beginnerRap: 12,
-  advanceRap: 30,
+  intermediateRap: 16,
+  advanceRap: 24,
   imageSrc: 'assets/all-workouts/tricepsdips.gif',
 );
 
@@ -1452,7 +1450,7 @@ Workout tricepsDips2 = Workout(
   videoLink: 'https://www.youtube.com/watch?v=6kALZikXxLc&ab_channel=Howcast',
   showTimer: false,
   beginnerRap: 10,
-  advanceRap: 24,
+  advanceRap: 22,
   imageSrc: 'assets/all-workouts/tricepsdips.gif',
 );
 
@@ -1636,11 +1634,15 @@ Workout walkingPlank = Workout(
     videoLink:
         'https://www.youtube.com/watch?v=1mPOD3IZxlI&ab_channel=NationalAcademyofSportsMedicine%28NASM%29',
     showTimer: false,
+    advanceRap: 16,
     intermediateRap: 12,
+    beginnerRap: 8,
     imageSrc: 'assets/all-workouts/walkingPlank.gif');
 
 Workout shoulderStretch = Workout(
+  //todo: imagesource should added
   title: 'Shoulder Stretch',
+  imageSrc: "",
 
   steps: [
     'Bring one arm across your upper body and hold it straight.',
@@ -1665,7 +1667,8 @@ Workout burpee = Workout(
   ],
   videoLink: 'https://www.youtube.com/watch?v=G2hv_NYhM-A&ab_channel=BuiltLean',
   showTimer: false,
-  advanceRap: 10,
+  advanceRap: 12,
+  intermediateRap: 10,
   imageSrc: 'assets/all-workouts/burpee.gif',
 );
 
@@ -1674,7 +1677,7 @@ Workout legBurpee = Workout(
   steps: [
     'Bend over or squat down and place your hands on the ground in front of you, shoulder-width apart.',
     'Jump back so that you end up in a plank.',
-    'Drop down to a pushup until your chest touches the floor.',
+    'Drop down to a push-up until your chest touches the floor.',
     'Push up to return to the plank again.',
     'Spring back, placing your feet back in the original position in line with your hands.',
     'Now jump explosively. Reach your arms overhead.'
@@ -1682,6 +1685,7 @@ Workout legBurpee = Workout(
   videoLink: 'https://www.youtube.com/watch?v=G2hv_NYhM-A&ab_channel=BuiltLean',
   showTimer: false,
   advanceRap: 14,
+  intermediateRap: 10,
   imageSrc: 'assets/all-workouts/burpee.gif',
 );
 
@@ -1696,6 +1700,7 @@ Workout diamond2 = Workout(
   videoLink: 'https://www.youtube.com/watch?v=pD3mD6WgykM&ab_channel=Howcast',
   showTimer: false,
   advanceRap: 12,
+  intermediateRap: 10,
   imageSrc: 'assets/all-workouts/diamond.gif',
 );
 
@@ -1710,6 +1715,7 @@ Workout diamond = Workout(
   videoLink: 'https://www.youtube.com/watch?v=pD3mD6WgykM&ab_channel=Howcast',
   showTimer: false,
   advanceRap: 16,
+  intermediateRap: 12,
   imageSrc: 'assets/all-workouts/diamond.gif',
 );
 
@@ -1865,8 +1871,8 @@ List<Workout> shoulderBeginner = [
   rhomboidPulls2,
   sideArmRaise2,
   kneePushUps2,
-  catCowPose,
   reclinedRhomboidSqueezes2,
+  catCowPose,
   childPose,
 ];
 
@@ -1882,10 +1888,10 @@ List<Workout> shoulderIntermediate = [
   plankUp,
   sideArmRaise,
   floorTricepsDips2,
-  threadTheNeedleL,
-  threadTheNeedleR,
   inchWorm,
   pulseUp2,
+  threadTheNeedleL,
+  threadTheNeedleR,
   childPose,
 ];
 
@@ -1923,10 +1929,10 @@ List<Workout> legsBeginner = [
   bottomLegLiftRight,
   lateralSquat,
   lateralSquat,
-  gluteKickBackLeft,
-  gluteKickBackRight,
-  gluteKickBackLeft,
-  gluteKickBackRight,
+  fireHydrantLeft,
+  fireHydrantRight,
+  fireHydrantLeft,
+  fireHydrantRight,
   leftQuadStretch,
   rightQuadStretch,
   kneeToChestStretch,
@@ -2000,20 +2006,17 @@ List<Workout> legsAdvance = [
   jumpingSquats,
   jumpingSquats,
   jumpingSquats,
-  gluteKickBackLeft,
-  gluteKickBackRight,
-  gluteKickBackLeft,
-  gluteKickBackRight,
-  gluteKickBackLeft,
-  gluteKickBackRight,
-  wallSit,
   lateralSquat,
+  lateralSquat,
+  lateralSquat,
+  wallSit,
+  wallSit,
   leftQuadStretch,
   rightQuadStretch,
+  walkingLunges,
+  walkingLunges,
+  walkingLunges,
   lyingButterFlyStretch,
-  walkingLunges,
-  walkingLunges,
-  walkingLunges,
   wallResistingSingleLegLeft,
   wallResistingSingleLegRight,
   wallResistingSingleLegLeft,
@@ -2033,11 +2036,11 @@ List<Workout> armsBeginner = [
   tricepsDips,
   armCircleClockWise,
   armCircleCounterClockWise,
-  diamond,
+  pulseUp,
   sideArmRaise2,
-  bodySaw,
+  inchWorm,
   diagonalPlank,
-  punches,
+  punches2,
   pushUps,
   inchWorm,
   wallPushUps,
@@ -2075,9 +2078,6 @@ List<Workout> armsIntermediate = [
 ];
 
 List<Workout> armsAdvance = [
-  //militry push ups --> Triceps push-up
-  //sholder gators -->Push-and-stretch elbow
-  //legbarbellcurl --> decline pushups
   // armCircleClockWise,
   // armCircleCounterClockWise,
   // skippingWithOutRope,
@@ -2100,14 +2100,13 @@ List<Workout> armsAdvance = [
   // threadTheNeedleL,
   // threadTheNeedleR,
   // wideArmPushUps,
-  // bodySaw,
+  // inchWorm2,
   // pushUpsRotation,
   // tricepsStretchLeft,
   tricepsStretchRight,
   standingBicepsStretchLeft,
   standingBicepsStretchRight
 ];
-
 
 List<Workout> allWorkOut = [
   ...absAdvance,

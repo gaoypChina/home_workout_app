@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:full_workout/database/workout_list.dart';
+import 'package:full_workout/main.dart';
 import 'package:full_workout/pages/workout_page/detail_dialog_page.dart';
 
 
@@ -22,19 +23,20 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
   @override
   Widget build(BuildContext context) {
     var item = widget.workOutList[widget.index];
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         showDialog(
             context: context,
             builder: (context) => MyDialog(
+              rapCount: widget.time,
                  workoutList: widget.workOutList,
               index: widget.index,
                 ));
       },
       child: Card(
-        elevation: 5,
+        elevation: 0,
         margin: EdgeInsets.only(bottom: 0),
-        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.blue.shade700),
+        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.blue.shade700,width: 1.5),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
@@ -52,16 +54,18 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                     color: Colors.white,
                     height: 100,
                     child: Center(
-                      child: Image.asset(
-                        item.imageSrc,
-                        fit: BoxFit.scaleDown,
+
+                        child: Image.asset(
+                          item.imageSrc,
+                          fit: BoxFit.scaleDown,
+
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-            Container(width: 1,height: 100, color: Colors.blue.shade700,),
+            Container(width: 1.5,height: 100, color: Colors.blue.shade700,),
             Expanded(
               flex: 3,
               child: Container(
@@ -86,11 +90,10 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                       padding: const EdgeInsets.only(left: 18.0),
                       child: Row(
                         children: <Widget>[
-                          Icon(
-                            Icons.access_time,
-                          ),
-                          SizedBox(width: 10),
-                          Text(widget.time.toString()),
+                          if(!item.showTimer)   Text("X ", style: textTheme.subtitle1,),
+                            Text(widget.time.toString(),style: textTheme.subtitle1,),
+
+                     if(item.showTimer)     Text(" Sec", style: textTheme.subtitle1,)
                         ],
                       ),
                     ),

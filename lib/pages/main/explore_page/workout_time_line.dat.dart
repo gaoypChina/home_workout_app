@@ -4,17 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/helper/light_dark_mode.dart';
 import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/pages/main/explore_page/explore_page.dart';
-import 'package:full_workout/pages/main/explore_page/rest_day_page.dart';
 import 'package:full_workout/pages/workout_page/exercise_list_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timelines/timelines.dart';
 import 'package:flutter/rendering.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+
+import '../../../main.dart';
 
 class WorkoutTimeLine extends StatefulWidget {
   final ChallengesModel challengesModel;
@@ -53,9 +50,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
 
   @override
   Widget build(BuildContext context) {
-    if (currentDay == 0) {
-      currentDay = 1;
-    }
+
     print(currentDay);
 
     List<String> title = ["Week 1", "Week 2", "Week 3", "Week 4"];
@@ -71,7 +66,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                     ? Colors.blue.shade700
                     : Colors.grey.shade300,
               ),
-              onTap: () => currIndex < currentDay
+              onTap: () => currIndex <= currentDay
                   ? Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -262,6 +257,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                   SliverAppBar(
                     title: Text(item.title),
                     elevation: 0,
+                    leading: IconButton(onPressed: (){},icon: Icon(Icons.keyboard_backspace_outlined),),
                     automaticallyImplyLeading: false,
                     centerTitle: false,
                     expandedHeight: 190.0,
@@ -269,7 +265,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                     pinned: true,
                     floating: false,
                     forceElevated: innerBoxIsScrolled,
-                    backgroundColor: item.color1,
+                    backgroundColor: Theme.of(context).primaryColor,
                     //collapsedHeight: 55,
                     flexibleSpace: FlexibleSpaceBar(
                       background: Stack(children: <Widget>[
@@ -286,22 +282,30 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                           ),
                         ),
                         Positioned(
-                    height: 20,
-                    width: 300,
+
+                    width: MediaQuery.of(context).size.width*.9,
                     bottom: 20,
                     left: 20,
-                    child: LinearPercentIndicator(
-                      percent: 13 / 28,
-                      lineHeight: 20,
-                      animation: true,
-                      center: new Text(
-                        "13/28",
-                        style: textTheme.subtitle2
-                            .copyWith(fontSize: 14, color: Colors.white),
-                      ),
-                      progressColor: Colors.blue,
-                            backgroundColor: Colors.blue.shade200,
-                          ),
+                    child:
+                    Column(
+                      children: [
+                        Row(children: [
+                          SizedBox(width: 8,),
+                          Text("25 day left",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 14),),
+                          Spacer(),
+                          Text("13/28",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 14),),
+                          SizedBox(width: 8,),
+                        ],),
+                        SizedBox(height: 8,),
+                        LinearPercentIndicator(
+                          percent: 13 / 28,
+                          lineHeight: 10,
+                          animation: true,
+                          progressColor: Colors.blue.shade700,
+                                backgroundColor: Colors.grey,
+                              ),
+                      ],
+                    ),
                         ),
                       ]),
                     ),

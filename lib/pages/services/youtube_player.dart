@@ -1,86 +1,142 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:full_workout/database/workout_list.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../main.dart';
 
 class YoutubeTutorial extends StatefulWidget {
-  final String link;
-  final String title;
-  final List<String>steps;
-  const YoutubeTutorial({
-    @required this.link,
-    @required this.title,
-    @required this.steps
-  });
+  final Workout workout;
+  final int rapCount;
+
+  const YoutubeTutorial({@required this.workout, @required this.rapCount});
 
   @override
   _YoutubeTutorialState createState() => _YoutubeTutorialState();
 }
 
 class _YoutubeTutorialState extends State<YoutubeTutorial> {
-  String videoURL = "https://www.youtube.com/watch?v=n8X9_MgEdCg";
 
   YoutubePlayerController _controller;
 
   @override
   void initState() {
-    print(widget.steps.toString());
     _controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(widget.link));
-
+        initialVideoId: YoutubePlayer.convertUrlToId(widget.workout.videoLink));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
+    getTopBar() {
+      return Container(
+
+        padding: EdgeInsets.only(top: 10),
+        height: 50,
+        child:             TextButton.icon(
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          label: Text(""),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              YoutubePlayer(bufferIndicator: CircularProgressIndicator(),
-                bottomActions: [Container(height: height*.3,color: Colors.blue,)],
-                controller: _controller,
-                showVideoProgressIndicator: true,
-                controlsTimeOut: Duration(seconds: 30),
-              ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0,top: 18,bottom: 8),
-              child: Text("Steps",style: textTheme.subtitle2.copyWith(fontSize: 18,fontWeight: FontWeight.w500),),
+
+      );
+    }
+
+    getImage(Workout workout, double height, double width) {
+      return Container(
+        height: height * .3,
+        width: width,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              color: Colors.black,
             ),
-            Container(height:height*.45 ,
-                child:
-            ListView.builder(
-                itemCount: widget.steps.length,
-                itemBuilder: (ctx, i) {
-                  return ListTile(
-                      title:
-                      Text.rich(
-                          TextSpan(
-                              text:  "Step ${i + 1}: ", style:textTheme.caption.copyWith(fontSize: 15,fontWeight: FontWeight.w700,color: Colors.black),
-                              children: <InlineSpan>[
-                                TextSpan(
-                                    text:
-                                    widget.steps[i],
-                                    style:textTheme.caption.copyWith(fontSize: 14,color: Colors.black)
-                                ),
+            borderRadius: BorderRadius.all(Radius.circular(12))),
 
-                              ]
-
-                            // Text(
-                            //
-                          )));
-                }))
+        margin: EdgeInsets.all(8),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(12)) ,
+          child: YoutubePlayer(
+            bufferIndicator: CircularProgressIndicator(),
+            bottomActions: [
+              Container(
+                color: Colors.red,
+              )
             ],
+            controller: _controller,
+            showVideoProgressIndicator: true,
+            controlsTimeOut: Duration(seconds: 10),
           ),
         ),
+      );
+    }
 
+    getTitle(Workout workout) {
+      String rap = workout.showTimer == true
+          ? "${widget.rapCount}s"
+          : "X ${widget.rapCount}";
+      return Container(
+        height: 50,
+        child: Row(
+          children: [
+            Text(
+              "${workout.title} $rap",
+              style: textTheme.bodyText1.copyWith(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white),
+            ),
+          ],
+        ),
+      );
+    }
+
+    getSteps(Workout workout) {
+      return Expanded(
+          child: ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+              minVerticalPadding: 0,
+              leading: Text("Step ${index + 1}: ",
+                  style: textTheme.bodyText2.copyWith(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700)),
+              title: Text(
+                "${workout.steps[index]}",
+                style: textTheme.bodyText2
+                    .copyWith(color: Colors.white, fontSize: 14),
+              ));
+        },
+        itemCount: workout.steps.length,
+      ));
+    }
+
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      backgroundColor: Colors.blue,
+      body: SafeArea(
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                getTopBar(),
+                getImage(widget.workout, height, width),
+                getTitle(widget.workout),
+                getSteps(widget.workout)
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/helper/light_dark_mode.dart';
 import 'package:full_workout/pages/workout_page/exercise_list_page.dart';
+
+import '../main.dart';
 
 class WorkoutCard extends StatelessWidget {
   final String title;
@@ -21,7 +22,95 @@ class WorkoutCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int totalExercise = workoutList.length;
-    int time = totalExercise * 2 - 2;
+    getDuration(int totalExercise) {
+      getIValue() {
+        if (totalExercise < 15) {
+          return 0;
+        } else if (totalExercise < 20) {
+          return 1;
+        }
+        return 2;
+      }
+
+      return Row(
+        children: [
+          Text("Duration",
+              style: textTheme.subtitle1.copyWith(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600)),
+          SizedBox(
+            width: 10,
+          ),
+          Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                //      border: Border.all(color: Colors.blue.shade700,width: 2)
+              ),
+              width: 35,
+              height: 18,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  for (int i = 0; i < 3; i++)
+                    Icon(
+                      Icons.circle,
+                      size: 8,
+                      color:
+                          getIValue() < i ? Colors.grey : Colors.blue.shade700,
+                    ),
+                ],
+              )),
+        ],
+      );
+    }
+
+    getDifficulty() {
+      return Row(
+        children: [
+          Text("Difficulty",
+              style: textTheme.subtitle2.copyWith(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600)),
+          SizedBox(
+            width: 10,
+          ),
+          Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                //      border: Border.all(color: Colors.blue.shade700,width: 2)
+              ),
+              width: 35,
+              height: 18,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  for (int i = 0; i < 3; i++)
+                    Icon(
+                      Icons.circle,
+                      size: 7,
+                      color: tagValue < i ? Colors.grey : Colors.blue.shade700,
+                    ),
+                ],
+              )
+
+              // ListView.builder(
+              //   scrollDirection: Axis.horizontal,
+              //   physics: NeverScrollableScrollPhysics(),
+              //     itemCount: tagValue+1, itemBuilder: (context, index) {
+              //   return Icon(
+              //     Icons.circle,
+              //     color: Colors.blue,
+              //     size: 8,
+              //   );
+              // }),
+              ),
+        ],
+      );
+    }
 
     return Card(
       elevation: 5,
@@ -32,7 +121,6 @@ class WorkoutCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -77,7 +165,8 @@ class WorkoutCard extends StatelessWidget {
                 ),
                 Container(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 18.0,top: 12),
+                    padding: const EdgeInsets.only(
+                        left: 18.0, top: 12, right: 18, bottom: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -88,36 +177,26 @@ class WorkoutCard extends StatelessWidget {
                               fontSize: 20,
                               fontWeight: FontWeight.w700),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              totalExercise.toString() + " Exercise",
-                              style: textTheme.bodyText2
-                                  .copyWith(color: Colors.white),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "25 Minute",
-                              style: textTheme.bodyText2
-                                  .copyWith(color: Colors.white),
-                            )
-                          ],
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          totalExercise.toString() + " Exercise",
+                          style: textTheme.bodyText2.copyWith(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
                         ),
                         Spacer(),
-                        Container(
-                          height: 50,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            physics: NeverScrollableScrollPhysics(),
-                              itemCount: tagValue+1, itemBuilder: (context, index) {
-                            return Icon(
-                              Icons.flash_on,
-                              color: Colors.blue,
-                            );
-                          }),
-                        )
+                        Row(
+                          children: [
+                            getDuration(totalExercise),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            getDifficulty(),
+                          ],
+                        ),
                       ],
                     ),
                   ),

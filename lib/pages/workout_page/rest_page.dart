@@ -1,16 +1,22 @@
+import 'package:audiofileplayer/audiofileplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/helper/light_dark_mode.dart';
+import 'package:full_workout/helper/mediaHelper.dart';
+import 'package:full_workout/helper/sp_helper.dart';
+import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
+import 'package:full_workout/pages/workout_page/check_list.dart';
 import 'package:full_workout/pages/workout_page/pause_page.dart';
 import 'package:full_workout/pages/workout_page/workout_page.dart';
-import 'package:full_workout/widgets/info_button.dart';
+import 'package:full_workout/components/info_button.dart';
 import 'package:full_workout/pages/services/youtube_player.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
+import '../../main.dart';
+import 'exercise_detail_page.dart';
 import 'exercise_list_page.dart';
 
 class RestScreen extends StatefulWidget {
@@ -43,7 +49,11 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
   int screenTime = 55;
   int addTime = 20;
   AnimationController controller;
-  FlutterTts _flutterTts;
+  MediaHelper mediaHelper =MediaHelper();
+  bool coachVoice;
+  bool soundEffect;
+  SpHelper spHelper = SpHelper();
+  SpKey spKey = SpKey();
 
   int index;
   Workout item;
@@ -53,30 +63,42 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
     return '${duration.inSeconds}';
   }
 
+  int get timerValue {
+    Duration duration = controller.duration * controller.value;
+    return duration.inMilliseconds;
+  }
+
   /// Functions
 
   _introMessage(Workout workout) async {
     String rapType = workout.showTimer == true ? "seconds" : "";
     String exerciseName = workout.title;
-    String totalRap = 12.toString();
-    await _flutterTts.setSpeechRate(0.75);
-    await _flutterTts.setPitch(.8);
-    await _flutterTts
-        .speak("Take a rest the next $totalRap $rapType $exerciseName");
+    String totalRap = widget.rapList[widget.exerciseNumber + 1].toString();
+
+
+    mediaHelper
+        .playSoundOnce("assets/sound/achievement.wav")
+        .then((value) => Future.delayed(Duration(seconds: 1)).then((value) =>
+            mediaHelper.speak(
+                "Take a rest the next $totalRap $rapType $exerciseName")));
   }
 
   _onPause() async {
-    print(controller.status);
-    bool value = true;
+    String value = "";
     if (controller.isAnimating) {
       controller.stop(canceled: true);
-      value =
-          await showDialog(context: context, builder: (builder) => StopPage());
     }
-    if (value == true) {
+    value =
+        await showDialog(context: context, builder: (builder) => StopPage());
+    if (value == "resume") {
       controller.reverse(
           from: controller.value == 0.0 ? 1.0 : controller.value);
     }
+    if (value == "restart") {
+      Navigator.of(context).pop();
+    }
+    controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
+    print(value);
   }
 
   _onComplete() {
@@ -84,9 +106,9 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
         context,
         MaterialPageRoute(
             builder: (context) => WorkoutPage(
-                tagValue:widget.tagValue,
-              tag: widget.tag,
-              currTime: widget.currTime,
+                tagValue: widget.tagValue,
+                tag: widget.tag,
+                currTime: widget.currTime,
                 rapList: widget.rapList,
                 workOutList: widget.workOutList,
                 title: widget.title,
@@ -97,7 +119,6 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    _flutterTts = FlutterTts();
     index = widget.exerciseNumber + 1;
     item = widget.workOutList[index];
     _introMessage(item);
@@ -126,9 +147,9 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
       lineHeight: 5.0,
       percent: index / widget.workOutList.length,
       width: width,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey.shade300,
       linearStrokeCap: LinearStrokeCap.round,
-      progressColor: Colors.amberAccent,
+      progressColor: Colors.blue.shade700,
     );
   }
 
@@ -149,7 +170,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                 Container(
                   height: height * .75,
                   width: width,
-                  color: Colors.blue,
+                  color: Colors.blue.shade700,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -172,11 +193,31 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                         child: AnimatedBuilder(
                             animation: controller,
                             builder: (BuildContext context, Widget child) {
-                              String timerValue = timerString.length == 1
+                              //playLocalAsset();
+
+                              if (timerValue <= 5000 && timerValue > 4950) {
+                                // flutterTts.speak('Ready to go');
+                              }
+                              if (timerValue <= 3000 && timerValue > 2950) {
+                                mediaHelper.playSoundOnce(
+                                    'assets/sound/countdown.wav');
+                                mediaHelper.speak('Three');
+                              }
+                              if (timerValue <= 2000 && timerValue > 1950) {
+                                mediaHelper.speak('Two');
+                              }
+                              if (timerValue <= 1000 && timerValue > 950) {
+                                mediaHelper.speak('One');
+                              }
+                              if (timerValue <= 200 && timerValue > 150) {
+                                //playLocalAsset();
+                              }
+
+                              String parsedTime = timerString.length == 1
                                   ? "0" + timerString
                                   : timerString;
                               return Text(
-                                "00:" + timerValue,
+                                "00:" + parsedTime,
                                 style: TextStyle(
                                     fontSize: 40, color: Colors.white),
                                 //    style: themeData.textTheme.display4,
@@ -189,7 +230,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          ElevatedButton(
+                          OutlinedButton(
                             onPressed: () {
                               _onPause();
                             },
@@ -199,12 +240,17 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                                   fontSize: 16,
                                   letterSpacing: 1,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.white),
+                                  color: Colors.white70),
                             ),
-                            style: TextButton.styleFrom(
+                            style: OutlinedButton.styleFrom(
+                              elevation: 1,
                               backgroundColor: Colors.blue.shade700,
+                              side: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: Colors.white70,
+                                  width: 2),
                               padding: EdgeInsets.only(
-                                  left: 40, right: 40, top: 10, bottom: 10),
+                                  left: 35, right: 35, top: 10, bottom: 10),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -242,47 +288,82 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                         InfoButton(
                           icon: Icons.list_alt_outlined,
                           tooltip: "Exercise Plane",
-                          onPress: () {
-                            showDialog(
+                          onPress: () async {
+                            bool value = true;
+                            controller.stop(canceled: true);
+                            value = await showDialog(
                                 context: context,
-                                builder: (builder) {
-                                  return ExerciseListScreen(
-                                      workOutList: widget.workOutList,
-                                      tag: "continue",
-                                      tagValue: widget.tagValue,
-                                      title: "title");
-                                });
+                                builder: (builder) => CheckListScreen(
+                                    workOutList: widget.workOutList,
+                                    tag: widget.tag,
+                                   progress: index / widget.workOutList.length,
+                                    title: widget.title));
+                            controller.reverse(
+                                from: controller.value == 0.0
+                                    ? 1.0
+                                    : controller.value);
                           },
                         ),
                         InfoButton(
                           icon: Icons.ondemand_video_outlined,
                           tooltip: "Video",
-                          onPress: () {
-                            showDialog(
-                                context: context,
-                                builder: (builder) {
-                                  return YoutubeTutorial(
-                                      link: item.videoLink,
-                                      title: item.title,
-                                      steps: item.steps);
-                                });
+                          onPress: () async {
+                            print(controller.status);
+                            if (controller.isAnimating) {
+                              controller.stop(canceled: true);
+                              await showDialog(
+                                  context: context,
+                                  builder: (builder) => YoutubeTutorial(
+                                    rapCount: widget.rapList[index],
+                                      workout: widget.workOutList[index],
+                                      ));
+                            }
+
+                            controller.reverse(
+                                from: controller.value == 0.0
+                                    ? 1.0
+                                    : controller.value);
                           },
                         ),
                         InfoButton(
                           icon: Icons.volume_up_outlined,
                           tooltip: "Sound",
-                          onPress: () {
-                            showDialog(
-                                context: context,
-                                builder: (builder) {
-                                  return SoundSetting();
-                                });
+                          onPress: () async {
+                            print(controller.status);
+
+                            if (controller.isAnimating) {
+                              controller.stop(canceled: true);
+                              await showDialog(
+                                  context: context,
+                                  builder: (builder) => SoundSetting());
+                            }
+
+                            controller.reverse(
+                                from: controller.value == 0.0
+                                    ? 1.0
+                                    : controller.value);
                           },
                         ),
                         InfoButton(
                           icon: FontAwesome5.question_circle,
                           tooltip: "Steps",
-                          onPress: () {},
+                          onPress: () async {
+                            print(controller.status);
+                            bool value = true;
+                            if (controller.isAnimating) {
+                              controller.stop(canceled: true);
+                              value = await showDialog(
+                                  context: context,
+                                  builder: (builder) => DetailPage(
+                                        workout: item,
+                                        rapCount: widget.rapList[index],
+                                      ));
+                            }
+                            controller.reverse(
+                                from: controller.value == 0.0
+                                    ? 1.0
+                                    : controller.value);
+                          },
                         ),
                       ],
                     )),
@@ -333,8 +414,8 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                         ),
                       )),
                   Expanded(
-                      child: Hero(
-                          tag: "workout", child: Image.asset(item.imageSrc))),
+
+                         child: Image.asset(item.imageSrc)),
                 ],
               ),
             )
