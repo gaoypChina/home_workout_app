@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/helper/recent_workout_db_helper.dart';
+import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
+import 'package:full_workout/pages/main_page.dart';
 import 'package:full_workout/pages/services/bmi_service/bmi_card.dart';
 import 'package:full_workout/widgets/weekly_workout_report.dart';
 import 'package:path_provider/path_provider.dart' as pp;
@@ -373,7 +375,7 @@ class _MyAppState extends State<ReportScreen> {
 
   getButton() {
     return Container(
-      height: 50,
+      height: 55,
       margin: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
       child: OutlinedButton(
           style: OutlinedButton.styleFrom(
@@ -384,7 +386,9 @@ class _MyAppState extends State<ReportScreen> {
             side: BorderSide(
                 color: Colors.blue.shade700, style: BorderStyle.solid, width: 0),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(context, WorkoutDetailReport.routeName, ModalRoute.withName('/'));
+          },
           child: Text(
             "Continue",
             style: Theme.of(context).textTheme.button.merge(TextStyle(
@@ -416,6 +420,7 @@ class _MyAppState extends State<ReportScreen> {
             getRatingBar(height),
             BmiCard(),
             getButton(),
+            SizedBox(height: 16,),
             Align(
               alignment: Alignment.center,
               child: ConfettiWidget(

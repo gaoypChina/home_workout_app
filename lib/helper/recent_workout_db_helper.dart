@@ -61,7 +61,7 @@ class RecentDatabaseHelper {
   Future<List> getAllWorkOut() async {
     var dbClient = await db;
     var result = await dbClient
-        .rawQuery("SELECT * FROM $tableName ORDER BY $columnId ASC");
+        .rawQuery("SELECT * FROM $tableName ORDER BY $columnId DESC");
     return result.toList();
   }
 

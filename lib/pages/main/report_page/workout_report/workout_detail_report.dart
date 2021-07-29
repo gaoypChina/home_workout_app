@@ -1,10 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/helper/recent_workout_db_helper.dart';
 import 'package:full_workout/models/recent_workout.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:timelines/timelines.dart';
 
 class WorkoutDetailReport extends StatefulWidget {
   static const routeName = "workout-detail-report";
@@ -126,69 +126,118 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
     super.initState();
   }
 
-  getCard(RecentWorkout workout) {
+
+
+  getCard(RecentWorkout workout, var size) {
+    getImage(String tag){
+      var tagList =  tag.split(" ");
+      if(tagList[0].toLowerCase() == "abs")
+        return "assets/animated-cover/abs.png";
+      if(tagList[0].toLowerCase() == "chest")
+        return "assets/animated-cover/chest.png";
+      if(tagList[0].toLowerCase() == "shoulder")
+        return "assets/animated-cover/sholder.png";
+      if(tagList[0].toLowerCase() == "legs")
+        return "assets/animated-cover/legs.png";
+      if(tagList[0].toLowerCase() == "arms")
+        return "assets/animated-cover/arms.png";
+      if(tagList[0].toLowerCase() == "full")
+        return "assets/animated-cover/full_body.png";
+      return "assets/animated-cover/full_body.png";
+    }
+
+    getBgColor(String tag){
+    var tagList = tag.split(" ");
+    if(tagList[1].toLowerCase() == "beginner"){
+      return Colors.orange.shade300;
+    }else if(tagList[1].toLowerCase() == "intermediate"){
+   return   Colors.green.shade400;
+    }else if(tagList[1].toLowerCase() == "advance"){
+      return Colors.red.shade300;
+    }else{
+      return Colors.red;
+    }
+    }
     Color textColor = Colors.white;
     return Container(
-      padding: EdgeInsets.all(8),
-      margin: EdgeInsets.only(bottom: 8),
+
+      margin: EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-          color: Colors.blue.shade700, // getBgColor(workout.workoutTitle),
-          borderRadius: BorderRadius.all(Radius.circular(12))),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+          color:getBgColor(workout.workoutTitle),
+          borderRadius: BorderRadius.all(Radius.circular(16))),
+      child: Row(
         children: [
-          SizedBox(
-            height: 4,
+          Expanded(
+            flex: 2,
+              child: Container(
+
+         padding: EdgeInsets.all(8),
+            height: size.height * .12,
+            width: size.height *.18,
+            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(28),),color: Colors.white70,border: Border.all(color:getBgColor(workout.workoutTitle),width: 12),),
+
+              child: Image.asset(getImage(workout.workoutTitle)))),
+          SizedBox(width: 8,),
+          Expanded(
+            flex: 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  DateFormat("dd,MMMM yyyy hh:mm aaa")
+                      .format(DateTime.parse(workout.date)),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500, fontSize: 16, color: textColor),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  workout.workoutTitle,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, fontSize: 19, color: textColor),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.timer,
+                      color: textColor,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      timeFormat(workout.activeTime) + " Min",
+                      style: TextStyle(color: textColor),
+                    ),
+                    SizedBox(
+                      width: 28,
+                    ),
+                    Icon(
+                      Icons.local_fire_department,
+                      color: textColor,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      (workout.activeTime * (18 / 60)).toString() + " Cal",
+                      style: TextStyle(color: textColor),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 12,
+                )
+              ],
+            ),
           ),
-          Text(
-            DateFormat("dd,MMMM yyyy hh:mm aaa")
-                .format(DateTime.parse(workout.date)),
-            style: TextStyle(
-                fontWeight: FontWeight.w500, fontSize: 16, color: textColor),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Text(
-            workout.workoutTitle,
-            style: TextStyle(
-                fontWeight: FontWeight.w600, fontSize: 18, color: textColor),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Row(
-            children: [
-              Icon(
-                Icons.timer,
-                color: textColor,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                timeFormat(workout.activeTime) + " Min",
-                style: TextStyle(color: textColor),
-              ),
-              SizedBox(
-                width: 28,
-              ),
-              Icon(
-                Icons.local_fire_department,
-                color: textColor,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                (workout.activeTime * (18 / 60)).toString() + " Cal",
-                style: TextStyle(color: textColor),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 4,
-          )
         ],
       ),
     );
@@ -201,12 +250,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
 
     return "$minute:$second";
   }
-  getDetail() {
-
-
-
-
-
+  getDetail(var size) {
 
     return ListView.builder(
         shrinkWrap: true,
@@ -229,165 +273,132 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                     itemCount: events.length,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (ctx, idx) {
-                      return getCard(events[idx]);
+                      return getCard(events[idx] ,size);
                     })),
           );
         });
   }
 
-  getChallenges() {
-    return ListView(
-      shrinkWrap: true,
-        children: [
-      FixedTimeline.tileBuilder(
-          theme: TimelineThemeData(
-            nodePosition: 0,
-            color: Colors.blue,
-            indicatorTheme: IndicatorThemeData(
-              position: 0.028,
-              size: 18.0,
-            ),
-            connectorTheme: ConnectorThemeData(
-              thickness: 2.5,
-            ),
-          ),
-          builder: TimelineTileBuilder.connected(
-              connectionDirection: ConnectionDirection.before,
-              itemCount: workoutModelList.length,
-              indicatorBuilder: (_, index) {
-                if (index < 2) {
-                  return Indicator.dot(
-                    size: 20,
-                    child: Icon(
-                      Icons.check,
-                      size: 16,
-                      color: Colors.white,
-                    ),
-                    color: Colors.blue.shade700,
-                  );
-                }
-                return Indicator.dot(
-                  color: Colors.grey,
-                  child: Icon(
-                    Icons.flash_on,
-                    size: 15,
-                    color: Colors.white,
-                  ),
-                  size: 20,
-                );
-              },
-              connectorBuilder: (_, index, ___) => index > 1
-                  ? DashedLineConnector(
-                      color: Colors.grey,
-                      dash: 1,
-                    )
-                  : SolidLineConnector(color: Theme.of(context).primaryColor),
-              contentsBuilder: (context, index) {
 
-                return  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: events.length,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (ctx, idx) {
-                      return getCard(events[index][idx]);
-                    });
-              }))
-    ]);
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Workout Report'),
+    return SafeArea(
+      child: Scaffold(
+
+        body: isLoading == true
+            ? CircularProgressIndicator()
+            :
+        Column(
+          children: [
+            Container(
+              height: 70,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(children: [
+                      IconButton(onPressed: ()=>Navigator.of(context).pop(),icon: Icon(Icons.arrow_back,color: Colors.grey.shade800,),),
+                      SizedBox(width: 30,),
+                      Text("History",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: Colors.grey.shade800),),
+
+
+                    ],),
+                  ),
+                  Spacer(),
+                  Container(color:Colors.grey.shade800,height: .5,)
+                ],
+              ),
+            ),
+
+            Expanded(
+              child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          Container(
+                            child: TableCalendar(
+                              firstDay: DateTime(2019, 01, 01),
+                              lastDay: DateTime.now(),
+                              focusedDay: _focusedDay,
+                              sixWeekMonthsEnforced: true,
+                              calendarFormat: _calendarFormat,
+                              rangeSelectionMode: _rangeSelectionMode,
+                              availableGestures: AvailableGestures.horizontalSwipe,
+                              eventLoader: (DateTime event) {
+                                if (events[
+                                        DateTime(event.year, event.month, event.day)] ==
+                                    null)
+                                  return [];
+                                else
+                                  return events[
+                                      DateTime(event.year, event.month, event.day)];
+                              },
+                              startingDayOfWeek: StartingDayOfWeek.monday,
+                              calendarStyle: CalendarStyle(
+                                  markersMaxCount: 1,
+                                  markersAnchor: 1,
+                                  markerSize: 42,
+                                  isTodayHighlighted: true,
+                                  markerSizeScale: 8,
+
+                                  //  rowDecoration:  BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8)),color: Colors.red.shade700.withOpacity(.0)),
+
+                                  outsideDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(8),
+                                    ),
+                                    color: Colors.grey.shade100.withOpacity(.8),
+                                  ),
+                                  weekendDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(8),
+                                    ),
+                                    color: Colors.grey.shade300,
+                                  ),
+                                  todayDecoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      color: Colors.blue.shade700.withOpacity(.0)),
+                                  disabledDecoration: BoxDecoration(
+                                    color: Colors.grey.shade100.withOpacity(.6),
+                                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                                  ),
+                                  markerDecoration: BoxDecoration(
+                                    color: Colors.blue.shade900.withOpacity(.4),
+                                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                                  ),
+                                  todayTextStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                  defaultDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(8),
+                                    ),
+                                    color: Colors.grey.shade300,
+                                  )),
+                              onFormatChanged: (format) {
+                                if (_calendarFormat != format) {
+                                  setState(() {
+                                    _calendarFormat = format;
+                                  });
+                                }
+                              },
+                            ),
+                          ),
+                          constants.getDivider(),
+                          getDetail(MediaQuery.of(context).size),
+                          SizedBox(
+                            height: 18,
+                          ),
+                        ],
+                      ),
+                    ),
+            ),
+          ],
+        ),
       ),
-      body: isLoading == true
-          ? CircularProgressIndicator()
-          : getChallenges(),
-      // SingleChildScrollView(
-      //         physics: BouncingScrollPhysics(),
-      //         child: Column(
-      //           children: [
-      //             Container(
-      //               child: TableCalendar(
-      //                 firstDay: DateTime(2019, 01, 01),
-      //                 lastDay: DateTime.now(),
-      //                 focusedDay: _focusedDay,
-      //                 sixWeekMonthsEnforced: true,
-      //                 calendarFormat: _calendarFormat,
-      //                 rangeSelectionMode: _rangeSelectionMode,
-      //                 availableGestures: AvailableGestures.horizontalSwipe,
-      //                 eventLoader: (DateTime event) {
-      //                   if (events[
-      //                           DateTime(event.year, event.month, event.day)] ==
-      //                       null)
-      //                     return [];
-      //                   else
-      //                     return events[
-      //                         DateTime(event.year, event.month, event.day)];
-      //                 },
-      //                 startingDayOfWeek: StartingDayOfWeek.monday,
-      //                 calendarStyle: CalendarStyle(
-      //                     markersMaxCount: 1,
-      //                     markersAnchor: 1,
-      //                     markerSize: 42,
-      //                     isTodayHighlighted: true,
-      //                     markerSizeScale: 8,
-      //
-      //                     //  rowDecoration:  BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8)),color: Colors.red.shade700.withOpacity(.0)),
-      //
-      //                     outsideDecoration: BoxDecoration(
-      //                       borderRadius: BorderRadius.all(
-      //                         Radius.circular(8),
-      //                       ),
-      //                       color: Colors.grey.shade100.withOpacity(.8),
-      //                     ),
-      //                     weekendDecoration: BoxDecoration(
-      //                       borderRadius: BorderRadius.all(
-      //                         Radius.circular(8),
-      //                       ),
-      //                       color: Colors.grey.shade300,
-      //                     ),
-      //                     todayDecoration: BoxDecoration(
-      //                         borderRadius:
-      //                             BorderRadius.all(Radius.circular(8)),
-      //                         color: Colors.blue.shade700.withOpacity(.0)),
-      //                     disabledDecoration: BoxDecoration(
-      //                       color: Colors.grey.shade100.withOpacity(.6),
-      //                       borderRadius: BorderRadius.all(Radius.circular(8)),
-      //                     ),
-      //                     markerDecoration: BoxDecoration(
-      //                       color: Colors.blue.shade900.withOpacity(.4),
-      //                       borderRadius: BorderRadius.all(Radius.circular(8)),
-      //                     ),
-      //                     todayTextStyle: TextStyle(
-      //                         color: Colors.black,
-      //                         fontWeight: FontWeight.w500,
-      //                         fontSize: 16),
-      //                     defaultDecoration: BoxDecoration(
-      //                       borderRadius: BorderRadius.all(
-      //                         Radius.circular(8),
-      //                       ),
-      //                       color: Colors.grey.shade300,
-      //                     )),
-      //                 onFormatChanged: (format) {
-      //                   if (_calendarFormat != format) {
-      //                     setState(() {
-      //                       _calendarFormat = format;
-      //                     });
-      //                   }
-      //                 },
-      //               ),
-      //             ),
-      //             constants.getDivider(),
-      //             getDetail(),
-      //             SizedBox(
-      //               height: 18,
-      //             ),
-      //              getChallenges()
-      //           ],
-      //         ),
-      //       ),
     );
   }
 }
