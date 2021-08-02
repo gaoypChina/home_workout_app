@@ -19,6 +19,8 @@ class Constants{
   Color leadingIconColor = Color(0xff969696);
   Color widgetColor = Color(0xff4278DF);
 
+  TextStyle titleStyle =   textTheme.subtitle1.copyWith(fontWeight: FontWeight.w700);
+
   var textStyle =textTheme.subtitle1.copyWith(wordSpacing:4,fontWeight: FontWeight.w700,fontSize: 18,color: Color(0xffA9A9A9));
   var contentTextStyle = textTheme.subtitle2.copyWith(fontSize: 15);
   Icon trailingIcon = Icon(Icons.arrow_forward_ios,color: Colors.black,size: 16,);

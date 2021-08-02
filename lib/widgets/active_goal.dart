@@ -5,8 +5,9 @@ import 'package:full_workout/helper/recent_workout_db_helper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/main.dart';
+import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/widgets/week_goal_settings.dart';
-import 'package:full_workout/widgets/weekly_workout_report.dart';
+import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
 import 'package:intl/intl.dart';
 
 class ActiveGoal extends StatefulWidget {
@@ -81,47 +82,60 @@ class _ActiveGoalState extends State<ActiveGoal> {
   @override
   Widget build(BuildContext context) {
     Color textColor = Colors.white;
+    double height =MediaQuery.of(context).size.height;
     getTitle() {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
-        child: Row(
-          children: [
-            Text(
-              "WEEK GOAL ",
-              style: textTheme.bodyText1
-                  .copyWith(fontSize: 16, fontWeight: FontWeight.w600,color:textColor ),
-            ),
-            InkWell(
-              onTap: () async {
-                var res = await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return WeekGoalSettings();
-                    });
-                if (res != null) {
-                  setState(() {
-                    daySelected = res[0];
-                    trainingDay = res[1];
-                    _getWorkDoneList();
-                  });
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 4.0,right: 8),
-                child: Row(
-                  children: [
-                    Icon(
-                      Feather.edit,
-                      size: 18,
-                      color: textColor,
-                    ),
-                  ],
+      onTap() async {
+        var res = await showDialog(
+            context: context,
+            builder: (context) {
+              return WeekGoalSettings();
+            });
+        if (res != null) {
+          setState(() {
+            daySelected = res[0];
+            trainingDay = res[1];
+            _getWorkDoneList();
+          });
+        }
+      }
+
+      return InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(16), topLeft: Radius.circular(16)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12),
+          child: Row(
+            children: [
+              Text(
+                "Week Goal ",
+                style: textTheme.bodyText1.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: textColor),
+              ),
+              InkWell(
+                onTap: onTap,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 4.0, right: 8),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Feather.edit,
+                        size: 18,
+                        color: textColor,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Spacer(),
-            Text("$completed/$trainingDay",style: TextStyle(color: textColor),)
-          ],
+              Spacer(),
+              Text(
+                "$completed/$trainingDay",
+                style: TextStyle(color: textColor),
+              )
+            ],
+          ),
         ),
       );
     }
@@ -139,42 +153,42 @@ class _ActiveGoalState extends State<ActiveGoal> {
                         style: TextStyle(fontWeight: FontWeight.w600,color: textColor),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 6,
                       ),
                       CircleAvatar(
-                          backgroundColor: activeDay.isDone
-                              ? Theme.of(context).primaryColor
-                              : Colors.grey.shade300,
+                          backgroundColor: DateTime.now().day >= activeDay.date.day
+                              ?Colors.white: activeDay.isDone
+                             ?Colors.white
+                              : Colors.grey.shade200,
                           child: CircleAvatar(
                             backgroundColor: activeDay.isDone
-                                ? Colors.blue.shade700
-                                : DateTime.now().day >= activeDay.date.day
-                                    ? Colors.grey.shade300
-                                    : Colors.white,
+                                ? Colors.white
+                                :  DateTime.now().day >= activeDay.date.day
+                                ?Colors.white:Colors.grey.shade200,
                             radius: 12,
                             child: activeDay.isDone
                                 ? Icon(
                                     Icons.check,
-                                    color: Colors.white,
+                                    color: Colors.blue,
                                   )
                                 : CircleAvatar(
                                     radius: 6,
                                     backgroundColor:
                                         DateTime.now().day >= activeDay.date.day
-                                            ? Colors.white
-                                            : Colors.white,
+                                            ? Colors.blue
+                                            : Colors.grey.shade400,
                                   ),
                           ),
                           radius: 15),
                       SizedBox(
-                        height: 5,
+                        height: 6,
                       ),
                       Text(
                         activeDay.date.day.toString(),
                         style: TextStyle(fontWeight: FontWeight.w500,color: textColor),
                       ),
                       SizedBox(
-                        height: 8,
+                        height: 12,
                       ),
                     ],
                   ),
@@ -183,16 +197,32 @@ class _ActiveGoalState extends State<ActiveGoal> {
       );
     }
 
-    return Material(
-      color: Colors.blue.shade400,
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12))),
-      child: Column(
-        children: [
-          getTitle(),
-          getWeeklyUpdate(),
-        ],
+    return InkWell(
+      borderRadius: BorderRadius.all(Radius.circular(16)),
+      onTap: () => Navigator.pushNamed(context, WorkoutDetailReport.routeName),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        child: Material(
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+          elevation: 2,
+        child: Container(
+          height: height*.16,
+
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                gradient: LinearGradient(
+                  colors: [Colors.blue.shade300,Colors.blue.shade700],
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft
+                )),
+            child: Column(
+              children: [
+                getTitle(),
+                getWeeklyUpdate(),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

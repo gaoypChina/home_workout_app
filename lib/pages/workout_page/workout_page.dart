@@ -26,7 +26,8 @@ class WorkoutPage extends StatefulWidget {
   final String currTime;
   final int tagValue;
   final String tag;
-
+  final int restTime;
+  final int countDownTime;
   WorkoutPage({
     @required this.workOutList,
     @required this.title,
@@ -34,7 +35,9 @@ class WorkoutPage extends StatefulWidget {
     @required this.rapList,
     @required this.currTime,
     @required this.tagValue,
-    @required this.tag
+    @required this.tag,
+    @required this.restTime,
+    @required this.countDownTime
   });
 
   @override
@@ -106,6 +109,8 @@ class _WorkoutPageState extends State<WorkoutPage>
         totalNumberOfExercise: widget.workOutList.length,
         rapList: widget.rapList,
         title: widget.title,
+        countDownTime: widget.countDownTime,
+        restTime:  widget.restTime,
       );
     }));
   }
