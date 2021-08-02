@@ -19,7 +19,11 @@ List<Workout> fullBodyDay5 = [
   cobraStretch,
 ];
 List<Workout> fullBodyDay6 = [...legsBeginner];
-List<Workout> fullBodyDay7 = []; //rest
+List<Workout> fullBodyDay7 = [
+  jumpingJacks,
+  armCircleClockWise,
+  pushUps,
+]; //rest
 List<Workout> fullBodyDay8 = [
   jumpingJacks,
   armCircleClockWise,

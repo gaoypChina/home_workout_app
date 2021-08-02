@@ -28,17 +28,20 @@ class RestScreen extends StatefulWidget {
   final String title;
   final String tag;
   final int tagValue;
+  final int countDownTime;
+  final int restTime;
 
-  RestScreen({
-    @required this.exerciseNumber,
-    @required this.totalNumberOfExercise,
-    @required this.workOutList,
-    @required this.rapList,
-    @required this.currTime,
-    @required this.title,
-    @required this.tag,
-    @required this.tagValue
-  });
+  RestScreen(
+      {@required this.exerciseNumber,
+      @required this.totalNumberOfExercise,
+      @required this.workOutList,
+      @required this.rapList,
+      @required this.currTime,
+      @required this.title,
+      @required this.tag,
+      @required this.tagValue,
+      @required this.countDownTime,
+      @required this.restTime});
 
   @override
   _RestScreenState createState() => _RestScreenState();
@@ -46,7 +49,7 @@ class RestScreen extends StatefulWidget {
 
 class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
   /// variables
-  int screenTime = 55;
+
   int addTime = 20;
   AnimationController controller;
   MediaHelper mediaHelper =MediaHelper();
@@ -58,9 +61,9 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
   int index;
   Workout item;
 
-  String get timerString {
+  int get secValue {
     Duration duration = controller.duration * controller.value;
-    return '${duration.inSeconds}';
+    return duration.inSeconds;
   }
 
   int get timerValue {
@@ -112,7 +115,24 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                 rapList: widget.rapList,
                 workOutList: widget.workOutList,
                 title: widget.title,
+                countDownTime: widget.countDownTime,
+                restTime: widget.restTime,
                 index: index)));
+  }
+
+  String formatedTime(int secTime) {
+    String getParsedTime(String time) {
+      if (time.length <= 1) return "0$time";
+      return time;
+    }
+
+    int min = secTime ~/ 60;
+    int sec = secTime % 60;
+
+    String parsedTime =
+        getParsedTime(min.toString()) + " : " + getParsedTime(sec.toString());
+
+    return parsedTime;
   }
 
   /// Initstate and dispose methods
@@ -124,7 +144,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
     _introMessage(item);
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: screenTime),
+      duration: Duration(seconds: widget.restTime),
     );
 
     controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
@@ -213,11 +233,8 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                                 //playLocalAsset();
                               }
 
-                              String parsedTime = timerString.length == 1
-                                  ? "0" + timerString
-                                  : timerString;
                               return Text(
-                                "00:" + parsedTime,
+                                formatedTime(secValue),
                                 style: TextStyle(
                                     fontSize: 40, color: Colors.white),
                                 //    style: themeData.textTheme.display4,

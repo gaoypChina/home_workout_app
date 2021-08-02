@@ -10,7 +10,7 @@ import 'package:full_workout/pages/main/home_page/leading_widget.dart';
 import 'package:full_workout/pages/main/report_page/weight_report/weight_report_detail.dart';
 import 'package:full_workout/pages/main/report_page/weight_report/weight_report.dart';
 import 'package:full_workout/pages/main/report_page/weight_report/weight_report_statics.dart';
-import 'package:full_workout/widgets/weekly_workout_report.dart';
+import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/pages/services/bmi_service/bmi_card.dart';
 import 'package:full_workout/widgets/achivement.dart';
@@ -165,7 +165,7 @@ class _ReportPageState extends State<ReportPage> {
         children: [
 
           SizedBox(height: 20,),
-            Achievement(),
+            Achievement(onTap: (){},),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: Row(
@@ -223,7 +223,7 @@ class _ReportPageState extends State<ReportPage> {
           Container(child: WeightReport()),
           WeightReportStatics(),
           constants.getDivider(),
-          BmiCard(),
+          BmiCard(showBool: false,),
         ],
       ),
     );

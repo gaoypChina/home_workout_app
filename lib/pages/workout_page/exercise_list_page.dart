@@ -31,13 +31,14 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   SpKey spKey = SpKey();
   AnimationController _controller;
   List<int> rapList = [];
-  int countDownTime =30;
-  int restTime = 30;
+  double countDownTime = 30;
+  double restTime = 30;
   final TextEditingController searchQuery = new TextEditingController();
   ScrollController _scrollController;
   List<String> items;
   TabController tabContoller;
-  double padValue =0;
+  double padValue = 0;
+  bool isLoading = true;
 
   getTime() {
     int length = widget.workOutList.length;
@@ -46,38 +47,45 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
     return length + 6;
   }
 
-
-  getPadding()async{
+  getPadding() async {
     Future.delayed(Duration(milliseconds: 100)).then((value) {
       setState(() {
         padValue = 1;
       });
     });
   }
+
+  getCountDown() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    countDownTime = await spHelper.loadDouble(spKey.countdownTime) ?? 30;
+    restTime = await spHelper.loadDouble(spKey.trainingRest) ?? 30;
+    setState(() {
+      print('now tiime : $countDownTime');
+    });
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   void initState() {
     getPadding();
     super.initState();
     getCountDown();
-     _scrollController = new ScrollController();
+    _scrollController = new ScrollController();
     tabContoller = new TabController(vsync: this, length: 1);
-
   }
+
   @override
   void dispose() {
     _controller.dispose();
     tabContoller.dispose();
     super.dispose();
   }
-
-  getCountDown() async {
-    countDownTime = await spHelper.loadInt(spKey.countdownTime) ?? 30;
-    restTime = await spHelper.loadInt(spKey.trainingRest) ?? 30;
-    setState(() {
-      print('now tiime : $countDownTime');
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -103,9 +111,9 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                       tagValue: widget.tagValue,
                       title: widget.title,
                       workOutList: widget.workOutList,
-                      rapList:rapList,
-                      countDownTime: countDownTime,
-                      restTime: restTime,
+                      rapList: rapList,
+                      countDownTime: countDownTime.toInt(),
+                      restTime: restTime.toInt(),
                     ),
                   ),
                 );
@@ -124,18 +132,21 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
             ),
           ),
         ),
-        body: NestedScrollView(
-          controller: _scrollController,
-          physics: BouncingScrollPhysics(),
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return [
-              SliverAppBar(
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.of(context).pop(true);
-                  },
-                ),
+        body: isLoading
+            ? CircularProgressIndicator()
+            : NestedScrollView(
+                controller: _scrollController,
+                physics: BouncingScrollPhysics(),
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return [
+                    SliverAppBar(
+                      leading: IconButton(
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.of(context).pop(true);
+                        },
+                      ),
 
                 automaticallyImplyLeading: false,
                 expandedHeight: 150.0,
@@ -160,20 +171,36 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
               children: [
                 ListView.builder(
                   itemBuilder: (context, index) {
-                    if (widget.workOutList[index].showTimer == false) {
-                      if (widget.tag.toLowerCase() == 'beginner') {
-                        time = widget.workOutList[index].beginnerRap;
-                      } else if (widget.tag.toLowerCase() == "intermediate") {
-                        time = widget.workOutList[index].intermediateRap;
-                      } else
-                        time = widget.workOutList[index].advanceRap;
-                    } else if (widget.workOutList[index].showTimer == true) {
-                      time = widget.workOutList[index].duration;
-                    } else {
-                      time = 69;
-                    }
 
-                    rapList.add(time);
+                          if (widget.workOutList[index].showTimer == false) {
+                            var splitTitle = widget.title.split(" ");
+                            if (splitTitle.length == 5) {
+                              int currDay = int.tryParse(splitTitle[4]);
+                              if (currDay < 10) {
+                                time = widget.workOutList[index].beginnerRap;
+                              } else if (currDay < 20) {
+                                time =
+                                    widget.workOutList[index].intermediateRap;
+                              } else
+                                time = widget.workOutList[index].advanceRap;
+                            } else {
+                              if (widget.tag.toLowerCase() == 'beginner') {
+                                time = widget.workOutList[index].beginnerRap;
+                              } else if (widget.tag.toLowerCase() ==
+                                  "intermediate") {
+                                time =
+                                    widget.workOutList[index].intermediateRap;
+                              } else
+                                time = widget.workOutList[index].advanceRap;
+                            }
+                          } else if (widget.workOutList[index].showTimer ==
+                              true) {
+                            time = widget.workOutList[index].duration;
+                          } else {
+                            time = 30;
+                          }
+
+                          rapList.add(time);
 
                     return Column(
                       children: [
@@ -221,7 +248,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                           duration:Duration(milliseconds: 1000),
 curve: Curves.easeOutCubic,
                           padding:
-                              EdgeInsets.only(top:padValue* 12, left:padValue* 16, right:padValue* 16),
+                          EdgeInsets.only(top:padValue* 12, left:padValue* 16, right:padValue* 16),
                           child: CustomExerciseCard(
                             index: index,
                             workOutList: widget.workOutList,

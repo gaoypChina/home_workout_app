@@ -3,13 +3,14 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/pages/main/explore_page/explore_page.dart';
 import 'package:full_workout/pages/workout_page/exercise_list_page.dart';
 import 'package:timelines/timelines.dart';
 import 'package:flutter/rendering.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:dashed_circle/dashed_circle.dart';
 
 import '../../../main.dart';
 
@@ -27,11 +28,33 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
   ScrollController _scrollController;
   TabController tabController;
   SpHelper _spHelper = SpHelper();
+  Constants constants = Constants();
   bool _isLoading = true;
   int currentDay = 0;
 
   getCurrentDate() async {
-    currentDay = await _spHelper.loadInt(widget.challengesModel.tag);
+    setState(() {
+      _isLoading = true;
+    });
+    currentDay = await _spHelper.loadInt(widget.challengesModel.tag) ?? 0;
+    setState(() {
+      _isLoading = false;
+    });
+  }
+  
+  onComplete(int currIndex){
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ExerciseListScreen(
+            workOutList: widget
+                .challengesModel.challengeList[currIndex],
+            tag: widget.challengesModel.tag,
+            title: widget.challengesModel.title +
+                " Day ${currIndex + 1}",
+            tagValue: currentDay + 1,
+          )),
+    );
   }
 
   @override
@@ -42,9 +65,6 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
       vsync: this,
       length: 1,
     );
-    setState(() {
-      _isLoading = false;
-    });
     super.initState();
   }
 
@@ -59,43 +79,45 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
-              child: CircleAvatar(
-                child: currIndex < currentDay ? Icon(Icons.check) : Text(day),
-                radius: 16,
-                backgroundColor: currIndex < currentDay
-                    ? Colors.blue.shade700
-                    : Colors.grey.shade300,
-              ),
+              child: currIndex == currentDay
+                  ? DashedCircle(
+                      color: Colors.blue.shade700,
+                      child: CircleAvatar(
+                          child: Text(day,
+                              style: TextStyle(
+                                  color: Colors.blue.shade700,
+                                  fontWeight: FontWeight.w700)),
+                          radius: 16,
+                          backgroundColor: Colors.transparent))
+                  : currIndex > currentDay
+                      ? DashedCircle(
+                          color: Colors.grey.shade300,
+                          dashes: 111,
+                          child: CircleAvatar(
+                              child: Text(
+                                day,
+                                style: TextStyle(color: Colors.grey.shade400),
+                              ),
+                              radius: 16,
+                              backgroundColor: Colors.transparent))
+                      : CircleAvatar(
+                          child: Icon(Icons.check),
+                          radius: 16,
+                        ),
               onTap: () => currIndex <= currentDay
-                  ? Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ExerciseListScreen(
-                                workOutList: widget
-                                    .challengesModel.challengeList[currIndex],
-                                tag: widget.challengesModel.tag,
-                                title: widget.challengesModel.title +
-                                    " Day ${currIndex + 1}",
-                                tagValue: currentDay,
-                              )),
-                    )
-                  : Fluttertoast.showToast(
-                      msg: "Please Complete previous challenges",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.blue.shade700.withOpacity(.9),
-                      textColor: Colors.white,
-                      fontSize: 16.0)),
+                  ? onComplete(currIndex)
+                  : constants.getToast("Please complete previous challenges first")),
         );
       }
 
-      getArrow() {
+      getArrow(int currIndex) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Icon(
             Icons.arrow_forward_ios,
-            color: Colors.grey,
+            color: currIndex >= currentDay
+                ? Colors.grey.shade400
+                : Colors.blue.shade700,
             size: 16,
           ),
         );
@@ -113,11 +135,11 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   getDay("1", index + 0),
-                  getArrow(),
+                  getArrow(index + 0),
                   getDay("2", index + 1),
-                  getArrow(),
+                  getArrow(index + 1),
                   getDay("3", index + 2),
-                  getArrow(),
+                  getArrow(index + 2),
                   getDay("4", index + 3)
                 ],
               ),
@@ -128,11 +150,11 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   getDay("5", index + 4),
-                  getArrow(),
+                  getArrow(index + 4),
                   getDay("6", index + 5),
-                  getArrow(),
+                  getArrow(index + 5),
                   getDay("7", index + 6),
-                  getArrow(),
+                  getArrow(index + 6),
                   CircleAvatar(
                     child: Icon(FontAwesome.trophy, color: Colors.white),
                     radius: 20,
@@ -169,7 +191,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
               connectionDirection: ConnectionDirection.before,
               itemCount: 4,
               indicatorBuilder: (_, index) {
-                if (index < 2) {
+                if (index <= (currentDay / 7).floor()) {
                   return Indicator.dot(
                     size: 20,
                     child: Icon(
@@ -184,18 +206,22 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                   color: Colors.grey,
                   child: Icon(
                     Icons.flash_on,
-                    size: 15,
+                    size: 14,
                     color: Colors.white,
                   ),
                   size: 20,
                 );
               },
-              connectorBuilder: (_, index, ___) => index > 1
-                  ? DashedLineConnector(
-                      color: Colors.grey,
-                      dash: 1,
-                    )
-                  : SolidLineConnector(color: Theme.of(context).primaryColor),
+              connectorBuilder: (_, index, ___) {
+                if (index <= (currentDay / 7).floor()+1) {
+                  return SolidLineConnector(
+                      color: Theme.of(context).primaryColor);
+                } else
+                  return DashedLineConnector(
+                    color: Colors.grey,
+                    dash: 1,
+                  );
+              },
               contentsBuilder: (context, index) {
                 int indexIndex = 0;
                 if (index == 0) {
@@ -248,17 +274,15 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
           )
         : Scaffold(
             backgroundColor: Colors.blue,
-            body: SafeArea(
-                child: NestedScrollView(
+      body: NestedScrollView(
               controller: _scrollController,
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverAppBar(
+                    brightness: Brightness.dark,
                     title: Text(item.title),
                     elevation: 0,
-                    leading: IconButton(onPressed: (){},icon: Icon(Icons.keyboard_backspace_outlined),),
-                    automaticallyImplyLeading: false,
                     centerTitle: false,
                     expandedHeight: 190.0,
                     collapsedHeight: 60,
@@ -266,7 +290,6 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                     floating: false,
                     forceElevated: innerBoxIsScrolled,
                     backgroundColor: Theme.of(context).primaryColor,
-                    //collapsedHeight: 55,
                     flexibleSpace: FlexibleSpaceBar(
                       background: Stack(children: <Widget>[
                         Container(
@@ -282,30 +305,48 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                           ),
                         ),
                         Positioned(
-
-                    width: MediaQuery.of(context).size.width*.9,
-                    bottom: 20,
-                    left: 20,
-                    child:
-                    Column(
-                      children: [
-                        Row(children: [
-                          SizedBox(width: 8,),
-                          Text("25 day left",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 14),),
-                          Spacer(),
-                          Text("13/28",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 14),),
-                          SizedBox(width: 8,),
-                        ],),
-                        SizedBox(height: 8,),
-                        LinearPercentIndicator(
-                          percent: 13 / 28,
-                          lineHeight: 10,
-                          animation: true,
-                          progressColor: Colors.blue.shade700,
+                          width: MediaQuery.of(context).size.width * .9,
+                          bottom: 20,
+                          left: 20,
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    "${28-currentDay} day left",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                  Spacer(),
+                                  Text(
+                                    "$currentDay /28",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              LinearPercentIndicator(
+                                percent: currentDay / 28,
+                                lineHeight: 10,
+                                animation: true,
+                                progressColor: Colors.blue.shade700,
                                 backgroundColor: Colors.grey,
                               ),
-                      ],
-                    ),
+                            ],
+                          ),
                         ),
                       ]),
                     ),
@@ -323,7 +364,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                     alignment: Alignment.bottomCenter,
                     child: FloatingActionButton.extended(
                       backgroundColor: Colors.blue.shade700,
-                      onPressed: () {},
+                      onPressed: ()=>onComplete(currentDay),
                       icon: Icon(
                         Icons.local_fire_department_sharp,
                         color: Colors.white,
@@ -357,7 +398,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                   ],
                 ),
               ),
-            )),
-    );
+            ),
+          );
   }
 }

@@ -70,115 +70,119 @@ class _MyDialogState extends State<MyDialog> {
                 children: [
                   Expanded(
                     child:
-                    PageView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: item.length,
-                        controller: _controller,
-                        itemBuilder: (context, index) {
-                          currPage = index;
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Stack(
-                                children: [
-                                  Container(
-                                    child: Center(
-                                      child: Hero(
-                                        tag:item[index].title,
-                                        child: Image.asset(
-                                          item[index].imageSrc,
-                                          fit: BoxFit.scaleDown,
+                    ClipRRect(
+                                                                borderRadius: BorderRadius.all(Radius.circular(20)),
+
+                      child: PageView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: item.length,
+                          controller: _controller,
+                          itemBuilder: (context, index) {
+                            currPage = index;
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: Center(
+                                        child: Hero(
+                                          tag:item[index].title,
+                                          child: Image.asset(
+                                            item[index].imageSrc,
+                                            fit: BoxFit.scaleDown,
+                                          ),
                                         ),
                                       ),
+                                      height: height *.2,
                                     ),
-                                    height: height *.2,
-                                  ),
-                                  Container(
-                                    height:height *.2,
-                                    width: double.infinity,
-                                    color: Colors.black.withOpacity(.05),
-                                  ),
-                                  Positioned(
-                                      right: 10,
-                                      top: 10,
-                                      child: InfoButton(
-                                          tooltip: "Video",
-                                          icon: Icons.ondemand_video,
-                                          onPress: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      YoutubeTutorial(
-                                                        rapCount:widget.rapCount ,
-                                                    workout: widget.workoutList[widget.index],
-                                                  ),
-                                                ));
-                                          })),
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: 16, top: 10, bottom: 10),
-                                child: Text(
-                                  item[index].title,
-                                  style: textTheme.headline2.copyWith(
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 18),
+                                    Container(
+                                      height:height *.2,
+                                      width: double.infinity,
+                                      color: Colors.black.withOpacity(.05),
+                                    ),
+                                    Positioned(
+                                        right: 10,
+                                        top: 10,
+                                        child: InfoButton(
+                                            tooltip: "Video",
+                                            icon: Icons.ondemand_video,
+                                            onPress: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        YoutubeTutorial(
+                                                          rapCount:widget.rapCount ,
+                                                      workout: widget.workoutList[widget.index],
+                                                    ),
+                                                  ));
+                                            })),
+                                  ],
                                 ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 16),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 16, top: 10, bottom: 10),
+                                  child: Text(
+                                    item[index].title,
+                                    style: textTheme.headline2.copyWith(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 18),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
 
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.white),
-                                height: height*.32,
-                                child: ListView.separated(
-                                  padding: EdgeInsets.only(bottom: 8),
-                                  itemCount: item[index].steps.length,
-                                  itemBuilder: (ctx, i) {
-                                    return Container(
-                                        child: Text.rich(TextSpan(
-                                            text: "Step ${i + 1}: ",
-                                            style: textTheme.caption.copyWith(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.black87),
-                                            children: <InlineSpan>[
-                                          TextSpan(
-                                              text: item[index].steps[i],
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.white),
+                                  height: height*.32,
+                                  child: ListView.separated(
+                                    padding: EdgeInsets.only(bottom: 8),
+                                    itemCount: item[index].steps.length,
+                                    itemBuilder: (ctx, i) {
+                                      return Container(
+                                          child: Text.rich(TextSpan(
+                                              text: "Step ${i + 1}: ",
                                               style: textTheme.caption.copyWith(
                                                   fontSize: 14,
-                                                  color: Colors.grey.shade800)),
-                                        ])));
-                                  },
-                                  separatorBuilder: (context, index) {
-                                    return Divider();
-                                  },
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Colors.black87),
+                                              children: <InlineSpan>[
+                                            TextSpan(
+                                                text: item[index].steps[i],
+                                                style: textTheme.caption.copyWith(
+                                                    fontSize: 14,
+                                                    color: Colors.grey.shade800)),
+                                          ])));
+                                    },
+                                    separatorBuilder: (context, index) {
+                                      return Divider();
+                                    },
+                                  ),
                                 ),
-                              ),
-                              Spacer(),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.of(context).pop(),
-                                  child: Text("Close"),
-                                ),
-                                  SizedBox(width: 10,)
-                              ],)
-                            ],
-                          );
-                        }),
+                                Spacer(),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                    child: Text("Close"),
+                                  ),
+                                    SizedBox(width: 10,)
+                                ],)
+                              ],
+                            );
+                          }),
+                    ),
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.blue.shade800,
+                      color: Colors.blue.shade700,
                       borderRadius: BorderRadius.only(bottomRight:Radius.circular(16),bottomLeft:Radius.circular(16))
                     ),
-                    height: 50,
+                    height: 60,
                     
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -191,7 +195,7 @@ class _MyDialogState extends State<MyDialog> {
                               FontAwesome.step_backward,
                               color: (currPage > 0)
                                   ? Colors.white
-                                  : Colors.grey.shade500,
+                                  : Colors.grey.shade300.withOpacity(.5),
                             )),
                         Container(
                           

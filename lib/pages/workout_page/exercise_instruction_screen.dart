@@ -67,6 +67,8 @@ class _InstructionScreenState extends State<InstructionScreen>
                   title: widget.title,
                   workOutList: widget.workOutList,
                   index: 0,
+              restTime: widget.restTime,
+              countDownTime: widget.countDownTime,
               currTime: DateTime.now().toIso8601String(),
                 )));
   }

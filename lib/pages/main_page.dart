@@ -62,12 +62,14 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     Constants constants = Constants();
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
         bottomNavigationBar: BottomNavigationBarTheme(
           data: BottomNavigationBarThemeData(
-              //   backgroundColor: isDark ? Colors.black : Colors.white
+                backgroundColor: isDark ? Colors.black : Colors.white
               ),
           child: BottomNavigationBar(
+
             selectedLabelStyle: textTheme.bodyText1
                 .copyWith(fontWeight: FontWeight.bold, fontSize: 15),
             elevation: 010,
@@ -76,8 +78,7 @@ class _MainPageState extends State<MainPage> {
                 .copyWith(fontSize: 12, fontWeight: FontWeight.w700),
             selectedItemColor: constants.widgetColor,
             iconSize: 20,
-            backgroundColor: constants.bottomNavigationColor,
-            unselectedItemColor: Colors.grey.shade800,
+            unselectedItemColor: Colors.blueGrey,
             showUnselectedLabels: true,
             currentIndex: currentIndex,
             items: [

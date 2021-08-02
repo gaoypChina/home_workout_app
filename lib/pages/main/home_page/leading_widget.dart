@@ -15,7 +15,6 @@ Constants constants = Constants();
       icon: Icon(
         Icons.person_outline_rounded,
         size: 26,
-        color:color?? constants.appBarContentColor,
       ),
       padding: EdgeInsets.only(right: 4, top: 4),
       splashRadius: 24,
@@ -29,7 +28,6 @@ Constants constants = Constants();
       },
       icon: Icon(
         Feather.calendar,
-        color:color?? constants.appBarContentColor,
         size: 22,
       ),
       tooltip: "Report",
@@ -41,7 +39,6 @@ Constants constants = Constants();
       icon: Icon(
 
         FontAwesome.question_circle_o,
-        color:color?? constants.appBarContentColor,
 
         size: 22,
       ),

@@ -35,36 +35,35 @@ class ExplorePage extends StatelessWidget {
         currentDay: i,
         imageUrl: "assets/bg_cover/back-cover.png",
         challengeList: fullBodyChallenge,
-
-        color1: Colors.blue.shade700,
-        color2: Color(0xffb29f94),
+        color1: Color(0xff2f7336),
+        color2: Colors.orange.shade300,
       ),
       ChallengesModel(
           title: "Abs Workout Challenge",
           currentDay: i,
           tag: _spKey.absChallenge,
-
-          imageUrl: "assets/splash/crunches.gif",
+          imageUrl: "assets/all-workouts/cobraStratch.png",
           challengeList: absChallenges,
           // color1: Colors.blue,
-          color1: Colors.orange.shade300,
-          color2: Colors.blue.shade700),
+          color1: Color(0xffff4b1f),
+          color2: Color(0xffff9068)),
       ChallengesModel(
-        tag: _spKey.chestChallenge,
+          tag: _spKey.chestChallenge,
           title: "Chest Workout Challenge",
           currentDay: i,
           imageUrl: "assets/all-workouts/cobraStratch.png",
           challengeList: chestChallenge,
-          color1: Colors.blue.shade700,
-          color2: Colors.teal),
+          color1: Color(0xff4da0b0),
+          color2: Color(0xffd39d38)),
       ChallengesModel(
-          title: "Arm Workout Challenge",
-          tag: _spKey.armChallenge,
-          currentDay: i,
-          imageUrl: "assets/all-workouts/cobraStratch.png",
-          challengeList: armChallenges,
-          color1: Colors.red.shade300,
-          color2: Colors.blue.shade700),
+        title: "Arm Workout Challenge",
+        tag: _spKey.armChallenge,
+        currentDay: i,
+        imageUrl: "assets/all-workouts/cobraStratch.png",
+        challengeList: armChallenges,
+        color1: Color(0xffff5f6d),
+        color2: Color(0xffffc371),
+      )
     ];
 
     getCard(var item) {
@@ -185,13 +184,14 @@ class ExplorePage extends StatelessWidget {
       
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.blue.shade700,
+        backgroundColor: Colors.white,
         titleSpacing: 14,
-      actions:getLeading(context,color: Colors.white),
-
+        actions: getLeading(
+          context,
+        ),
         title: Text(
           "Explore",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
         centerTitle: false,
       ),

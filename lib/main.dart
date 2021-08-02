@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:full_workout/helper/notification_helper.dart';
 
 import 'package:full_workout/pages/main/report_page/report_page.dart';
 import 'package:full_workout/pages/main/report_page/weight_report/weight_report_detail.dart';
@@ -13,48 +14,73 @@ import 'package:full_workout/pages/main_page.dart';
 import 'package:full_workout/pages/services/faq_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 Future<void> main() async {
+  tz.initializeTimeZones();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.white70,
+    statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
     statusBarBrightness: Brightness.dark,
   ));
 
-
-
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    NotificationHelper.init(initScheduled: true);
+    listenNotification();
+  }
+
+  void listenNotification() =>
+      NotificationHelper.onNotifications.stream.listen(onClickedNotification);
+
+  onClickedNotification(String payload) => Navigator.of(context).pushNamed("/");
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      // darkTheme:
-      // ThemeData(
-      //     brightness: Brightness.dark,
-      //     primarySwatch: Colors.blue,
-      //     textTheme: textTheme,
-      //     inputDecorationTheme: InputDecorationTheme(
-      //       filled: true,
-      //       fillColor: Colors.grey.shade800,
-      //       enabledBorder: OutlineInputBorder(
-      //           borderRadius: BorderRadius.circular(8),
-      //           borderSide: BorderSide(color: Colors.transparent)),
-      //       contentPadding: EdgeInsets.symmetric(horizontal: 16),
-      //       focusedBorder: OutlineInputBorder(
-      //           borderRadius: BorderRadius.circular(8),
-      //           borderSide: BorderSide(color: Colors.transparent)),
-      //     )),
+      darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          appBarTheme: AppBarTheme(color: Colors.black),
+          backgroundColor: Colors.black,
+          primarySwatch: Colors.blue,
+          textTheme: textTheme,
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            fillColor: Colors.grey.shade800,
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.transparent)),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.transparent)),
+          )),
       theme: ThemeData(
           //  primarySwatch: Colors.blue,
           primaryColor: Colors.blue.shade700,
           textTheme: textTheme,
+          appBarTheme: AppBarTheme(
+              backgroundColor: Colors.white,
+              elevation: 0,
+              iconTheme: IconThemeData(color: Colors.black),
+              titleTextStyle: TextStyle(color: Colors.black),
+              toolbarTextStyle: TextStyle(color: Colors.black),
+              actionsIconTheme: IconThemeData(color: Colors.black)),
           radioTheme: RadioThemeData(
             fillColor: MaterialStateProperty.all(Colors.blue.shade700),
           ),
+
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             fillColor: Colors.blue.shade50,

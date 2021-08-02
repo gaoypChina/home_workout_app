@@ -70,152 +70,170 @@ super.initState();
         ),
         fit: BoxFit.cover,
         colorFilter: new ColorFilter.mode(
-            Colors.black.withOpacity(.1), BlendMode.screen),
+            Colors.grey.withOpacity(.3), BlendMode.difference),
       )),
-      child: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              )),
-          SizedBox(height: 20),
-          Text(
-            "Set you weekly goal",
-            style: textTheme.bodyText1.copyWith(
-                fontWeight: FontWeight.w600, fontSize: 20, color: Colors.white),
-          ),
-          SizedBox(height: 10),
-          Text(
-            "We recommend training at least 3 days weekly for a better result",
-            style: textTheme.bodyText1.copyWith(
-                fontWeight: FontWeight.w600, fontSize: 16, color: Colors.white),
-          ),
-          SizedBox(height: 20),
-          Text("Weekly training days",
-              style: textTheme.bodyText1.copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: Colors.white)),
-          SizedBox(height: 10),
-          InkWell(
-            onTap: () async {
-              int res = await showDialog(
-                  context: context,
-                  builder: (context) {
-                    return DaySelector(
-                      title: "Weekly Training day",
-                      dayList: trainingDay,
-                    );
-                  });
-              if(res != null){
-                setState(() {
-                  totalActiveDay = res.toString() + " Days";
-                  activeDayVal = res;
-                });
-              }
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-                color: Colors.white,
-              ),
-              height: 40,
-              width: 200,
-              child: Row(
-                children: [
-                  Text(totalActiveDay),
-                  Spacer(),
-                  Icon(Icons.arrow_drop_down_rounded)
-                ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 6, top: 22),
+            child: ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Icon(Icons.arrow_back),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue.shade700,
+                shape: CircleBorder(),
               ),
             ),
           ),
-          SizedBox(
-            height: 30,
-          ),
-          Text("First day of week",
-              style: textTheme.bodyText1.copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: Colors.white)),
-          SizedBox(
-            height: 10,
-          ),
-          InkWell(
-            onTap: () async {
-      int res =     await   showDialog(
-                  context: context,
-                  builder: (context) {
-                    return DaySelector(
-                      title: "First Day of week",
-                      dayList: firstDay,
-                    );
-                  });
+          Expanded(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20),
+                    Text(
+                      "Set you weekly goal",
+                      style: textTheme.bodyText1.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
+                          color: Colors.white),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "We recommend training at least 3 days weekly for a better result",
+                      style: textTheme.bodyText1.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: Colors.white),
+                    ),
+                    SizedBox(height: 20),
+                    Text("Weekly training days",
+                        style: textTheme.bodyText1.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Colors.white)),
+                    SizedBox(height: 10),
+                    InkWell(
+                      onTap: () async {
+                        int res = await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return DaySelector(
+                                title: "Weekly Training day",
+                                dayList: trainingDay,
+                              );
+                            });
+                        if (res != null) {
+                          setState(() {
+                            totalActiveDay = res.toString() + " Days";
+                            activeDayVal = res;
+                          });
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          color: Colors.white,
+                        ),
+                        height: 40,
+                        width: 200,
+                        child: Row(
+                          children: [
+                            Text(totalActiveDay),
+                            Spacer(),
+                            Icon(Icons.arrow_drop_down_rounded)
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text("First day of week",
+                        style: textTheme.bodyText1.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Colors.white)),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        int res = await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return DaySelector(
+                                title: "First Day of week",
+                                dayList: firstDay,
+                              );
+                            });
 
-      print(res);
-      if(res != null){
-        String resString = "";
-        if(res == 1){
-          resString = "Saturday";
-          firstDayVal = 6;
-        }else if(res == 2){
-          resString =  "Sunday";
-          firstDayVal = 7;
-        }else{
-          resString = "Monday";
-          firstDayVal = 1;
-        }
-        setState(() {
-          startDay = resString;
-        });
-      }
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-                color: Colors.white,
-              ),
-              height: 40,
-              width: 200,
-              child: Row(
-                children: [
-                  Text(startDay),
-                  Spacer(),
-                  Icon(Icons.arrow_drop_down_rounded)
-                ],
-              ),
+                        if (res != null) {
+                          String resString = "";
+                          if (res == 1) {
+                            resString = "Saturday";
+                            firstDayVal = 6;
+                          } else if (res == 2) {
+                            resString = "Sunday";
+                            firstDayVal = 7;
+                          } else {
+                            resString = "Monday";
+                            firstDayVal = 1;
+                          }
+                          setState(() {
+                            startDay = resString;
+                          });
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          color: Colors.white,
+                        ),
+                        height: 40,
+                        width: 200,
+                        child: Row(
+                          children: [
+                            Text(startDay),
+                            Spacer(),
+                            Icon(Icons.arrow_drop_down_rounded)
+                          ],
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Container(
+                      padding: EdgeInsets.only(bottom: 0.0),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: FloatingActionButton.extended(
+                          backgroundColor: Colors.blue.shade700,
+                          onPressed: () {
+                            spHelper.saveInt(spKey.firstDay, firstDayVal);
+                            spHelper.saveInt(spKey.trainingDay, activeDayVal);
+                            Navigator.pop(context, [firstDayVal, activeDayVal]);
+                          },
+                          label: Text(
+                            "SAVE",
+                            style: textTheme.button
+                                .copyWith(fontSize: 16, color: Colors.white),
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ]),
             ),
           ),
-          Spacer(),
-          Container(
-            padding: EdgeInsets.only(bottom: 0.0),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: FloatingActionButton.extended(
-                backgroundColor: Colors.blue.shade700,
-                onPressed: () {
-                        spHelper.saveInt(spKey.firstDay, firstDayVal);
-                        spHelper.saveInt(spKey.trainingDay, activeDayVal);
-                        Navigator.pop(context,[firstDayVal, activeDayVal]);
-                },
-                label: Text(
-                  "SAVE",
-                  style: textTheme.button
-                      .copyWith(fontSize: 16, color: Colors.white),
-                  textAlign: TextAlign.end,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-        ]),
+        ],
       ),
     );
   }
@@ -294,17 +312,20 @@ class _QuitPageState extends State<DaySelector> {
       ),
       body: Stack(
         children: [
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: Icon(Icons.arrow_back),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue.shade700,
-                  shape: CircleBorder(),
-                ),
-              )
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 18.0,horizontal: 8),
+            child: Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Icon(Icons.arrow_back),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue.shade700,
+                    shape: CircleBorder(),
+                  ),
+                )
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -315,12 +336,12 @@ class _QuitPageState extends State<DaySelector> {
                   widget.title,
                   style: textTheme.headline1.copyWith(
                       color: Colors.black,
-                      fontSize: 40,
+                      fontSize: 30,
                       letterSpacing: 1.5,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 18,
                 ),
                 ...widget.dayList
                     .map((item) => getButton(
@@ -339,7 +360,7 @@ class _QuitPageState extends State<DaySelector> {
                         }))
                     .toList(),
                 Spacer(
-                  flex: 2,
+
                 ),
               ],
             ),
