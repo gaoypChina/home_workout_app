@@ -8,16 +8,14 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/helper/recent_workout_db_helper.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
-import 'package:full_workout/pages/main_page.dart';
 import 'package:full_workout/pages/services/bmi_service/bmi_card.dart';
-import 'package:full_workout/widgets/weekly_workout_report.dart';
+import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
 import 'package:path_provider/path_provider.dart' as pp;
 
 import 'package:flutter_svg/svg.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/models/recent_workout.dart';
-import 'package:full_workout/widgets/achivement.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share/share.dart';
 import 'package:wakelock/wakelock.dart';
@@ -50,32 +48,31 @@ Constants constants = Constants();
 final _screenshotController = ScreenshotController();
 
 class _MyAppState extends State<ReportScreen> {
-  ConfettiController _controllerCenter;
-  ConfettiController _controllerCenterRight;
-  ConfettiController _controllerCenterLeft;
   ConfettiController _controllerTopCenter;
-  ConfettiController _controllerBottomCenter;
 
   saveWorkoutData() async {
     try {
       DateTime startTime = DateTime.parse(widget.dateTime);
-      DateTime currDate =
-          DateTime(startTime.year, startTime.month, startTime.day);
+
       int activeTime = DateTime.now().difference(startTime).inSeconds;
       RecentWorkout recentWorkout = RecentWorkout(
-        currDate.toIso8601String(),
+        widget.dateTime,
         widget.title,
         activeTime,
-        3,
-        activeTime * (18/60),
+        3, //unused value
+        activeTime * (18 / 60),
         widget.totalExercise,
       );
       if (widget.tag == spKey.fullBodyChallenge ||
           widget.tag == spKey.absChallenge ||
           widget.tag == spKey.armChallenge ||
           widget.tag == spKey.chestChallenge) {
-        print(widget.tag);
-        spHelper.saveInt(widget.tag, widget.tagValue);
+        print(widget.tag.toString() + " : tag");
+        print(widget.tagValue.toString() + " : tagValue");
+        int currVal = await spHelper.loadInt(widget.tag);
+        spHelper.saveInt(widget.tag, currVal + 1);
+      } else {
+        spHelper.saveString(widget.tag, widget.dateTime);
       }
 
       int savedActiveTime = await spHelper.loadInt(spKey.time) == null
@@ -92,15 +89,8 @@ class _MyAppState extends State<ReportScreen> {
       spHelper.saveInt(spKey.exercise, totalExercise);
 
       int a = await dbHelper.saveWorkOut(recentWorkout);
-      print(a);
     } catch (error) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return Container(
-              child: Text(error.toString()),
-            );
-          });
+      print(error);
     }
   }
 
@@ -131,31 +121,18 @@ class _MyAppState extends State<ReportScreen> {
 
   @override
   void initState() {
+    _controllerTopCenter =
+        ConfettiController(duration: const Duration(seconds: 5));
+    _controllerTopCenter.play();
     saveWorkoutData();
     setAwakeScreen();
-    _controllerCenter =
-        ConfettiController(duration: const Duration(seconds: 10));
-    _controllerCenterRight =
-        ConfettiController(duration: const Duration(seconds: 10));
-    _controllerCenterLeft =
-        ConfettiController(duration: const Duration(seconds: 10));
-    _controllerTopCenter =
-        ConfettiController(duration: const Duration(seconds: 10));
-    _controllerBottomCenter =
-        ConfettiController(duration: const Duration(seconds: 10));
-    _controllerTopCenter.play();
-    _controllerCenterLeft.play();
-    _controllerCenterRight.play();
     super.initState();
   }
 
   @override
   void dispose() {
-    _controllerCenter.dispose();
-    _controllerCenterRight.dispose();
-    _controllerCenterLeft.dispose();
     _controllerTopCenter.dispose();
-    _controllerBottomCenter.dispose();
+
     super.dispose();
   }
 
@@ -223,26 +200,66 @@ class _MyAppState extends State<ReportScreen> {
         ),
         Positioned(
             bottom: 0,
-            child: isLoading
-                ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    backgroundColor: constants.widgetColor,
-              color: Colors.white,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              width: width,
+              child: Row(
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text("Do Again")),
+                  Spacer(),
+                  isLoading
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            backgroundColor: constants.widgetColor,
+                            color: Colors.white,
+                          ),
+                        )
+                      : ElevatedButton(
+                          onPressed: () {
+                            _takeScreenshot();
+                          },
+                          child: Text(
+                            "Share",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                              primary: constants.widgetColor),
+                        ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Spacer(),
+                  TextButton(
+                      onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          WorkoutDetailReport.routeName,
+                          ModalRoute.withName('/')),
+                      child: Text("Next")),
+                ],
+              ),
+            )),
+      ],
+    );
+  }
 
-                    ),
-                )
-                : ElevatedButton(
-                    onPressed: () {
-                      _takeScreenshot();
-                    },
-                    child: Text(
-                      "Share",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(primary: constants.widgetColor),
-                  )),
+  Widget getPastWeek() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12),
+          child: Text("Past Week", style: constants.titleStyle),
+        ),
+        WeeklyWorkoutReport(),
+        SizedBox(
+          height: 10,
+        )
       ],
     );
   }
@@ -250,13 +267,13 @@ class _MyAppState extends State<ReportScreen> {
   Widget getAchievementCard() {
     getCard(String title, String subTitle, Color color) {
       return Container(
-
-        height: MediaQuery.of(context).size.height*.12,
+        height: MediaQuery.of(context).size.height * .12,
         child: Card(
           elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16))),
           child: Container(
-            width: MediaQuery.of(context).size.width/3.5,
+            width: MediaQuery.of(context).size.width / 3.5,
             decoration: BoxDecoration(
               color: color,
               borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -299,13 +316,15 @@ class _MyAppState extends State<ReportScreen> {
     int calories = (timeInSec * (18/60)).toInt();
 
     return Container(
-
+      padding: EdgeInsets.only(top: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          getCard("Exercise",exercise.toString(), Colors.green.shade500),
-          getCard("Time",(time % 60).toString().padLeft(2, '0') , Colors.red.shade400),
-          getCard("Calories",calories.toInt().toString(), Colors.orange.shade400),
+          getCard("Exercise", exercise.toString(), Colors.green.shade500),
+          getCard("Time", (time % 60).toString().padLeft(2, '0'),
+              Colors.red.shade400),
+          getCard(
+              "Calories", calories.toInt().toString(), Colors.orange.shade400),
         ],
       ),
     );
@@ -321,10 +340,9 @@ class _MyAppState extends State<ReportScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(
-            "How it feel?",
-            style: textTheme.bodyText1.copyWith(
-                fontSize: 22, fontWeight: FontWeight.w700, color: Colors.black),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18.0),
+            child: Text("How it feel?", style: constants.titleStyle),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -346,23 +364,23 @@ class _MyAppState extends State<ReportScreen> {
           Center(
             child:
             RatingBar.builder(
-              unratedColor: Colors.grey,
+              unratedColor: Colors.blue.shade100,
               initialRating: 3,
               minRating: 1,
               direction: Axis.horizontal,
               itemCount: 5,
-              itemPadding: EdgeInsets.symmetric(horizontal: 16.0),
+              itemPadding: EdgeInsets.symmetric(horizontal: 17.0),
               itemBuilder: (context, _) => CircleAvatar(
                 child: CircleAvatar(
                   radius: 20,
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.blue.shade700,
                   child: CircleAvatar(
                     radius: 10,
                     backgroundColor: Colors.white,
                   ),
                 ),
               ),
-             itemSize: 30,
+              itemSize: 35,
               onRatingUpdate: (rating) {
                 print(rating);
               },
@@ -399,6 +417,20 @@ class _MyAppState extends State<ReportScreen> {
     );
   }
 
+  Widget getConfetti() {
+    Widget confetti = ConfettiWidget(
+      confettiController: _controllerTopCenter,
+      blastDirection: -pi / 2,
+    );
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        confetti,
+        confetti,
+        confetti,
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -411,28 +443,28 @@ class _MyAppState extends State<ReportScreen> {
       backgroundColor: Colors.white,
       body: Screenshot(
         controller: _screenshotController,
-        child: ListView(
-          physics: BouncingScrollPhysics(),
-          children: <Widget>[
-            getTitle(height * .5 - safeHeight, width),
-            getAchievementCard(),
-            WeeklyWorkoutReport(),
-            getRatingBar(height),
-            BmiCard(),
-            getButton(),
-            SizedBox(height: 16,),
-            Align(
-              alignment: Alignment.center,
-              child: ConfettiWidget(
-                confettiController: _controllerCenterLeft,
-                blastDirection: -pi / 2,
-                emissionFrequency: 0.01,
-                numberOfParticles: 20,
-                maxBlastForce: 100,
-                minBlastForce: 80,
-                gravity: 0.3,
-              ),
+        child: Stack(
+          children: [
+            ListView(
+              physics: BouncingScrollPhysics(),
+              children: <Widget>[
+                getTitle(height * .5 - safeHeight, width),
+                Divider(),
+                getAchievementCard(),
+                getPastWeek(),
+                constants.getDivider(),
+                BmiCard(
+                  showBool: false,
+                ),
+                constants.getDivider(),
+                getRatingBar(height),
+                getButton(),
+                SizedBox(
+                  height: 16,
+                ),
+              ],
             ),
+            getConfetti(),
           ],
         ),
       ),
