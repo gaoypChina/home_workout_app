@@ -154,88 +154,100 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
    return   Colors.green.shade400;
     }else if(tagList[1].toLowerCase() == "advance"){
       return Colors.red.shade300;
-    }else{
-      return Colors.red;
-    }
+    }else {
+        return Colors.amber.shade300;
+      }
     }
     Color textColor = Colors.white;
     return Container(
 
-      margin: EdgeInsets.only(bottom: 12),
+      margin: EdgeInsets.only(bottom: 6),
       decoration: BoxDecoration(
-          color:getBgColor(workout.workoutTitle),
+          color:Colors.blue,//getBgColor(workout.workoutTitle),
           borderRadius: BorderRadius.all(Radius.circular(16))),
       child: Row(
         children: [
           Expanded(
-            flex: 2,
+              flex: 2,
               child: Container(
-
-         padding: EdgeInsets.all(8),
-            height: size.height * .12,
-            width: size.height *.18,
-            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(28),),color: Colors.white70,border: Border.all(color:getBgColor(workout.workoutTitle),width: 12),),
-
-              child: Image.asset(getImage(workout.workoutTitle)))),
-          SizedBox(width: 8,),
+                  padding: EdgeInsets.all(8),
+                  height: size.height * .12,
+                  width: size.height * .18,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(22),
+                    ),
+                    color: Colors.white54,
+                    border: Border.all(
+                      width: 8,
+                        color:Colors.blue,)// getBgColor(workout.workoutTitle)),
+                  ),
+                  child: Image.asset(getImage(workout.workoutTitle)))),
+          SizedBox(
+            width: 8,
+          ),
           Expanded(
             flex: 5,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  DateFormat("dd,MMMM yyyy hh:mm aaa")
-                      .format(DateTime.parse(workout.date)),
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500, fontSize: 16, color: textColor),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  workout.workoutTitle,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, fontSize: 19, color: textColor),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.timer,
-                      color: textColor,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      timeFormat(workout.activeTime) + " Min",
-                      style: TextStyle(color: textColor),
-                    ),
-                    SizedBox(
-                      width: 28,
-                    ),
-                    Icon(
-                      Icons.local_fire_department,
-                      color: textColor,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      (workout.activeTime * (18 / 60)).toString() + " Cal",
-                      style: TextStyle(color: textColor),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 12,
-                )
-              ],
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    DateFormat("dd MMM yyyy  |  hh:mm aaa")
+                        .format(DateTime.parse(workout.date)),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500, fontSize: 16, color: textColor),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    workout.workoutTitle,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 18, color: textColor),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.timer,
+                        color: textColor,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        timeFormat(workout.activeTime) + " Min",
+                        style: TextStyle(color: textColor),
+                      ),
+                      SizedBox(
+                        width: 28,
+                      ),
+                      Icon(
+                        Icons.local_fire_department,
+                        color: textColor,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        (workout.activeTime * (18 / 60)).toStringAsFixed(2) +
+                            " Cal",
+                        style: TextStyle(color: textColor),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 12,
+                  )
+                ],
+              ),
             ),
           ),
         ],
@@ -285,28 +297,39 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-
         body: isLoading == true
-            ? CircularProgressIndicator()
+            ? Center(child: CircularProgressIndicator())
             :
         Column(
           children: [
             Container(
-              height: 70,
+              height: 55,
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(left: 8.0),
                     child: Row(children: [
-                      IconButton(onPressed: ()=>Navigator.of(context).pop(),icon: Icon(Icons.arrow_back,color: Colors.grey.shade800,),),
-                      SizedBox(width: 30,),
-                      Text("History",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: Colors.grey.shade800),),
-
-
-                    ],),
+                              IconButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.grey.shade800,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                "History",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.grey.shade800),
+                              ),
+                            ],),
                   ),
                   Spacer(),
-                  Container(color:Colors.grey.shade800,height: .5,)
+                  Container(color:Colors.grey.shade400,height: .5,)
                 ],
               ),
             ),
@@ -359,17 +382,20 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                                   todayDecoration: BoxDecoration(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(8)),
-                                      color: Colors.blue.shade700.withOpacity(.0)),
+                                      color:
+                                          Colors.blue.shade700.withOpacity(.5)),
                                   disabledDecoration: BoxDecoration(
                                     color: Colors.grey.shade100.withOpacity(.6),
-                                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
                                   ),
                                   markerDecoration: BoxDecoration(
                                     color: Colors.blue.shade900.withOpacity(.4),
-                                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
                                   ),
                                   todayTextStyle: TextStyle(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16),
                                   defaultDecoration: BoxDecoration(

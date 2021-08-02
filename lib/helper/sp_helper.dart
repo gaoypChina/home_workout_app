@@ -63,16 +63,7 @@ class SpHelper {
     return null;
   }
 
-  Future<String> loadReminderTime(String key) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    if (preferences.getString(key) != null &&
-        preferences.getString(key).isNotEmpty) {
-      String rt = preferences.getString(key);
-      return rt;
-    } else {
-      return DateTime.now().toIso8601String();
-    }
-  }
+
 
   Future<bool> loadIsActive(String key) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
@@ -53,10 +51,12 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
 
     DateTime now = DateTime.now();
     await _loadRangeData(
-        DateTime(now.year, now.month, 1), DateTime(now.year, now.month + 1, 1));
+        DateTime(now.year, now.month, 1).subtract(Duration(days: 1)),
+        DateTime(now.year, now.month + 1, 1));
 
-    firstDate = DateFormat.yMMMd().format(DateTime(now.year, now.month - 1, 1));
-    lastDate = DateFormat.yMMMd().format(DateTime.now());
+    firstDate = DateFormat.yMMMd().format(DateTime(now.year, now.month, 1));
+    lastDate = DateFormat.yMMMd().format(
+        DateTime(now.year, now.month + 1, 1).subtract(Duration(days: 1)));
 
     setState(() {
       isLoading = false;
@@ -66,7 +66,7 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
   _loadRangeData(DateTime startDate, DateTime endDate) async {
     weight = [];
     DateTime parsedStartDate =
-        DateTime(startDate.year, startDate.month, startDate.day + 1);
+        DateTime(startDate.year, startDate.month, startDate.day);
     DateTime parsedEndDate =
         DateTime(endDate.year, endDate.month, endDate.day + 1);
     List items = await weightDb.getRangeData(parsedStartDate, parsedEndDate);
@@ -188,27 +188,24 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
               }
 
               onEdit() async {
-          double value = await showDialog(
-              context: context,
-              builder: (context) => HeightWeightSelector(
-                  title: "Weight",
-                  label1: "kg",
-                  label2: "lbs",
-                  selected: 0,
-                  controller1: item.weightModel.weight.toStringAsFixed(2),
-                  derivedController1:
-                      (item.weightModel.weight * 2.20462).toStringAsFixed(2)));
+                double value = await showDialog(
+                    context: context,
+                    builder: (context) => WeightSelector(
+                          weightIndex: 0,
+                          weight: item.weightModel.weight,
+                        ));
 
-          DateTime selectedDate = DateTime.parse(item.weightModel.date);
-          DateTime todayDate = DateTime.now();
-          double toSave = (value == null) ? item.weightModel.weight : value;
-          if (selectedDate.day == todayDate.day &&
-              selectedDate.month == todayDate.month &&
-              selectedDate.year == todayDate.year) {
-            await spHelper.saveDouble(spKey.weight, toSave);
-            String key = DateFormat.yMd().format(selectedDate).toString();
-            WeightModel weightModel =
-                WeightModel(selectedDate.toIso8601String(), toSave, key);
+                DateTime selectedDate = DateTime.parse(item.weightModel.date);
+                DateTime todayDate = DateTime.now();
+                double toSave =
+                    (value == null) ? item.weightModel.weight : value;
+                if (selectedDate.day == todayDate.day &&
+                    selectedDate.month == todayDate.month &&
+                    selectedDate.year == todayDate.year) {
+                  await spHelper.saveDouble(spKey.weight, toSave);
+                  String key = DateFormat.yMd().format(selectedDate).toString();
+                  WeightModel weightModel =
+                      WeightModel(selectedDate.toIso8601String(), toSave, key);
                   if (weightModel.weight == null) return;
                   await weightDb.addWeight(toSave, weightModel, key);
                   setState(() {
@@ -260,9 +257,11 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                     trailing: RichText(
                       text: TextSpan(children: [
                         TextSpan(
-                          text: item.weightModel.weight.toString(),
-                          style: TextStyle(color: Colors.black, fontSize: 22),
-                        ),
+                          text:
+                                    item.weightModel.weight.toStringAsFixed(2),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 22),
+                              ),
                         TextSpan(
                           text: "Kg",
                           style: TextStyle(color: Colors.black, fontSize: 16),
@@ -451,21 +450,10 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
             backgroundColor: Colors.blue.shade700,
             onPressed: () async {
               double previousValue = weightValue;
-              double initVal = 0;
               double value = await showDialog(
                   context: context,
-                  builder: (context) => HeightWeightSelector(
-                        title: "Weight",
-                        label1: "kg",
-                        label2: "lbs",
-                        selected: 0,
-                        controller1: (weightValue == null)
-                            ? initVal.toString()
-                            : weightValue.toStringAsFixed(2),
-                        derivedController1: lbsWeight == null
-                            ? initVal.toString()
-                            : lbsWeight.round().toString(),
-                      ));
+                  builder: (context) =>
+                      WeightSelector(weight: weightValue, weightIndex: 0));
               DateTime selectedDate = DateTime.now();
               double toSave = (value == null) ? previousValue : value;
               await spHelper.saveDouble(spKey.weight, toSave);
@@ -474,31 +462,20 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                   WeightModel(selectedDate.toIso8601String(), toSave, key);
               if (weightModel.weight == null) return;
               await weightDb.addWeight(toSave, weightModel, key);
-              if (weight.length == 0) {
+
+              if (weight[0].weightModel.key == key) {
+                weight.removeAt(0);
                 weight.insert(
                     0, WeightList(index: 0, weightModel: weightModel));
-              } else {
-                weight.insert(
-                    0, WeightList(index: 0, weightModel: weightModel));
-                setState(() {});
+              }else{
+                weight.insert(0, WeightList(index: 0, weightModel: weightModel));
+
               }
 
-              if (value != null) {
-                weight.forEach((element) {
-                  if (element.weightModel.key == weight[0].weightModel.key) {
-                    weight.removeAt(element.index);
-                    weight.insert(element.index,
-                        WeightList(weightModel: weightModel, index: 0));
-                  }
-                });
-                setState(() {});
-                constants.getToast("Weight update successfully");
-              }
 
-              setState(() {
-                weightValue = toSave;
-                lbsWeight = toSave * 2.20462;
-              });
+              setState(() {});
+
+              constants.getToast("Weight added successfully");
             },
             icon: Icon(
               Icons.add,

@@ -148,9 +148,7 @@ class _WeightChartState extends State<WeightChart> {
     }
     getData() {
       dataList = [];
-      for (int i = 1; i <= DateTime
-          .now()
-          .day; i++) {
+      for (int i = 1; i <= 30; i++) {
 
         for (int j = 0; j < weightDataList.length; j++) {
           if (i == DateTime

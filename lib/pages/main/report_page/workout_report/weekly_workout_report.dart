@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/recent_workout_db_helper.dart';
 import 'package:full_workout/models/recent_workout.dart';
+import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:intl/intl.dart';
 
-import '../pages/main/report_page/report_page.dart';
+import '../report_page.dart';
 
 class WeeklyWorkoutReport extends StatefulWidget {
   @override
@@ -68,34 +69,37 @@ for(int i=0; i<7; i++){
 
 
     getWeeklyUpdate() {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: activeDayList
-            .map((activeDay) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Column(
-            children: [
-              Text(DateFormat('EEEE').format(activeDay.date)[0],style: TextStyle(fontWeight: FontWeight.w600),),
-              SizedBox(height: 10,),
-              CircleAvatar(
-                  backgroundColor: Theme.of(context).primaryColor.withOpacity(.8),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 12,
+      return InkWell(
+        onTap: ()=>Navigator.pushNamed(context, WorkoutDetailReport.routeName),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: activeDayList
+              .map((activeDay) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Column(
+              children: [
+                Text(DateFormat('EEEE').format(activeDay.date)[0],style: TextStyle(fontWeight: FontWeight.w600),),
+                SizedBox(height: 10,),
+                CircleAvatar(
+                    backgroundColor: Theme.of(context).primaryColor.withOpacity(.8),
                     child: CircleAvatar(
-                      radius: 6,
-                      backgroundColor: activeDay.isDone
-                          ? Colors.blue.shade700.withOpacity(.6)
-                          : Colors.white,
+                      backgroundColor: Colors.white,
+                      radius: 12,
+                      child: CircleAvatar(
+                        radius: 6,
+                        backgroundColor: activeDay.isDone
+                            ? Colors.blue.shade700.withOpacity(.6)
+                            : Colors.white,
+                      ),
                     ),
-                  ),
-                  radius: 15),
-              SizedBox(height: 5,),
-              Text(activeDay.date.day.toString(),style: TextStyle(fontWeight: FontWeight.w500),),
-            ],
-          ),
-        ))
-            .toList(),
+                    radius: 15),
+                SizedBox(height: 5,),
+                Text(activeDay.date.day.toString(),style: TextStyle(fontWeight: FontWeight.w500),),
+              ],
+            ),
+          ))
+              .toList(),
+        ),
       );
     }
     return Container(

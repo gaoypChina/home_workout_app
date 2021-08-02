@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
@@ -60,10 +61,15 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
     });
 
     await spHelper.loadDouble(spKey.height).then((value) {
-      double feet = (value / 2.54) / 12;
-      double inch = (feet - feet.toInt()) * 12;
+      int feet = value ~/ 30.48;
+      double inch = (value - (feet * 30.48)) * 0.393701;
+      if (inch == 12) {
+        inch = 0;
+        feet = feet++;
+      }
+
       setState(() {
-        feetHeight = feet;
+        feetHeight = feet.toDouble();
         inchHeight = inch;
         heightValue = value;
       });
@@ -91,12 +97,16 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _selectDate(BuildContext context) async {
-      final DateTime picked = await showDatePicker(
+    _selectDate() async {
+      final DateTime picked = await showRoundedDatePicker(
+
+        theme: ThemeData(primaryColor: Colors.blue.shade700),
         context: context,
-        initialDate: (actualDate == null) ? DateTime.now() : actualDate,
-        firstDate: DateTime(1920),
+        height: MediaQuery.of(context).size.height * .4,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(DateTime.now().year - 110),
         lastDate: DateTime.now(),
+        borderRadius: 16,
       );
       if (picked != null && picked.toString() != date) {
         String formatedDay = DateFormat.yMMMd().format(picked);
@@ -192,7 +202,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                   title: "Birthday",
                   subTitle: (date == null) ? "Select your birthday" : date,
                   onPressed: () {
-                    _selectDate(context);
+                    _selectDate();
                   },
                   icon: Icons.cake,
                   iconColor: iconColor[1],
@@ -265,33 +275,28 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                             : "$heightValue cm"
                         : (feetHeight == null)
                             ? ""
-                            : "${feetHeight.round().toString()} feet ${inchHeight.toStringAsFixed(2)} inch",
+                            : "${feetHeight.round().toString()} feet ${inchHeight.toInt()} inch",
                 onPressed: () async {
                   double previousValue = heightValue;
                   double initVal = 0;
                   double value = await showDialog(
                       context: context,
-                      builder: (context) => HeightWeightSelector(
-                            title: "Height",
-                            label1: "cm",
-                            label2: "feet",
-                            controller1: heightValue == null
-                                ? initVal.toString()
-                                : heightValue.toStringAsFixed(2),
-                            controller2: feetHeight == null
-                                ? initVal.toString()
-                                : feetHeight.round().toString(),
-                            controller3: inchHeight == null
-                                ? initVal.toString()
-                                : inchHeight.toStringAsFixed(2),
-                            selected: unit,
+                      builder: (context) => HeightSelector(
+                            height: heightValue == null ? initVal : heightValue,
+                            unitValue: unit,
                           ));
                   double toSave = (value == null) ? previousValue : value;
                   await spHelper.saveDouble(spKey.height, toSave);
                   setState(() {
                     heightValue = toSave;
-                    feetHeight = (toSave / 2.54) / 12;
-                    inchHeight = (feetHeight - feetHeight.toInt()) * 12;
+                    feetHeight = (toSave ~/ 30.48).toDouble();
+                    inchHeight = (toSave - (feetHeight * 30.48)) * 0.393701;
+                    if (inchHeight == 12) {
+                      inchHeight = 0;
+                      feetHeight = feetHeight++;
+                    }
+                    // feetHeight = ((toSave / 2.54) / 1o2);
+                    // inchHeight = (feetHeight - feetHeight.toInt()) * 12;
                   });
                 },
                 icon: AntDesign.barchart,
@@ -307,20 +312,11 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                         : "${lbsWeight.round()} lbs",
                 onPressed: () async {
                   double previousValue = weightValue;
-                  double initVal = 0;
                   double value = await showDialog(
                       context: context,
-                      builder: (context) => HeightWeightSelector(
-                            title: "Weight",
-                            label1: "kg",
-                            label2: "lbs",
-                            selected: unit,
-                            controller1: (weightValue == null)
-                                ? initVal.toString()
-                                : weightValue.toStringAsFixed(2),
-                            derivedController1: lbsWeight == null
-                                ? initVal.toString()
-                                : lbsWeight.round().toString(),
+                      builder: (context) => WeightSelector(
+                            weight: weightValue,
+                            weightIndex: unit,
                           ));
                   DateTime selectedDate = DateTime.now();
                   double toSave = (value == null) ? previousValue : value;
@@ -390,7 +386,7 @@ class NameSelector extends StatelessWidget {
             onPressed: () => Navigator.of(context).pop()),
         TextButton(
             child: Text(
-              "Submit",
+              "Save",
               style: textTheme.button.copyWith(color: contentColor),
             ),
             onPressed: () => Navigator.of(context)
@@ -424,6 +420,8 @@ class _RadioSelectorState extends State<RadioSelector> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(16))),
       title: Text(widget.title),
       content: Container(
         height: 120,
@@ -466,7 +464,7 @@ class _RadioSelectorState extends State<RadioSelector> {
           onPressed: () {
             Navigator.of(context).pop(radioValue);
           },
-          child: Text("Submit",
+          child: Text("Save",
               style: textTheme.button.copyWith(color: Colors.blue.shade700)),
         ),
       ],

@@ -35,4 +35,8 @@ class SpKey {
   /// Week goal
   String trainingDay = "trainingDay";
   String firstDay = "firstDay";
+
+  /// reminder time
+  String hourTime = "hourTime";
+  String minuteTime = "minuteTime";
 }
