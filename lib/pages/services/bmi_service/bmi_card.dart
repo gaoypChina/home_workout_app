@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
@@ -10,6 +11,8 @@ import '../../../main.dart';
 import 'bmi_picker.dart';
 
 class BmiCard extends StatefulWidget {
+  final bool showBool;
+  BmiCard({@required this.showBool});
   @override
   _BmiCardState createState() => _BmiCardState();
 }
@@ -18,6 +21,7 @@ class _BmiCardState extends State<BmiCard> {
   SpHelper _spHelper = new SpHelper();
   SpKey _spKey = new SpKey();
   var weightDb = WeightDatabaseHelper();
+  Constants constants = Constants();
 
 
   bool _isLoading = true;
@@ -110,12 +114,12 @@ class _BmiCardState extends State<BmiCard> {
                 builder: (BuildContext context, ScrollController scrollController) {
                   return
                       Container(
-                        margin:  EdgeInsets.symmetric(horizontal: 4),
+                        margin:  EdgeInsets.symmetric(horizontal: 0),
                         decoration: BoxDecoration(
 
 
                          // border: Border.fromBorderSide(BorderSide(color: Colors.blue.shade700,width: 2)),
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
 
                           color: Colors.white,
                         ),
@@ -523,17 +527,11 @@ class _BmiCardState extends State<BmiCard> {
               SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 0.0),
-                child: Container(
-                  height: 5,
-                  width: double.infinity,
-                  color: Colors.grey.shade300,
-                ),
-              ),
+        if(widget.showBool)  constants.getDivider(),
+          //    Container(height: 1,color: Colors.grey.shade300,),
 
-              getMyHealth(height.toInt().toString() +" Cm",weight.toInt().toString()+" Kg"),
-        SizedBox(height: 20,)
+        if(widget.showBool)   getMyHealth(height.toInt().toString() +" Cm",weight.toInt().toString()+" Kg"),
+
       ],
     );
   }

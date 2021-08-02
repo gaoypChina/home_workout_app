@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:full_workout/constants/constants.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../../main.dart';
@@ -14,7 +15,7 @@ class BMIPicker extends StatefulWidget {
 }
 
 class _BMIPickerState extends State<BMIPicker> {
-
+  final constants = Constants();
 
 
   int weightIndex = 0;
@@ -25,17 +26,11 @@ class _BMIPickerState extends State<BMIPicker> {
   @override
   Widget build(BuildContext context) {
 
-    // double rawInch =widget.height/2.54;
-    // int feet =rawInch ~/12;
-    // double inch = rawInch - feet*12;
-    //
-    // double lbsWeight = widget.weight * 2.205;
 
     String heightCm = widget.height == null ? 0.toString() : widget.height.toStringAsFixed(0);
     String weightKg = widget.weight == null ? 0.toString() : widget.weight.toStringAsFixed(0);
 
-
-        TextEditingController _cmController = TextEditingController(text: heightCm);
+    TextEditingController _cmController = TextEditingController(text: heightCm);
     TextEditingController _feetController = TextEditingController();
     TextEditingController _inchController = TextEditingController();
     TextEditingController _kgController = TextEditingController(text: weightKg);
@@ -43,14 +38,7 @@ class _BMIPickerState extends State<BMIPicker> {
 
 
     showToast(String msg) {
-      return Fluttertoast.showToast(
-          msg: msg,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.blue.shade700.withOpacity(.8),
-          textColor: Colors.white,
-          fontSize: 16.0);
+      return constants.getToast(msg);
     }
 
     onSubmit() {
