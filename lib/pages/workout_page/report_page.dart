@@ -10,6 +10,8 @@ import 'package:full_workout/helper/recent_workout_db_helper.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/pages/services/bmi_service/bmi_card.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
+import 'package:full_workout/pages/workout_page/report_share_page.dart';
+import 'package:full_workout/widgets/slide_fade_transition.dart';
 import 'package:path_provider/path_provider.dart' as pp;
 
 import 'package:flutter_svg/svg.dart';
@@ -45,6 +47,7 @@ SpKey spKey = SpKey();
 RecentDatabaseHelper dbHelper = RecentDatabaseHelper();
 bool isLoading = false;
 Constants constants = Constants();
+int activeTime = 0;
 final _screenshotController = ScreenshotController();
 
 class _MyAppState extends State<ReportScreen> {
@@ -54,7 +57,7 @@ class _MyAppState extends State<ReportScreen> {
     try {
       DateTime startTime = DateTime.parse(widget.dateTime);
 
-      int activeTime = DateTime.now().difference(startTime).inSeconds;
+      activeTime = DateTime.now().difference(startTime).inSeconds;
       RecentWorkout recentWorkout = RecentWorkout(
         widget.dateTime,
         widget.title,
@@ -88,18 +91,25 @@ class _MyAppState extends State<ReportScreen> {
       spHelper.saveInt(spKey.time, totalActiveTime);
       spHelper.saveInt(spKey.exercise, totalExercise);
 
-      int a = await dbHelper.saveWorkOut(recentWorkout);
+      await dbHelper.saveWorkOut(recentWorkout);
     } catch (error) {
       print(error);
     }
   }
 
-
   void _takeScreenshot() async {
     setState(() {
       isLoading = true;
     });
-    final screenShort = await _screenshotController.capture();
+    final screenShort = await _screenshotController.captureFromWidget(
+      ReportShare(
+        title: widget.title,
+        date: widget.dateTime,
+        time: activeTime~/60,
+        calories: (activeTime * (18 / 60)).toInt(),
+        exercise: widget.totalExercise,
+      ),
+    );
     final dir = await pp.getExternalStorageDirectory();
     String currDate = DateTime.now().toString();
     final myImagePath = dir.path + "/$currDate.png";
@@ -108,7 +118,12 @@ class _MyAppState extends State<ReportScreen> {
       imageFile.create(recursive: true);
     }
     imageFile.writeAsBytes(screenShort);
-    Share.shareFiles([myImagePath], subject: "subject", text: "Text");
+    Share.shareFiles(
+      [myImagePath],
+      subject: "Install app",
+      text:
+          "I have completed ${activeTime ~/ 60} minutes of home workout \nYou can start working out at home too with Home workout app: \n https://play.google.com/my_app",
+    );
     setState(() {
       isLoading = false;
     });
@@ -132,7 +147,6 @@ class _MyAppState extends State<ReportScreen> {
   @override
   void dispose() {
     _controllerTopCenter.dispose();
-
     super.dispose();
   }
 
@@ -216,12 +230,11 @@ class _MyAppState extends State<ReportScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            backgroundColor: constants.widgetColor,
-                            color: Colors.white,
+                            color: Colors.blue,
                           ),
                         )
                       : ElevatedButton(
-                          onPressed: () {
+                    onPressed: () {
                             _takeScreenshot();
                           },
                           child: Text(
@@ -229,7 +242,7 @@ class _MyAppState extends State<ReportScreen> {
                             style: TextStyle(color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(
-                              primary: constants.widgetColor),
+                              primary: constants.primaryColor),
                         ),
                   SizedBox(
                     width: 5,
@@ -256,7 +269,11 @@ class _MyAppState extends State<ReportScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12),
           child: Text("Past Week", style: constants.titleStyle),
         ),
-        WeeklyWorkoutReport(),
+        IgnorePointer(
+          child: WeeklyWorkoutReport(
+            onTap: () {},
+          ),
+        ),
         SizedBox(
           height: 10,
         )
@@ -310,10 +327,9 @@ class _MyAppState extends State<ReportScreen> {
       );
     }
 
-    int timeInSec =DateTime.now().difference( DateTime.parse(widget.dateTime)).inSeconds;
     int exercise = widget.totalExercise;
-    int time = DateTime.now().difference( DateTime.parse(widget.dateTime)).inMinutes;
-    int calories = (timeInSec * (18/60)).toInt();
+    int calories = (activeTime * (18/60)).toInt();
+    int inMinute = activeTime~/60;
 
     return Container(
       padding: EdgeInsets.only(top: 4),
@@ -321,7 +337,7 @@ class _MyAppState extends State<ReportScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           getCard("Exercise", exercise.toString(), Colors.green.shade500),
-          getCard("Time", (time % 60).toString().padLeft(2, '0'),
+          getCard("Minute", inMinute.toString(),
               Colors.red.shade400),
           getCard(
               "Calories", calories.toInt().toString(), Colors.orange.shade400),
@@ -332,9 +348,11 @@ class _MyAppState extends State<ReportScreen> {
 
   getRatingBar(double height) {
     TextStyle bodyStyle = textTheme.bodyText2.copyWith(
-        fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black);
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+    );
     return Container(
-      color:Colors.white,
+      //  color:Colors.white,
       height: height * .2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -439,124 +457,34 @@ class _MyAppState extends State<ReportScreen> {
     double safeHeight = AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Screenshot(
-        controller: _screenshotController,
-        child: Stack(
-          children: [
-            ListView(
-              physics: BouncingScrollPhysics(),
-              children: <Widget>[
-                getTitle(height * .5 - safeHeight, width),
-                Divider(),
-                getAchievementCard(),
-                getPastWeek(),
-                constants.getDivider(),
-                BmiCard(
-                  showBool: false,
-                ),
-                constants.getDivider(),
-                getRatingBar(height),
-                getButton(),
-                SizedBox(
-                  height: 16,
-                ),
-              ],
-            ),
-            getConfetti(),
-          ],
-        ),
+      backgroundColor: isDark ? Colors.black : Colors.white,
+      body: Stack(
+        children: [
+          ListView(
+            children: <Widget>[
+              getTitle(height * .5 - safeHeight, width),
+              Divider(),
+              getAchievementCard(),
+              getPastWeek(),
+              constants.getDivider(isDark),
+              BmiCard(
+                showBool: false,
+              ),
+              constants.getDivider(isDark),
+              getRatingBar(height),
+              getButton(),
+              SizedBox(
+                height: 16,
+              ),
+            ],
+          ),
+          getConfetti(),
+        ],
       ),
     );
   }
 }
 
-enum Direction { vertical, horizontal }
-
-class SlideFadeTransition extends StatefulWidget {
-  final Widget child;
-
-  final double offset;
-
-  final Curve curve;
-
-  final Direction direction;
-
-  final Duration delayStart;
-
-  final Duration animationDuration;
-
-  SlideFadeTransition({
-    @required this.child,
-    this.offset = 1.0,
-    this.curve = Curves.easeIn,
-    this.direction = Direction.vertical,
-    this.delayStart = const Duration(seconds: 0),
-    this.animationDuration = const Duration(milliseconds: 800),
-  });
-
-  @override
-  _SlideFadeTransitionState createState() => _SlideFadeTransitionState();
-}
-
-class _SlideFadeTransitionState extends State<SlideFadeTransition>
-    with SingleTickerProviderStateMixin {
-  Animation<Offset> _animationSlide;
-
-  AnimationController _animationController;
-
-  Animation<double> _animationFade;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: widget.animationDuration,
-    );
-
-    if (widget.direction == Direction.vertical) {
-      _animationSlide =
-          Tween<Offset>(begin: Offset(0, widget.offset), end: Offset(0, 0))
-              .animate(CurvedAnimation(
-        curve: widget.curve,
-        parent: _animationController,
-      ));
-    } else {
-      _animationSlide =
-          Tween<Offset>(begin: Offset(widget.offset, 0), end: Offset(0, 0))
-              .animate(CurvedAnimation(
-        curve: widget.curve,
-        parent: _animationController,
-      ));
-    }
-
-    _animationFade =
-        Tween<double>(begin: -1.0, end: 1.0).animate(CurvedAnimation(
-      curve: widget.curve,
-      parent: _animationController,
-    ));
-
-    Timer(widget.delayStart, () {
-      _animationController.forward();
-    });
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _animationFade,
-      child: SlideTransition(
-        position: _animationSlide,
-        child: widget.child,
-      ),
-    );
-  }
-}
