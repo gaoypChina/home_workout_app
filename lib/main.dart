@@ -1,5 +1,7 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_workout/helper/notification_helper.dart';
 
 import 'package:full_workout/pages/main/report_page/report_page.dart';
@@ -14,6 +16,8 @@ import 'package:full_workout/pages/main/setting_page/faq_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:timezone/data/latest.dart' as tz;
+
+import 'bloc_provider/connectivity_state_bloc.dart';
 
 Future<void> main() async {
   tz.initializeTimeZones();
@@ -46,71 +50,80 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Home Workout',
-      darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          appBarTheme: AppBarTheme(color: Colors.black),
-          backgroundColor: Colors.black,
-          primarySwatch: Colors.blue,
-          textTheme: textTheme,
-          radioTheme: RadioThemeData(
-            fillColor:MaterialStateProperty.all(Colors.blue.shade700),
-          ),
-          switchTheme: SwitchThemeData(thumbColor:MaterialStateProperty.all(Colors.blue.shade100),),
-          inputDecorationTheme: InputDecorationTheme(
-            filled: true,
-            fillColor: Colors.grey.shade800,
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.blue.shade700)),
-            contentPadding: EdgeInsets.symmetric(horizontal: 16),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.blue.shade700)),
-          )),
-      theme: ThemeData(
-          primaryColor: Colors.blue.shade700,
+    return MultiBlocProvider(
+      providers:[
+        BlocProvider<ConnectivityCubit>(
+          create: (context) =>
+              ConnectivityCubit(connectivity: Connectivity(),),
+        )
+      ],
+      child: MaterialApp(
+        title: 'Home Workout',
+        darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            appBarTheme: AppBarTheme(color: Colors.black),
+            backgroundColor: Colors.black,
+            primarySwatch: Colors.blue,
+            textTheme: textTheme,
+            radioTheme: RadioThemeData(
+              fillColor: MaterialStateProperty.all(Colors.blue.shade700),
+            ),
+            switchTheme: SwitchThemeData(
+              thumbColor: MaterialStateProperty.all(Colors.blue.shade100),),
+            inputDecorationTheme: InputDecorationTheme(
+              filled: true,
+              fillColor: Colors.grey.shade800,
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Colors.blue.shade700)),
+              contentPadding: EdgeInsets.symmetric(horizontal: 16),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Colors.blue.shade700)),
+            )),
+        theme: ThemeData(
+            primaryColor: Colors.blue.shade700,
 
-          textTheme: textTheme,
-          appBarTheme: AppBarTheme(
-              backgroundColor: Colors.blue.shade700,
-              elevation: 0,
-              iconTheme: IconThemeData(color: Colors.black),
-              titleTextStyle: TextStyle(color: Colors.black),
-            //  toolbarTextStyle: TextStyle(color: Colors.black),
-              actionsIconTheme: IconThemeData(color: Colors.black)),
-          radioTheme: RadioThemeData(
-            fillColor: MaterialStateProperty.all(Colors.blue.shade700),
-          ),
+            textTheme: textTheme,
+            appBarTheme: AppBarTheme(
+                backgroundColor: Colors.blue.shade700,
+                elevation: 0,
+                iconTheme: IconThemeData(color: Colors.black),
+                titleTextStyle: TextStyle(color: Colors.black),
+                //  toolbarTextStyle: TextStyle(color: Colors.black),
+                actionsIconTheme: IconThemeData(color: Colors.black)),
+            radioTheme: RadioThemeData(
+              fillColor: MaterialStateProperty.all(Colors.blue.shade700),
+            ),
 
-          inputDecorationTheme: InputDecorationTheme(
-            filled: true,
-            fillColor: Colors.white,
-            enabledBorder: OutlineInputBorder(
+            inputDecorationTheme: InputDecorationTheme(
+              filled: true,
+              fillColor: Colors.white,
+              enabledBorder: OutlineInputBorder(
 
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.transparent)),
-            contentPadding: EdgeInsets.symmetric(horizontal: 16),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.blue.shade700)),
-          )),
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Colors.transparent)),
+              contentPadding: EdgeInsets.symmetric(horizontal: 16),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Colors.blue.shade700)),
+            )),
 
-      routes: {
-        '/': (ctx) => MainPage(),
-        ReminderTab.routeName: (ctx) => ReminderTab(),
-        FAQPage.routeName: (ctx) => FAQPage(),
-        ReportPage.routeName: (ctx) => ReportPage(),
-        MainPage.routeName: (ctx) => MainPage(),
-        ProfileSettingScreen.routeName: (ctx) => ProfileSettingScreen(),
-        SoundSetting.routeName: (ctx) => SoundSetting(),
-        WeightReportDetail.routeName: (ctx) => WeightReportDetail(),
-        WorkoutDetailReport.routeName: (ctx) => WorkoutDetailReport(),
-        SettingPage.routeName: (ctx) => SettingPage()
-      },
-      builder: EasyLoading.init(),
-      debugShowCheckedModeBanner: false,
+        routes: {
+          '/': (ctx) => MainPage(),
+          ReminderTab.routeName: (ctx) => ReminderTab(),
+          FAQPage.routeName: (ctx) => FAQPage(),
+          ReportPage.routeName: (ctx) => ReportPage(),
+          MainPage.routeName: (ctx) => MainPage(),
+          ProfileSettingScreen.routeName: (ctx) => ProfileSettingScreen(),
+          SoundSetting.routeName: (ctx) => SoundSetting(),
+          WeightReportDetail.routeName: (ctx) => WeightReportDetail(),
+          WorkoutDetailReport.routeName: (ctx) => WorkoutDetailReport(),
+          SettingPage.routeName: (ctx) => SettingPage()
+        },
+        builder: EasyLoading.init(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
