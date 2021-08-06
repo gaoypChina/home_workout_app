@@ -19,6 +19,7 @@ class _SoundSettingState extends State<SoundSetting> {
   bool voice;
   bool coach;
   bool effect;
+  bool showSaveButton = false;
 
   @override
   void initState() {
@@ -94,7 +95,10 @@ class _SoundSettingState extends State<SoundSetting> {
           title,
           style: constants.listTileTitleStyle.copyWith(fontSize: 16),
         ),
-        onChanged: (newVal) => onToggle(newVal),
+        onChanged: (newVal) {
+          showSaveButton = true;
+          return onToggle(newVal);
+        },
       );
     }
 
@@ -117,20 +121,25 @@ class _SoundSettingState extends State<SoundSetting> {
     return Scaffold(
       backgroundColor: isDark?Colors.black:Colors.white,
       appBar: AppBar(
+        backgroundColor: isDark?Colors.black:Colors.white,
+
         actions: [
-          TextButton(
-              onPressed: () {
-                spHelper.saveBool(spKey.mute, mute);
-                spHelper.saveBool(spKey.coach, coach);
-                spHelper.saveBool(spKey.voice, voice);
-                spHelper.saveBool(spKey.effect, effect);
-                Navigator.of(context).pop();
-                constants.getToast("Sound Settings Saved");
-              },
-              child: Text("Save",
-                  style: TextStyle(
-                    color: Colors.blue.shade700,
-                  )))
+         showSaveButton? Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: TextButton(
+                onPressed: () {
+                  spHelper.saveBool(spKey.mute, mute);
+                  spHelper.saveBool(spKey.coach, coach);
+                  spHelper.saveBool(spKey.voice, voice);
+                  spHelper.saveBool(spKey.effect, effect);
+                  Navigator.of(context).pop();
+                  constants.getToast("Sound Settings Saved");
+                },
+                child: Text("Save",
+                    style: TextStyle(
+                      color: Colors.blue.shade700,
+                    ))),
+          ):Container()
         ],
         title: Text(
           "Sound Setting",

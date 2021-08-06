@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:full_workout/database/workout_list.dart';
+import 'package:full_workout/pages/services/youtube_player.dart';
 
 import '../../main.dart';
 
@@ -35,7 +36,17 @@ class DetailPage extends StatelessWidget {
               label: Text(""),
             ),
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: ()  {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          YoutubeTutorial(
+                            rapCount:rapCount ,
+                            workout: workout,
+                          ),
+                    ));
+              },
               style: ElevatedButton.styleFrom(
                   primary:isDark?Colors.grey.shade200:Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 4)),
@@ -108,7 +119,6 @@ class DetailPage extends StatelessWidget {
     backgroundColor:isDark?Colors.black: Colors.blue,
       body: SafeArea(
         child: Container(
-
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: Column(

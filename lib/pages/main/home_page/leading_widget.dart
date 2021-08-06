@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/pages/main/setting_page/profile_settings_screen.dart';
-import 'package:full_workout/pages/services/faq_page.dart';
+import 'package:full_workout/pages/main/setting_page/faq_page.dart';
 
 List<Widget>  getLeading(BuildContext context, {Color color}){
   return  [

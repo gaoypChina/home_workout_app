@@ -39,4 +39,5 @@ class SpKey {
   /// reminder time
   String hourTime = "hourTime";
   String minuteTime = "minuteTime";
+  String reminderToggle = "reminderToggle";
 }

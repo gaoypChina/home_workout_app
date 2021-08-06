@@ -26,6 +26,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   double heightValue;
   double weightValue;
   DateTime actualDate;
+  bool showSaveButton = false;
 
   //derived values
 
@@ -130,9 +131,9 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
       // Colors.blue.shade700,
       Colors.red,
       Colors.green,
-      Colors.amberAccent,
+      Colors.amberAccent.shade200,
       Colors.orange,
-      Colors.purpleAccent,
+      Colors.red,
       Colors.orangeAccent,
     ];
 
@@ -141,34 +142,29 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
       appBar:
 
       AppBar(
-
-
+        backgroundColor: isDark?Colors.black:Colors.white,
         title: Text(
           "Profile",
         style: TextStyle(color: isDark?Colors.white:Colors.black)),
 
         actions: [
-          TextButton(
+          showSaveButton ?   TextButton(
               style: TextButton.styleFrom(padding: EdgeInsets.only(right: 18)),
-            child: Text("Save",style: TextStyle(color: Colors.blue.shade700),),
+            child: Padding(
+              padding: const EdgeInsets.only(right:12.0),
+              child: Text("Save",style: TextStyle(color: Colors.blue.shade700),),
+            ),
               onPressed: () {
                 Navigator.of(context).pop();
                 constants.getToast("Profile Saved Successfully");
-              }),
+              }):Container(),
         ],
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            //   child: Text(
-            //       "Add your profile details and get more relevant exercise."),
-            // ),
-            // SizedBox(
-            //   height: 10,
-            // ),
+
             CustomProfileTile(
               title: "Name",
               subTitle: (name != null) ? name : "Enter your name",
@@ -183,24 +179,24 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 await spHelper.saveString(spKey.name, toSave);
                 setState(() {
                   name = toSave;
+                  showSaveButton = true;
                 });
               },
               icon: Icons.edit,
               iconColor: iconColor[0],
             ),
-            Theme(
-              data: Theme.of(context)
-                  .copyWith(primaryColor: Colors.blue.shade700),
-              child: CustomProfileTile(
+            CustomProfileTile(
                 title: "Date of Birth",
                 subTitle: (date == null) ? "Select your birthday" : date,
                 onPressed: () {
                   _selectDate();
+                  setState(() {
+                    showSaveButton = true;
+                  });
                 },
                 icon: Icons.cake,
                 iconColor: iconColor[1],
               ),
-            ),
             CustomProfileTile(
               title: "Gender",
               subTitle: (gender == null)
@@ -223,6 +219,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 await spHelper.saveInt(spKey.gender, toSave);
                 setState(() {
                   gender = toSave;
+                  showSaveButton = true;
                 });
               },
               icon: Icons.male,
@@ -233,16 +230,16 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
               subTitle: (unit == null)
                   ? "Select unit"
                   : (unit == 0)
-                      ? "cm/kg"
-                      : "in/lbs",
+                      ? "Cm/Kg"
+                      : "Inch/Lbs",
               onPressed: () async {
                 int previousValue = unit;
                 int selectedUnit = await showDialog(
                     context: context,
                     builder: (context) => RadioSelector(
                           title: "Select Unit",
-                          radio2: "inch/lbs",
-                          radio1: "cm/kg",
+                          radio2: "Inch/Lbs",
+                          radio1: "Cm/Kg",
                           value: unit,
                         ));
                 int toSave =
@@ -250,6 +247,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 await spHelper.saveInt(spKey.unit, toSave);
                 setState(() {
                   unit = toSave;
+                  showSaveButton = true;
                 });
               },
               icon: Icons.linear_scale_sharp,
@@ -278,6 +276,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 double toSave = (value == null) ? previousValue : value;
                 await spHelper.saveDouble(spKey.height, toSave);
                 setState(() {
+                  showSaveButton = true;
                   heightValue = toSave;
                   feetHeight = (toSave ~/ 30.48).toDouble();
                   inchHeight = (toSave - (feetHeight * 30.48)) * 0.393701;
@@ -285,8 +284,6 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                     inchHeight = 0;
                     feetHeight = feetHeight++;
                   }
-                  // feetHeight = ((toSave / 2.54) / 1o2);
-                  // inchHeight = (feetHeight - feetHeight.toInt()) * 12;
                 });
               },
               icon: AntDesign.barchart,
@@ -297,8 +294,8 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
               subTitle: (weightValue == null)
                   ? "Enter your weight"
                   : (unit == 0)
-                      ? "${weightValue.toStringAsFixed(2)} kg"
-                      : "${lbsWeight.round()} lbs",
+                      ? "${weightValue.toStringAsFixed(2)} Kg"
+                      : "${lbsWeight.round()} Lbs",
               onPressed: () async {
                 double previousValue = weightValue;
                 double value = await showDialog(
@@ -317,6 +314,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 await weightDatabaseHelper.addWeight(
                     toSave, weightModel, key);
                 setState(() {
+                  showSaveButton = true;
                   weightValue = toSave;
                   lbsWeight = toSave * 2.20462;
                 });
@@ -362,7 +360,9 @@ class NameSelector extends StatelessWidget {
                 TextStyle(color: contentColor, fontWeight: FontWeight.w700)),
       ),
       actions: [
-        TextButton(
+
+
+   TextButton(
             child: Text(
               "Cancel",
               style: textTheme.button.copyWith(color: Colors.grey),
@@ -475,9 +475,7 @@ class CustomProfileTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Constants constants = Constants();
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
-
 
 
     return ListTile(
@@ -487,8 +485,8 @@ class CustomProfileTile extends StatelessWidget {
       title: Text(title),
       leading: Icon(icon,color: iconColor,),
       onTap: onPressed,
-      subtitle: Text(subTitle,style: TextStyle(color:isDark? Colors.white:Colors.black,fontSize: 15),),
-      trailing: constants.trailingIcon,
+      trailing: Text(subTitle.length > 20 ? '${subTitle.substring(0, 20)}...' : subTitle,   overflow: TextOverflow.ellipsis,style: TextStyle(color:isDark? Colors.white:Colors.black,fontSize: 15,)),
+     // trailing: constants.trailingIcon,
 
     );
 

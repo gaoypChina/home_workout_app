@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/constants/constants.dart';
 
-import '../../main.dart';
+import '../../../main.dart';
 
 class FAQPage extends StatelessWidget {
   static const routeName = "FAQ-page";
 
   @override
   Widget build(BuildContext context) {
-    Constants constants = Constants();
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     Widget getFAQTile() {
@@ -16,30 +15,35 @@ class FAQPage extends StatelessWidget {
         children: faqList
             .map((faq) => Column(
                   children: [
-                    Material(
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(16))),
-                        child: Theme(
-                          data: Theme.of(context)
-                              .copyWith(dividerColor: Colors.transparent),
-                          child: ExpansionTile(
-                            title: Text(
-                              faq.question,
-                              style: textTheme.bodyText1.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 15),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0,right: 8,bottom: 8),
+                      child: Material(
+                        color: isDark?Colors.grey.shade800:Colors.white,
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16))),
+                          child: Theme(
+                            data: Theme.of(context)
+                                .copyWith(dividerColor: Colors.transparent),
+                            child: ExpansionTile(
+                              initiallyExpanded: true,
+                              title: Text(
+                                faq.question,
+                                style: textTheme.bodyText1.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15),
+                              ),
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 18.0, right: 18, bottom: 18),
+                                  child: Text(faq.answer),
+                                )
+                              ],
                             ),
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 18.0, right: 18, bottom: 18),
-                                child: Text(faq.answer),
-                              )
-                            ],
-                          ),
-                        )),
+                          )),
+                    ),
                     SizedBox(
                       height: 8,
                     )
@@ -52,6 +56,7 @@ class FAQPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDark?Colors.black:Colors.white,
       appBar: AppBar(
+        backgroundColor: isDark?Colors.black:Colors.white,
         title: Text("FAQ",style: TextStyle(color: isDark?Colors.white:Colors.black),),
       ),
       body: SingleChildScrollView(

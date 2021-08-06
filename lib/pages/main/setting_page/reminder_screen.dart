@@ -7,12 +7,9 @@ import 'package:full_workout/helper/sp_key_helper.dart';
 
 class ReminderTab extends StatefulWidget {
   static const routeName = "reminder-screen";
-
   @override
   _ReminderTabState createState() => _ReminderTabState();
 }
-
-
 
 class _ReminderTabState extends State<ReminderTab> {
   FlutterLocalNotificationsPlugin fltrNotification;
@@ -23,6 +20,7 @@ class _ReminderTabState extends State<ReminderTab> {
   bool isChecked = true;
   List<bool> activeDayList = [];
   bool isLoading = true;
+  bool showSaveButton = false;
 
   List<ReminderDay> selector = [
     ReminderDay(day: "Monday", activate: true, dayValue: 1),
@@ -54,32 +52,42 @@ class _ReminderTabState extends State<ReminderTab> {
     }
   }
 
+  _loadReminderToggle() async {
+    isChecked = await spHelper.loadBool(spKey.reminderToggle) ?? null;
+  }
+
   _loadInit() async {
     setState(() {
       isLoading = true;
     });
     await _loadReminderTime();
     await _loadIsActiveDay();
+    await _loadReminderToggle();
     setState(() {
       isLoading = false;
     });
   }
-  _setReminder() {
-    List<int> dayList = [];
-    selector.forEach((element) {
-      if (element.activate == true) {
-        dayList.add(element.dayValue);
-      }
-    });
 
+  _setReminder(bool isOn) {
+    List<int> dayList = [];
+    if (isOn) {
+      selector.forEach((element) {
+        if (element.activate == true) {
+          dayList.add(element.dayValue);
+        }
+      });
+    } else {
+      dayList.add(7);
+    }
+    print(dayList);
     NotificationHelper.showScheduledNotification(
         payload: "",
         days: dayList,
         title: "Home Workout Reminder",
         id: 1,
-        body: "Click! Start your workout now",
-        time: Time(reminderTime.hour, reminderTime.minute)
-    );
+        body:
+            "Complete your daily workout task and move a step closer to your goal",
+        time: Time(reminderTime.hour, reminderTime.minute));
   }
 
   @override
@@ -144,138 +152,142 @@ class _ReminderTabState extends State<ReminderTab> {
 
     getDivider(){
       return  Container(
-          margin: EdgeInsets.only(left: 14,right: 8),
-          height: 1,
-          color: Colors.grey.shade300,);
+        margin: EdgeInsets.only(left: 14, right: 8),
+        height: 0,
+        color: Colors.grey.shade300,
+      );
     }
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: isDark ? Colors.black : Colors.white,
         elevation: 0,
+        actions: [
+         showSaveButton? Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: TextButton(
+              onPressed: () {
+                _setReminder(isChecked);
+                constants.getToast("Your changes saved successfully");
+                Navigator.of(context).pop();
+              },
+              child: Text("Save"),
+            ),
+          ):Container(),
+        ],
         title: Text(
-          "Workout Reminder",style: TextStyle(color: isDark?Colors.white:Colors.black),
+          "Workout Reminder",
+          style: TextStyle(color: isDark ? Colors.white : Colors.black),
         ),
       ),
      backgroundColor:isDark?Colors.black: Colors.white,
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
-        child: Padding(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 12),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Text(
-              "Set a workout reminder to help you meet your goals faster. you can change the frequency or turn off in your account settings at any time.",
-              style: constants.textStyle.copyWith(fontSize: 14,fontWeight: FontWeight.w500),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 10,
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            child: Column(
-              children: [
-                    Material(
-                      elevation: 0,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(12),
-                      ),
-                      child: SwitchListTile(
-                     tileColor: tileColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12))),
-                        title: Text(
-                          "Show Notification",
-                          style: titleStyle,
-                        ),
-                        subtitle: Text(
-                          isChecked ? "Reminder is on" : "Reminder is off",
-                          style: timeStyle,
-                        ),
-                        value: isChecked,
-                        onChanged: (value) {
-                          setState(() {
-                            isChecked = value;
-                          });
-                        },
-                      ),
-                    ),
-                    getDivider(),
-                    Material(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
-                      child: ListTile(
-                        tileColor: tileColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12))),
-                        title: Text(
-                          "Workout Time",
-                          style: titleStyle,
-                        ),
-                        trailing: Icon(Icons.edit),
-                        subtitle: Text(getTimeString(reminderTime.hour, reminderTime.minute),style: timeStyle,),
-                        onTap: () async {
-                          await _pickTime();
-                          _setReminder();
-                        },
-                      ),
-                    ),
-                    getDivider(),
-                    Material(
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12))),
-                        child: ListTile(
-                          tileColor: tileColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
-                          title: Text(
-                            "Workout Day",
-                            style: titleStyle,
-                          ),
-                          trailing: Icon(
-                            Icons.edit,
-                          ),
-                          onTap: () async {
-                            List<ReminderDay> list = await showDialog(
-                                context: context,
-                                builder: (context) => DaySelector(selector));
-                            setState(() {});
-                            if (list != null) {
-                              list.forEach((element) {
-                                spHelper.saveBool(
-                                    element.day, element.activate);
-                                //  NotificationHelper.showScheduledNotification();
-                              });
-                              _setReminder();
-                            }
-                          },
-                          subtitle: Container(
-                            padding: EdgeInsets.only(top: 10),
-                            height: 30,
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: selector.length,
-                                itemBuilder: (context, index) {
-                                  return (selector[index].activate == true)
-                                      ? Text(
-                                          '${selector[index].day.substring(0, 3)}    ',
-                                          style: timeStyle,
-                                        )
-                                      : Text('');
-                                }),
-                          ),
-                        )),
-                  ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                "Set a workout reminder to help you meet your goals faster. you can change the frequency or turn off in your account settings at any time.",
+                style: constants.textStyle
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
+              ),
             ),
-          ),
-        ],
-      ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              child: Column(
+                children: [
+                  SwitchListTile(
+                    tileColor: tileColor,
+                    contentPadding: EdgeInsets.only(left: 20, right: 4),
+                    activeColor: Colors.blue,
+                    title: Text(
+                      "Show Notification",
+                      style: titleStyle,
+                    ),
+                    subtitle: Text(
+                      isChecked ? "Reminder is on" : "Reminder is off",
+                      style: timeStyle,
+                    ),
+                    value: isChecked,
+                    onChanged: (value) {
+                      setState(() {
+                        isChecked = value;
+                        showSaveButton = true;
+                      });
+                      spHelper.saveBool(spKey.reminderToggle, value);
+                    },
+                  ),
+                  getDivider(),
+                  ListTile(
+                    tileColor: tileColor,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                    title: Text(
+                      "Workout Time",
+                      style: titleStyle,
+                    ),
+                    trailing: Icon(Icons.edit),
+                    subtitle: Text(
+                      getTimeString(reminderTime.hour, reminderTime.minute),
+                      style: timeStyle,
+                    ),
+                    onTap: () async {
+                      await _pickTime();
+                      setState(() {
+                        showSaveButton = true;
+                      });
+
+                    },
+                  ),
+                  getDivider(),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                    tileColor: tileColor,
+                    title: Text(
+                      "Workout Day",
+                      style: titleStyle,
+                    ),
+                    trailing: Icon(
+                      Icons.edit,
+                    ),
+                    onTap: () async {
+                      List<ReminderDay> list = await showDialog(
+                          context: context,
+                          builder: (context) => DaySelector(selector));
+                      setState(() {
+                        showSaveButton = true;
+                      });
+                      if (list != null) {
+                        list.forEach((element) {
+                          spHelper.saveBool(element.day, element.activate);
+                          //  NotificationHelper.showScheduledNotification();
+                        });
+                      }
+                    },
+                    subtitle: Container(
+                      padding: EdgeInsets.only(top: 10),
+                      height: 30,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: selector.length,
+                          itemBuilder: (context, index) {
+                            return (selector[index].activate == true)
+                                ? Text(
+                                    '${selector[index].day.substring(0, 3)}    ',
+                                    style: timeStyle,
+                                  )
+                                : Text('');
+                          }),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
