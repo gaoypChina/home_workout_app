@@ -40,6 +40,22 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   double padValue = 0;
   bool isLoading = true;
 
+  bool lastStatus = true;
+
+  _scrollListener() {
+    if (isShrink != lastStatus) {
+      setState(() {
+        lastStatus = isShrink;
+      });
+    }
+  }
+
+  bool get isShrink {
+    return _scrollController.hasClients &&
+        _scrollController.offset > (200 - kToolbarHeight);
+  }
+
+
   getTime() {
     int length = widget.workOutList.length;
     if (length < 15) return length + 2;
@@ -77,6 +93,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
     super.initState();
     getCountDown();
     _scrollController = new ScrollController();
+    _scrollController.addListener(_scrollListener);
     tabContoller = new TabController(vsync: this, length: 1);
   }
 
@@ -89,9 +106,8 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
-
-    print('now time : $countDownTime');
     int time;
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -140,22 +156,23 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return [
-                    SliverAppBar(
+                    SliverAppBar(backgroundColor:isDark?Colors.black: Colors.white,
                       leading: IconButton(
-                        icon: Icon(Icons.arrow_back),
+                        icon: Icon(Icons.arrow_back,color:isDark?Colors.white: isShrink?Colors.black:Colors.white,),
                         onPressed: () {
                           Navigator.of(context).pop(true);
                         },
                       ),
 
-                automaticallyImplyLeading: false,
                 expandedHeight: 150.0,
                 pinned: true,
+                elevation: isDark?0:1,
                 floating: false,
                 forceElevated: innerBoxIsScrolled,
                 flexibleSpace: FlexibleSpaceBar(
                   title: Text(
                     widget.title,
+                   style: TextStyle(color:isDark?Colors.white: isShrink?Colors.black:Colors.white),
                   ),
                   background: Image.asset(
                     "assets/cover/back-cover.jpg",
@@ -166,6 +183,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
             ];
           },
           body: Scaffold(
+            backgroundColor: isDark?Colors.black:Colors.white,
             body: TabBarView(
               controller: tabContoller,
               children: [

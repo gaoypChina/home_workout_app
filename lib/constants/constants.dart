@@ -6,33 +6,29 @@ import '../main.dart';
 class Constants{
 
 
-   Color primaryColor = Color(0xff4278DF);
 
 
 
-  Color appBarColor =Colors.white;
-  Color appBarContentColor = Colors.black;
   Color bottomNavigationColor =  Color(0xffF2F2F2);
-  Color titleBgColor = Color(0xffF6F6F6);
-  Color titleColor = Color(0xffA9A9A9);
-  Color tileColor =Colors.blue.shade50;//Color(0xffF2F2F2);
-  Color leadingIconColor = Color(0xff969696);
-  Color widgetColor = Color(0xff4278DF);
+  Color darkSecondary = Colors.blueGrey.shade800;
+  Color lightSecondary = Colors.blue.shade50;
+  Color primaryColor = Colors.blue.shade700;
+
 
   TextStyle titleStyle =   textTheme.subtitle1.copyWith(fontWeight: FontWeight.w700);
 
   var textStyle =textTheme.subtitle1.copyWith(wordSpacing:4,fontWeight: FontWeight.w700,fontSize: 18,color: Color(0xffA9A9A9));
-  var contentTextStyle = textTheme.subtitle2.copyWith(fontSize: 15);
-  Icon trailingIcon = Icon(Icons.arrow_forward_ios,color: Colors.black,size: 16,);
+  var listTileTitleStyle = TextStyle(fontWeight: FontWeight.w500,fontSize: 17);
+  Icon trailingIcon = Icon(Icons.arrow_forward_ios,color: Colors.grey,size: 16,);
 
 
-  getDivider() {
+  getDivider(bool isDark) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Container(
         height: 8,
         width: double.infinity,
-        color: Colors.grey.shade300,
+        color:isDark? Colors.grey.shade800:Colors.grey.shade200,
       ),
     );
   }

@@ -109,7 +109,7 @@ class _AchievementState extends State<Achievement> {
           children: [
             getCard("Exercise", exercise.toString(),
                 [Colors.green.shade700, Colors.green]),
-            getCard("Minute", (time % 60).toString().padLeft(2, '0'),
+            getCard("Minute", (time~/60).toString(),
                 [Colors.red.shade700, Colors.red.shade300]),
             getCard("Calories", calories.toInt().toString(),
                 [Colors.orange.shade700, Colors.orange]),

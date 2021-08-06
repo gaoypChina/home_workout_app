@@ -9,6 +9,7 @@ import 'package:full_workout/pages/workout_page/report_page.dart';
 import 'package:intl/intl.dart';
 import '../../../main.dart';
 import 'bmi_picker.dart';
+import 'package:sliding_sheet/sliding_sheet.dart';
 
 class BmiCard extends StatefulWidget {
   final bool showBool;
@@ -46,6 +47,8 @@ class _BmiCardState extends State<BmiCard> {
   @override
   Widget build(BuildContext context) {
     BmiRemark remark = BmiRemark();
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     double bmi = 0;
     TextStyle titleStyle =
         textTheme.subtitle1.copyWith(fontWeight: FontWeight.w700);
@@ -79,7 +82,6 @@ class _BmiCardState extends State<BmiCard> {
     }
 
 
-
     showBmiSheet(){
       getWeightDetail({String title, String value, Color color}) {
         return Padding(
@@ -94,121 +96,140 @@ class _BmiCardState extends State<BmiCard> {
               SizedBox(
                 width: 10,
               ),
-              Text(title,style: textTheme.subtitle1.copyWith(color: Colors.grey.shade800,fontSize: 16,fontWeight: FontWeight.w500),),
+              Text(
+                title,
+                style: textTheme.subtitle1.copyWith(
+
+                    fontWeight: FontWeight.w500),
+              ),
               Spacer(),
-              Text(value,style: textTheme.subtitle1.copyWith(color: Colors.grey.shade800,fontSize: 15,fontWeight: FontWeight.w700),)
+              Text(
+                value,
+                style: textTheme.subtitle1.copyWith(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700),
+              )
             ],
           ),
         );
       }
 
-      return
-      TextButton(
-          onPressed: () {
-          showBottomSheet(backgroundColor:  Colors.grey.withOpacity(.2),
-              elevation: 5,
+      return showSlidingBottomSheet(context, builder: (context) {
+        return SlidingSheetDialog(
+          elevation: 8,
+          cornerRadius: 16,
+          extendBody: true,
+          snapSpec: const SnapSpec(
+            snap: true,
+            snappings: [0.4, 0.7, 1.0],
+            positioning: SnapPositioning.relativeToSheetHeight,
+          ),
+          builder: (context, state) {
+            return SingleChildScrollView(
+            child:    Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 18,),
+                Container(
 
-              context: context, builder: (builder){
-            return   SizedBox.expand(
-              child: DraggableScrollableSheet(
-                builder: (BuildContext context, ScrollController scrollController) {
-                  return
-                      Container(
-                        margin:  EdgeInsets.symmetric(horizontal: 0),
-                        decoration: BoxDecoration(
+                  height: 30,
+                  child: Row(
+                    children: [
+                      Text(""),
+                      Spacer(),
+                      Text(
+                        "Weight Categories",
+                        style: textTheme.subtitle1.copyWith(
 
-
-                         // border: Border.fromBorderSide(BorderSide(color: Colors.blue.shade700,width: 2)),
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
-
-                          color: Colors.white,
-                        ),
-
-                        child: ListView(
-                          physics: BouncingScrollPhysics(),
-                          controller: scrollController,
-                              children: [
-                                SizedBox(height: 30,),
-                                Container(
-                                  height: 30,
-                                  child: Row(children: [
-                                    Text(""),
-                                    Spacer(),
-                                    Text("Weight Categories",style:textTheme.subtitle1.copyWith(color: Colors.grey.shade800,fontWeight: FontWeight.w600,fontSize: 18),),
-                                    Spacer(),
-                                    Text("Index",style:textTheme.subtitle1.copyWith(color: Colors.grey.shade800,fontWeight: FontWeight.w600,fontSize: 18),),
-                                    SizedBox(width: 18,)
-                                  ],),
-                                ),
-                                Divider(),
-                                getWeightDetail(
-                                    title: "Very Severely Underweight",
-                                    value: "<= 16",
-                                    color: Colors.grey),
-                                Divider(),
-                                getWeightDetail(
-                                    title: "Severely Underweight",
-                                    value: "16 - 16.9",
-                                    color: Colors.grey.shade500),
-                                Divider(),
-                                getWeightDetail(
-                                    title: "Underweight",
-                                    value: "17 - 18.4",
-                                    color: Colors.blue),
-                                Divider(),
-                                getWeightDetail(
-                                    title: "Healthy weight",
-                                    value: "18.5 - 24.9",
-                                    color: Colors.green),
-                                Divider(),
-                                getWeightDetail(
-                                    title: "Overweight",
-                                    value: "25 - 29.9",
-                                    color: Colors.orange),
-                                Divider(),
-                                getWeightDetail(
-                                    title: "Obese class I",
-                                    value: "30 - 34.9",
-                                    color: Colors.redAccent),
-                                Divider(),
-                                getWeightDetail(
-                                    title: "Obese class II",
-                                    value: "35 - 39.9",
-                                    color: Colors.red),
-                                Divider(),
-                                getWeightDetail(
-                                    title: "Obese class III",
-                                    value: ">=40",
-                                    color: Colors.red.shade800),
-                                Divider(),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                                  child: Text("The body mass index(BMI) Calculator can be used to calculate BMI value and corresponding weight status."),
-                                ),
-                                SizedBox(height: 10),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                                  child: Text("Healthy BMI Range",style: textTheme.subtitle1.copyWith(fontSize: 16,fontWeight: FontWeight.w600)),
-                                ),
-                                SizedBox(height: 5),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                                  child: Text("The world health organization\'s (WHO) recommended healthy BMI range is 18.5-25 for both male and female",style: textTheme.subtitle1.copyWith(fontSize: 16,fontWeight: FontWeight.w500)),
-                                ),
-                                SizedBox(height: 20,)
-                              ],
-                            )
-
-                      );
-                },
-              ),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18),
+                      ),
+                      Spacer(),
+                      Text(
+                        "Index",
+                        style: textTheme.subtitle1.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18),
+                      ),
+                      SizedBox(
+                        width: 18,
+                      )
+                    ],
+                  ),
+                ),
+                Divider(),
+                getWeightDetail(
+                    title: "Very Severely Underweight",
+                    value: "<= 16",
+                    color: Colors.grey),
+                Divider(),
+                getWeightDetail(
+                    title: "Severely Underweight",
+                    value: "16 - 16.9",
+                    color: Colors.grey.shade500),
+                Divider(),
+                getWeightDetail(
+                    title: "Underweight",
+                    value: "17 - 18.4",
+                    color: Colors.blue),
+                Divider(),
+                getWeightDetail(
+                    title: "Healthy weight",
+                    value: "18.5 - 24.9",
+                    color: Colors.green),
+                Divider(),
+                getWeightDetail(
+                    title: "Overweight",
+                    value: "25 - 29.9",
+                    color: Colors.orange),
+                Divider(),
+                getWeightDetail(
+                    title: "Obese class I",
+                    value: "30 - 34.9",
+                    color: Colors.redAccent),
+                Divider(),
+                getWeightDetail(
+                    title: "Obese class II",
+                    value: "35 - 39.9",
+                    color: Colors.red),
+                Divider(),
+                getWeightDetail(
+                    title: "Obese class III",
+                    value: ">=40",
+                    color: Colors.red.shade800),
+                Divider(),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 18.0,vertical: 10),
+                  child: Text(
+                      "The body mass index(BMI) Calculator can be used to calculate BMI value and corresponding weight status."),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 18.0,right: 18,  bottom: 4),
+                  child: Text("Healthy BMI Range",
+                      style: textTheme.subtitle1.copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600)),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 18.0,right: 18),
+                  child: Text(
+                      "The world health organization\'s (WHO) recommended healthy BMI range is 18.5-25 for both male and female",
+                      ),
+                ),
+                SizedBox(
+                  height: 30,
+                )
+              ],
+            ),
             );
-          });
           },
-          child: Icon(Icons.info_outline));
+        );
+      });
     }
-
-
 
     if (height != null && weight != null) {
       bmi = double.parse(_calcBmi(height / 100, weight).toStringAsFixed(2));
@@ -268,14 +289,110 @@ class _BmiCardState extends State<BmiCard> {
       );
     }
 
+    getBmiStrip() {
+      return InkWell(
+        onTap: () => showBmiSheet(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 50,
+              width: bmiWidth + borderWidth * 5 + 5,
+              child: Row(
+                children: [
+                  Container(
+                    width: oneUnit + 5,
+                    color: Colors.grey,
+                  ),
+                  getBorder(),
+                  Container(
+                    width: oneUnit * 2.5,
+                    color: Colors.blue,
+                  ),
+                  getBorder(),
+                  Container(
+                    width: oneUnit * 6.5,
+                    color: Colors.green,
+                  ),
+                  getBorder(),
+                  Container(
+                    width: oneUnit * 5,
+                    color: Colors.orange,
+                  ),
+                  getBorder(),
+                  Container(
+                    width: oneUnit * 5,
+                    color: Colors.redAccent,
+                  ),
+                  getBorder(),
+                  Container(
+                    width: oneUnit * 5,
+                    color: Colors.red,
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 8,
+                ),
+                getBottomText("16"),
+                Container(
+                  width: oneUnit - 7,
+                  color: Colors.grey,
+                ),
+                getBottomText("17"),
+                Container(
+                  width: oneUnit * 2.5 - 15,
+                  color: Colors.blue,
+                ),
+                getBottomText("18.5"),
+                Container(
+                  width: oneUnit * 6.5 - 12,
+                  color: Colors.green,
+                ),
+                getBottomText("25"),
+                Container(
+                  width: oneUnit * 5 - 12,
+                  color: Colors.orange,
+                ),
+                getBottomText("30"),
+                Container(
+                  width: oneUnit * 5 - 10,
+                  color: Colors.redAccent,
+                ),
+                getBottomText("35"),
+                Container(
+                  width: oneUnit * 5 - 19,
+                  color: Colors.red,
+                ),
+                getBottomText("40"),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
     getMyHealth(String height, String weight) {
       getDetail(String title, String value) {
         return Column(
           children: [
-            Text(title,style: textTheme.bodyText1.copyWith(fontWeight: FontWeight.w500),),
-            SizedBox(height: 8,),
-            Text(value,style: textTheme.headline2.copyWith(fontSize: 21,fontWeight: FontWeight.bold,color: Colors.blue.shade800),),
-
+            Text(
+              title,
+              style: textTheme.bodyText1.copyWith(fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+              value,
+              style: textTheme.headline2.copyWith(
+                  fontSize: 21,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue.shade800),
+            ),
           ],
         );
       }
@@ -306,24 +423,32 @@ class _BmiCardState extends State<BmiCard> {
       );
     }
     return (_isLoading)
-        ? CircularProgressIndicator():height == null || weight == null? Column(
-          children: [
-            Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-      child:
-      Row(
-            children: [
-              Text(
-                  "BMI Calculator",
-                  style: titleStyle
-              ),
-              Spacer(),
-              getEditButton("CALCULATE")
-            ],
-      ),
-    ),
-            SizedBox(height: 20,)
-          ],
+        ? CircularProgressIndicator()
+        : height == null || weight == null
+            ? Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Row(
+                      children: [
+                        Text("BMI Calculator", style: titleStyle),
+                        Spacer(),
+                        getEditButton("Edit")
+                      ],
+                    ),
+                  ),
+                  getBmiStrip(),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    "Add height and weight to calculate BMI",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  SizedBox(
+                    height: 24,
+                  )
+                ],
         )
         : Column(
       children: [
@@ -363,97 +488,20 @@ class _BmiCardState extends State<BmiCard> {
           height: 90,
           child: Stack(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 50,
-                    width: bmiWidth + borderWidth * 5 + 5,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: oneUnit + 5,
-                          color: Colors.grey,
-                        ),
-                        getBorder(),
-                        Container(
-                          width: oneUnit * 2.5,
-                          color: Colors.blue,
-                        ),
-                        getBorder(),
-                        Container(
-                          width: oneUnit * 6.5,
-                                color: Colors.green,
-                              ),
-                        getBorder(),
-                        Container(
-                          width: oneUnit * 5,
-                          color: Colors.orange,
-                        ),
-                        getBorder(),
-                        Container(
-                          width: oneUnit * 5,
-                          color: Colors.redAccent,
-                        ),
-                        getBorder(),
-                        Container(
-                          width: oneUnit * 5,
-                          color: Colors.red,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 8,
-                      ),
-                      getBottomText("16"),
-                      Container(
-                        width: oneUnit - 7,
-                        color: Colors.grey,
-                      ),
-                      getBottomText("17"),
-                      Container(
-                        width: oneUnit * 2.5 - 15,
-                        color: Colors.blue,
-                      ),
-                      getBottomText("18.5"),
-                      Container(
-                        width: oneUnit * 6.5 - 12,
-                        color: Colors.green,
-                      ),
-                      getBottomText("25"),
-                      Container(
-                        width: oneUnit * 5 - 12,
-                        color: Colors.orange,
-                      ),
-                      getBottomText("30"),
-                      Container(
-                        width: oneUnit * 5 - 10,
-                        color: Colors.redAccent,
-                      ),
-                      getBottomText("35"),
-                      Container(
-                        width: oneUnit * 5 - 19,
-                        color: Colors.red,
-                      ),
-                      getBottomText("40"),
-                    ],
-                  ),
-                ],
-              ),
-              (bmi >= 15 && bmi <= 40)
-                  ? Row(
-                children: [
-                  SizedBox(width: (bmi - 15) * oneUnit + 4),
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.arrow_upward,
+                        getBmiStrip(),
+                        (bmi >= 15 && bmi <= 40)
+                            ? Row(
+                                children: [
+                                  SizedBox(width: (bmi - 15) * oneUnit + 4),
+                                  Container(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.arrow_upward,
                           size: 22,
                         ),
                         Container(
@@ -500,39 +548,41 @@ class _BmiCardState extends State<BmiCard> {
                                   ],
                                 ),
                               ),
-                            ],
-                          )
-                        : Container()
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0,right: 6),
-                child: Row(
-                  children: [
-                    Text("BMI : ",style: textTheme.subtitle1.copyWith(
-                        fontWeight: FontWeight.w600,fontSize: 18)),
-                    Text(bmi.toString(),style: textTheme.subtitle1.copyWith(
-    color: remark.color, fontWeight: FontWeight.w600,fontSize: 18)),
-                    SizedBox(width: 5,),
-                    Text("(${remark.remark})",
-                        style: textTheme.subtitle1.copyWith(
-                            color: remark.color, fontWeight: FontWeight.w600)),
-                    Spacer(),
-                    showBmiSheet(),
-                  //  TextButton(onPressed: (){}, child: Icon(Icons.info))
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-        if(widget.showBool)  constants.getDivider(),
-          //    Container(height: 1,color: Colors.grey.shade300,),
+                                ],
+                              )
+                            : Container()
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0, right: 6),
+                    child: Row(
+                      children: [
+                        Text("BMI : " + bmi.toString(),
+                            style: textTheme.subtitle1.copyWith(
+                                color: remark.color,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18)),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("(${remark.remark})",
+                            style: textTheme.subtitle1.copyWith(
+                                color: remark.color,
+                                fontWeight: FontWeight.w600)),
+                        Spacer(),
+                      ],
+                    ),
+                  ),
 
-        if(widget.showBool)   getMyHealth(height.toInt().toString() +" Cm",weight.toInt().toString()+" Kg"),
+                  if (widget.showBool) constants.getDivider(isDark),
+                  //    Container(height: 1,color: Colors.grey.shade300,),
 
-      ],
-    );
+                  if (widget.showBool)
+                    getMyHealth(height.toInt().toString() + " Cm",
+                        weight.toInt().toString() + " Kg"),
+                  if (widget.showBool) SizedBox(height: 20)
+                ],
+              );
   }
 }

@@ -21,22 +21,20 @@ class _WeightChartState extends State<WeightChart> {
   List<FlSpot> dataList = [];
   double maxWeight = 0;
   double minWeight = 0;
+  int tillDate = 30;
+  DateTime initMonth = DateTime.now();
 
   _loadRangeData(DateTime startDate, DateTime endDate) async {
-
-    weightDataList = [];
-    dataList = [];
-
     setState(() {
       isLoading = true;
     });
-   // loadMinMax();
+    weightDataList = [];
+    dataList = [];
     List<dynamic> minWeightDB = await weightDatabaseHelper.getMinWeight();
 
     minWeight = minWeightDB.length == 0 ? 0 : minWeightDB[0]["MIN(weight)"];
 
     List<dynamic> maxWeightDB = await weightDatabaseHelper.getMaxWeight();
-    print(maxWeightDB);
     maxWeight = maxWeightDB.length == 0 ? 0 : maxWeightDB[0]["MAX(weight)"];
     DateTime parsedStartDate =
         DateTime(startDate.year, startDate.month, startDate.day + 1);
@@ -48,71 +46,83 @@ class _WeightChartState extends State<WeightChart> {
       weightDataList.add(
           WeightList(weightModel: WeightModel.map(items[idx]), index: idx));
     }
-    print(minWeight);
     setState(() {
       isLoading = false;
     });
+
   }
 
-  loadMinMax() async {
-    List<dynamic> minWeightDB = await weightDatabaseHelper.getMinWeight();
 
-    minWeight = minWeightDB.length == 0 ? 0 : minWeightDB[0]["MIN(weight)"];
+  loadCurrentMonth(DateTime currMonth) async {
+    DateTime now = DateTime.now();
+    if (currMonth.year == now.year && currMonth.month == now.month) {
+      tillDate = DateTime.now().day;
+    } else {
+      tillDate = 30;
+    }
+    initMonth = currMonth;
+    print(tillDate.toString() + ": till date");
+  }
 
-    List<dynamic> maxWeightDB = await weightDatabaseHelper.getMaxWeight();
-    print(maxWeightDB);
-    maxWeight = maxWeightDB.length == 0 ? 0 : maxWeightDB[0]["MAX(weight)"];
+  loadData() async{
+    setState(() {
+      isLoading = true;
+    });
+   await _loadRangeData(DateTime(DateTime.now().year, DateTime.now().month, 01),
+        DateTime(DateTime.now().year, DateTime.now().month + 1, 01));
+   await loadCurrentMonth(DateTime.now());
+    setState(() {
+      isLoading = false;
+    });
 
   }
 
   @override
   void initState() {
+    loadData();
 
-    _loadRangeData(DateTime(DateTime.now().year, DateTime.now().month, 01),
-        DateTime(DateTime.now().year, DateTime.now().month + 1, 01));
     super.initState();
   }
 
-  List<Color> gradientColors = [
-    const Color(0xff23b6e6),
-    const Color(0xff02d39a),
-  ];
+
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return isLoading
         ? Container(
-      height: height*.6,
-          width: double.infinity,
-          child: Center(
+            height: height * .6,
+            width: double.infinity,
+            child: Center(
               child: CircularProgressIndicator(),
             ),
-        )
+          )
         : Container(
             padding: EdgeInsets.symmetric(horizontal: 10),
             height: height*.55,
             child: Stack(
               children: [
                 LineChart(
-                  mainData(),
+                  mainData(isDark),
                 ),
                 Positioned(
                     right: 5,
                     child: TextButton(
                         style: TextButton.styleFrom(
                             padding: EdgeInsets.only(left: 4),
-                            backgroundColor:
-                                Colors.blue.shade700.withOpacity(.5),
-                            primary: Color(0xff37434d)),
+                            backgroundColor: Colors.blue,
+                            primary: Colors.white),
                         onPressed: () async {
                           DateTime selectedMonth = await showMonthPicker(
-                              context: context, initialDate: DateTime.now());
+                              lastDate: DateTime.now(),
+                              context: context,
+                              initialDate: initMonth);
                           if (selectedMonth == null) {
                             return;
                           }
+                          await loadCurrentMonth(selectedMonth);
                           setState(() {
                             currDate = selectedMonth;
                             _loadRangeData(
@@ -121,7 +131,6 @@ class _WeightChartState extends State<WeightChart> {
                                 DateTime(selectedMonth.year,
                                     selectedMonth.month + 1, 01));
                           });
-                          print(currDate);
                         },
                         child: Row(
                           children: [
@@ -139,8 +148,15 @@ class _WeightChartState extends State<WeightChart> {
           );
   }
 
-  LineChartData mainData() {
+  LineChartData mainData(bool isDark) {
+    List<Color> gradientColors = [
+      isDark? Colors.blue.shade800:Colors.blue.shade300,
+      Colors.blue,
+
+    ];
+
     double presentValue = 0;
+    const Color color = Colors.grey;
 
     if (weightDataList.length > 0) {
       presentValue =
@@ -148,12 +164,9 @@ class _WeightChartState extends State<WeightChart> {
     }
     getData() {
       dataList = [];
-      for (int i = 1; i <= 30; i++) {
-
+      for (int i = 1; i <= tillDate; i++) {
         for (int j = 0; j < weightDataList.length; j++) {
-          if (i == DateTime
-              .parse(weightDataList[j].weightModel.date)
-              .day) {
+          if (i == DateTime.parse(weightDataList[j].weightModel.date).day) {
             presentValue = weightDataList[j].weightModel.weight;
           }
         }
@@ -170,13 +183,13 @@ class _WeightChartState extends State<WeightChart> {
         horizontalInterval: 5,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: const Color(0xff37434d),
+            color: isDark ? Colors.white70 : Colors.black54,
             strokeWidth: .2,
           );
         },
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: const Color(0xff37434d),
+            color: isDark ? Colors.white70 : Colors.black54,
             strokeWidth: 0.2,
           );
         },
@@ -189,9 +202,7 @@ class _WeightChartState extends State<WeightChart> {
           reservedSize: 22,
           getTextStyles: (value) =>
           const TextStyle(
-              color: Color(0xff68737d),
-              fontWeight: FontWeight.w600,
-              fontSize: 12),
+              color: color, fontWeight: FontWeight.w600, fontSize: 12),
           getTitles: (value) {
             if (value.toInt() % 2 == 0) {
               return value.toInt().toString();
@@ -203,7 +214,7 @@ class _WeightChartState extends State<WeightChart> {
         leftTitles: SideTitles(
           showTitles: true,
           getTextStyles: (value) => const TextStyle(
-            color: Color(0xff68737d),
+            color: color,
             fontWeight: FontWeight.bold,
             fontSize: 12,
           ),

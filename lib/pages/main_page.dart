@@ -7,8 +7,8 @@ import 'package:full_workout/pages/main/home_page/home_page.dart';
 import '../main.dart';
 import 'main/explore_page/explore_page.dart';
 import 'main/report_page/report_page.dart';
-import 'main/report_page/weight_report/weight_report_detail.dart';
 import 'main/setting_page/setting_screen.dart';
+import 'main/weight_report_page/weight_report_detail.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = "main-page";
@@ -76,7 +76,7 @@ class _MainPageState extends State<MainPage> {
             showSelectedLabels: true,
             unselectedLabelStyle: textTheme.subtitle1
                 .copyWith(fontSize: 12, fontWeight: FontWeight.w700),
-            selectedItemColor: constants.widgetColor,
+            selectedItemColor: constants.primaryColor,
             iconSize: 20,
             unselectedItemColor: Colors.blueGrey,
             showUnselectedLabels: true,

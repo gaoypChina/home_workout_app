@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/database/workout_plan/abs_challenges.dart';
 import 'package:full_workout/database/workout_plan/arm_challenges.dart';
 import 'package:full_workout/database/workout_plan/chest_challenge.dart';
 import 'package:full_workout/database/workout_plan/full_body_challenge.dart';
+import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/pages/main/explore_page/workout_time_line.dat.dart';
 import 'package:full_workout/pages/main/home_page/leading_widget.dart';
@@ -25,8 +25,10 @@ class ExplorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    SpHelper _spHelper = SpHelper();
+
     SpKey _spKey = SpKey();
-    Constants constants = Constants();
     int i = 0;
     List<ChallengesModel> challenges = [
       ChallengesModel(
@@ -65,114 +67,141 @@ class ExplorePage extends StatelessWidget {
         color2: Color(0xffffc371),
       )
     ];
+    
+    getProgress(String key){
+
+      
+      return FutureBuilder(future:_spHelper.loadInt(key) ,
+          builder: (BuildContext context,AsyncSnapshot snapshot){
+        print(snapshot);
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return CircularProgressIndicator(color: Colors.white70,);
+        }
+        if(snapshot.hasData){
+           return  Text(
+            "${snapshot.data}/28",
+            style: textTheme.headline3.copyWith(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w700),
+          );
+        }else{
+          return  Text(
+            "0/28",
+            style: textTheme.headline3.copyWith(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w700),
+          );
+        }
+
+      });
+        
+
+    }
 
     getCard(var item) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 12.0),
-        child: Ink(
+
+          child: Container(
+          height: height * .2,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [item.color1, item.color2],
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(12))),
           child: InkWell(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => WorkoutTimeLine(
-                            challengesModel: item,
-                          )));
+                        challengesModel: item,
+                      )));
             },
+
             child: Container(
-              height: height*.2,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [item.color1, item.color2],
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(12))),
-              child: Container(
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16),
-                          bottomLeft: Radius.circular(16)),
-                      child: Container(
-                      width: width*.45,
-                        child: Image.asset(
-                          item.imageUrl,
-                          fit: BoxFit.fill,
-                        ),
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        bottomLeft: Radius.circular(16)),
+                    child: Container(
+                    width: width*.45,
+                      child: Image.asset(
+                        item.imageUrl,
+                        fit: BoxFit.fill,
                       ),
                     ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Expanded(
-                        flex: 2,
-                        child: Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item.title,
-                                style: textTheme.headline2.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Duration",
-                                        style: textTheme.headline3.copyWith(
-                                            color: Colors.white, fontSize: 16),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        "28 Day",
-                                        style: textTheme.headline3.copyWith(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Progress",
-                                        style: textTheme.headline3.copyWith(
-                                            color: Colors.white, fontSize: 16),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        "${item.currentDay}/28",
-                                        style: textTheme.headline3.copyWith(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w700),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        )),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Expanded(
+                      flex: 2,
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item.title,
+                              style: textTheme.headline2.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      "Duration",
+                                      style: textTheme.headline3.copyWith(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      "28 Day",
+                                      style: textTheme.headline3.copyWith(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      "Progress",
+                                      style: textTheme.headline3.copyWith(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                   getProgress(item.tag),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )),
+                ],
               ),
             ),
           ),
@@ -181,17 +210,19 @@ class ExplorePage extends StatelessWidget {
     }
 
     return Scaffold(
-      
+      backgroundColor:isDark?Colors.black: Colors.white,
+
+
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor:isDark?Colors.black: Colors.white,
         titleSpacing: 14,
         actions: getLeading(
           context,
         ),
         title: Text(
           "Explore",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color:isDark?Colors.white: Colors.black),
         ),
         centerTitle: false,
       ),

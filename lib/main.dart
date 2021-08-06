@@ -3,13 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:full_workout/helper/notification_helper.dart';
 
 import 'package:full_workout/pages/main/report_page/report_page.dart';
-import 'package:full_workout/pages/main/report_page/weight_report/weight_report_detail.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/pages/main/setting_page/profile_settings_screen.dart';
 import 'package:full_workout/pages/main/setting_page/reminder_tab.dart';
 import 'package:full_workout/pages/main/setting_page/setting_screen.dart';
 import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
-import 'package:full_workout/pages/main/setting_page/training_settings_screen.dart';
+import 'package:full_workout/pages/main/weight_report_page/weight_report_detail.dart';
 import 'package:full_workout/pages/main_page.dart';
 import 'package:full_workout/pages/services/faq_page.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -48,34 +47,38 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Home Workout',
       darkTheme: ThemeData(
           brightness: Brightness.dark,
           appBarTheme: AppBarTheme(color: Colors.black),
           backgroundColor: Colors.black,
           primarySwatch: Colors.blue,
           textTheme: textTheme,
+          radioTheme: RadioThemeData(
+            fillColor:MaterialStateProperty.all(Colors.blue.shade700),
+          ),
+          switchTheme: SwitchThemeData(thumbColor:MaterialStateProperty.all(Colors.blue.shade100),),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             fillColor: Colors.grey.shade800,
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.transparent)),
+                borderSide: BorderSide(color: Colors.blue.shade700)),
             contentPadding: EdgeInsets.symmetric(horizontal: 16),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.transparent)),
+                borderSide: BorderSide(color: Colors.blue.shade700)),
           )),
       theme: ThemeData(
-          //  primarySwatch: Colors.blue,
           primaryColor: Colors.blue.shade700,
+
           textTheme: textTheme,
           appBarTheme: AppBarTheme(
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.blue.shade700,
               elevation: 0,
               iconTheme: IconThemeData(color: Colors.black),
               titleTextStyle: TextStyle(color: Colors.black),
-              toolbarTextStyle: TextStyle(color: Colors.black),
+            //  toolbarTextStyle: TextStyle(color: Colors.black),
               actionsIconTheme: IconThemeData(color: Colors.black)),
           radioTheme: RadioThemeData(
             fillColor: MaterialStateProperty.all(Colors.blue.shade700),
@@ -83,14 +86,15 @@ class _MyAppState extends State<MyApp> {
 
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
-            fillColor: Colors.blue.shade50,
+            fillColor: Colors.white,
             enabledBorder: OutlineInputBorder(
+
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(color: Colors.transparent)),
             contentPadding: EdgeInsets.symmetric(horizontal: 16),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.transparent)),
+                borderSide: BorderSide(color: Colors.blue.shade700)),
           )),
 
       routes: {
@@ -101,7 +105,6 @@ class _MyAppState extends State<MyApp> {
         MainPage.routeName: (ctx) => MainPage(),
         ProfileSettingScreen.routeName: (ctx) => ProfileSettingScreen(),
         SoundSetting.routeName: (ctx) => SoundSetting(),
-        TrainingSettingsScreen.routeName: (ctx) => TrainingSettingsScreen(),
         WeightReportDetail.routeName: (ctx) => WeightReportDetail(),
         WorkoutDetailReport.routeName: (ctx) => WorkoutDetailReport(),
         SettingPage.routeName: (ctx) => SettingPage()

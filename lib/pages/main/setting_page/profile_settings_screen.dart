@@ -97,10 +97,12 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     _selectDate() async {
       final DateTime picked = await showRoundedDatePicker(
 
-        theme: ThemeData(primaryColor: Colors.blue.shade700),
+        theme:isDark?ThemeData.dark(): ThemeData(primaryColor: Colors.blue.shade700),
         context: context,
         height: MediaQuery.of(context).size.height * .4,
         initialDate: DateTime.now(),
@@ -120,40 +122,35 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
 
 
     List<Color> iconColor = [
-      Colors.blue.shade700,
-      Colors.blue.shade700,
-      Colors.blue.shade700,
-      Colors.blue.shade700,
-      Colors.blue.shade700,
-      Colors.blue.shade700,
-      // Colors.red.shade700,
-      // Colors.green.shade700,
-      // Colors.cyan.shade700,
-      // Colors.teal.shade700,
-      // Colors.orangeAccent.shade700,
+      // Colors.blue.shade700,
+      // Colors.blue.shade700,
+      // Colors.blue.shade700,
+      // Colors.blue.shade700,
+      // Colors.blue.shade700,
+      // Colors.blue.shade700,
+      Colors.red,
+      Colors.green,
+      Colors.amberAccent,
+      Colors.orange,
+      Colors.purpleAccent,
+      Colors.orangeAccent,
     ];
 
     return Scaffold(
+      backgroundColor: isDark?Colors.black:Colors.white,
       appBar:
 
       AppBar(
-        leading: IconButton(
-          onPressed:()=> Navigator.of(context).pop(),
-          icon: Icon(Icons.arrow_back,color: constants.appBarContentColor,),
-          color: constants.appBarContentColor,
-        ),
+
+
         title: Text(
           "Profile",
-        style: TextStyle(color: constants.appBarContentColor)),
-        backgroundColor: constants.appBarColor,
-        elevation: 5,
+        style: TextStyle(color: isDark?Colors.white:Colors.black)),
+
         actions: [
           TextButton(
               style: TextButton.styleFrom(padding: EdgeInsets.only(right: 18)),
-              child: Text(
-                "Save",
-                style: TextStyle(color: constants.appBarContentColor),
-              ),
+            child: Text("Save",style: TextStyle(color: Colors.blue.shade700),),
               onPressed: () {
                 Navigator.of(context).pop();
                 constants.getToast("Profile Saved Successfully");
@@ -162,184 +159,175 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 12),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Text(
-                    "Add your profile details and get more relevant exercise "),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              CustomTile(
-                backgroundColor: constants.tileColor,
-                title: "Name",
-                subTitle: (name != null) ? name : "Enter your name",
-                onPressed: () async {
-                  String previousValue = name;
-                  String a = await showDialog(
-                      context: context,
-                      builder: (context) => NameSelector(
-                            name: name,
-                          ));
-                  String toSave = (a == null) ? previousValue : a;
-                  await spHelper.saveString(spKey.name, toSave);
-                  setState(() {
-                    name = toSave;
-                  });
+        child: Column(
+          children: [
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            //   child: Text(
+            //       "Add your profile details and get more relevant exercise."),
+            // ),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            CustomProfileTile(
+              title: "Name",
+              subTitle: (name != null) ? name : "Enter your name",
+              onPressed: () async {
+                String previousValue = name;
+                String a = await showDialog(
+                    context: context,
+                    builder: (context) => NameSelector(
+                          name: name,
+                        ));
+                String toSave = (a == null) ? previousValue : a;
+                await spHelper.saveString(spKey.name, toSave);
+                setState(() {
+                  name = toSave;
+                });
+              },
+              icon: Icons.edit,
+              iconColor: iconColor[0],
+            ),
+            Theme(
+              data: Theme.of(context)
+                  .copyWith(primaryColor: Colors.blue.shade700),
+              child: CustomProfileTile(
+                title: "Date of Birth",
+                subTitle: (date == null) ? "Select your birthday" : date,
+                onPressed: () {
+                  _selectDate();
                 },
-                icon: Icons.edit,
-                iconColor: iconColor[0],
+                icon: Icons.cake,
+                iconColor: iconColor[1],
               ),
-              Theme(
-                data: Theme.of(context)
-                    .copyWith(primaryColor: Colors.blue.shade700),
-                child: CustomTile(
-                  backgroundColor: constants.tileColor,
-                  title: "Birthday",
-                  subTitle: (date == null) ? "Select your birthday" : date,
-                  onPressed: () {
-                    _selectDate();
-                  },
-                  icon: Icons.cake,
-                  iconColor: iconColor[1],
-                ),
-              ),
-              CustomTile(
-                backgroundColor: constants.tileColor,
-                title: "Gender",
-                subTitle: (gender == null)
-                    ? "Select your gender"
-                    : (gender == 0)
-                        ? "Male"
-                        : "Female",
-                onPressed: () async {
-                  int previousValue = gender;
-                  int selectedGender = await showDialog(
-                      context: context,
-                      builder: (context) => RadioSelector(
-                            title: "Select Gender",
-                            radio1: "Male",
-                            radio2: "Female",
-                            value: gender,
-                          ));
-                  int toSave =
-                      (selectedGender == null) ? previousValue : selectedGender;
-                  await spHelper.saveInt(spKey.gender, toSave);
-                  setState(() {
-                    gender = toSave;
-                  });
-                },
-                icon: Icons.male,
-                iconColor: iconColor[2],
-              ),
-              CustomTile(
-                backgroundColor: constants.tileColor,
-                title: "Unit",
-                subTitle: (unit == null)
-                    ? "Select unit"
-                    : (unit == 0)
-                        ? "cm/kg"
-                        : "in/lbs",
-                onPressed: () async {
-                  int previousValue = unit;
-                  int selectedUnit = await showDialog(
-                      context: context,
-                      builder: (context) => RadioSelector(
-                            title: "Select Unit",
-                            radio2: "inch/lbs",
-                            radio1: "cm/kg",
-                            value: unit,
-                          ));
-                  int toSave =
-                      (selectedUnit == null) ? previousValue : selectedUnit;
-                  await spHelper.saveInt(spKey.unit, toSave);
-                  setState(() {
-                    unit = toSave;
-                  });
-                },
-                icon: Icons.linear_scale_sharp,
-                iconColor: iconColor[3],
-              ),
-              CustomTile(
-                backgroundColor: constants.tileColor,
-                title: "Height",
-                subTitle: (unit == null)
-                    ? "Enter your height"
-                    : (unit == 0)
-                        ? (heightValue == null)
-                            ? ""
-                            : "$heightValue cm"
-                        : (feetHeight == null)
-                            ? ""
-                            : "${feetHeight.round().toString()} feet ${inchHeight.toInt()} inch",
-                onPressed: () async {
-                  double previousValue = heightValue;
-                  double initVal = 0;
-                  double value = await showDialog(
-                      context: context,
-                      builder: (context) => HeightSelector(
-                            height: heightValue == null ? initVal : heightValue,
-                            unitValue: unit,
-                          ));
-                  double toSave = (value == null) ? previousValue : value;
-                  await spHelper.saveDouble(spKey.height, toSave);
-                  setState(() {
-                    heightValue = toSave;
-                    feetHeight = (toSave ~/ 30.48).toDouble();
-                    inchHeight = (toSave - (feetHeight * 30.48)) * 0.393701;
-                    if (inchHeight == 12) {
-                      inchHeight = 0;
-                      feetHeight = feetHeight++;
-                    }
-                    // feetHeight = ((toSave / 2.54) / 1o2);
-                    // inchHeight = (feetHeight - feetHeight.toInt()) * 12;
-                  });
-                },
-                icon: AntDesign.barchart,
-                iconColor: iconColor[4],
-              ),
-              CustomTile(
-                backgroundColor: constants.tileColor,
-                title: "Weight",
-                subTitle: (weightValue == null)
-                    ? "Enter your weight"
-                    : (unit == 0)
-                        ? "${weightValue.toStringAsFixed(2)} kg"
-                        : "${lbsWeight.round()} lbs",
-                onPressed: () async {
-                  double previousValue = weightValue;
-                  double value = await showDialog(
-                      context: context,
-                      builder: (context) => WeightSelector(
-                            weight: weightValue,
-                            weightIndex: unit,
-                          ));
-                  DateTime selectedDate = DateTime.now();
-                  double toSave = (value == null) ? previousValue : value;
-                  await spHelper.saveDouble(spKey.weight, toSave);
-                  String key = DateFormat.yMd().format(selectedDate).toString();
-                  WeightModel weightModel =
-                      WeightModel(selectedDate.toIso8601String(), toSave, key);
-                  if (weightModel.weight == null) return;
-                  await weightDatabaseHelper.addWeight(
-                      toSave, weightModel, key);
-                  setState(() {
-                    weightValue = toSave;
-                    lbsWeight = toSave * 2.20462;
-                  });
-                },
-                icon: MaterialCommunityIcons.weight,
-                iconColor: iconColor[5],
-              ),
-              SizedBox(
-                height: 50,
-              ),
-            ],
-          ),
+            ),
+            CustomProfileTile(
+              title: "Gender",
+              subTitle: (gender == null)
+                  ? "Select your gender"
+                  : (gender == 0)
+                      ? "Male"
+                      : "Female",
+              onPressed: () async {
+                int previousValue = gender;
+                int selectedGender = await showDialog(
+                    context: context,
+                    builder: (context) => RadioSelector(
+                          title: "Select Gender",
+                          radio1: "Male",
+                          radio2: "Female",
+                          value: gender,
+                        ));
+                int toSave =
+                    (selectedGender == null) ? previousValue : selectedGender;
+                await spHelper.saveInt(spKey.gender, toSave);
+                setState(() {
+                  gender = toSave;
+                });
+              },
+              icon: Icons.male,
+              iconColor: iconColor[2],
+            ),
+            CustomProfileTile(
+              title: "Unit",
+              subTitle: (unit == null)
+                  ? "Select unit"
+                  : (unit == 0)
+                      ? "cm/kg"
+                      : "in/lbs",
+              onPressed: () async {
+                int previousValue = unit;
+                int selectedUnit = await showDialog(
+                    context: context,
+                    builder: (context) => RadioSelector(
+                          title: "Select Unit",
+                          radio2: "inch/lbs",
+                          radio1: "cm/kg",
+                          value: unit,
+                        ));
+                int toSave =
+                    (selectedUnit == null) ? previousValue : selectedUnit;
+                await spHelper.saveInt(spKey.unit, toSave);
+                setState(() {
+                  unit = toSave;
+                });
+              },
+              icon: Icons.linear_scale_sharp,
+              iconColor: iconColor[3],
+            ),
+            CustomProfileTile(
+              title: "Height",
+              subTitle: (unit == null)
+                  ? "Enter your height"
+                  : (unit == 0)
+                      ? (heightValue == null)
+                          ? ""
+                          : "$heightValue cm"
+                      : (feetHeight == null)
+                          ? ""
+                          : "${feetHeight.round().toString()} feet ${inchHeight.toInt()} inch",
+              onPressed: () async {
+                double previousValue = heightValue;
+                double initVal = 0;
+                double value = await showDialog(
+                    context: context,
+                    builder: (context) => HeightSelector(
+                          height: heightValue == null ? initVal : heightValue,
+                          unitValue: unit,
+                        ));
+                double toSave = (value == null) ? previousValue : value;
+                await spHelper.saveDouble(spKey.height, toSave);
+                setState(() {
+                  heightValue = toSave;
+                  feetHeight = (toSave ~/ 30.48).toDouble();
+                  inchHeight = (toSave - (feetHeight * 30.48)) * 0.393701;
+                  if (inchHeight == 12) {
+                    inchHeight = 0;
+                    feetHeight = feetHeight++;
+                  }
+                  // feetHeight = ((toSave / 2.54) / 1o2);
+                  // inchHeight = (feetHeight - feetHeight.toInt()) * 12;
+                });
+              },
+              icon: AntDesign.barchart,
+              iconColor: iconColor[4],
+            ),
+            CustomProfileTile(
+              title: "Weight",
+              subTitle: (weightValue == null)
+                  ? "Enter your weight"
+                  : (unit == 0)
+                      ? "${weightValue.toStringAsFixed(2)} kg"
+                      : "${lbsWeight.round()} lbs",
+              onPressed: () async {
+                double previousValue = weightValue;
+                double value = await showDialog(
+                    context: context,
+                    builder: (context) => WeightSelector(
+                          weight: weightValue,
+                          weightIndex: unit,
+                        ));
+                DateTime selectedDate = DateTime.now();
+                double toSave = (value == null) ? previousValue : value;
+                await spHelper.saveDouble(spKey.weight, toSave);
+                String key = DateFormat.yMd().format(selectedDate).toString();
+                WeightModel weightModel =
+                    WeightModel(selectedDate.toIso8601String(), toSave, key);
+                if (weightModel.weight == null) return;
+                await weightDatabaseHelper.addWeight(
+                    toSave, weightModel, key);
+                setState(() {
+                  weightValue = toSave;
+                  lbsWeight = toSave * 2.20462;
+                });
+              },
+              icon: MaterialCommunityIcons.weight,
+              iconColor: iconColor[5],
+            ),
+            SizedBox(
+              height: 50,
+            ),
+          ],
         ),
       ),
     );
@@ -367,11 +355,7 @@ class NameSelector extends StatelessWidget {
         cursorColor: contentColor,
         autocorrect: false,
         decoration: InputDecoration(
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: contentColor),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            fillColor: Colors.blue.shade50,
+
             enabled: true,
             labelText: "Name",
             labelStyle:
@@ -472,7 +456,7 @@ class _RadioSelectorState extends State<RadioSelector> {
   }
 }
 
-class CustomTile extends StatelessWidget {
+class CustomProfileTile extends StatelessWidget {
   final String title;
   final String subTitle;
   final Color backgroundColor;
@@ -480,7 +464,8 @@ class CustomTile extends StatelessWidget {
   final Function onPressed;
   final Color iconColor;
 
-  CustomTile(
+
+  CustomProfileTile(
       {this.title,
       this.subTitle,
       this.backgroundColor,
@@ -490,63 +475,22 @@ class CustomTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var textStyle = TextStyle(
-        fontWeight: FontWeight.w600, fontSize: 15, color: Colors.grey.shade700);
-    var titleStyle = TextStyle(
-      fontWeight: FontWeight.w700,
-      fontSize: 16,
+    Constants constants = Constants();
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
+
+
+    return ListTile(
+
+      contentPadding: EdgeInsets.only(left: 24,right: 30),
+
+      title: Text(title),
+      leading: Icon(icon,color: iconColor,),
+      onTap: onPressed,
+      subtitle: Text(subTitle,style: TextStyle(color:isDark? Colors.white:Colors.black,fontSize: 15),),
+      trailing: constants.trailingIcon,
+
     );
 
-    return Card(
-        elevation: 1,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16))),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Container(
-            height: 70,
-            color: backgroundColor,
-            child: Row(
-              children: <Widget>[
-                Container(
-                  color: iconColor,
-                  width: 70,
-                  height: 70,
-                  child: Icon(
-                    icon,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                ),
-                SizedBox(width: 20),
-                Expanded(
-                  child: InkWell(
-                    onTap: onPressed,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          title,
-                          style: titleStyle,
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Text(subTitle, style: textStyle)
-                      ],
-                    ),
-                  ),
-                ),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.black,
-                  size: 22,
-                ),
-                SizedBox(width: 18),
-              ],
-            ),
-          ),
-        ));
   }
 }

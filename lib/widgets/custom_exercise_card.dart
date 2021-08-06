@@ -22,24 +22,26 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     var item = widget.workOutList[widget.index];
-    return InkWell(
-      onTap: () {
-        showDialog(
-            context: context,
-            builder: (context) => MyDialog(
-              rapCount: widget.time,
-                 workoutList: widget.workOutList,
-              index: widget.index,
-                ));
-      },
-      child: Card(
+    return  Card(
         elevation: 0,
         margin: EdgeInsets.only(bottom: 0),
-        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.blue.shade700,width: 1.5),
+        shape: RoundedRectangleBorder(side: BorderSide(color:isDark?Colors.blue.shade100: Colors.blue.shade700,width: 1.5),
           borderRadius: BorderRadius.circular(16),
         ),
-        child: Row(
+        child:InkWell(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) => WorkoutDetailDialog(
+                  rapCount: widget.time,
+                  workoutList: widget.workOutList,
+                  index: widget.index,
+                ));
+          },
+          child: Row(
           children: <Widget>[
             Expanded(
               flex: 2,
@@ -65,7 +67,7 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                 ),
               ),
             ),
-            Container(width: 1.5,height: 100, color: Colors.blue.shade700,),
+            Container(width: 1.5,height: 100,color:isDark?Colors.blue.shade100: Colors.blue.shade700,),
             Expanded(
               flex: 3,
               child: Container(

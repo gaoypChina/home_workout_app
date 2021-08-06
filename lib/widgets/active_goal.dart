@@ -6,7 +6,7 @@ import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/main.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
-import 'package:full_workout/widgets/week_goal_settings.dart';
+import 'package:full_workout/widgets/active_goal_settings.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
 import 'package:intl/intl.dart';
 
@@ -197,12 +197,12 @@ class _ActiveGoalState extends State<ActiveGoal> {
       );
     }
 
-    return InkWell(
-      borderRadius: BorderRadius.all(Radius.circular(16)),
-      onTap: () => Navigator.pushNamed(context, WorkoutDetailReport.routeName),
-      child: Padding(
+    return Padding(
         padding: EdgeInsets.symmetric(horizontal: 8),
-        child: Material(
+        child:InkWell(
+    borderRadius: BorderRadius.all(Radius.circular(16)),
+    onTap: () => Navigator.pushNamed(context, WorkoutDetailReport.routeName),
+    child:  Material(
           borderRadius: BorderRadius.all(Radius.circular(16)),
           elevation: 2,
         child: Container(

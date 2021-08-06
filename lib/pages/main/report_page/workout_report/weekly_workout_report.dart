@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/recent_workout_db_helper.dart';
-import 'package:full_workout/models/recent_workout.dart';
-import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:intl/intl.dart';
 
-import '../report_page.dart';
-
 class WeeklyWorkoutReport extends StatefulWidget {
+ final Function onTap;
+ WeeklyWorkoutReport({@required this.onTap});
   @override
   _WeeklyWorkoutReportState createState() => _WeeklyWorkoutReportState();
 }
@@ -70,7 +68,7 @@ for(int i=0; i<7; i++){
 
     getWeeklyUpdate() {
       return InkWell(
-        onTap: ()=>Navigator.pushNamed(context, WorkoutDetailReport.routeName),
+        onTap: ()=> widget.onTap,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: activeDayList

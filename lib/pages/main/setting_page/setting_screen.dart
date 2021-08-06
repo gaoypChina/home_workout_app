@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/pages/main/home_page/leading_widget.dart';
 import 'package:full_workout/pages/main/setting_page/privacy_policy.dart';
 import 'package:full_workout/pages/main/setting_page/profile_settings_screen.dart';
 import 'package:full_workout/pages/main/setting_page/reminder_tab.dart';
@@ -13,7 +11,6 @@ import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
 import 'package:full_workout/pages/main/setting_page/training_settings_screen.dart';
 import 'package:full_workout/pages/services/faq_page.dart';
 import 'package:share/share.dart';
-import 'package:wakelock/wakelock.dart';
 import 'package:device_info/device_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -29,35 +26,75 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   SpHelper spHelper = SpHelper();
   SpKey spKey = SpKey();
+  Constants constants = Constants();
+  double trainingRest = 10;
+  double countdownTime = 10;
   bool enable = true;
+  bool isLoading = true;
 
   getScreenEnable() async {
     enable = await spHelper.loadBool(spKey.awakeScreen) ?? true;
     setState(() {});
   }
 
+  loadRestTime() async {
+    await spHelper.loadDouble(spKey.trainingRest).then((value) {
+      setState(() {
+        trainingRest = (value == null) ? 30.0 : value;
+      });
+    });
+    await spHelper.loadDouble(spKey.countdownTime).then((value) {
+      setState(() {
+        countdownTime = (value == null) ? 30.0 : value;
+      });
+    });
+  }
+
+  loadData() async {
+    setState(() {
+      isLoading = true;
+    });
+    loadRestTime();
+    getScreenEnable();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   void initState() {
     spHelper.saveInt(spKey.initPage, 0);
-    getScreenEnable();
+    loadData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Constants constants = Constants();
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     Icon trailingIcon = Icon(
       Icons.arrow_forward_ios,
-      color: Colors.black,
+      color: Colors.grey,
       size: 16,
     );
 
+    List<Color> colorList = [
+      Colors.red,
+      Colors.green,
+      Colors.orange,
+      Colors.amberAccent,
+      Colors.redAccent,
+      Colors.deepOrangeAccent,
+      Colors.redAccent,
+      Colors.red,
+      Colors.orange,
+      Colors.green,
+    ];
+
     getTitle(String text) {
       return Container(
-          color: Colors.grey.shade50,
+          color: isDark ? Colors.black : Colors.grey.shade50,
           width: double.infinity,
-          margin: EdgeInsets.only(bottom: 4),
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
           child: Text(
             text,
@@ -65,29 +102,33 @@ class _SettingPageState extends State<SettingPage> {
                 wordSpacing: 4,
                 fontWeight: FontWeight.w700,
                 fontSize: 18,
-                color: Colors.blue.shade900),
+                color: Colors.blue.shade700),
           ));
     }
 
     return Scaffold(
-      backgroundColor: Colors.white70,
-
+      backgroundColor: isDark ? Colors.black : Colors.white,
       body: NestedScrollView(
           controller: ScrollController(),
           physics: BouncingScrollPhysics(),
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverAppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.white,),
-                actions: getLeading(context),
-                backgroundColor: constants.appBarColor,
+                systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarColor: Colors.white,
+                ),
+                backgroundColor: isDark ? Colors.black : Colors.white,
                 automaticallyImplyLeading: false,
                 expandedHeight: 150.0,
                 pinned: true,
                 floating: false,
                 forceElevated: innerBoxIsScrolled,
                 flexibleSpace: FlexibleSpaceBar(
-                  title: Text("Settings",style: TextStyle(color: constants.appBarContentColor),),
+                  title: Text(
+                    "Settings",
+                    style:
+                        TextStyle(color: isDark ? Colors.white : Colors.black),
+                  ),
                 ),
               ),
             ];
@@ -100,63 +141,112 @@ class _SettingPageState extends State<SettingPage> {
               children: [
                 getTitle("Workout"),
                 CustomTile(
+                  color: colorList[0],
                   icon: Icons.person,
-                  title: "Edit Profile",
+                  title: "Profile",
                   trailing: trailingIcon,
                   onPress: () => Navigator.of(context)
                       .pushNamed(ProfileSettingScreen.routeName),
                 ),
                 CustomTile(
-                  icon: Icons.local_activity_outlined,
-                  trailing: trailingIcon,
-                  title: "Training Settings",
-                  onPress: () => Navigator.of(context)
-                      .pushNamed(TrainingSettingsScreen.routeName),
+                  title: "Training Rest",
+                  icon: AntDesign.rest,
+                  color: colorList[2],
+                  onPress: () async {
+                    int num = await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return WorkoutTimePicker(
+                            value: trainingRest.toInt(),
+                            maximumVal: 180,
+                            minimumVal: 5,
+                          );
+                        });
+                    if (num != null) {
+                      await spHelper.saveDouble(
+                          spKey.trainingRest, num.toDouble());
+                      setState(() {
+                        trainingRest = num.toDouble();
+                      });
+                    }
+                  },
+                  trailing:isLoading?CircularProgressIndicator(): Text(
+                    trainingRest.toStringAsFixed(0) + " Sec",
+                    style: TextStyle(
+                        color: Colors.blue, fontWeight: FontWeight.w600),
+                  ),
                 ),
                 CustomTile(
+                  color: colorList[3],
+                  icon: Icons.timer,
+                  title: "Countdown time",
+                  onPress: () async {
+                    int num = await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return WorkoutTimePicker(
+                            value: countdownTime.toInt(),
+                            minimumVal: 10,
+                            maximumVal: 15,
+                          );
+                        });
+                    if (num != null) {
+                      await spHelper.saveDouble(
+                          spKey.countdownTime, num.toDouble());
+                      setState(() {
+                        countdownTime = num.toDouble();
+                      });
+                    }
+                  },
+                  trailing:isLoading?CircularProgressIndicator(): Text(
+                    countdownTime.toStringAsFixed(0) + " Sec",
+                    style: TextStyle(
+                        color: Colors.blue, fontWeight: FontWeight.w600),
+                  ),
+                ),
+                CustomTile(
+                  color: colorList[2],
                   title: "Sound",
                   trailing: trailingIcon,
                   icon: Icons.volume_up,
                   onPress: () =>
                       Navigator.of(context).pushNamed(SoundSetting.routeName),
                 ),
-                getTitle("Personalised"),
+                getTitle("General Settings"),
+
+                isLoading?CustomTile(title: "Keep screen", icon: Icons.toggle_off_outlined, trailing: CircularProgressIndicator(), onPress: (){}, color:colorList[3],):
                 SwitchListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
+                  contentPadding: EdgeInsets.only(left: 20, right: 16),
+
                   value: enable,
+                  activeColor: Colors.blue.shade700,
                   onChanged: (value) {
                     spHelper.saveBool(spKey.awakeScreen, value);
                     spHelper.saveInt(spKey.initPage, 4);
                     setState(() {
                       enable = value;
                     });
-                    Phoenix.rebirth(context);
                   },
-                  secondary: CircleAvatar(
-                    child: Icon(
-                      Icons.toggle_off_outlined,
-                    ),
+                  secondary: Icon(
+                    Icons.toggle_off_outlined,
+                    color: colorList[3],
                   ),
                   title: Text(
                     "Keep screen ${enable ? "On" : "Off"}",
-                    style: constants.contentTextStyle.copyWith(fontSize: 16),
+                    style: constants.listTileTitleStyle,
                   ),
-                  //  onTap: () {},
                 ),
                 CustomTile(
-                  icon: Icons.timer,
-                  title: "Set reminder",
-                  onPress: () {
-                    Navigator.of(context).pushNamed(ReminderTab.routeName);
-                  },
-                  trailing: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: trailingIcon,
-                  ),
-                ),
+                    color: colorList[4],
+                    icon: Icons.alarm_add_rounded,
+                    title: "Set reminder",
+                    onPress: () {
+                      Navigator.of(context).pushNamed(ReminderTab.routeName);
+                    },
+                    trailing: trailingIcon),
                 getTitle("Support Us"),
                 CustomTile(
+                  color: colorList[5],
                   icon: Icons.share,
                   title: "Share With Friends",
                   trailing: trailingIcon,
@@ -170,6 +260,7 @@ class _SettingPageState extends State<SettingPage> {
                   },
                 ),
                 CustomTile(
+                  color: colorList[6],
                   icon: Icons.star,
                   title: "5 star Ratting",
                   trailing: trailingIcon,
@@ -177,6 +268,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 getTitle("About us"),
                 CustomTile(
+                  color: colorList[7],
                   icon: Icons.email,
                   title: "Feedback",
                   trailing: trailingIcon,
@@ -203,6 +295,7 @@ class _SettingPageState extends State<SettingPage> {
                   },
                 ),
                 CustomTile(
+                  color: colorList[8],
                   icon: FontAwesome.question_circle,
                   title: "FAQ",
                   onPress: () =>
@@ -210,6 +303,7 @@ class _SettingPageState extends State<SettingPage> {
                   trailing: trailingIcon,
                 ),
                 CustomTile(
+                  color: colorList[9],
                   icon: Icons.privacy_tip,
                   title: "Privacy Policy",
                   trailing: trailingIcon,
@@ -221,10 +315,13 @@ class _SettingPageState extends State<SettingPage> {
                   child: Center(
                     child: Text(
                       "Version 1.0.0",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 13),
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 10,
+                )
               ],
             ),
           )),
@@ -237,30 +334,30 @@ class CustomTile extends StatelessWidget {
   final IconData icon;
   final Widget trailing;
   final Function onPress;
+  final Color color;
 
-  CustomTile({this.title, this.icon, this.trailing, this.onPress});
+  CustomTile(
+      {@required this.title,
+      @required this.icon,
+      @required this.trailing,
+      @required this.onPress,
+      @required this.color});
 
   @override
   Widget build(BuildContext context) {
     Constants constants = Constants();
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
-      child: ListTile(
-          minLeadingWidth: 18,
-          contentPadding: EdgeInsets.only(left: 8, right: 16),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12))),
-          leading: CircleAvatar(
-              child: Icon(icon)),
-          onTap: onPress,
-          title: Text(
-            title,
-            style: constants.contentTextStyle.copyWith(fontSize: 16),
-          ),
-          trailing: trailing),
-    );
+    return ListTile(
+        contentPadding: EdgeInsets.only(left: 20, right: 24),
+        leading: Icon(
+          icon,
+          color: color,
+        ),
+        onTap: onPress,
+        title: Text(
+          title,
+          style: constants.listTileTitleStyle,
+        ),
+        trailing: trailing);
   }
 }
-
-

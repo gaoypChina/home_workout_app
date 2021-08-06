@@ -146,18 +146,18 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
       return "assets/animated-cover/full_body.png";
     }
 
-    getBgColor(String tag){
-    var tagList = tag.split(" ");
-    if(tagList[1].toLowerCase() == "beginner"){
-      return Colors.orange.shade300;
-    }else if(tagList[1].toLowerCase() == "intermediate"){
-   return   Colors.green.shade400;
-    }else if(tagList[1].toLowerCase() == "advance"){
-      return Colors.red.shade300;
-    }else {
-        return Colors.amber.shade300;
-      }
-    }
+   //  getBgColor(String tag){
+   //  var tagList = tag.split(" ");
+   //  if(tagList[1].toLowerCase() == "beginner"){
+   //    return Colors.orange.shade300;
+   //  }else if(tagList[1].toLowerCase() == "intermediate"){
+   // return   Colors.green.shade400;
+   //  }else if(tagList[1].toLowerCase() == "advance"){
+   //    return Colors.red.shade300;
+   //  }else {
+   //      return Colors.amber.shade300;
+   //    }
+   //  }
     Color textColor = Colors.white;
     return Container(
 
@@ -295,6 +295,8 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return SafeArea(
       child: Scaffold(
         body: isLoading == true
@@ -413,7 +415,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                               },
                             ),
                           ),
-                          constants.getDivider(),
+                          constants.getDivider(isDark),
                           getDetail(MediaQuery.of(context).size),
                           SizedBox(
                             height: 18,

@@ -200,7 +200,7 @@ class _HeightSelectorState extends State<HeightSelector> {
           TextButton(
               onPressed: () => onSubmit(),
               child: Text(
-                "Submit",
+                "Save",
                 style: textTheme.button.copyWith(color: Colors.blue.shade700),
               )),
         ],
@@ -357,7 +357,7 @@ class _WeightSelectorState extends State<WeightSelector> {
           TextButton(
               onPressed: () => onSubmit(),
               child: Text(
-                "Submit",
+                "Save",
                 style: textTheme.button.copyWith(color: Colors.blue.shade700),
               )),
         ],

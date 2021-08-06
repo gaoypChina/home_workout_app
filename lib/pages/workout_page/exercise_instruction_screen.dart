@@ -15,9 +15,9 @@ import 'package:wakelock/wakelock.dart';
 
 import '../../main.dart';
 import 'exercise_detail_page.dart';
-import 'exercise_list_page.dart';
 
 class InstructionScreen extends StatefulWidget {
+
   final List<Workout> workOutList;
   final String title;
   final List<int> rapList;
@@ -125,6 +125,8 @@ class _InstructionScreenState extends State<InstructionScreen>
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     var item = widget.workOutList[0];
     Widget getImage() {
       return Stack(
@@ -133,10 +135,7 @@ class _InstructionScreenState extends State<InstructionScreen>
             height: height / 2,
             child: Image.asset(item.imageSrc),
           ),
-          Container(
-            color: Colors.black.withOpacity(.1),
-            height: height/2,
-          ),
+
           Positioned(
               left: 10,
               top: 20,
@@ -145,7 +144,7 @@ class _InstructionScreenState extends State<InstructionScreen>
                     context: context, builder: (context) => StopPage()),
                 child: Icon(Icons.arrow_back),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.blue.shade200,
+                  primary: Colors.blue,
                   shape: CircleBorder(),
                 ),
               )),
@@ -233,6 +232,7 @@ class _InstructionScreenState extends State<InstructionScreen>
     Widget getTimer() {
       return
         Container(
+          color:isDark? Colors.black:Colors.grey.shade100,
         height: height * .45,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

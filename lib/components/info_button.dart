@@ -12,15 +12,16 @@ class InfoButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.only(top: 5.0,right: 8,bottom: 5),
       child: Container(
         height: 35,
         width: 35,
         child: FloatingActionButton(
-          backgroundColor: Colors.blue.shade200,
+          backgroundColor: Colors.blue,
           onPressed: onPress,
-          child: Icon(icon),
+          child: Icon(icon,color:Colors.white,size: 22,),
           tooltip: tooltip,
         ),
       ),

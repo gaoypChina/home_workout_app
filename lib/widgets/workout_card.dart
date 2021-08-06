@@ -177,42 +177,41 @@ class WorkoutCard extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
-      child: Ink(
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ExerciseListScreen(
-                        workOutList: workoutList,
-                        tag: tag,
-                        title: title,
-                        tagValue: tagValue,
-                      )),
-            );
-          },
-          child: Container(
-            height: height * .18,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [color[0], color[1]],
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(12))),
-            child: Container(
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 8,
-                  ),
-                  getImage(),
-                  getTitle(),
-                  SizedBox(
-                    width: 8,
-                  ),
-                ],
+      child: InkWell(
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ExerciseListScreen(
+                      workOutList: workoutList,
+                      tag: tag,
+                      title: title,
+                      tagValue: tagValue,
+                    )),
+          );
+        },
+        child: Container(
+          height: height * .18,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [color[0], color[1]],
               ),
+              borderRadius: BorderRadius.all(Radius.circular(16))),
+          child: Container(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 8,
+                ),
+                getImage(),
+                getTitle(),
+                SizedBox(
+                  width: 8,
+                ),
+              ],
             ),
           ),
         ),

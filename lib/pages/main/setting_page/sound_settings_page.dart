@@ -78,27 +78,23 @@ class _SoundSettingState extends State<SoundSetting> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     getSwitch(String title, IconData icon, bool value, Function onToggle,
-        String subTile) {
-      return Material(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12))),
-        elevation: 2,
-        child: SwitchListTile(
-          subtitle: Text(subTile),
-          value: value,
-          tileColor: constants.tileColor,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12))),
-          secondary: CircleAvatar(
-            child: Icon(icon),
-          ),
-          title: Text(
-            title,
-            style: constants.contentTextStyle.copyWith(fontSize: 16),
-          ),
-          onChanged: (newVal) => onToggle(newVal),
+        String subTile,Color color) {
+      return SwitchListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 20),
+        subtitle: Text(subTile),
+        value: value,
+        secondary:
+        Icon(icon,color: color,),
+        activeColor: Colors.blue.shade700,
+
+        title: Text(
+          title,
+          style: constants.listTileTitleStyle.copyWith(fontSize: 16),
         ),
+        onChanged: (newVal) => onToggle(newVal),
       );
     }
 
@@ -106,7 +102,20 @@ class _SoundSettingState extends State<SoundSetting> {
       return val ? "On" : "Off";
     }
 
+    List<Color> colorList = [Colors.green,Colors.red,Colors.orange,Colors.purpleAccent,];
+
+    getDivider(){
+      return
+        //Divider(color: Colors.grey,indent: 50,endIndent: 20,);
+        Container(
+        width: MediaQuery.of(context).size.width,
+        height: .0,
+        color: Colors.grey,padding: EdgeInsets.only(left: 20,right: 20),);
+
+    }
+
     return Scaffold(
+      backgroundColor: isDark?Colors.black:Colors.white,
       appBar: AppBar(
         actions: [
           TextButton(
@@ -120,35 +129,37 @@ class _SoundSettingState extends State<SoundSetting> {
               },
               child: Text("Save",
                   style: TextStyle(
-                    color: constants.appBarContentColor,
+                    color: Colors.blue.shade700,
                   )))
         ],
         title: Text(
           "Sound Setting",
-          style: TextStyle(color: constants.appBarContentColor),
+          style:TextStyle(color: isDark?Colors.white:Colors.black)
         ),
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+
+        padding: EdgeInsets.only(top: 8),
         shrinkWrap: true,
         children: [
           getSwitch(
-              "Mute", Icons.volume_up, mute, onMuteToggle, "Mute all Sound"),
-          SizedBox(
-            height: 10,
-          ),
+              "Mute", Icons.volume_up, mute, onMuteToggle, "Mute all Sound",colorList[0]),
+
+          getDivider(),
           getSwitch("Coach Assistant", Icons.record_voice_over, coach,
-              onCoachToggle, "Coach Assistant " + getSwitchValue(coach)),
-          SizedBox(
-            height: 10,
-          ),
+              onCoachToggle, "Coach Assistant " + getSwitchValue(coach),colorList[1]),
+
+          getDivider(),
+
           getSwitch("Voice Guid", MaterialCommunityIcons.speaker_wireless,
-              voice, onVoiceToggle, "Voice Guid " + getSwitchValue(voice)),
-          SizedBox(
-            height: 10,
-          ),
+              voice, onVoiceToggle, "Voice Guid " + getSwitchValue(voice),colorList[2]),
+
+          getDivider(),
+
           getSwitch("Sound Effect", MaterialCommunityIcons.bell, effect,
-              onEffectToggle, "Sound Effect " + getSwitchValue(effect))
+              onEffectToggle, "Sound Effect " + getSwitchValue(effect),colorList[3]),
+
+          getDivider(),
         ],
       ),
 

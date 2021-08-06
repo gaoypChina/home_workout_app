@@ -8,9 +8,9 @@ import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/models/weight_list_model.dart';
 import 'package:full_workout/models/weight_model.dart';
 import 'package:full_workout/pages/main/home_page/leading_widget.dart';
-import 'package:full_workout/pages/main/report_page/weight_report/weight_chart.dart';
-import 'package:full_workout/pages/main/report_page/weight_report/weight_report_statics.dart';
 import 'package:full_workout/components/height_weightSelector.dart';
+import 'package:full_workout/pages/main/weight_report_page/weight_chart.dart';
+import 'package:full_workout/pages/main/weight_report_page/weight_report_statics.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 
@@ -148,7 +148,7 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
     super.initState();
   }
 
-  getDetail() {
+  getDetail(bool isDark) {
     print(weight.length.toString() + ": weight length");
     return (weight.length == 0)
         ? getEmptyList()
@@ -244,28 +244,34 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
-                child: Slidable(
-                  actionPane: SlidableDrawerActionPane(),
-                  actionExtentRatio: 0.25,
-                  child: ListTile(
-                    title: Text(
-                      formatedDay,
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    trailing: RichText(
+                elevation: 1,color:isDark? constants.darkSecondary:constants.lightSecondary,
+
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12))),
+                      child: Slidable(
+                        actionPane: SlidableDrawerActionPane(),
+                        actionExtentRatio: 0.25,
+                        child: ListTile(
+                          title: Text(
+                            formatedDay,
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                          trailing: RichText(
                       text: TextSpan(children: [
                         TextSpan(
                           text:
                                     item.weightModel.weight.toStringAsFixed(2),
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 22),
+                                    color: isDark ? Colors.white : Colors.black,
+                                    fontSize: 22),
                               ),
                         TextSpan(
                           text: "Kg",
-                          style: TextStyle(color: Colors.black, fontSize: 16),
-                        ),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color:
+                                        isDark ? Colors.white : Colors.black),
+                              ),
                       ]),
                     ),
                     subtitle: Row(
@@ -273,35 +279,35 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                       children: [
                         wd.isNegative
                             ? Icon(
-                                Icons.arrow_downward_sharp,
-                                color: Colors.red.shade700,
-                                size: 25,
-                              )
+                          Icons.arrow_downward_sharp,
+                          color: Colors.red.shade700,
+                          size: 25,
+                        )
                             : wd == 0
-                                ? Icon(Icons.compare_arrows,
-                                    color: Colors.blue.shade700, size: 25)
-                                : Icon(Icons.arrow_upward_outlined,
-                                    color: Colors.green.shade700, size: 25),
+                            ? Icon(Icons.compare_arrows,
+                            color: Colors.blue.shade700, size: 25)
+                            : Icon(Icons.arrow_upward_outlined,
+                            color: Colors.green.shade700, size: 25),
                         SizedBox(
                           width: 5,
                         ),
                         RichText(
                             text: TextSpan(children: [
-                          TextSpan(
-                            text: wd.abs().toStringAsFixed(2),
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.grey,
-                                fontSize: 16),
-                          ),
-                          TextSpan(
-                            text: "Kg",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey,
-                                fontSize: 14),
-                          ),
-                        ])),
+                              TextSpan(
+                                text: wd.abs().toStringAsFixed(2),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.grey,
+                                    fontSize: 16),
+                              ),
+                              TextSpan(
+                                text: "Kg",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey,
+                                    fontSize: 14),
+                              ),
+                            ])),
                         Spacer()
                       ],
                     ),
@@ -350,16 +356,14 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
   }
 
   getEmptyList() {
-    return Stack(
+    return Column(
       children: [
         Container(
-            height: 300,
-            width: double.infinity,
-            child: Image.asset("assets/other/list2.png", fit: BoxFit.fill)),
+            child: Image.asset("assets/other/list2.png", fit: BoxFit.fitHeight)),
         Column(
           children: [
             SizedBox(
-              height: 55,
+              height: 45,
             ),
             Center(
               child: Positioned(
@@ -406,40 +410,45 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
 
   ///widget
 
-  tab2() {
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 15,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0),
-            child: Text(
-              "Weight Record",
-              style: textTheme.subtitle1.copyWith(fontWeight: FontWeight.w700),
+  tab2(bool isDark) {
+    return Scaffold(
+      backgroundColor: isDark ? Colors.black : Colors.white,
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 15,
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          WeightChart(),
-          SizedBox(
-            height: 10,
-          ),
-          WeightReportStatics(),
-          SizedBox(
-            height: 100,
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0),
+              child: Text(
+                "Weight Record",
+                style:
+                    textTheme.subtitle1.copyWith(fontWeight: FontWeight.w700),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            WeightChart(),
+            SizedBox(
+              height: 10,
+            ),
+            WeightReportStatics(),
+            SizedBox(
+              height: 100,
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  tab1() {
+  tab1(bool isDark) {
     return Scaffold(
+      backgroundColor: isDark ? Colors.black : Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       floatingActionButton: Container(
@@ -459,7 +468,7 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
               await spHelper.saveDouble(spKey.weight, toSave);
               String key = DateFormat.yMd().format(selectedDate).toString();
               WeightModel weightModel =
-                  WeightModel(selectedDate.toIso8601String(), toSave, key);
+              WeightModel(selectedDate.toIso8601String(), toSave, key);
               if (weightModel.weight == null) return;
               await weightDb.addWeight(toSave, weightModel, key);
 
@@ -467,15 +476,14 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                 weight.removeAt(0);
                 weight.insert(
                     0, WeightList(index: 0, weightModel: weightModel));
-              }else{
-                weight.insert(0, WeightList(index: 0, weightModel: weightModel));
-
+              } else {
+                weight.insert(
+                    0, WeightList(index: 0, weightModel: weightModel));
               }
 
-
               setState(() {});
-
-              constants.getToast("Weight added successfully");
+              if (weightModel.weight == null)
+                constants.getToast("Weight added successfully");
             },
             icon: Icon(
               Icons.add,
@@ -485,7 +493,7 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
             label: Text(
               "Add weight",
               style:
-                  textTheme.button.copyWith(fontSize: 16, color: Colors.white),
+              textTheme.button.copyWith(fontSize: 16, color: Colors.white),
               textAlign: TextAlign.end,
             ),
           ),
@@ -496,7 +504,7 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              padding: const EdgeInsets.only(left: 18.0, top: 8, right: 18),
               child: Row(
                 children: [
                   Text(
@@ -506,30 +514,42 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                   ),
                   Spacer(),
                   Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(6)),
+                      color: Colors.blue,
+                    ),
+                    padding:
+                        EdgeInsets.only(left: 8, right: 4, top: 6, bottom: 6),
                     child: DropdownButton<String>(
                         value: rangeType,
-                        elevation: 5,
-                        style: TextStyle(color: Colors.black),
+                        dropdownColor: Colors.blue,
+                        focusColor: Colors.blue,
                         items: rangeTypeList
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                value,
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w400),
-                              ),
+                            child: Text(
+                              value,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
                             ),
                           );
                         }).toList(),
+                        isDense: true,
+                        elevation: 2,
+                        underline: Container(
+                          color: Colors.blue,
+                        ),
+                        icon: Icon(
+                          Icons.arrow_drop_down_rounded,
+                          color: Colors.white,
+                        ),
                         hint: Text(
                           rangeType,
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600),
+                              fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                         onChanged: (String value) => onRangeChange(value)),
                   )
@@ -537,7 +557,7 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
               ),
             ),
             getDateRange(),
-            getDetail(),
+            getDetail(isDark),
             SizedBox(
               height: 80,
             )
@@ -549,27 +569,29 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return DefaultTabController(
       initialIndex: 0,
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          //  backwardsCompatibility: false,
-          // brightness: Brightness.dark,
-          // systemOverlayStyle:
-          //     SystemUiOverlayStyle(statusBarColor: Colors.blue.shade700),
-
+          backgroundColor: isDark ? Colors.black : Colors.blue.shade700,
           title: Text("Weight Tracker"),
           bottom: TabBar(
             indicatorColor: Colors.white,
             tabs: [
               Tab(
-                icon: Icon(Icons.stacked_line_chart_outlined),
-                child: Text("STATICS"),
+                icon: Icon(Icons.history),
+                child: Text(
+                  "HISTORY",
+                ),
               ),
               Tab(
-                icon: Icon(Icons.history),
-                child: Text("HISTORY"),
+                icon: Icon(Icons.stacked_line_chart_outlined),
+                child: Text(
+                  "STATICS",
+                ),
               ),
             ],
           ),
@@ -581,8 +603,8 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                : tab1(),
-            tab2()
+                : tab1(isDark),
+            tab2(isDark)
           ],
         ),
       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/models/main_page_item.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/widgets/achivement.dart';
@@ -13,7 +12,6 @@ import 'leading_widget.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Constants constants = Constants();
     Future<bool> _onBackPressed() {
       return showDialog(
               context: context,
@@ -86,6 +84,7 @@ class HomePage extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                               fontSize: 22))
                     ])),
+
                     pinned: true,
                     forceElevated: innerBoxIsScrolled,
                     flexibleSpace: FlexibleSpaceBar(

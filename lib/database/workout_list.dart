@@ -1342,7 +1342,7 @@ Workout jumpingJacks = Workout(
   ],
   showTimer: true,
   duration: 30,
-  imageSrc: "assets/splash/sample 2 (1).gif",
+  imageSrc: "assets/other/v_ups.gif",
   //imageSrc: 'assets/all-workouts/jumpingJacks.gif',
 );
 

@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:full_workout/helper/weight_db_helper.dart';
-import 'package:full_workout/pages/main/report_page/weight_report/weight_chart.dart';
+import 'package:full_workout/pages/main/weight_report_page/weight_chart.dart';
+import 'package:full_workout/pages/main/weight_report_page/weight_report_statics.dart';
 
 class WeightReport extends StatefulWidget {
   @override
@@ -17,6 +18,8 @@ class _WeightReportState extends State<WeightReport> {
     return Column(
       children: [
         WeightChart(),
+        SizedBox(height: 5,),
+        WeightReportStatics(),
       ],
     );
   }

@@ -1,8 +1,6 @@
-import 'package:audiofileplayer/audiofileplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/mediaHelper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
@@ -17,7 +15,6 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../main.dart';
 import 'exercise_detail_page.dart';
-import 'exercise_list_page.dart';
 
 class RestScreen extends StatefulWidget {
   final int exerciseNumber;
@@ -50,7 +47,6 @@ class RestScreen extends StatefulWidget {
 class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
   /// variables
 
-  int addTime = 20;
   AnimationController controller;
   MediaHelper mediaHelper =MediaHelper();
   bool coachVoice;
@@ -144,7 +140,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
     _introMessage(item);
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: widget.restTime),
+      duration: Duration(seconds: widget.restTime+1),
     );
 
     controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
@@ -160,14 +156,14 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
 
   /// widget functions
 
-  getProgressBar(double width, int currIndex) {
+  getProgressBar(double width, int currIndex,bool isDark) {
     return LinearPercentIndicator(
       padding: EdgeInsets.all(0),
       animation: true,
       lineHeight: 5.0,
       percent: index / widget.workOutList.length,
       width: width,
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor:isDark?Colors.grey.shade800: Colors.grey.shade200,
       linearStrokeCap: LinearStrokeCap.round,
       progressColor: Colors.blue.shade700,
     );
@@ -179,8 +175,12 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
     var height = size.height;
     var width = size.width;
     var safePadding = MediaQuery.of(context).padding.top;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     height = height - safePadding;
     return Scaffold(
+      backgroundColor:isDark? Colors.black:Colors.blue.shade700,
+
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,7 +190,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                 Container(
                   height: height * .75,
                   width: width,
-                  color: Colors.blue.shade700,
+                  color:isDark? Colors.black:Colors.blue.shade700,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -261,10 +261,10 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                             ),
                             style: OutlinedButton.styleFrom(
                               elevation: 1,
-                              backgroundColor: Colors.blue.shade700,
+                              backgroundColor:isDark?Colors.black: Colors.blue.shade700,
                               side: BorderSide(
                                   style: BorderStyle.solid,
-                                  color: Colors.white70,
+                                  color: isDark?Colors.white60:Colors.white70,
                                   width: 2),
                               padding: EdgeInsets.only(
                                   left: 35, right: 35, top: 10, bottom: 10),
@@ -306,9 +306,9 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                           icon: Icons.list_alt_outlined,
                           tooltip: "Exercise Plane",
                           onPress: () async {
-                            bool value = true;
+
                             controller.stop(canceled: true);
-                            value = await showDialog(
+                            await showDialog(
                                 context: context,
                                 builder: (builder) => CheckListScreen(
                                     workOutList: widget.workOutList,
@@ -366,10 +366,10 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                           tooltip: "Steps",
                           onPress: () async {
                             print(controller.status);
-                            bool value = true;
+
                             if (controller.isAnimating) {
                               controller.stop(canceled: true);
-                              value = await showDialog(
+                               await showDialog(
                                   context: context,
                                   builder: (builder) => DetailPage(
                                         workout: item,
@@ -386,9 +386,10 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                     )),
               ],
             ),
-            getProgressBar(width, 3),
+            getProgressBar(width, 3,isDark),
             Container(
               height: height * .25 - 5,
+              color:isDark? Colors.black87:Colors.white,
               child: Row(
                 children: [
                   Expanded(

@@ -54,7 +54,8 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
-              color: Colors.black,
+              color: Colors.white,
+              width: 1
             ),
             borderRadius: BorderRadius.all(Radius.circular(12))),
 
@@ -70,6 +71,8 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
             ],
             controller: _controller,
             showVideoProgressIndicator: true,
+            liveUIColor: Colors.blue,
+            progressColors: ProgressBarColors(backgroundColor: Colors.white,bufferedColor: Colors.white,handleColor: Colors.white,playedColor: Colors.blue),
             controlsTimeOut: Duration(seconds: 10),
           ),
         ),
@@ -119,9 +122,11 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
 
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor:isDark?Colors.black: Colors.blue,
       body: SafeArea(
         child: Container(
           child: Padding(

@@ -14,6 +14,8 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
 
     getTopBar() {
       return Container(
@@ -35,16 +37,16 @@ class DetailPage extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
+                  primary:isDark?Colors.grey.shade200:Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 4)),
               icon: Icon(
                 Icons.videocam,
-                color: Colors.blue,
+                color: Colors.grey.shade800,
               ),
               label: Text(
                 "Video",
                 style: textTheme.button.copyWith(
-                  color: Colors.blue,
+                  color: Colors.grey.shade800,
                 ),
               ),
             )
@@ -102,7 +104,8 @@ class DetailPage extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.blue,
+
+    backgroundColor:isDark?Colors.black: Colors.blue,
       body: SafeArea(
         child: Container(
 
