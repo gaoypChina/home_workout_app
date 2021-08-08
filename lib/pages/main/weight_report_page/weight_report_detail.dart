@@ -17,6 +17,9 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 import '../../../../main.dart';
 
 class WeightReportDetail extends StatefulWidget {
+  final Function onBack;
+  WeightReportDetail({ this.onBack});
+
   static const routeName = "weight-report-detail";
 
   @override
@@ -412,6 +415,7 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
 
   tab2(bool isDark) {
     return Scaffold(
+
       backgroundColor: isDark ? Colors.black : Colors.white,
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -571,41 +575,44 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
   Widget build(BuildContext context) {
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: isDark ? Colors.black : Colors.blue.shade700,
-          title: Text("Weight Tracker"),
-          bottom: TabBar(
-            indicatorColor: Colors.white,
-            tabs: [
-              Tab(
-                icon: Icon(Icons.history),
-                child: Text(
-                  "HISTORY",
+    return WillPopScope(
+      onWillPop: ()=>widget.onBack(),
+      child: DefaultTabController(
+        initialIndex: 0,
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: isDark ? Colors.black : Colors.blue.shade700,
+            title: Text("Weight Tracker"),
+            bottom: TabBar(
+              indicatorColor: Colors.white,
+              tabs: [
+                Tab(
+                  icon: Icon(Icons.history),
+                  child: Text(
+                    "HISTORY",
+                  ),
                 ),
-              ),
-              Tab(
-                icon: Icon(Icons.stacked_line_chart_outlined),
-                child: Text(
-                  "STATICS",
+                Tab(
+                  icon: Icon(Icons.stacked_line_chart_outlined),
+                  child: Text(
+                    "STATICS",
+                  ),
                 ),
-              ),
+              ],
+            ),
+            actions: getLeading(context, color: Colors.white),
+          ),
+          body: TabBarView(
+            children: [
+              isLoading == true
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : tab1(isDark),
+              tab2(isDark)
             ],
           ),
-          actions: getLeading(context, color: Colors.white),
-        ),
-        body: TabBarView(
-          children: [
-            isLoading == true
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : tab1(isDark),
-            tab2(isDark)
-          ],
         ),
       ),
     );

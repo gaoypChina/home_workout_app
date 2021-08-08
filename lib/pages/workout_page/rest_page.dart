@@ -178,266 +178,269 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     height = height - safePadding;
-    return Scaffold(
-      backgroundColor:isDark? Colors.black:Colors.blue.shade700,
+    return WillPopScope(
+      onWillPop: ()=>_onPause(),
+      child: Scaffold(
+        backgroundColor:isDark? Colors.black:Colors.blue.shade700,
 
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: height * .75,
-                  width: width,
-                  color:isDark? Colors.black:Colors.blue.shade700,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: height * .1,
-                      ),
-                      Text(
-                        "Rest",
-                        style: textTheme.bodyText1.copyWith(
-                            fontSize: 40,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white),
-                      ),
-                      SizedBox(
-                        height: height * .05,
-                      ),
-                      Container(
-                        height: 50,
-                        //  width: double.infinity,
-                        child: AnimatedBuilder(
-                            animation: controller,
-                            builder: (BuildContext context, Widget child) {
-                              //playLocalAsset();
-
-                              if (timerValue <= 5000 && timerValue > 4950) {
-                                // flutterTts.speak('Ready to go');
-                              }
-                              if (timerValue <= 3000 && timerValue > 2950) {
-                                mediaHelper.playSoundOnce(
-                                    'assets/sound/countdown.wav');
-                                mediaHelper.speak('Three');
-                              }
-                              if (timerValue <= 2000 && timerValue > 1950) {
-                                mediaHelper.speak('Two');
-                              }
-                              if (timerValue <= 1000 && timerValue > 950) {
-                                mediaHelper.speak('One');
-                              }
-                              if (timerValue <= 200 && timerValue > 150) {
-                                //playLocalAsset();
-                              }
-
-                              return Text(
-                                formatedTime(secValue),
-                                style: TextStyle(
-                                    fontSize: 40, color: Colors.white),
-                                //    style: themeData.textTheme.display4,
-                              );
-                            }),
-                      ),
-                      SizedBox(
-                        height: height * .05,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          OutlinedButton(
-                            onPressed: () {
-                              _onPause();
-                            },
-                            child: Text(
-                              "Pause",
-                              style: textTheme.button.copyWith(
-                                  fontSize: 16,
-                                  letterSpacing: 1,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white70),
-                            ),
-                            style: OutlinedButton.styleFrom(
-                              elevation: 1,
-                              backgroundColor:isDark?Colors.black: Colors.blue.shade700,
-                              side: BorderSide(
-                                  style: BorderStyle.solid,
-                                  color: isDark?Colors.white60:Colors.white70,
-                                  width: 2),
-                              padding: EdgeInsets.only(
-                                  left: 35, right: 35, top: 10, bottom: 10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () => _onComplete(),
-                            child: Text(
-                              "Skip",
-                              style: textTheme.button.copyWith(
-                                  fontSize: 16,
-                                  letterSpacing: 1,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.blue),
-                            ),
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              padding: EdgeInsets.only(
-                                  left: 40, right: 40, top: 10, bottom: 10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                    right: 10,
-                    top: 20,
-                    child: Column(
-                      children: [
-                        InfoButton(
-                          icon: Icons.list_alt_outlined,
-                          tooltip: "Exercise Plane",
-                          onPress: () async {
-
-                            controller.stop(canceled: true);
-                            await showDialog(
-                                context: context,
-                                builder: (builder) => CheckListScreen(
-                                    workOutList: widget.workOutList,
-                                    tag: widget.tag,
-                                   progress: index / widget.workOutList.length,
-                                    title: widget.title));
-                            controller.reverse(
-                                from: controller.value == 0.0
-                                    ? 1.0
-                                    : controller.value);
-                          },
-                        ),
-                        InfoButton(
-                          icon: Icons.ondemand_video_outlined,
-                          tooltip: "Video",
-                          onPress: () async {
-                            print(controller.status);
-                            if (controller.isAnimating) {
-                              controller.stop(canceled: true);
-                              await showDialog(
-                                  context: context,
-                                  builder: (builder) => YoutubeTutorial(
-                                    rapCount: widget.rapList[index],
-                                      workout: widget.workOutList[index],
-                                      ));
-                            }
-
-                            controller.reverse(
-                                from: controller.value == 0.0
-                                    ? 1.0
-                                    : controller.value);
-                          },
-                        ),
-                        InfoButton(
-                          icon: Icons.volume_up_outlined,
-                          tooltip: "Sound",
-                          onPress: () async {
-                            print(controller.status);
-
-                            if (controller.isAnimating) {
-                              controller.stop(canceled: true);
-                              await showDialog(
-                                  context: context,
-                                  builder: (builder) => SoundSetting());
-                            }
-
-                            controller.reverse(
-                                from: controller.value == 0.0
-                                    ? 1.0
-                                    : controller.value);
-                          },
-                        ),
-                        InfoButton(
-                          icon: FontAwesome5.question_circle,
-                          tooltip: "Steps",
-                          onPress: () async {
-                            print(controller.status);
-
-                            if (controller.isAnimating) {
-                              controller.stop(canceled: true);
-                               await showDialog(
-                                  context: context,
-                                  builder: (builder) => DetailPage(
-                                        workout: item,
-                                        rapCount: widget.rapList[index],
-                                      ));
-                            }
-                            controller.reverse(
-                                from: controller.value == 0.0
-                                    ? 1.0
-                                    : controller.value);
-                          },
-                        ),
-                      ],
-                    )),
-              ],
-            ),
-            getProgressBar(width, 3,isDark),
-            Container(
-              height: height * .25 - 5,
-              color:isDark? Colors.black87:Colors.white,
-              child: Row(
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
                 children: [
-                  Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  Container(
+                    height: height * .75,
+                    width: width,
+                    color:isDark? Colors.black:Colors.blue.shade700,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: height * .1,
+                        ),
+                        Text(
+                          "Rest",
+                          style: textTheme.bodyText1.copyWith(
+                              fontSize: 40,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: height * .05,
+                        ),
+                        Container(
+                          height: 50,
+                          //  width: double.infinity,
+                          child: AnimatedBuilder(
+                              animation: controller,
+                              builder: (BuildContext context, Widget child) {
+                                //playLocalAsset();
+
+                                if (timerValue <= 5000 && timerValue > 4950) {
+                                  // flutterTts.speak('Ready to go');
+                                }
+                                if (timerValue <= 3000 && timerValue > 2950) {
+                                  mediaHelper.playSoundOnce(
+                                      'assets/sound/countdown.wav');
+                                  mediaHelper.speak('Three');
+                                }
+                                if (timerValue <= 2000 && timerValue > 1950) {
+                                  mediaHelper.speak('Two');
+                                }
+                                if (timerValue <= 1000 && timerValue > 950) {
+                                  mediaHelper.speak('One');
+                                }
+                                if (timerValue <= 200 && timerValue > 150) {
+                                  //playLocalAsset();
+                                }
+
+                                return Text(
+                                  formatedTime(secValue),
+                                  style: TextStyle(
+                                      fontSize: 40, color: Colors.white),
+                                  //    style: themeData.textTheme.display4,
+                                );
+                              }),
+                        ),
+                        SizedBox(
+                          height: height * .05,
+                        ),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            SizedBox(
-                              height: height * .04,
+                            OutlinedButton(
+                              onPressed: () {
+                                _onPause();
+                              },
+                              child: Text(
+                                "Pause",
+                                style: textTheme.button.copyWith(
+                                    fontSize: 16,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white70),
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                elevation: 1,
+                                backgroundColor:isDark?Colors.black: Colors.blue.shade700,
+                                side: BorderSide(
+                                    style: BorderStyle.solid,
+                                    color: isDark?Colors.white60:Colors.white70,
+                                    width: 2),
+                                padding: EdgeInsets.only(
+                                    left: 35, right: 35, top: 10, bottom: 10),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
                             ),
-                            Text(
-                              "Next $index / ${widget.workOutList.length}",
-                              style: textTheme.bodyText2.copyWith(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.grey),
+                            ElevatedButton(
+                              onPressed: () => _onComplete(),
+                              child: Text(
+                                "Skip",
+                                style: textTheme.button.copyWith(
+                                    fontSize: 16,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.blue),
+                              ),
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                padding: EdgeInsets.only(
+                                    left: 40, right: 40, top: 10, bottom: 10),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
                             ),
-                            Text(
-                              item.title,
-                              style: textTheme.bodyText2.copyWith(
-                                  fontSize: item.title.length > 15 ? 20 : 28,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            Text(
-                              item.showTimer == true
-                                  ? "${widget.rapList[index]} sec"
-                                  : "X ${widget.rapList[index]}",
-                              style: textTheme.bodyText2.copyWith(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.grey),
-                            ),
-                            SizedBox(
-                              height: height * .01,
-                            )
                           ],
                         ),
-                      )),
-                  Expanded(
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                      right: 10,
+                      top: 20,
+                      child: Column(
+                        children: [
+                          InfoButton(
+                            icon: Icons.list_alt_outlined,
+                            tooltip: "Exercise Plane",
+                            onPress: () async {
 
-                         child: Image.asset(item.imageSrc)),
+                              controller.stop(canceled: true);
+                              await showDialog(
+                                  context: context,
+                                  builder: (builder) => CheckListScreen(
+                                      workOutList: widget.workOutList,
+                                      tag: widget.tag,
+                                     progress: index / widget.workOutList.length,
+                                      title: widget.title));
+                              controller.reverse(
+                                  from: controller.value == 0.0
+                                      ? 1.0
+                                      : controller.value);
+                            },
+                          ),
+                          InfoButton(
+                            icon: Icons.ondemand_video_outlined,
+                            tooltip: "Video",
+                            onPress: () async {
+                              print(controller.status);
+                              if (controller.isAnimating) {
+                                controller.stop(canceled: true);
+                                await showDialog(
+                                    context: context,
+                                    builder: (builder) => YoutubeTutorial(
+                                      rapCount: widget.rapList[index],
+                                        workout: widget.workOutList[index],
+                                        ));
+                              }
+
+                              controller.reverse(
+                                  from: controller.value == 0.0
+                                      ? 1.0
+                                      : controller.value);
+                            },
+                          ),
+                          InfoButton(
+                            icon: Icons.volume_up_outlined,
+                            tooltip: "Sound",
+                            onPress: () async {
+                              print(controller.status);
+
+                              if (controller.isAnimating) {
+                                controller.stop(canceled: true);
+                                await showDialog(
+                                    context: context,
+                                    builder: (builder) => SoundSetting());
+                              }
+
+                              controller.reverse(
+                                  from: controller.value == 0.0
+                                      ? 1.0
+                                      : controller.value);
+                            },
+                          ),
+                          InfoButton(
+                            icon: FontAwesome5.question_circle,
+                            tooltip: "Steps",
+                            onPress: () async {
+                              print(controller.status);
+
+                              if (controller.isAnimating) {
+                                controller.stop(canceled: true);
+                                 await showDialog(
+                                    context: context,
+                                    builder: (builder) => DetailPage(
+                                          workout: item,
+                                          rapCount: widget.rapList[index],
+                                        ));
+                              }
+                              controller.reverse(
+                                  from: controller.value == 0.0
+                                      ? 1.0
+                                      : controller.value);
+                            },
+                          ),
+                        ],
+                      )),
                 ],
               ),
-            )
-          ],
+              getProgressBar(width, 3,isDark),
+              Container(
+                height: height * .25 - 5,
+                color:isDark? Colors.black87:Colors.white,
+                child: Row(
+                  children: [
+                    Expanded(
+                        flex: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 18.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              SizedBox(
+                                height: height * .04,
+                              ),
+                              Text(
+                                "Next $index / ${widget.workOutList.length}",
+                                style: textTheme.bodyText2.copyWith(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.grey),
+                              ),
+                              Text(
+                                item.title,
+                                style: textTheme.bodyText2.copyWith(
+                                    fontSize: item.title.length > 15 ? 20 : 28,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              Text(
+                                item.showTimer == true
+                                    ? "${widget.rapList[index]} sec"
+                                    : "X ${widget.rapList[index]}",
+                                style: textTheme.bodyText2.copyWith(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey),
+                              ),
+                              SizedBox(
+                                height: height * .01,
+                              )
+                            ],
+                          ),
+                        )),
+                    Expanded(
+
+                           child: Image.asset(item.imageSrc)),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -174,9 +174,9 @@ class _ActiveGoalState extends State<ActiveGoal> {
                                 : CircleAvatar(
                                     radius: 6,
                                     backgroundColor:
-                                        DateTime.now().day >= activeDay.date.day
+                                        DateTime.now().day == activeDay.date.day
                                             ? Colors.blue
-                                            : Colors.grey.shade400,
+                                            :DateTime.now().day >= activeDay.date.day?Colors.white70: Colors.grey.shade400,
                                   ),
                           ),
                           radius: 15),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
@@ -54,7 +55,26 @@ class _BmiCardState extends State<BmiCard> {
         textTheme.subtitle1.copyWith(fontWeight: FontWeight.w700);
 
     double _calcBmi(double height, double weight) {
-      return weight / (height * height);
+      return  weight / (height * height);
+    }
+
+    getPadValue(double bmi) {
+      double toReturn = 0;
+      if (bmi >= 17 && bmi < 18.5) {
+        toReturn = 10;
+      } else if (bmi >= 18.5 && bmi < 25) {
+        toReturn = 22;
+      } else if (bmi >= 25 && bmi < 30) {
+        toReturn = 24;
+      } else if (bmi >= 30 && bmi < 35) {
+        toReturn = 26;
+      } else if (bmi >= 35 && bmi < 40) {
+        toReturn = 28;
+      } else if (bmi >= 40) {
+        toReturn = 29;
+      }
+
+      return toReturn+1;
     }
 
     BmiRemark _getRemark(double bmi) {
@@ -121,7 +141,7 @@ class _BmiCardState extends State<BmiCard> {
           extendBody: true,
           snapSpec: const SnapSpec(
             snap: true,
-            snappings: [0.4, 0.7, 1.0],
+            snappings: [ 0.7, 1.0],
             positioning: SnapPositioning.relativeToSheetHeight,
           ),
           builder: (context, state) {
@@ -245,7 +265,7 @@ class _BmiCardState extends State<BmiCard> {
     getBorder() {
       return Container(
         height: 50,
-        color: Colors.white,
+        color: isDark ? Colors.black : Colors.white,
         width: borderWidth,
       );
     }
@@ -286,6 +306,40 @@ class _BmiCardState extends State<BmiCard> {
       return Text(
         text,
         style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+      );
+    }
+
+    getArrow() {
+      getContainer(){
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(30),
+            ),
+            color: isDark ? Colors.white : Colors.black,
+          ),
+          height: 12,
+          width: 4,
+        );
+      }
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            FontAwesome.arrow_up,
+            size: 20,
+          ),
+          SizedBox(height: 2,),
+          getContainer(),
+          SizedBox(height: 4,),
+          getContainer(),
+          SizedBox(height: 4,),
+          getContainer(),
+          SizedBox(height: 4,),
+
+
+        ],
       );
     }
 
@@ -457,127 +511,74 @@ class _BmiCardState extends State<BmiCard> {
           padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child:
           Row(
-            children: [
-              Text(
-                  "BMI Calculator",
-                  style: titleStyle
-              ),
-              Spacer(),
-              getEditButton("EDIT")
-                  ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child:
-          (bmi >= 15 && bmi <= 40)
-              ? Row(
-            children: [
-              SizedBox(width: (bmi - 15) * oneUnit),
-              Text(
-                bmi.toString(),
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-            ],
-          )
-              : Container(),
-        ),
-        Container(
-          padding: EdgeInsets.only(left: 8),
-          height: 90,
-          child: Stack(
-            children: [
+                      children: [
+                        Text("BMI Calculator", style: titleStyle),
+                        Spacer(),
+                        getEditButton("EDIT")
+                      ],
+                    ),
+                  ),
+                  (bmi >= 15 && bmi <= 40)
+                      ? Row(
+                          children: [
+                            (bmi >= 35 && bmi <= 40)
+                                ? SizedBox(
+                                    width: (bmi - 16) * oneUnit +
+                                        getPadValue(bmi) -
+                                        8)
+                                : SizedBox(
+                                    width: (bmi - 16) * oneUnit +
+                                        getPadValue(bmi)),
+                            Text(
+                              (bmi >= 35 && bmi <= 40)
+                                  ? bmi.toStringAsFixed(1)
+                                  : bmi.toStringAsFixed(1),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  Container(
+                    padding: EdgeInsets.only(left: 8),
+                    height: 90,
+                    child: Stack(
+                      children: [
                         getBmiStrip(),
-                        (bmi >= 15 && bmi <= 40)
+                        (bmi >= 16 && bmi <= 40)
                             ? Row(
                                 children: [
-                                  SizedBox(width: (bmi - 15) * oneUnit + 4),
+                                  SizedBox(
+                                      width: (bmi - 16) * oneUnit +
+                                          getPadValue(bmi)),
                                   Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.arrow_upward,
-                          size: 22,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(30))),
-                          height: 10,
-                          width: 2,
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(30))),
-                          height: 10,
-                          width: 2,
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(30))),
-                          height: 10,
-                          width: 2,
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(30))),
-                          height: 10,
-                          width: 2,
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                    child: getArrow(),
+                                  ),
                                 ],
                               )
                             : Container()
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 18.0, right: 6),
-                    child: Row(
-                      children: [
-                        Text("BMI : " + bmi.toString(),
-                            style: textTheme.subtitle1.copyWith(
-                                color: remark.color,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18)),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("(${remark.remark})",
-                            style: textTheme.subtitle1.copyWith(
-                                color: remark.color,
-                                fontWeight: FontWeight.w600)),
-                        Spacer(),
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("BMI : " + bmi.toStringAsFixed(1),
+                          style: textTheme.subtitle1.copyWith(
+                              color: remark.color,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18)),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text("(${remark.remark})",
+                          style: textTheme.subtitle1.copyWith(
+                              color: remark.color,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18)),
+                    ],
                   ),
-
                   if (widget.showBool) constants.getDivider(isDark),
-                  //    Container(height: 1,color: Colors.grey.shade300,),
-
                   if (widget.showBool)
                     getMyHealth(height.toInt().toString() + " Cm",
                         weight.toInt().toString() + " Kg"),

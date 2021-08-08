@@ -10,74 +10,82 @@ import '../../../main.dart';
 
 class ReportPage extends StatelessWidget {
   static const routeName = "report-page";
+  final Function onBack;
+  ReportPage({this.onBack});
+
 
   @override
   Widget build(BuildContext context) {
     Constants constants = Constants();
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
-    return Scaffold(
-        backgroundColor: isDark ? Colors.black : Colors.white,
-        appBar: AppBar(
+    return WillPopScope(
+      onWillPop: (){
+      return  onBack();
+      },
+      child: Scaffold(
           backgroundColor: isDark ? Colors.black : Colors.white,
-          actions: getLeading(context),
-          automaticallyImplyLeading: false,
-          title: Text(
-            "Report",
-            style: TextStyle(color: isDark ? Colors.white : Colors.black),
+          appBar: AppBar(
+            backgroundColor: isDark ? Colors.black : Colors.white,
+            actions: getLeading(context),
+            automaticallyImplyLeading: false,
+            title: Text(
+              "Report",
+              style: TextStyle(color: isDark ? Colors.white : Colors.black),
+            ),
           ),
-        ),
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Achievement(
-                onTap: () {},
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                child: Row(
-                  children: [
-                    Text(
-                      "History",
-                      style: textTheme.subtitle1
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    Spacer(),
-                    TextButton(
-                        onPressed: () => Navigator.pushNamed(
-                            context, WorkoutDetailReport.routeName),
-                        child: Text(
-                          "More",
-                          style: textTheme.button,
-                        )),
-                  ],
+          body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Achievement(
+                  onTap: () {},
                 ),
-              ),
-              WeeklyWorkoutReport(
-                onTap: () =>
-                    Navigator.pushNamed(context, WorkoutDetailReport.routeName),
-              ),
-              constants.getDivider(isDark),
-              Padding(
-                padding: const EdgeInsets.only(left: 18,top: 4,bottom: 12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        "History",
+                        style: textTheme.subtitle1
+                            .copyWith(fontWeight: FontWeight.w700),
+                      ),
+                      Spacer(),
+                      TextButton(
+                          onPressed: () => Navigator.pushNamed(
+                              context, WorkoutDetailReport.routeName),
+                          child: Text(
+                            "More",
+                            style: textTheme.button,
+                          )),
+                    ],
+                  ),
+                ),
+                WeeklyWorkoutReport(
+                  onTap: () =>
+                      Navigator.pushNamed(context, WorkoutDetailReport.routeName),
+                ),
+                constants.getDivider(isDark),
+                Padding(
+                  padding: const EdgeInsets.only(left: 18,top: 4,bottom: 12),
 
-                 child:   Text(
-                      "Weight",
-                      style: textTheme.subtitle1
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
+                   child:   Text(
+                        "Weight",
+                        style: textTheme.subtitle1
+                            .copyWith(fontWeight: FontWeight.w700),
+                      ),
 
 
-              ),
-            WeightReport(),
-              constants.getDivider(isDark),
-              BmiCard(
-                showBool: true,
-              ),
-            ],
-          ),
-        ));
+                ),
+              WeightReport(),
+                constants.getDivider(isDark),
+                BmiCard(
+                  showBool: true,
+                ),
+              ],
+            ),
+          )),
+    );
   }
 }

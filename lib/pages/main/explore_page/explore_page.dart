@@ -16,9 +16,6 @@ import '../../../main.dart';
 class ExplorePage extends StatelessWidget {
   final Function onBack;
 
-
-
-
   ExplorePage({this.onBack});
 
   @override
@@ -69,8 +66,6 @@ class ExplorePage extends StatelessWidget {
     ];
     
     getProgress(String key){
-
-      
       return FutureBuilder(future:_spHelper.loadInt(key) ,
           builder: (BuildContext context,AsyncSnapshot snapshot){
         print(snapshot);
@@ -96,8 +91,6 @@ class ExplorePage extends StatelessWidget {
         }
 
       });
-        
-
     }
 
     getCard(var item) {
@@ -209,43 +202,44 @@ class ExplorePage extends StatelessWidget {
       );
     }
 
-    return Scaffold(
-      backgroundColor:isDark?Colors.black: Colors.white,
+    return WillPopScope(
+      onWillPop: ()=>
+       onBack(),
 
 
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
+      child: Scaffold(
         backgroundColor:isDark?Colors.black: Colors.white,
-        titleSpacing: 14,
-        actions: getLeading(
-          context,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor:isDark?Colors.black: Colors.white,
+          titleSpacing: 14,
+          actions: getLeading(
+            context,
+          ),
+          title: Text(
+            "Explore",
+            style: TextStyle(color:isDark?Colors.white: Colors.black),
+          ),
+          centerTitle: false,
         ),
-        title: Text(
-          "Explore",
-          style: TextStyle(color:isDark?Colors.white: Colors.black),
-        ),
-        centerTitle: false,
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(14),
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-
-
-            ...challenges.map((challenge) => getCard(challenge)).toList(),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 4.0, bottom: 18, left: 8, right: 8),
-              child: Text(
-                "Generally you can expect to notice results after two weeks. Your posture will improve and you'll feel more muscle tone. It takes three to four months for the muscles to grow.",
-                style: textTheme.subtitle1
-                    .copyWith(color: Colors.grey, fontSize: 14),
+        body: SingleChildScrollView(
+          padding: EdgeInsets.all(14),
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ...challenges.map((challenge) => getCard(challenge)).toList(),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 4.0, bottom: 18, left: 8, right: 8),
+                child: Text(
+                  "Generally you can expect to notice results after two weeks. Your posture will improve and you'll feel more muscle tone. It takes three to four months for the muscles to grow.",
+                  style: textTheme.subtitle1
+                      .copyWith(color: Colors.grey, fontSize: 14),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

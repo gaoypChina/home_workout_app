@@ -73,9 +73,17 @@ class _InstructionScreenState extends State<InstructionScreen>
                 )));
   }
 
-  _onPopBack(){
-    showDialog(context: context, builder: (context) => StopPage());
+  _onPopBack() async {
+
+  if (controller.isAnimating) {
+  controller.stop(canceled: true);
   }
+  await showDialog(
+  context: context, builder: (builder) => StopPage());
+
+  controller.reverse(
+  from: controller.value == 0.0 ? 1.0 : controller.value);
+}
 
 
 
@@ -140,8 +148,7 @@ class _InstructionScreenState extends State<InstructionScreen>
               left: 10,
               top: 20,
               child: ElevatedButton(
-                onPressed: () => showDialog(
-                    context: context, builder: (context) => StopPage()),
+                onPressed: () => _onPopBack(),
                 child: Icon(Icons.arrow_back),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blue,

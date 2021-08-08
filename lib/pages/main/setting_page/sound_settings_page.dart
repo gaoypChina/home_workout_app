@@ -23,11 +23,7 @@ class _SoundSettingState extends State<SoundSetting> {
 
   @override
   void initState() {
-    print("$mute, $voice, $coach $effect");
     intiValue();
-    setState(() {
-
-    });
     super.initState();
   }
 
@@ -36,9 +32,6 @@ class _SoundSettingState extends State<SoundSetting> {
     voice = await spHelper.loadBool(spKey.voice);
     coach = await spHelper.loadBool(spKey.coach);
     effect = await spHelper.loadBool(spKey.effect);
-
-    print("$mute, $voice, $coach $effect");
-
 
     mute = mute == null ? false : mute;
     voice = voice == null ? true : voice;
@@ -50,30 +43,49 @@ class _SoundSettingState extends State<SoundSetting> {
   onMuteToggle(bool value) {
     setState(() {
       mute = value;
-      voice = false;
-      coach = false;
-      effect = false;
+      if(value){
+        voice = false;
+        coach = false;
+        effect = false;
+      }else{
+        voice = true;
+        coach = true;
+        effect = true;
+      }
+
     });
   }
 
   onVoiceToggle(bool value) async{
     setState(() {
       voice = value;
-      mute = false;
+      if(!voice && !coach && !effect){
+        mute = true;
+      }else{
+        mute = false;
+      }
     });
   }
 
   onCoachToggle(bool value) {
     setState(() {
       coach = value;
-      mute = false;
+      if(!voice && !coach && !effect){
+        mute = true;
+      }else{
+        mute = false;
+      }
     });
   }
 
   onEffectToggle(bool value) {
     setState(() {
       effect = value;
-      mute = false;
+      if(!voice && !coach && !effect){
+        mute = true;
+      }else{
+        mute = false;
+      }
     });
   }
 
@@ -148,7 +160,6 @@ class _SoundSettingState extends State<SoundSetting> {
       ),
       body: ListView(
 
-        padding: EdgeInsets.only(top: 8),
         shrinkWrap: true,
         children: [
           getSwitch(

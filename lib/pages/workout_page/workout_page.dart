@@ -84,6 +84,18 @@ class _WorkoutPageState extends State<WorkoutPage>
                 }))));
   }
 
+  _onPopBack() async {
+
+  if (controller.isAnimating) {
+  controller.stop(canceled: true);
+  }
+  await showDialog(
+  context: context, builder: (builder) => StopPage());
+
+  controller.reverse(
+  from: controller.value == 0.0 ? 1.0 : controller.value);
+  }
+
   _onComplete(int currIndex) async {
     if (currIndex + 1 == widget.workOutList.length) {
       return Navigator.pushReplacement(
@@ -247,6 +259,7 @@ class _WorkoutPageState extends State<WorkoutPage>
     );
   }
 
+
   getTitleCard(Workout item, int currIndex,bool isDark) {
     return Expanded(
       child: Container(
@@ -353,17 +366,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     TextButton(
-                        onPressed: () async {
-
-                      if (controller.isAnimating) {
-                        controller.stop(canceled: true);
-                      }
-               await showDialog(
-                          context: context, builder: (builder) => StopPage());
-
-                      controller.reverse(
-                          from: controller.value == 0.0 ? 1.0 : controller.value);
-                    },
+                        onPressed:()=> _onPopBack(),
                         child: Row(
                           children: [
                             Icon(
@@ -421,15 +424,18 @@ class _WorkoutPageState extends State<WorkoutPage>
     double width = MediaQuery.of(context).size.width;
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
-    return Scaffold(
-      backgroundColor:isDark?Colors.black: Colors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-            getImage(height, item, currIndex),
-            getProgressBar(width, currIndex,isDark),
-            getTitleCard(item, currIndex,isDark)
-          ],
+    return WillPopScope(
+      onWillPop: ()=>_onPopBack(),
+      child: Scaffold(
+        backgroundColor:isDark?Colors.black: Colors.white,
+        body: SafeArea(
+          child: Column(
+            children: [
+              getImage(height, item, currIndex),
+              getProgressBar(width, currIndex,isDark),
+              getTitleCard(item, currIndex,isDark)
+            ],
+          ),
         ),
       ),
     );

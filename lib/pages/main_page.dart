@@ -31,27 +31,6 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  Future<bool> _onBackPressed(BuildContext context) {
-    return showDialog(
-            context: context,
-            builder: (context) => new AlertDialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16))),
-                  title: new Text('Are you sure?'),
-                  content: new Text('Do you want to exit Home Workout App'),
-                  actions: <Widget>[
-                    new TextButton(
-                      onPressed: () => Navigator.of(context).pop(true),
-                      child: Text("YES"),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: Text("NO"),
-                    ),
-                  ],
-                )) ??
-        false;
-  }
 
   @override
   void initState() {
@@ -122,11 +101,17 @@ class _MainPageState extends State<MainPage> {
         onBack: onBack,
       );
     } else if (currentIndex == 2) {
-      return ReportPage();
+      return ReportPage(
+        onBack: onBack,
+      );
     } else if (currentIndex == 3) {
-      return WeightReportDetail();
+      return WeightReportDetail(
+        onBack: onBack,
+      );
     } else if (currentIndex == 4) {
-      return SettingPage();
+      return SettingPage(
+        onBack: onBack,
+      );
     } else {
       return Container();
     }

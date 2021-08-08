@@ -48,7 +48,8 @@ dependencies:
   flutter_rounded_date_picker: ^2.0.2
   sliding_sheet: ^0.5.0
   numberpicker: ^2.1.1
-  slimy_card: ^1.0.4
+  flutter_material_pickers: ^3.1.0
+  flutter_email_sender: ^5.0.2
 
 
 dev_dependencies:
