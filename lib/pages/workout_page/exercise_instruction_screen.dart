@@ -74,15 +74,21 @@ class _InstructionScreenState extends State<InstructionScreen>
   }
 
   _onPopBack() async {
-
-  if (controller.isAnimating) {
-  controller.stop(canceled: true);
-  }
-  await showDialog(
-  context: context, builder: (builder) => StopPage());
-
-  controller.reverse(
-  from: controller.value == 0.0 ? 1.0 : controller.value);
+    String value = "";
+    if (controller.isAnimating) {
+      controller.stop(canceled: true);
+    }
+    value =
+    await showDialog(context: context, builder: (builder) => StopPage());
+    if (value == "resume") {
+      controller.reverse(
+          from: controller.value == 0.0 ? 1.0 : controller.value);
+    }
+    if (value == "restart") {
+      Navigator.of(context).pop();
+    }
+    controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
+    print(value);
 }
 
 

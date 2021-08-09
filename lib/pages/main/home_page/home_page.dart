@@ -69,6 +69,7 @@ class HomePage extends StatelessWidget {
                     backgroundColor: isDark?Colors.black:Colors.white,
                     automaticallyImplyLeading: false,
                     expandedHeight: height * .36,
+                    elevation: 5,
                     title: RichText(
                         text: TextSpan(children: [
                       TextSpan(

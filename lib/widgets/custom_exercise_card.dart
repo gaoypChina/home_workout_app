@@ -76,7 +76,7 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(left: 18.0),
+                      padding: const EdgeInsets.only(left: 12.0,right: 8),
                       child: Text(
                         item.title,
                         style: TextStyle(

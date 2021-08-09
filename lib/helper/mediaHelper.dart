@@ -2,16 +2,18 @@ import 'package:audiofileplayer/audiofileplayer.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
+import 'package:text_to_speech/text_to_speech.dart';
 
 class MediaHelper {
   SpHelper spHelper = SpHelper();
   SpKey spKey = SpKey();
   FlutterTts flutterTts = FlutterTts();
+  TextToSpeech tts = TextToSpeech();
+
   Audio audio;
   Future playSoundOnce(String audioPath) async {
     bool effect = await spHelper.loadBool(spKey.effect);
     print(effect);
-    print("sound effect : " + effect.toString());
     if (effect) {
       audio = Audio.load(audioPath);
       audio
@@ -22,14 +24,12 @@ class MediaHelper {
 
   Future speak(String text) async {
 
-    bool effect = await spHelper.loadBool(spKey.effect);
-    print(effect);
-
-    print("speak effect : " + effect.toString());
-
-    if(effect){
-      await flutterTts.setPitch(1);
-      await flutterTts.speak(text);
+    bool voice = await spHelper.loadBool(spKey.voice);
+    bool coach = await spHelper.loadBool(spKey.coach);
+    if(voice || coach){
+    await  tts.speak(text);
+      // await flutterTts.setPitch(1);
+      // await flutterTts.speak(text);
     }
   }
 
@@ -42,52 +42,15 @@ class MediaHelper {
 
   Future dispose() async{
     await audio.dispose();
-    await flutterTts.stop();
+
+    await tts.stop();
+
+
+   // await flutterTts.pause();
+
+   // await flutterTts.stop();
   }
 
 }
 
 
-class RestMediaHelper {
-  SpHelper spHelper = SpHelper();
-  SpKey spKey = SpKey();
-  FlutterTts flutterTts = FlutterTts();
-  Audio audio;
-  Future playSoundOnce(String audioPath) async {
-    bool effect = await spHelper.loadBool(spKey.effect);
-    print(effect);
-    print("sound effect : " + effect.toString());
-    if (effect) {
-      audio = Audio.load(audioPath);
-      audio
-        ..play()
-        ..dispose();
-    }
-  }
-
-  Future speak(String text) async {
-
-    bool effect = await spHelper.loadBool(spKey.effect);
-    print(effect);
-
-    print("speak effect : " + effect.toString());
-
-    if(effect){
-      await flutterTts.setPitch(1);
-      await flutterTts.speak(text);
-    }
-  }
-
-  Future<List<String>> getLang() async {
-    List<String> langList = [];
-    await flutterTts.getLanguages.then((value) => langList.add(value));
-    return langList;
-  }
-
-
-  Future dispose() async{
-    await audio.dispose();
-    await flutterTts.stop();
-  }
-
-}

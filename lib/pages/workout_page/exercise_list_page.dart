@@ -29,7 +29,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
     with TickerProviderStateMixin {
   SpHelper spHelper = SpHelper();
   SpKey spKey = SpKey();
-  AnimationController _controller;
   List<int> rapList = [];
   double countDownTime = 30;
   double restTime = 30;
@@ -99,8 +98,8 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
 
   @override
   void dispose() {
-    _controller.dispose();
     tabContoller.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -189,9 +188,11 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
               children: [
                 ListView.builder(
                   itemBuilder: (context, index) {
-
+                    print(widget.tag.toLowerCase());
                           if (widget.workOutList[index].showTimer == false) {
-                            var splitTitle = widget.title.split(" ");
+                            List<String> splitTitle = widget.title.split(" ");
+
+
                             if (splitTitle.length == 5) {
                               int currDay = int.tryParse(splitTitle[4]);
                               if (currDay < 10) {
@@ -202,9 +203,10 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                               } else
                                 time = widget.workOutList[index].advanceRap;
                             } else {
-                              if (widget.tag.toLowerCase() == 'beginner') {
+                              String tag = splitTitle[1];
+                              if (tag == 'beginner') {
                                 time = widget.workOutList[index].beginnerRap;
-                              } else if (widget.tag.toLowerCase() ==
+                              } else if (tag ==
                                   "intermediate") {
                                 time =
                                     widget.workOutList[index].intermediateRap;

@@ -6,6 +6,8 @@ import '../../main.dart';
 class StopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     getButton(
         {Function onPress,
         String title,
@@ -39,9 +41,10 @@ class StopPage extends StatelessWidget {
     }
 
     Color defaultTextColor = Colors.blue.shade700;
-    Color defaultBackgroundColor = Colors.white;
+    Color defaultBackgroundColor =isDark?Colors.black: Colors.white;
 
     return Scaffold(
+      backgroundColor: isDark?Colors.black:Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Stack(
@@ -58,14 +61,14 @@ class StopPage extends StatelessWidget {
                       .height * .4,
                   width: double.infinity,
                   child: SvgPicture.asset(
-                    "assets/other/swing.svg",
+                    "assets/other/bee.svg",
                   ),
                 ),
                 Spacer(),
                 Text(
                   "Pause",
                   style: textTheme.headline1.copyWith(
-                      color: Colors.blue.shade700,
+                      color: isDark?Colors.white:Colors.black,
                       fontSize: 40,
                       letterSpacing: 1.5,
                       fontWeight: FontWeight.bold),

@@ -211,11 +211,9 @@ class ExplorePage extends StatelessWidget {
         backgroundColor:isDark?Colors.black: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
+          actions: getLeading(context),
           backgroundColor:isDark?Colors.black: Colors.white,
           titleSpacing: 14,
-          actions: getLeading(
-            context,
-          ),
           title: Text(
             "Explore",
             style: TextStyle(color:isDark?Colors.white: Colors.black),
