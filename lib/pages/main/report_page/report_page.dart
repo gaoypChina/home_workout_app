@@ -27,7 +27,6 @@ class ReportPage extends StatelessWidget {
           backgroundColor: isDark ? Colors.black : Colors.white,
           appBar: AppBar(
             backgroundColor: isDark ? Colors.black : Colors.white,
-            actions: getLeading(context),
             automaticallyImplyLeading: false,
             title: Text(
               "Report",

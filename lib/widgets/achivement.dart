@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
@@ -102,10 +103,10 @@ class _AchievementState extends State<Achievement> {
 
       return Container(
 
-
+padding: EdgeInsets.symmetric(horizontal: 8),
 
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             getCard("Exercise", exercise.toString(),
                 [Colors.green.shade700, Colors.green]),

@@ -601,7 +601,6 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                 ),
               ],
             ),
-            actions: getLeading(context, color: Colors.white),
           ),
           body: TabBarView(
             children: [

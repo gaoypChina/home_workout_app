@@ -74,56 +74,62 @@ class _WorkoutPageState extends State<WorkoutPage>
     String totalRap = widget.rapList[currIndex].toString();
     String message = "Start $totalRap $rapType $exerciseName";
     mediaHelper.playSoundOnce(audioPath).then((value) => Future.delayed(
-            Duration(seconds: 1))
+            Duration(milliseconds: 500))
         .then((value) => mediaHelper.speak(message))
         .then((value) => Future.delayed(Duration(seconds: 2))
             .then((value) => mediaHelper.speak(workout.steps[0]))
-            .then((value) => Future.delayed(Duration(seconds: 4)).then((value) {
-                  if (workout.steps.length >= 2)
-                    mediaHelper.speak(workout.steps[1]);
-                }))));
+           ));
   }
 
   _onPopBack() async {
-
-  if (controller.isAnimating) {
-  controller.stop(canceled: true);
-  }
-  await showDialog(
-  context: context, builder: (builder) => StopPage());
-
-  controller.reverse(
-  from: controller.value == 0.0 ? 1.0 : controller.value);
+    String value = "";
+    if (controller.isAnimating) {
+      controller.stop(canceled: true);
+    }
+    value =
+    await showDialog(context: context, builder: (builder) => StopPage());
+    if (value == "resume") {
+      controller.reverse(
+          from: controller.value == 0.0 ? 1.0 : controller.value);
+    }
+    if (value == "restart") {
+      Navigator.of(context).pop();
+    }
+    controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
+    print(value);
   }
 
   _onComplete(int currIndex) async {
+
     if (currIndex + 1 == widget.workOutList.length) {
-      return Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ReportScreen(
-                    tag: widget.tag,
-                    tagValue: widget.tagValue,
-                    title: widget.title,
-                    dateTime: widget.currTime,
-                    totalExercise: widget.workOutList.length,
-                  )));
-    }
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return RestScreen(
-        tagValue:widget.tagValue,
-        tag: widget.tag,
-        currTime: widget.currTime,
-        workOutList: widget.workOutList,
-        exerciseNumber: currIndex,
-        totalNumberOfExercise: widget.workOutList.length,
-        rapList: widget.rapList,
-        title: widget.title,
-        countDownTime: widget.countDownTime,
-        restTime:  widget.restTime,
-      );
-    }));
-  }
+       return Navigator.pushReplacement(
+           context,
+           MaterialPageRoute(
+               builder: (context) => ReportScreen(
+                 tag: widget.tag,
+                 tagValue: widget.tagValue,
+                 title: widget.title,
+                 dateTime: widget.currTime,
+                 totalExercise: widget.workOutList.length,
+               )));
+     }
+     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+       return RestScreen(
+         tagValue:widget.tagValue,
+         tag: widget.tag,
+         currTime: widget.currTime,
+         workOutList: widget.workOutList,
+         exerciseNumber: currIndex,
+         totalNumberOfExercise: widget.workOutList.length,
+         rapList: widget.rapList,
+         title: widget.title,
+         countDownTime: widget.countDownTime,
+         restTime:  widget.restTime,
+       );
+     }));
+     }
+
+
 
   _showTimer() {
     controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);

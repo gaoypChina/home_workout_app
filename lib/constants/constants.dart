@@ -5,6 +5,13 @@ import '../main.dart';
 
 class Constants{
 
+  // ToDo: update package name
+  String packageName = "";
+
+  // ToDo: Update version number
+
+  String versionNumber ="1.0.0";
+
 
 
 

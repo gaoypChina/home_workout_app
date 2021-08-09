@@ -64,11 +64,10 @@ super.initState();
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
 
     return Scaffold(
-      backgroundColor: isDark?Colors.black:Colors.white,
+      backgroundColor:Colors.black,
 
       body: Container(
 

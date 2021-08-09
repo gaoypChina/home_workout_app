@@ -100,7 +100,9 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
     print(value);
   }
 
-  _onComplete() {
+  _onComplete() async{
+    await mediaHelper.flutterTts.stop();
+
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(

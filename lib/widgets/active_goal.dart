@@ -156,14 +156,14 @@ class _ActiveGoalState extends State<ActiveGoal> {
                         height: 6,
                       ),
                       CircleAvatar(
-                          backgroundColor: DateTime.now().day >= activeDay.date.day
+                          backgroundColor: DateTime.now().day == activeDay.date.day
                               ?Colors.white: activeDay.isDone
                              ?Colors.white
                               : Colors.grey.shade200,
                           child: CircleAvatar(
                             backgroundColor: activeDay.isDone
                                 ? Colors.white
-                                :  DateTime.now().day >= activeDay.date.day
+                                :  DateTime.now().day == activeDay.date.day
                                 ?Colors.white:Colors.grey.shade200,
                             radius: 12,
                             child: activeDay.isDone
@@ -176,7 +176,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
                                     backgroundColor:
                                         DateTime.now().day == activeDay.date.day
                                             ? Colors.blue
-                                            :DateTime.now().day >= activeDay.date.day?Colors.white70: Colors.grey.shade400,
+                                            :DateTime.now().day >= activeDay.date.day?Colors.grey: Colors.grey.shade400,
                                   ),
                           ),
                           radius: 15),

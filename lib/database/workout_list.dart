@@ -1297,7 +1297,7 @@ Workout pushUpsRotation2 = Workout(
 );
 
 Workout spineLumberL = Workout(
-    title: 'Spine Lumber(L)',
+    title: 'Spine Lumber Left',
     steps: [
       'Begin lying comfortably on the back. Bend your knees in to your chest and extend your arms out alongside the body in a “T” formation, with your palms facing up toward the ceiling.',
       'Inhale here, lengthening your tailbone down toward the ground. As you exhale, drop both of your bent knees over to the right, and send your gaze over to the left.',
@@ -1312,7 +1312,7 @@ Workout spineLumberL = Workout(
     imageSrc: 'assets/all-workouts/spineLumberL.png');
 
 Workout spineLumberR = Workout(
-  title: 'Spine Lumber(R)',
+  title: 'Spine Lumber Right)',
   steps: [
     'Begin lying comfortably on the back. Bend your knees in to your chest and extend your arms out alongside the body in a “T” formation, with your palms facing up toward the ceiling.',
     'Inhale here, lengthening your tailbone down toward the ground. As you exhale, drop both of your bent knees over to the right, and send your gaze over to the left.',
