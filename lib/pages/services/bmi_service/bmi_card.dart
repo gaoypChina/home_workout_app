@@ -443,9 +443,9 @@ class _BmiCardState extends State<BmiCard> {
             Text(
               value,
               style: textTheme.headline2.copyWith(
-                  fontSize: 21,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue.shade800),
+                  fontSize: 20,
+                  fontWeight:FontWeight.w400,
+                  ),
             ),
           ],
         );

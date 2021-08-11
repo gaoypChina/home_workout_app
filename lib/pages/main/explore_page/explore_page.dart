@@ -75,18 +75,18 @@ class ExplorePage extends StatelessWidget {
         if(snapshot.hasData){
            return  Text(
             "${snapshot.data}/28",
-            style: textTheme.headline3.copyWith(
+            style: textTheme.bodyText1.copyWith(
                 color: Colors.white,
                 fontSize: 18,
-                fontWeight: FontWeight.w700),
+                fontWeight: FontWeight.w500),
           );
         }else{
           return  Text(
             "0/28",
-            style: textTheme.headline3.copyWith(
+            style: textTheme.bodyText1.copyWith(
                 color: Colors.white,
                 fontSize: 18,
-                fontWeight: FontWeight.w700),
+                fontWeight: FontWeight.w500),
           );
         }
 
@@ -98,7 +98,7 @@ class ExplorePage extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 12.0),
 
           child: Container(
-          height: height * .2,
+
           decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -142,12 +142,14 @@ class ExplorePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(height: 10),
+
                             Text(
                               item.title,
                               style: textTheme.headline2.copyWith(
                                   color: Colors.white,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.w700),
                             ),
                             SizedBox(height: 10),
                             Row(
@@ -158,18 +160,18 @@ class ExplorePage extends StatelessWidget {
                                   children: [
                                     Text(
                                       "Duration",
-                                      style: textTheme.headline3.copyWith(
-                                          color: Colors.white, fontSize: 16),
+                                      style: textTheme.bodyText1.copyWith(
+                                          color: Colors.white, fontSize: 15),
                                     ),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Text(
-                                      "28 Day",
-                                      style: textTheme.headline3.copyWith(
+                                      "28 Days",
+                                      style: textTheme.bodyText1.copyWith(
                                           color: Colors.white,
                                           fontSize: 18,
-                                          fontWeight: FontWeight.w700),
+                                          fontWeight: FontWeight.w500),
                                     ),
                                   ],
                                 ),
@@ -177,8 +179,8 @@ class ExplorePage extends StatelessWidget {
                                   children: [
                                     Text(
                                       "Progress",
-                                      style: textTheme.headline3.copyWith(
-                                          color: Colors.white, fontSize: 16),
+                                      style: textTheme.bodyText1.copyWith(
+                                          color: Colors.white, fontSize: 15),
                                     ),
                                     SizedBox(
                                       height: 5,
@@ -191,6 +193,8 @@ class ExplorePage extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            SizedBox(height: 10),
+
                           ],
                         ),
                       )),

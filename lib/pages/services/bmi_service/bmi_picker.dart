@@ -88,188 +88,190 @@ class _BMIPickerState extends State<BMIPicker> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16))),
         contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 16),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 4.0),
-              child: Text(
-                "Height",
-                style: textTheme.bodyText1
-                    .copyWith(fontWeight: FontWeight.w700, fontSize: 20),
-              ),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: ToggleSwitch(
-                  initialLabelIndex: heightIndex,
-                  minWidth: 100,
-                  cornerRadius: 10.0,
-                  activeFgColor: Colors.white,
-                  inactiveBgColor: Colors.grey,
-                  inactiveFgColor: Colors.white,
-                  totalSwitches: 2,
-                  labels: ['CM', 'Feet'],
-                  //   icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
-                  activeBgColors: [
-                    [Colors.blue.shade700],
-                    [Colors.blue.shade700]
-                  ],
-                  onToggle: (index) {
-                    setState(() {
-                      heightIndex = index;
-                    });
-                  },
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 4.0),
+                child: Text(
+                  "Height",
+                  style: textTheme.bodyText1
+                      .copyWith(fontWeight: FontWeight.w700, fontSize: 20),
                 ),
               ),
-            ),
-
-            SizedBox(
-              height: 10,
-            ),
-            heightIndex == 1
-                ? Container(
-                    width: double.infinity,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          width: 100,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              suffix: Text("Feet"),
-                              labelText: "Feet",
-                              border: new OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide:
-                                      new BorderSide(color: Colors.teal)),
-                            ),
-                            controller: _feetController,
-                            keyboardType:
-                                TextInputType.numberWithOptions(decimal: true),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          width: 100,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              suffix: Text("Inch"),
-                              labelText: "Inch",
-                              border: new OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide:
-                                      new BorderSide(color: Colors.teal)),
-                            ),
-                            controller: _inchController,
-                            keyboardType:
-                                TextInputType.numberWithOptions(decimal: true),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : Container(
-                    width: 200,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        suffix: Text("Cm"),
-                        labelText: "Height",
-                        border: new OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: new BorderSide(color: Colors.blueGrey)),
-                      ),
-                      controller: _cmController,
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                    ),
-                  ),
-            SizedBox(
-              height: 40,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 4.0),
-              child: Text(
-                "Weight",
-                style: textTheme.bodyText1
-                    .copyWith(fontWeight: FontWeight.w700, fontSize: 20),
+              SizedBox(
+                height: 16,
               ),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: ToggleSwitch(
-                  minWidth: 100,
-                  initialLabelIndex: weightIndex,
-                  cornerRadius: 10.0,
-                  activeFgColor: Colors.white,
-                  inactiveBgColor: Colors.grey,
-                  inactiveFgColor: Colors.white,
-                  totalSwitches: 2,
-                  labels: ['KG', 'LBS'],
-                  activeBgColors: [
-                    [Colors.blue.shade700],
-                    [Colors.blue.shade700]
-                  ],
-                  onToggle: (index) {
-                    print(index);
-                    setState(() {
-                      weightIndex = index;
-                    });
-                  },
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: ToggleSwitch(
+                    initialLabelIndex: heightIndex,
+                    minWidth: 100,
+                    cornerRadius: 10.0,
+                    activeFgColor: Colors.white,
+                    inactiveBgColor: Colors.grey,
+                    inactiveFgColor: Colors.white,
+                    totalSwitches: 2,
+                    labels: ['CM', 'Feet'],
+                    //   icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
+                    activeBgColors: [
+                      [Colors.blue.shade700],
+                      [Colors.blue.shade700]
+                    ],
+                    onToggle: (index) {
+                      setState(() {
+                        heightIndex = index;
+                      });
+                    },
+                  ),
                 ),
               ),
-            ),
 
+              SizedBox(
+                height: 10,
+              ),
+              heightIndex == 1
+                  ? Container(
+                      width: double.infinity,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            width: 100,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                suffix: Text("Feet"),
+                                labelText: "Feet",
+                                border: new OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide:
+                                        new BorderSide(color: Colors.teal)),
+                              ),
+                              controller: _feetController,
+                              keyboardType:
+                                  TextInputType.numberWithOptions(decimal: true),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Container(
+                            width: 100,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                suffix: Text("Inch"),
+                                labelText: "Inch",
+                                border: new OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide:
+                                        new BorderSide(color: Colors.teal)),
+                              ),
+                              controller: _inchController,
+                              keyboardType:
+                                  TextInputType.numberWithOptions(decimal: true),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(
+                      width: 200,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          suffix: Text("Cm"),
+                          labelText: "Height",
+                          border: new OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: new BorderSide(color: Colors.blueGrey)),
+                        ),
+                        controller: _cmController,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                      ),
+                    ),
+              SizedBox(
+                height: 40,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 4.0),
+                child: Text(
+                  "Weight",
+                  style: textTheme.bodyText1
+                      .copyWith(fontWeight: FontWeight.w700, fontSize: 20),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
 
-            SizedBox(
-              height: 10,
-            ),
-            weightIndex == 0
-                ? Container(
-                    width: 200,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        suffix: Text("KG"),
-                        labelText: "Kg",
-                        border: new OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: new BorderSide(color: Colors.blueGrey)),
-                      ),
-                      controller: _kgController,
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                    ),
-                  )
-                : Container(
-                    width: 200,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        suffix: Text("Lbs"),
-                        labelText: "Lbs",
-                        border: new OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: new BorderSide(color: Colors.blueGrey)),
-                      ),
-                      controller: _lbsController,
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                    ),
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: ToggleSwitch(
+                    minWidth: 100,
+                    initialLabelIndex: weightIndex,
+                    cornerRadius: 10.0,
+                    activeFgColor: Colors.white,
+                    inactiveBgColor: Colors.grey,
+                    inactiveFgColor: Colors.white,
+                    totalSwitches: 2,
+                    labels: ['KG', 'LBS'],
+                    activeBgColors: [
+                      [Colors.blue.shade700],
+                      [Colors.blue.shade700]
+                    ],
+                    onToggle: (index) {
+                      print(index);
+                      setState(() {
+                        weightIndex = index;
+                      });
+                    },
                   ),
-          ],
+                ),
+              ),
+
+
+              SizedBox(
+                height: 10,
+              ),
+              weightIndex == 0
+                  ? Container(
+                      width: 200,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          suffix: Text("KG"),
+                          labelText: "Kg",
+                          border: new OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: new BorderSide(color: Colors.blueGrey)),
+                        ),
+                        controller: _kgController,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                      ),
+                    )
+                  : Container(
+                      width: 200,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          suffix: Text("Lbs"),
+                          labelText: "Lbs",
+                          border: new OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: new BorderSide(color: Colors.blueGrey)),
+                        ),
+                        controller: _lbsController,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                      ),
+                    ),
+            ],
+          ),
         ),
         actions: [
           TextButton(

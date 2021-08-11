@@ -226,9 +226,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                         timeFormat(workout.activeTime) + " Min",
                         style: TextStyle(color: textColor),
                       ),
-                      SizedBox(
-                        width: 28,
-                      ),
+                    Spacer(),
                       Icon(
                         Icons.local_fire_department,
                         color: textColor,
@@ -240,7 +238,8 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                         (workout.activeTime * (18 / 60)).toStringAsFixed(2) +
                             " Cal",
                         style: TextStyle(color: textColor),
-                      )
+                      ),
+                      Spacer(),
                     ],
                   ),
                   SizedBox(

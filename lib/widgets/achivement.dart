@@ -53,7 +53,7 @@ class _AchievementState extends State<Achievement> {
         int time, int exercise, double calories, bool isLoading) {
       getCard(String title, String subTitle, List<Color> color) {
         return Container(
-          height: MediaQuery.of(context).size.height * .12,
+          height: MediaQuery.of(context).size.height * .13,
           child: Card(
             elevation: 2,
             shape: RoundedRectangleBorder(

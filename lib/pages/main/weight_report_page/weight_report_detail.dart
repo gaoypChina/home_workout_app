@@ -45,11 +45,11 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
   String lastDate = "";
 
   _loadData() async {
-    await spHelper.loadDouble(spKey.weight).then((value) {
-      setState(() {
-        weightValue = value;
-        lbsWeight = value * 2.20462 == null ? 0 : value * 2.20462;
-      });
+
+    double value =  await spHelper.loadDouble(spKey.weight)??0;
+    setState(() {
+      weightValue = value;
+      lbsWeight = value * 2.20462 == null ? 0 : value * 2.20462;
     });
 
     DateTime now = DateTime.now();
@@ -244,116 +244,92 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
         }
         return Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Card(
-                elevation: 1,color:isDark? constants.darkSecondary:constants.lightSecondary,
-
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
-                      child: Slidable(
-                        actionPane: SlidableDrawerActionPane(),
-                        actionExtentRatio: 0.25,
-                        child: ListTile(
-                          title: Text(
+                  Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.25,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 18,right: 18,top: 14,bottom: 14),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
                             formatedDay,
-                            style: TextStyle(fontWeight: FontWeight.w600),
+                            style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15),
                           ),
-                          trailing: RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text:
+                          RichText(
+                            text: TextSpan(children: [
+                              TextSpan(
+                                text:
                                     item.weightModel.weight.toStringAsFixed(2),
                                 style: TextStyle(
                                     color: isDark ? Colors.white : Colors.black,
-                                    fontSize: 22),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w300),
                               ),
-                        TextSpan(
-                          text: "Kg",
+                              TextSpan(
+                                text: " Kg",
                                 style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 18,
                                     color:
-                                        isDark ? Colors.white : Colors.black),
+                                        isDark ? Colors.white : Colors.black, fontWeight: FontWeight.w300),
                               ),
-                      ]),
+                            ]),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              wd.isNegative
+                                  ? Icon(
+                                      Icons.arrow_downward_sharp,
+                                      color: Colors.red,
+                                      size: 25,
+                                    )
+                                  : wd == 0
+                                      ? Icon(Icons.compare_arrows,
+                                          color: Colors.blue, size: 25)
+                                      : Icon(Icons.arrow_upward_outlined,
+                                          color: Colors.green,
+                                          size: 25),
+                              SizedBox(
+                                width:wd.abs().toStringAsFixed(2).length>=5? 3:10,
+                              ),
+                              RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: wd.abs().toStringAsFixed(2),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      color:isDark?Colors.white:Colors.black,
+                                      fontSize: 16),
+                                ),
+                                TextSpan(
+                                  text: "Kg",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      color:isDark?Colors.white:Colors.black,
+                                      fontSize: 14),
+                                ),
+                              ]))
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    subtitle: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        wd.isNegative
-                            ? Icon(
-                          Icons.arrow_downward_sharp,
-                          color: Colors.red.shade700,
-                          size: 25,
-                        )
-                            : wd == 0
-                            ? Icon(Icons.compare_arrows,
-                            color: Colors.blue.shade700, size: 25)
-                            : Icon(Icons.arrow_upward_outlined,
-                            color: Colors.green.shade700, size: 25),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        RichText(
-                            text: TextSpan(children: [
-                              TextSpan(
-                                text: wd.abs().toStringAsFixed(2),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.grey,
-                                    fontSize: 16),
-                              ),
-                              TextSpan(
-                                text: "Kg",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.grey,
-                                    fontSize: 14),
-                              ),
-                            ])),
-                        Spacer()
-                      ],
-                    ),
+                    secondaryActions: <Widget>[
+                      IconSlideAction(
+                          caption: 'Delete',
+                          color: Colors.red,
+                          icon: Icons.delete,
+                          onTap: () => onDelete()),
+                      IconSlideAction(
+                          caption: 'Edit',
+                          color: Colors.green,
+                          icon: Icons.edit,
+                          onTap: () => onEdit()),
+                    ],
                   ),
-                  actions: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          bottomLeft: Radius.circular(12)),
-                      child: IconSlideAction(
-                          caption: 'Edit',
-                          color: Colors.green,
-                          icon: Icons.edit,
-                          onTap: () => onEdit()),
-                    ),
-                    IconSlideAction(
-                        caption: 'Delete',
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () => onDelete()),
-                  ],
-                  secondaryActions: <Widget>[
-                    IconSlideAction(
-                        caption: 'Delete',
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () => onDelete()),
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(12),
-                          bottomRight: Radius.circular(12)),
-                      child: IconSlideAction(
-                          caption: 'Edit',
-                          color: Colors.green,
-                          icon: Icons.edit,
-                          onTap: () => onEdit()),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        );
+                ],
+              );
       }).toList(),
     ]);
   }
@@ -387,24 +363,28 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
 
   getDateRange() {
     return Padding(
-      padding:
-          const EdgeInsets.only(left: 18.0, right: 18, top: 10, bottom: 10),
+      padding: const EdgeInsets.only(left: 18.0, right: 18, top: 18, bottom: 2),
       child: Container(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             firstDate,
-            style: textTheme.headline4.copyWith(fontSize: 20),
+            style: textTheme.headline4.copyWith(
+              fontSize: 16,
+            ),
           ),
           SizedBox(
             width: 20,
           ),
-          Icon(Icons.compare_arrows),
+          Icon(
+            Icons.compare_arrows,
+            size: 20,
+          ),
           SizedBox(width: 20),
           Text(
             lastDate,
-            style: textTheme.headline4.copyWith(fontSize: 20),
+            style: textTheme.headline4.copyWith(fontSize: 16),
           )
         ],
       )),
@@ -423,18 +403,18 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 15,
+              height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 18.0),
-              child: Text(
-                "Weight Record",
-                style:
-                    textTheme.subtitle1.copyWith(fontWeight: FontWeight.w700),
-              ),
-            ),
+          // Center(
+          //   child: Text(
+          //         "Weight Statics",
+          //         style: textTheme.subtitle1
+          //             .copyWith(fontWeight: FontWeight.w500, fontSize: 18),
+          //       ),
+          // ),
+
             SizedBox(
-              height: 10,
+              height: 18,
             ),
             WeightChart(),
             SizedBox(
@@ -508,13 +488,13 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 18.0, top: 8, right: 18),
+              padding: const EdgeInsets.only(left: 16.0, top: 8, right: 16),
               child: Row(
                 children: [
                   Text(
-                    "Weight Record",
+                    "Weight History",
                     style: textTheme.subtitle1
-                        .copyWith(fontWeight: FontWeight.w700),
+                        .copyWith(fontWeight: FontWeight.w500, fontSize: 19),
                   ),
                   Spacer(),
                   Container(
@@ -582,21 +562,34 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: isDark ? Colors.black : Colors.blue.shade700,
-            title: Text("Weight Tracker"),
+            backgroundColor: isDark ? Colors.black : Colors.white,
+            title: Text(
+              "Weight Tracker",
+              style: TextStyle(color: isDark ? Colors.white : Colors.black),
+            ),
             bottom: TabBar(
-              indicatorColor: Colors.white,
+              indicatorColor: Colors.blue.shade700,
               tabs: [
                 Tab(
-                  icon: Icon(Icons.history),
+                  icon: Icon(
+                    Icons.history,
+                    color: isDark ? Colors.white : Colors.grey.shade700,
+                  ),
                   child: Text(
                     "HISTORY",
+                    style:
+                        TextStyle(color: isDark ? Colors.white :  Colors.grey.shade700),
                   ),
                 ),
                 Tab(
-                  icon: Icon(Icons.stacked_line_chart_outlined),
+                  icon: Icon(
+                    Icons.stacked_line_chart_outlined,
+                    color: isDark ? Colors.white : Colors.grey.shade700,
+                  ),
                   child: Text(
                     "STATICS",
+                    style:
+                        TextStyle(color: isDark ? Colors.white : Colors.grey.shade700),
                   ),
                 ),
               ],

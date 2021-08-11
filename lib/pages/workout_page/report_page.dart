@@ -284,7 +284,7 @@ class _MyAppState extends State<ReportScreen> {
   Widget getAchievementCard() {
     getCard(String title, String subTitle, Color color) {
       return Container(
-        height: MediaQuery.of(context).size.height * .12,
+        height: MediaQuery.of(context).size.height * .14,
         child: Card(
           elevation: 2,
           shape: RoundedRectangleBorder(
@@ -304,7 +304,7 @@ class _MyAppState extends State<ReportScreen> {
                     subTitle,
                     style: textTheme.bodyText2.copyWith(
                         color: Colors.white,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         fontSize: 16),
                   ),
 
@@ -459,30 +459,36 @@ class _MyAppState extends State<ReportScreen> {
         MediaQuery.of(context).padding.bottom;
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
-    return Scaffold(
-      backgroundColor: isDark ? Colors.black : Colors.white,
-      body: Stack(
-        children: [
-          ListView(
-            children: <Widget>[
-              getTitle(height * .5 - safeHeight, width),
-              Divider(),
-              getAchievementCard(),
-              getPastWeek(),
-              constants.getDivider(isDark),
-              BmiCard(
-                showBool: false,
-              ),
-              constants.getDivider(isDark),
-              getRatingBar(height),
-              getButton(),
-              SizedBox(
-                height: 16,
-              ),
-            ],
-          ),
-          getConfetti(),
-        ],
+    return WillPopScope(
+      onWillPop: ()=>Navigator.pushNamedAndRemoveUntil(
+          context,
+          WorkoutDetailReport.routeName,
+          ModalRoute.withName('/')),
+      child: Scaffold(
+        backgroundColor: isDark ? Colors.black : Colors.white,
+        body: Stack(
+          children: [
+            ListView(
+              children: <Widget>[
+                getTitle(height * .5 - safeHeight, width),
+                Divider(),
+                getAchievementCard(),
+                getPastWeek(),
+                constants.getDivider(isDark),
+                BmiCard(
+                  showBool: false,
+                ),
+                constants.getDivider(isDark),
+                getRatingBar(height),
+                getButton(),
+                SizedBox(
+                  height: 16,
+                ),
+              ],
+            ),
+            getConfetti(),
+          ],
+        ),
       ),
     );
   }

@@ -188,7 +188,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
                         style: TextStyle(fontWeight: FontWeight.w500,color: textColor),
                       ),
                       SizedBox(
-                        height: 12,
+                        height: 6,
                       ),
                     ],
                   ),
@@ -206,7 +206,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
           borderRadius: BorderRadius.all(Radius.circular(16)),
           elevation: 2,
         child: Container(
-          height: height*.16,
+          height: height*.22,
 
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(16)),

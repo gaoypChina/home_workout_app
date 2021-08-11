@@ -188,11 +188,8 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
               children: [
                 ListView.builder(
                   itemBuilder: (context, index) {
-                    print(widget.tag.toLowerCase());
                           if (widget.workOutList[index].showTimer == false) {
                             List<String> splitTitle = widget.title.split(" ");
-
-
                             if (splitTitle.length == 5) {
                               int currDay = int.tryParse(splitTitle[4]);
                               if (currDay < 10) {
@@ -203,7 +200,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                               } else
                                 time = widget.workOutList[index].advanceRap;
                             } else {
-                              String tag = splitTitle[1];
+                              String tag = widget.tag.toLowerCase();
                               if (tag == 'beginner') {
                                 time = widget.workOutList[index].beginnerRap;
                               } else if (tag ==
@@ -278,7 +275,7 @@ curve: Curves.easeOutCubic,
                       ],
                     );
                   },
-                  padding: EdgeInsets.only(bottom: 70),
+                  padding: EdgeInsets.only(bottom: 100),
                   physics: BouncingScrollPhysics(),
                   itemCount: widget.workOutList.length,
                 )

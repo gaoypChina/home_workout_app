@@ -60,6 +60,7 @@ class _HeightSelectorState extends State<HeightSelector> {
     String inchHeight = "0";
 
     if (widget.height == null) {
+
     } else {
       cmHeight = widget.height.toStringAsFixed(0);
 
@@ -254,9 +255,10 @@ class _WeightSelectorState extends State<WeightSelector> {
 
   @override
   void initState() {
-    _kgController = TextEditingController(text: widget.weight.toStringAsFixed(0));
-    _lbsController = TextEditingController(text: (widget.weight* 2.205).toStringAsFixed(0));
-    weightIndex = widget.weightIndex;
+    double initWeight = widget.weight??0;
+    _kgController = TextEditingController(text: initWeight.toStringAsFixed(0));
+    _lbsController = TextEditingController(text: initWeight.toStringAsFixed(0));
+    weightIndex = widget.weightIndex??0;
     super.initState();
   }
   @override

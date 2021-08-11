@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-//1615
+
 class Workout {
   String title;
   String imageSrc;
@@ -25,7 +25,6 @@ class Workout {
   });
 }
 //Arm
-
 Workout armCurlsCrunchLeft = Workout(
   title: 'Arm Curls Crunch Left',
   steps: [
@@ -42,7 +41,6 @@ Workout armCurlsCrunchLeft = Workout(
   advanceRap: 18,
   imageSrc: 'assets/all-workouts/armCurlsCrunchLeft.gif',
 );
-
 Workout armCurlsCrunchLeft2 = Workout(
   title: 'Arm Curls Crunch Left',
   steps: [
@@ -59,7 +57,6 @@ Workout armCurlsCrunchLeft2 = Workout(
   advanceRap: 14,
   imageSrc: 'assets/all-workouts/armCurlsCrunchLeft.gif',
 );
-
 Workout armCurlsCrunchRight = Workout(
     title: 'Arm Curls Crunch Right',
     steps: [
@@ -75,7 +72,6 @@ Workout armCurlsCrunchRight = Workout(
     intermediateRap: 14,
     advanceRap: 18,
     imageSrc: 'assets/all-workouts/armCurlsCrunchRight.gif');
-
 Workout armCurlsCrunchRight2 = Workout(
     title: 'Arm Curls Crunch Right',
     steps: [
@@ -91,7 +87,6 @@ Workout armCurlsCrunchRight2 = Workout(
     intermediateRap: 12,
     advanceRap: 14,
     imageSrc: 'assets/all-workouts/armCurlsCrunchRight.gif');
-
 Workout skippingWithOutRope = Workout(
   title: 'Skipping Without Rope',
   steps: [
@@ -103,9 +98,8 @@ Workout skippingWithOutRope = Workout(
       'https://www.youtube.com/watch?v=bTJW3LUwrOA&ab_channel=HarrisonAndFam',
   showTimer: true,
   duration: 30,
-  imageSrc: 'assets/all-workouts/skippingWithOutRope.gif',
+  imageSrc: 'assets/all-workouts/skippignwithout rope.gif',
 );
-
 Workout tricepsPushUp = Workout(
   title: 'Triceps Push-ups',
   steps: [
@@ -121,7 +115,6 @@ Workout tricepsPushUp = Workout(
   advanceRap: 16,
   imageSrc: 'assets/all-workouts/tricepsPushUp.gif',
 );
-
 Workout tricepsPushUp2 = Workout(
   title: 'Triceps Push-ups',
   steps: [
@@ -137,7 +130,6 @@ Workout tricepsPushUp2 = Workout(
   advanceRap: 12,
   imageSrc: 'assets/all-workouts/tricepsPushUp.gif',
 );
-
 Workout armCircleClockWise = Workout(
   title: 'Arm Circle ClockWise',
   steps: [
@@ -151,7 +143,6 @@ Workout armCircleClockWise = Workout(
   duration: 30,
   imageSrc: 'assets/all-workouts/armCircleClockWIse.gif',
 );
-
 Workout armCircleCounterClockWise = Workout(
     title: 'Arm Circle Counterclockwise',
     steps: [
@@ -163,8 +154,7 @@ Workout armCircleCounterClockWise = Workout(
         'https://www.youtube.com/watch?v=140RTNMciH8&ab_channel=FitnessBlender',
     showTimer: true,
     duration: 30,
-    imageSrc: 'assets/all-workouts/armCircleCounterClowk.gif');
-
+    imageSrc: 'assets/all-workouts/armCircleCounterClock.gif');
 Workout diagonalPlank = Workout(
     title: 'Diagonal Plank',
     steps: [
@@ -178,8 +168,7 @@ Workout diagonalPlank = Workout(
     beginnerRap: 10,
     intermediateRap: 14,
     advanceRap: 18,
-    imageSrc: 'assets/all-workouts/digonalPlank.gif');
-
+    imageSrc: 'assets/all-workouts/diagonalPlank.gif');
 Workout punches = Workout(
   title: 'Punches',
   steps: [
@@ -196,7 +185,6 @@ Workout punches = Workout(
   advanceRap: 18,
   imageSrc: 'assets/all-workouts/punches.gif',
 );
-
 Workout punches2 = Workout(
   title: 'Punches',
   steps: [
@@ -213,7 +201,6 @@ Workout punches2 = Workout(
   advanceRap: 16,
   imageSrc: 'assets/all-workouts/punches.gif',
 );
-
 Workout wallPushUps = Workout(
   title: 'Wall Push-Ups',
   steps: [
@@ -231,7 +218,6 @@ Workout wallPushUps = Workout(
   advanceRap: 18,
   imageSrc: 'assets/all-workouts/wallPushUps.gif',
 );
-
 Workout tricepsStretchLeft = Workout(
     title: 'Triceps Stretch Left',
     steps: [
@@ -243,7 +229,6 @@ Workout tricepsStretchLeft = Workout(
     showTimer: true,
     duration: 30,
     imageSrc: 'assets/all-workouts/tricepsStretchLeft.gif');
-
 Workout tricepsStretchRight = Workout(
   title: 'Triceps Stretch Right',
   steps: [
@@ -257,7 +242,6 @@ Workout tricepsStretchRight = Workout(
   duration: 30,
   imageSrc: 'assets/all-workouts/tricepsStretchRight.gif',
 );
-
 Workout standingBicepsStretchRight = Workout(
     title: 'Standing Biceps Stretch Right',
     steps: [
@@ -268,8 +252,7 @@ Workout standingBicepsStretchRight = Workout(
     videoLink: 'https://youtu.be/QY4gCIYbGQk',
     showTimer: true,
     duration: 30,
-    imageSrc: 'assets/all-workouts/standingBicepsStretchRight.jpg');
-
+    imageSrc: 'assets/all-workouts/standingBicepsStrechRight.png');
 Workout standingBicepsStretchLeft = Workout(
     title: 'Standing Biceps Stretch Left',
     steps: [
@@ -280,10 +263,8 @@ Workout standingBicepsStretchLeft = Workout(
     videoLink: 'https://youtu.be/QY4gCIYbGQk',
     showTimer: true,
     duration: 30,
-    imageSrc: 'assets/all-workouts/standingBicepsStretchLeft.jpg');
-
+    imageSrc: 'assets/all-workouts/standingBicepsStrechLeft.png');
 //Legs
-
 Workout kneeToChestStretch = Workout(
   title: 'Knee Hugs',
   steps: [
@@ -298,7 +279,6 @@ Workout kneeToChestStretch = Workout(
   duration: 20,
   imageSrc: 'assets/all-workouts/kneeToChestStretch.gif',
 );
-
 Workout squats = Workout(
   title: 'Squats',
   steps: [
@@ -312,9 +292,8 @@ Workout squats = Workout(
   showTimer: false,
   beginnerRap: 12,
   intermediateRap: 14,
-  imageSrc: 'assets/all-workouts/squarts.gif',
+  imageSrc: "assets/all-workouts/squats.gif",
 );
-
 Workout buttBridge = Workout(
   title: 'Butt Bridge',
   steps: [
@@ -330,7 +309,6 @@ Workout buttBridge = Workout(
   intermediateRap: 12,
   imageSrc: 'assets/all-workouts/buttBridge.gif',
 );
-
 Workout curtsyLunges = Workout(
   title: 'Curtsy Lunges',
   steps: [
@@ -347,7 +325,6 @@ Workout curtsyLunges = Workout(
   advanceRap: 16,
   imageSrc: 'assets/all-workouts/curtsyLunges.gif',
 );
-
 Workout bottomLegLiftLeft = Workout(
   title: 'Bottom Leg Lift Left',
   steps: [
@@ -365,7 +342,6 @@ Workout bottomLegLiftLeft = Workout(
   intermediateRap: 12,
   imageSrc: 'assets/all-workouts/bottomLegLift_L.gif',
 );
-
 Workout bottomLegLiftRight = Workout(
     title: 'Bottom Leg Lift Right',
     steps: [
@@ -382,7 +358,6 @@ Workout bottomLegLiftRight = Workout(
     beginnerRap: 10,
     intermediateRap: 12,
     imageSrc: 'assets/all-workouts/bottomLegLift_R.gif');
-
 Workout sumoSquat = Workout(
   title: 'Sumo Squat',
   steps: [
@@ -398,7 +373,6 @@ Workout sumoSquat = Workout(
   intermediateRap: 14,
   imageSrc: 'assets/all-workouts/sumoSquat.gif',
 );
-
 Workout fireHydrantLeft = Workout(
   title: 'Fire Hydrant Left',
   steps: [
@@ -414,7 +388,6 @@ Workout fireHydrantLeft = Workout(
   beginnerRap: 10,
   imageSrc: 'assets/all-workouts/fire_hydrant_L.gif',
 );
-
 Workout fireHydrantRight = Workout(
   title: 'Fire Hydrant Right',
   steps: [
@@ -430,7 +403,6 @@ Workout fireHydrantRight = Workout(
   beginnerRap: 10,
   imageSrc: 'assets/all-workouts/fire_hydrant_R.gif',
 );
-
 Workout jumpingSquats = Workout(
   title: 'Jumping Squats',
   steps: [
@@ -445,8 +417,6 @@ Workout jumpingSquats = Workout(
   advanceRap: 14,
   imageSrc: 'assets/all-workouts/jumpingSquats.gif',
 );
-
-
 Workout wallSit = Workout(
     title: 'Wall Sit',
     steps: [
@@ -460,8 +430,7 @@ Workout wallSit = Workout(
         'https://www.youtube.com/watch?v=-cdph8hv0O0&ab_channel=FitnessBlender',
     showTimer: true,
     duration: 30,
-    imageSrc: 'assets/all-workouts/wallUp.jpg');
-
+    imageSrc: 'assets/all-workouts/wallUp.gif');
 Workout leftQuadStretch = Workout(
   title: 'Left Quad Stretch',
   steps: [
@@ -472,9 +441,8 @@ Workout leftQuadStretch = Workout(
   videoLink: 'https://www.youtube.com/watch?v=vPo1j-fzfNo&ab_channel=Howcast',
   showTimer: true,
   duration: 30,
-  imageSrc: 'assets/all-workouts/left quad stretch with wall.jpg',
+  imageSrc: 'assets/all-workouts/quadStretchWithWallLeft.png',
 );
-
 Workout rightQuadStretch = Workout(
   title: 'Right Quad Stretch',
   steps: [
@@ -485,9 +453,8 @@ Workout rightQuadStretch = Workout(
   videoLink: 'https://www.youtube.com/watch?v=vPo1j-fzfNo&ab_channel=Howcast',
   showTimer: true,
   duration: 30,
-  imageSrc: 'assets/all-workouts/rightQuadStretchWithWall.jpg',
+  imageSrc: 'assets/all-workouts/quadStretchWithWallRight.png',
 );
-
 Workout wallResistingSingleLegLeft = Workout(
   title: 'Wall Resisting Single Leg Left',
   steps: [
@@ -501,9 +468,8 @@ Workout wallResistingSingleLegLeft = Workout(
   advanceRap: 16,
   beginnerRap: 12,
   intermediateRap: 14,
-  imageSrc: 'assets/all-workouts/wallResistingSingleLegCalfRaise_L.gif',
+  imageSrc: 'assets/all-workouts/wallRestingSinglCalfRise_L.gif',
 );
-
 Workout wallResistingSingleLegRight = Workout(
   title: 'Wall Resisting Single Leg Right',
   steps: [
@@ -517,9 +483,8 @@ Workout wallResistingSingleLegRight = Workout(
   advanceRap: 16,
   beginnerRap: 12,
   intermediateRap: 14,
-  imageSrc: 'assets/all-workouts/wallResistingSingleLegCalfRaise_R.gif',
+  imageSrc: 'assets/all-workouts/wallRestingSinglCalfRise_R.gif',
 );
-
 Workout lyingButterFlyStretch = Workout(
     title: 'Lying ButterFly Stretch',
     steps: [
@@ -533,8 +498,7 @@ Workout lyingButterFlyStretch = Workout(
     videoLink: 'https://www.youtube.com/watch?v=rdxD3POKbV8&ab_channel=Howcast',
     showTimer: true,
     duration: 30,
-    imageSrc: 'assets/all-workouts/lyingButterFlyStretch.jpg');
-
+    imageSrc: 'assets/all-workouts/lyingButterFlyStretch.png');
 Workout walkingLunges = Workout(
   title: 'Walking Lunges',
   steps: [
@@ -551,7 +515,6 @@ Workout walkingLunges = Workout(
   intermediateRap: 12,
   imageSrc: 'assets/all-workouts/walking-lunge.gif',
 );
-
 Workout lateralSquat = Workout(
   title: 'Lateral Squat',
   steps: [
@@ -568,7 +531,6 @@ Workout lateralSquat = Workout(
   intermediateRap: 14,
   imageSrc: 'assets/all-workouts/lateralSquat.gif',
 );
-
 Workout calfStretchLeft = Workout(
   title: 'Calf Stretch Left',
   steps: [
@@ -580,9 +542,8 @@ Workout calfStretchLeft = Workout(
       'https://www.youtube.com/watch?v=fEbF7Qb5vgM&ab_channel=JamesDunne',
   showTimer: true,
   duration: 30,
-  imageSrc: 'assets/all-workouts/calfStretchLeft.png',
+  imageSrc: 'assets/all-workouts/CalfStretchLeft.png',
 );
-
 Workout calfStretchRight = Workout(
   title: 'Calf Stretch Right',
   steps: [
@@ -594,11 +555,9 @@ Workout calfStretchRight = Workout(
       'https://www.youtube.com/watch?v=fEbF7Qb5vgM&ab_channel=JamesDunne',
   showTimer: true,
   duration: 30,
-  imageSrc: 'assets/all-workouts/calfStretchRight.png',
+  imageSrc: 'assets/all-workouts/CalfStretchRight.png',
 );
-
 //----------------------------------SHOULDER--------------------------------------
-
 Workout rhomboidPulls = Workout(
   title: 'Rhomboid Pulls',
   steps: [
@@ -613,7 +572,6 @@ Workout rhomboidPulls = Workout(
   intermediateRap: 16,
   imageSrc: 'assets/all-workouts/rhomboidPulls.gif',
 );
-
 Workout sideArmRaise = Workout(
   title: 'Side Arm Raise',
   steps: [
@@ -631,7 +589,6 @@ Workout sideArmRaise = Workout(
   beginnerRap: 12,
   imageSrc: 'assets/all-workouts/side arm raise.gif',
 );
-
 Workout reclinedRhomboidSqueezes = Workout(
   title: 'Reclined Rhomboid Squeezes',
   steps: [
@@ -645,7 +602,6 @@ Workout reclinedRhomboidSqueezes = Workout(
   beginnerRap: 12,
   imageSrc: 'assets/all-workouts/reclinedRomboidSqueeze.gif',
 );
-
 Workout armScissors = Workout(
   title: 'Arm Scissors',
   steps: [
@@ -659,7 +615,6 @@ Workout armScissors = Workout(
   duration: 30,
   imageSrc: 'assets/all-workouts/armScissor.gif',
 );
-
 Workout rhomboidPulls2 = Workout(
   title: 'Rhomboid Pulls',
   steps: [
@@ -675,7 +630,6 @@ Workout rhomboidPulls2 = Workout(
   advanceRap: 18,
   imageSrc: 'assets/all-workouts/rhomboidPulls.gif',
 );
-
 Workout sideArmRaise2 = Workout(
   title: 'Side Arm Raise',
   steps: [
@@ -692,7 +646,6 @@ Workout sideArmRaise2 = Workout(
   beginnerRap: 10,
   imageSrc: 'assets/all-workouts/side arm raise.gif',
 );
-
 Workout reclinedRhomboidSqueezes2 = Workout(
   title: 'Reclined Rhomboid Squeezes',
   steps: [
@@ -706,7 +659,6 @@ Workout reclinedRhomboidSqueezes2 = Workout(
   beginnerRap: 10,
   imageSrc: 'assets/all-workouts/reclinedRomboidSqueeze.gif',
 );
-
 Workout floorTricepsDips = Workout(
   title: 'Floor Triceps Dips',
   steps: [
@@ -723,7 +675,6 @@ Workout floorTricepsDips = Workout(
   advanceRap: 16,
   imageSrc: 'assets/all-workouts/floorTricepsDipes.gif',
 );
-
 Workout pikePushUps = Workout(
   title: 'Pike Push Ups',
   imageSrc: 'assets/all-workouts/pikePushUps_.gif',
@@ -738,7 +689,6 @@ Workout pikePushUps = Workout(
   advanceRap: 16,
   showTimer: false,
 );
-
 Workout reversePushUps = Workout(
   title: 'Reverse Push Ups',
   steps: [
@@ -751,9 +701,8 @@ Workout reversePushUps = Workout(
       'https://www.youtube.com/watch?v=a00N2M7I1_o&ab_channel=Men%27sHealth',
   showTimer: false,
   advanceRap: 14,
-  imageSrc: 'assets/all-workouts/reversePushups.gif.gif',
+  imageSrc: 'assets/all-workouts/reversePushups.gif',
 );
-
 Workout threadTheNeedleL = Workout(
   title: 'Thread The Needle Left',
   steps: [
@@ -769,7 +718,6 @@ Workout threadTheNeedleL = Workout(
   duration: 30,
   imageSrc: 'assets/all-workouts/threadTheNeedleLeft.png',
 );
-
 Workout threadTheNeedleR = Workout(
   title: 'Thread The Needle Right',
   steps: [
@@ -785,7 +733,6 @@ Workout threadTheNeedleR = Workout(
   duration: 30,
   imageSrc: 'assets/all-workouts/threadTheNeedleRight.png',
 );
-
 Workout floorTricepsDips2 = Workout(
   title: 'Floor Triceps Dips',
   steps: [
@@ -802,7 +749,6 @@ Workout floorTricepsDips2 = Workout(
   advanceRap: 12,
   imageSrc: 'assets/all-workouts/floorTricepsDipes.gif',
 );
-
 Workout pikePushUps2 = Workout(
   title: 'Pike Push Ups',
   imageSrc: 'assets/all-workouts/pikePushUps_.gif',
@@ -817,7 +763,6 @@ Workout pikePushUps2 = Workout(
   advanceRap: 12,
   showTimer: false,
 );
-
 Workout reversePushUps2 = Workout(
   title: 'Reverse Push Ups',
   steps: [
@@ -832,7 +777,6 @@ Workout reversePushUps2 = Workout(
   advanceRap: 12,
   imageSrc: 'assets/all-workouts/reversePushups.gif.gif',
 );
-
 Workout catCowPose = Workout(
   title: 'Cat Cow Pose',
   steps: [
@@ -844,9 +788,8 @@ Workout catCowPose = Workout(
   videoLink: 'https://www.youtube.com/watch?v=kqnua4rHVVA&ab_channel=Howcast',
   showTimer: true,
   duration: 30,
-  imageSrc: 'assets/all-workouts/catCowPose_.gif',
+  imageSrc: 'assets/all-workouts/catCowPose.gif',
 );
-
 Workout plankUp = Workout(
     title: 'Plank Up',
     steps: [
@@ -863,7 +806,6 @@ Workout plankUp = Workout(
     advanceRap: 16,
     intermediateRap: 12,
     imageSrc: 'assets/all-workouts/plankUp.gif');
-
 Workout inchWorm = Workout(
   title: 'Inch Worm',
   steps: [
@@ -879,7 +821,6 @@ Workout inchWorm = Workout(
   beginnerRap: 10,
   imageSrc: 'assets/all-workouts/Inchworm.gif',
 );
-
 Workout plankUp2 = Workout(
   title: 'Plank Up',
   steps: [
@@ -897,7 +838,6 @@ Workout plankUp2 = Workout(
   intermediateRap: 10,
   imageSrc: 'assets/all-workouts/plankUp.gif',
 );
-
 Workout reverseSnowAngle = Workout(
   title: 'Reverse Snow Angle',
   steps: [
@@ -913,7 +853,6 @@ Workout reverseSnowAngle = Workout(
   advanceRap: 16,
   imageSrc: 'assets/all-workouts/reverseSnowAngel.gif',
 );
-
 Workout childPose = Workout(
   title: 'Child\'s Pose',
   steps: [
@@ -928,9 +867,8 @@ Workout childPose = Workout(
       'https://www.youtube.com/watch?v=qYvYsFrTI0U&ab_channel=ViveHealth',
   showTimer: true,
   duration: 30,
-  imageSrc: 'assets/all-workouts/child\'sPose.jpg',
+  imageSrc: 'assets/all-workouts/child\'sPose.png',
 );
-
 Workout inchWorm2 = Workout(
   title: 'Inch Worm',
   steps: [
@@ -946,9 +884,7 @@ Workout inchWorm2 = Workout(
   advanceRap: 14,
   imageSrc: 'assets/all-workouts/Inchworm.gif',
 );
-
 // ABS
-
 Workout abdominalCrunches = Workout(
     title: 'Abdominal Crunches',
     videoLink:
@@ -961,10 +897,10 @@ Workout abdominalCrunches = Workout(
       'Inhale and return to the starting position.'
     ],
     showTimer: false,
-    beginnerRap: 16,
+    beginnerRap: 20,
+    intermediateRap: 20,
     advanceRap: 20,
     imageSrc: 'assets/all-workouts/abdominalCrunches.gif');
-
 Workout russianTwist = Workout(
   title: 'Russian Twist',
   videoLink:
@@ -977,12 +913,11 @@ Workout russianTwist = Workout(
     'For more of a challenge, lift your head and neck off the floor.'
   ],
   showTimer: false,
-  beginnerRap: 16,
-  intermediateRap: 20,
+  beginnerRap: 30,
+  intermediateRap: 36,
   advanceRap: 40,
   imageSrc: 'assets/all-workouts/russianTwist.gif',
 );
-
 Workout flutterKikes = Workout(
   title: 'Flutter Kikes',
   videoLink:
@@ -1000,7 +935,6 @@ Workout flutterKikes = Workout(
   advanceRap: 20,
   imageSrc: 'assets/all-workouts/flutterKikes.gif',
 );
-
 Workout pulseUp = Workout(
   title: 'Pulse Up',
   videoLink: 'https://www.youtube.com/watch?v=wzhQMdkMzyA&ab_channel=Sears',
@@ -1015,7 +949,6 @@ Workout pulseUp = Workout(
   intermediateRap: 20,
   imageSrc: 'assets/all-workouts/pulseUp.gif',
 );
-
 Workout mountainClimbing = Workout(
   title: 'Mountain Climbing',
   videoLink: 'https://www.youtube.com/watch?v=UOGvtqv856A&ab_channel=Howcast',
@@ -1030,7 +963,6 @@ Workout mountainClimbing = Workout(
   intermediateRap: 20,
   imageSrc: 'assets/all-workouts/mountainClimbing.gif',
 );
-
 Workout russianTwist2 = Workout(
   title: 'Russian Twist',
   videoLink:
@@ -1043,12 +975,11 @@ Workout russianTwist2 = Workout(
     'For more of a challenge, lift your head and neck off the floor.'
   ],
   showTimer: false,
-  beginnerRap: 12,
-  intermediateRap: 16,
-  advanceRap: 24,
+  beginnerRap: 20,
+  intermediateRap: 24,
+  advanceRap: 30,
   imageSrc: 'assets/all-workouts/russianTwist.gif',
 );
-
 Workout elbowPlanks = Workout(
   title: 'Elbow Planks',
   videoLink: 'https://www.youtube.com/watch?v=zuHZyVg3zRA&ab_channel=PFITtv',
@@ -1059,9 +990,8 @@ Workout elbowPlanks = Workout(
   ],
   showTimer: true,
   duration: 20,
-  imageSrc: 'assets/all-workouts/elbowPlank.gif',
+  imageSrc: 'assets/all-workouts/elbowPlank.png',
 );
-
 Workout advanceElbowPlanks = Workout(
   title: 'Elbow Planks',
   videoLink: 'https://www.youtube.com/watch?v=zuHZyVg3zRA&ab_channel=PFITtv',
@@ -1072,9 +1002,8 @@ Workout advanceElbowPlanks = Workout(
   ],
   showTimer: true,
   duration: 60,
-  imageSrc: 'assets/all-workouts/elbowPlank.gif',
+  imageSrc: 'assets/all-workouts/elbowPlank.png',
 );
-
 Workout abdominalCrunches2 = Workout(
   title: 'Abdominal Crunches',
   videoLink:
@@ -1091,7 +1020,6 @@ Workout abdominalCrunches2 = Workout(
   advanceRap: 20,
   imageSrc: 'assets/all-workouts/abdominalCrunches.gif',
 );
-
 Workout flutterKikes2 = Workout(
   title: 'Flutter Kikes',
   videoLink:
@@ -1109,7 +1037,6 @@ Workout flutterKikes2 = Workout(
   advanceRap: 20,
   imageSrc: 'assets/all-workouts/flutterKikes.gif',
 );
-
 Workout mountainClimbing2 = Workout(
     title: 'Mountain Climbing',
     videoLink: 'https://www.youtube.com/watch?v=UOGvtqv856A&ab_channel=Howcast',
@@ -1122,7 +1049,6 @@ Workout mountainClimbing2 = Workout(
     showTimer: false,
     beginnerRap: 16,
     imageSrc: 'assets/all-workouts/mountainClimbing.gif');
-
 Workout pulseUp2 = Workout(
     title: 'Pulse Up',
     videoLink: 'https://www.youtube.com/watch?v=wzhQMdkMzyA&ab_channel=Sears',
@@ -1136,7 +1062,6 @@ Workout pulseUp2 = Workout(
     beginnerRap: 12,
     intermediateRap: 16,
     imageSrc: 'assets/all-workouts/pulseUp.gif');
-
 Workout wipers = Workout(
     title: 'Wipers',
     steps: [
@@ -1149,7 +1074,6 @@ Workout wipers = Workout(
     showTimer: true,
     duration: 30,
     imageSrc: 'assets/all-workouts/wipers.gif');
-
 Workout reverseCrunches = Workout(
   title: 'Reverse Crunches',
   showTimer: false,
@@ -1165,7 +1089,6 @@ Workout reverseCrunches = Workout(
   advanceRap: 30,
   imageSrc: 'assets/all-workouts/reverseCrunches.gif',
 );
-
 Workout vUps = Workout(
   title: 'V-Ups',
   steps: [
@@ -1181,7 +1104,6 @@ Workout vUps = Workout(
   advanceRap: 24,
   imageSrc: 'assets/all-workouts/VUps.gif',
 );
-
 Workout sidePlankRight = Workout(
     title: 'Side Plank Right',
     steps: [
@@ -1193,8 +1115,7 @@ Workout sidePlankRight = Workout(
     videoLink: 'https://www.youtube.com/watch?v=K2VljzCC16g&ab_channel=Howcast',
     showTimer: true,
     duration: 30,
-    imageSrc: 'assets/all-workouts/sidePlankRight.gif');
-
+    imageSrc: 'assets/all-workouts/sidePlankRight.png');
 Workout sidePlankLeft = Workout(
     title: 'Side Plank Left',
     steps: [
@@ -1206,8 +1127,7 @@ Workout sidePlankLeft = Workout(
     videoLink: 'https://www.youtube.com/watch?v=K2VljzCC16g&ab_channel=Howcast',
     showTimer: true,
     duration: 30,
-    imageSrc: 'assets/all-workouts/sidePlankLeft.gif');
-
+    imageSrc: 'assets/all-workouts/sidePlankLeft.png');
 Workout vUps2 = Workout(
     title: 'V-Ups',
     steps: [
@@ -1222,7 +1142,6 @@ Workout vUps2 = Workout(
     intermediateRap: 16,
     advanceRap: 20,
     imageSrc: 'assets/all-workouts/VUps.gif');
-
 Workout reverseCrunches2 = Workout(
   title: 'Reverse Crunches',
   showTimer: true,
@@ -1238,7 +1157,6 @@ Workout reverseCrunches2 = Workout(
   advanceRap: 24,
   imageSrc: 'assets/all-workouts/reverseCrunches.gif',
 ); //
-
 Workout sidePlankRight2 = Workout(
   title: 'Side Plank Right',
   steps: [
@@ -1250,9 +1168,8 @@ Workout sidePlankRight2 = Workout(
   videoLink: 'https://www.youtube.com/watch?v=K2VljzCC16g&ab_channel=Howcast',
   showTimer: true,
   duration: 20,
-  imageSrc: 'assets/all-workouts/sidePlankRight.gif',
+  imageSrc: 'assets/all-workouts/sidePlankRight.png',
 );
-
 Workout sidePlankLeft2 = Workout(
     title: 'Side Plank Left',
     steps: [
@@ -1264,8 +1181,7 @@ Workout sidePlankLeft2 = Workout(
     videoLink: 'https://www.youtube.com/watch?v=K2VljzCC16g&ab_channel=Howcast',
     showTimer: true,
     duration: 20,
-    imageSrc: 'assets/all-workouts/sidePlankLeft.gif');
-
+    imageSrc: 'assets/all-workouts/sidePlankLeft.png');
 Workout pushUpsRotation = Workout(
   title: 'Push-Ups & Rotation',
   steps: [
@@ -1280,7 +1196,6 @@ Workout pushUpsRotation = Workout(
   intermediateRap: 16,
   imageSrc: 'assets/all-workouts/pushUpsRotation.gif',
 );
-
 Workout pushUpsRotation2 = Workout(
   title: 'Push-Ups & Rotation',
   steps: [
@@ -1295,7 +1210,6 @@ Workout pushUpsRotation2 = Workout(
   intermediateRap: 12,
   imageSrc: 'assets/all-workouts/pushUpsRotation.gif',
 );
-
 Workout spineLumberL = Workout(
     title: 'Spine Lumber Left',
     steps: [
@@ -1310,7 +1224,6 @@ Workout spineLumberL = Workout(
     showTimer: true,
     duration: 30,
     imageSrc: 'assets/all-workouts/spineLumberL.png');
-
 Workout spineLumberR = Workout(
   title: 'Spine Lumber Right)',
   steps: [
@@ -1326,9 +1239,7 @@ Workout spineLumberR = Workout(
   duration: 30,
   imageSrc: 'assets/all-workouts/spineLumberR.png',
 );
-
 // Chest
-
 Workout jumpingJacks = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=iSSAk4XCsRA&ab_channel=RedefiningStrength',
@@ -1342,10 +1253,26 @@ Workout jumpingJacks = Workout(
   ],
   showTimer: true,
   duration: 30,
-  imageSrc: "assets/other/v_ups.gif",
-  //imageSrc: 'assets/all-workouts/jumpingJacks.gif',
+
+  imageSrc: 'assets/all-workouts/jumpingJacks.gif',
 );
 
+Workout beginnerJumpingJacks = Workout(
+  videoLink:
+  'https://www.youtube.com/watch?v=iSSAk4XCsRA&ab_channel=RedefiningStrength',
+  title: 'Jumping Jacks',
+  steps: [
+    'Stand upright with your legs together, arms at your sides.',
+    'Bend your knees slightly, and jump into the air.',
+    'As you jump, spread your legs to be about shoulder-width apart.',
+    'Stretch your arms out and over your head.',
+    'Jump back to starting position.'
+  ],
+  showTimer: true,
+  duration: 20,
+
+  imageSrc: 'assets/all-workouts/jumpingJacks.gif',
+);
 Workout kneePushUps = Workout(
     title: 'Knee Push-ups',
     steps: [
@@ -1360,7 +1287,6 @@ Workout kneePushUps = Workout(
     beginnerRap: 12,
     intermediateRap: 12,
     imageSrc: 'assets/all-workouts/kneePushUps.gif');
-
 Workout inclinePushUps = Workout(
   title: 'Incline Push-ups',
   steps: [
@@ -1375,7 +1301,6 @@ Workout inclinePushUps = Workout(
   intermediateRap: 14,
   imageSrc: 'assets/all-workouts/inclinePushUps.gif',
 );
-
 Workout inclinePushUps2 = Workout(
   title: 'Incline Push-ups',
   steps: [
@@ -1389,7 +1314,6 @@ Workout inclinePushUps2 = Workout(
   intermediateRap: 10,
   imageSrc: 'assets/all-workouts/inclinePushUps.gif',
 );
-
 Workout tricepsDips = Workout(
   title: 'Triceps Dips',
   steps: [
@@ -1406,7 +1330,6 @@ Workout tricepsDips = Workout(
   advanceRap: 24,
   imageSrc: 'assets/all-workouts/tricepsdips.gif',
 );
-
 Workout pushUps = Workout(
   title: 'Push-Ups',
   steps: [
@@ -1422,7 +1345,6 @@ Workout pushUps = Workout(
   advanceRap: 16,
   imageSrc: 'assets/all-workouts/pushUp.gif',
 );
-
 Workout kneePushUps2 = Workout(
   title: 'Knee Push-ups',
   steps: [
@@ -1437,7 +1359,6 @@ Workout kneePushUps2 = Workout(
   beginnerRap: 8,
   imageSrc: 'assets/all-workouts/kneePushUps.gif',
 );
-
 Workout tricepsDips2 = Workout(
   title: 'Triceps Dips',
   steps: [
@@ -1453,7 +1374,6 @@ Workout tricepsDips2 = Workout(
   advanceRap: 22,
   imageSrc: 'assets/all-workouts/tricepsdips.gif',
 );
-
 Workout pushUps2 = Workout(
   title: 'Push-Ups',
   steps: [
@@ -1469,7 +1389,6 @@ Workout pushUps2 = Workout(
   advanceRap: 12,
   imageSrc: 'assets/all-workouts/pushUp.gif',
 );
-
 Workout cobraStretch = Workout(
   title: 'Cobra Stretch',
   videoLink:
@@ -1485,7 +1404,6 @@ Workout cobraStretch = Workout(
   duration: 30,
   imageSrc: 'assets/all-workouts/cobraStratch.png',
 );
-
 Workout chestStretch = Workout(
   title: 'Chest Stretch',
   steps: [
@@ -1497,9 +1415,8 @@ Workout chestStretch = Workout(
       'https://www.youtube.com/watch?v=CEQMx4zFwYs&ab_channel=MidwestOrtho',
   showTimer: true,
   duration: 30,
-  imageSrc: 'assets/all-workouts/ChestStretches.jpg',
+  imageSrc: 'assets/all-workouts/ChestStretches.png',
 );
-
 Workout hinduPushUps = Workout(
   title: 'Hindu Push-ups',
   steps: [
@@ -1514,7 +1431,6 @@ Workout hinduPushUps = Workout(
   advanceRap: 16,
   imageSrc: 'assets/all-workouts/hinduPushUps.gif',
 );
-
 Workout wideArmPushUps = Workout(
     title: 'Wide Arm Push-ups',
     steps: [
@@ -1530,7 +1446,6 @@ Workout wideArmPushUps = Workout(
     intermediateRap: 16,
     advanceRap: 16,
     imageSrc: 'assets/all-workouts/wideArmPushUps.gif');
-
 Workout staggeredPushUps = Workout(
   title: 'Staggered Push-ups',
   steps: [
@@ -1539,13 +1454,12 @@ Workout staggeredPushUps = Workout(
     'Begin exercise by lowering your chest until it almost touches the ground. Pause, then push back up as quickly as possible. This completes one rep. Alternate hands every set.'
   ],
   videoLink:
-      'https://www.youtube.com/watch?v=odAdPR3ypSs&ab_channel=Exercises.com.au',
+  'https://www.youtube.com/watch?v=odAdPR3ypSs&ab_channel=Exercises.com.au',
   showTimer: false,
   intermediateRap: 12,
   advanceRap: 16,
   imageSrc: 'assets/all-workouts/staggeredPushUps.gif',
 );
-
 Workout ployMetricPushUps = Workout(
   title: 'PloyMetric Push-ups',
   steps: [
@@ -1555,13 +1469,12 @@ Workout ployMetricPushUps = Workout(
     'Land lightly on the ground, moving into your next rep immediately.'
   ],
   videoLink:
-      'https://www.youtube.com/watch?v=Z1hBVYb3Gi0&ab_channel=ThePostGame',
+  'https://www.youtube.com/watch?v=Z1hBVYb3Gi0&ab_channel=ThePostGame',
   showTimer: false,
   intermediateRap: 12,
   advanceRap: 16,
-  imageSrc: 'assets/all-workouts/ploymetricPushUps.gif',
+  imageSrc: 'assets/all-workouts/polymetriPushUps.gif',
 );
-
 Workout hinduPushUps2 = Workout(
   title: 'Hindu Push-ups',
   steps: [
@@ -1576,7 +1489,6 @@ Workout hinduPushUps2 = Workout(
   advanceRap: 12,
   imageSrc: 'assets/all-workouts/hinduPushUps.gif',
 );
-
 Workout staggeredPushUps2 = Workout(
     title: 'Staggered Push-ups',
     steps: [
@@ -1585,12 +1497,11 @@ Workout staggeredPushUps2 = Workout(
       'Begin exercise by lowering your chest until it almost touches the ground. Pause, then push back up as quickly as possible. This completes one rep. Alternate hands every set.'
     ],
     videoLink:
-        'https://www.youtube.com/watch?v=odAdPR3ypSs&ab_channel=Exercises.com.au',
+    'https://www.youtube.com/watch?v=odAdPR3ypSs&ab_channel=Exercises.com.au',
     showTimer: false,
     intermediateRap: 10,
     advanceRap: 12,
     imageSrc: 'assets/all-workouts/staggeredPushUps.gif');
-
 Workout ployMetricPushUps2 = Workout(
   title: 'PloyMetric Push-ups',
   steps: [
@@ -1600,13 +1511,12 @@ Workout ployMetricPushUps2 = Workout(
     'Land lightly on the ground, moving into your next rep immediately.'
   ],
   videoLink:
-      'https://www.youtube.com/watch?v=Z1hBVYb3Gi0&ab_channel=ThePostGame',
+  'https://www.youtube.com/watch?v=Z1hBVYb3Gi0&ab_channel=ThePostGame',
   showTimer: false,
   intermediateRap: 10,
   advanceRap: 12,
-  imageSrc: 'assets/all-workouts/ploymetricPushUps.gif',
+  imageSrc: 'assets/all-workouts/polymetriPushUps.gif',
 );
-
 Workout declinePushUps = Workout(
     title: 'Decline Push-Ups',
     steps: [
@@ -1617,12 +1527,11 @@ Workout declinePushUps = Workout(
       'Push into the floor to return to starting position, extending your elbows.',
     ],
     videoLink:
-        'https://www.youtube.com/watch?v=b_CC4kAF1HQ&ab_channel=LIVESTRONG.COM',
+    'https://www.youtube.com/watch?v=b_CC4kAF1HQ&ab_channel=LIVESTRONG.COM',
     showTimer: false,
     intermediateRap: 12,
     advanceRap: 16,
     imageSrc: 'assets/all-workouts/declinePushUps.gif');
-
 Workout walkingPlank = Workout(
     title: 'Walking Plank',
     steps: [
@@ -1632,17 +1541,16 @@ Workout walkingPlank = Workout(
       'Step left hand back to start, then right hand.',
     ],
     videoLink:
-        'https://www.youtube.com/watch?v=1mPOD3IZxlI&ab_channel=NationalAcademyofSportsMedicine%28NASM%29',
+    'https://www.youtube.com/watch?v=1mPOD3IZxlI&ab_channel=NationalAcademyofSportsMedicine%28NASM%29',
     showTimer: false,
     advanceRap: 16,
     intermediateRap: 12,
     beginnerRap: 8,
     imageSrc: 'assets/all-workouts/walkingPlank.gif');
-
 Workout shoulderStretch = Workout(
-  //todo: imagesource should added
+
   title: 'Shoulder Stretch',
-  imageSrc: "",
+  imageSrc: "assets/all-workouts/shoulder_stretch.gif",
 
   steps: [
     'Bring one arm across your upper body and hold it straight.',
@@ -1650,11 +1558,10 @@ Workout shoulderStretch = Workout(
     'Hold for 5to 10 seconds and repeat on the other side.',
   ],
   videoLink:
-      'https://www.youtube.com/watch?v=KNfqxl7jkiU&ab_channel=NHSAyrshire%26Arran',
+  'https://www.youtube.com/watch?v=KNfqxl7jkiU&ab_channel=NHSAyrshire%26Arran',
   showTimer: true,
   duration: 30,
 );
-
 Workout burpee = Workout(
   title: 'Burpee',
   steps: [
@@ -1671,7 +1578,6 @@ Workout burpee = Workout(
   intermediateRap: 10,
   imageSrc: 'assets/all-workouts/burpee.gif',
 );
-
 Workout legBurpee = Workout(
   title: 'Burpee',
   steps: [
@@ -1688,7 +1594,6 @@ Workout legBurpee = Workout(
   intermediateRap: 10,
   imageSrc: 'assets/all-workouts/burpee.gif',
 );
-
 Workout diamond2 = Workout(
   title: 'Diamond Push-Ups',
   steps: [
@@ -1703,7 +1608,6 @@ Workout diamond2 = Workout(
   intermediateRap: 10,
   imageSrc: 'assets/all-workouts/diamond.gif',
 );
-
 Workout diamond = Workout(
   title: 'Diamond Push-Ups',
   steps: [
@@ -1718,7 +1622,6 @@ Workout diamond = Workout(
   intermediateRap: 12,
   imageSrc: 'assets/all-workouts/diamond.gif',
 );
-
 Workout spiderManPushUps = Workout(
   title: 'Spider-Man Push-Ups',
   imageSrc: 'assets/all-workouts/spiderMan.gif',
@@ -1730,7 +1633,7 @@ Workout spiderManPushUps = Workout(
     'Repeat to the opposite side, this time bringing your left knee to your left elbow.'
   ],
   videoLink:
-      'https://www.youtube.com/watch?v=ND72B0DcYsQ&ab_channel=PrecisionMovementbyEricWong',
+  'https://www.youtube.com/watch?v=ND72B0DcYsQ&ab_channel=PrecisionMovementbyEricWong',
   showTimer: false,
   advanceRap: 16,
 );
@@ -1792,7 +1695,7 @@ List<Workout> chestAdvance = [
 //-------------------------------------ABS--------------------------------------
 
 List<Workout> absBeginner = [
-  jumpingJacks,
+  beginnerJumpingJacks,
   abdominalCrunches,
   russianTwist,
   flutterKikes,
@@ -1801,32 +1704,36 @@ List<Workout> absBeginner = [
   russianTwist2,
   elbowPlanks,
   abdominalCrunches2,
+  pulseUp2,
   flutterKikes2,
   mountainClimbing2,
-  pulseUp2,
   wipers,
+  spineLumberL,
+  spineLumberR,
   cobraStretch,
+
 ];
 
 List<Workout> absIntermediate = [
   jumpingJacks,
   reverseCrunches,
-  russianTwist,
-  pulseUp,
-  vUps,
   mountainClimbing,
+  tricepsDips,
+  abdominalCrunches,
+  russianTwist,
+  vUps,
   sidePlankRight,
   sidePlankLeft,
-  flutterKikes,
-  vUps2,
+  tricepsDips,
   russianTwist2,
   mountainClimbing2,
   reverseCrunches2,
-  pulseUp2,
-  flutterKikes2,
+  vUps2,
+  abdominalCrunches2,
   sidePlankRight2,
   sidePlankLeft2,
-  wipers,
+  spineLumberL,
+  spineLumberR,
   cobraStretch,
 ];
 
@@ -2078,6 +1985,7 @@ List<Workout> armsIntermediate = [
 ];
 
 List<Workout> armsAdvance = [
+  //ToDo: remove all comments
   // armCircleClockWise,
   // armCircleCounterClockWise,
   // skippingWithOutRope,
@@ -2108,6 +2016,118 @@ List<Workout> armsAdvance = [
   standingBicepsStretchRight
 ];
 
+List<Workout> workoutList = [
+  armCurlsCrunchLeft,
+  armCurlsCrunchLeft2,
+  armCurlsCrunchRight,
+  armCurlsCrunchRight2,
+  skippingWithOutRope,
+  tricepsPushUp,
+  tricepsPushUp2,
+  armCircleClockWise,
+  armCircleCounterClockWise,
+  diagonalPlank,
+  punches,
+  punches2,
+  wallPushUps,
+  tricepsStretchLeft,
+  tricepsStretchRight,
+  standingBicepsStretchRight,
+  standingBicepsStretchLeft,
+  kneeToChestStretch,
+  squats,
+  buttBridge,
+  curtsyLunges,
+  bottomLegLiftLeft,
+  bottomLegLiftRight,
+  sumoSquat,
+  fireHydrantLeft,
+  fireHydrantRight,
+  jumpingSquats,
+  wallSit,
+  leftQuadStretch,
+  rightQuadStretch,
+  wallResistingSingleLegLeft,
+  wallResistingSingleLegRight,
+  lyingButterFlyStretch,
+  walkingLunges,
+  lateralSquat,
+  calfStretchLeft,
+  calfStretchRight,
+  rhomboidPulls,
+  sideArmRaise,
+  reclinedRhomboidSqueezes,
+  armScissors,
+  rhomboidPulls2,
+  sideArmRaise2,
+  reclinedRhomboidSqueezes2,
+  floorTricepsDips,
+  pikePushUps,
+  reversePushUps,
+  threadTheNeedleL,
+  threadTheNeedleR,
+  floorTricepsDips2,
+  pikePushUps2,
+  reversePushUps2,
+  catCowPose,
+  plankUp,
+  inchWorm,
+  plankUp2,
+  reverseSnowAngle,
+  childPose,
+  inchWorm2,
+  abdominalCrunches,
+  russianTwist,
+  flutterKikes,
+  pulseUp,
+  mountainClimbing,
+  russianTwist2,
+  elbowPlanks,
+  advanceElbowPlanks,
+  abdominalCrunches2,
+  flutterKikes2,
+  mountainClimbing2,
+  pulseUp2,
+  wipers,
+  reverseCrunches,
+  vUps,
+  sidePlankRight,
+  sidePlankLeft,
+  vUps2,
+  reverseCrunches2,
+  sidePlankRight2,
+  sidePlankLeft2,
+  pushUpsRotation,
+  pushUpsRotation2,
+  spineLumberL,
+  spineLumberR,
+  jumpingJacks,
+  kneePushUps,
+  inclinePushUps,
+  inclinePushUps2,
+  tricepsDips,
+  pushUps,
+  kneePushUps2,
+  tricepsDips2,
+  pushUps2,
+  cobraStretch,
+  chestStretch,
+  hinduPushUps,
+  wideArmPushUps,
+  staggeredPushUps,
+  ployMetricPushUps,
+  hinduPushUps2,
+  staggeredPushUps2,
+  ployMetricPushUps2,
+  declinePushUps,
+  walkingPlank,
+  shoulderStretch,
+  burpee,
+  legBurpee,
+  diamond2,
+  diamond,
+  spiderManPushUps
+];
 List<Workout> allWorkOut = [
   ...absAdvance,
   ...absBeginner,

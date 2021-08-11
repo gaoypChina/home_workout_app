@@ -144,17 +144,15 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
           ? "${widget.rapCount}s"
           : "X ${widget.rapCount}";
       return Container(
-        height: 50,
-        child: Row(
-          children: [
+        height: 60,
+        child:
             Text(
               "${workout.title} $rap",
               style: textTheme.bodyText1.copyWith(
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
                   color: Colors.white),
-            ),
-          ],
+
         ),
       );
     }

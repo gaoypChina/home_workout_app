@@ -87,12 +87,9 @@ class DetailPage extends StatelessWidget {
     getTitle(Workout workout){
       String rap = workout.showTimer == true ? "${rapCount}s": "X $rapCount";
      return Container(
-        height: 50,
-        child: Row(
-          children: [
-            Text("${workout.title} $rap",style: textTheme.bodyText1.copyWith(fontSize: 22,fontWeight: FontWeight.w600,color: Colors.white),),
-          ],
-        ),
+        height: 60,
+         child:   Text("${workout.title} $rap",style: textTheme.bodyText1.copyWith(fontSize: 22,fontWeight: FontWeight.w600,color: Colors.white),),
+
       );
     }
 

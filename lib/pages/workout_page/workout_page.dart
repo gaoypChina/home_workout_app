@@ -270,7 +270,6 @@ class _WorkoutPageState extends State<WorkoutPage>
     return Expanded(
       child: Container(
           color:isDark? Colors.black:Colors.grey.shade100,
-
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -287,14 +286,21 @@ class _WorkoutPageState extends State<WorkoutPage>
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    item.title,
-                    textAlign: TextAlign.center,
-                    style: textTheme.headline1.copyWith(
-                        fontSize: item.title.length > 15 ? 25 : 30,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.2,
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          item.title,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: textTheme.headline1.copyWith(
+                              fontSize: item.title.length > 15 ? 25 : 30,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.2,
+                              ),
                         ),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -27,7 +27,6 @@ class WorkoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
     getLastDate() {
@@ -192,7 +191,7 @@ class WorkoutCard extends StatelessWidget {
           );
         },
         child: Container(
-          height: height * .18,
+
           decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -218,107 +217,6 @@ class WorkoutCard extends StatelessWidget {
       ),
     );
 
-    //   Card(
-    //   elevation: 5,
-    //   shape: RoundedRectangleBorder(
-    //     borderRadius: BorderRadius.all(
-    //       Radius.circular(12.0),
-    //     ),
-    //   ),
-    //   child: InkWell(
-    //     onTap: () {
-    //       Navigator.push(
-    //         context,
-    //         MaterialPageRoute(
-    //             builder: (context) => ExerciseListScreen(
-    //                 workOutList: workoutList,
-    //                 tag: tag,
-    //                 title: title,
-    //               tagValue: tagValue,)),
-    //       );
-    //     },
-    //     child: ClipRRect(
-    //       borderRadius: BorderRadius.all(
-    //         Radius.circular(12.0),
-    //       ),
-    //       child: Container(
-    //         height: 130,
-    //         child: Stack(
-    //           children: [
-    //             Container(
-    //               width: double.infinity,
-    //               child: Image(
-    //                 image: AssetImage(
-    //                   "assets/cover/chest.jpg",
-    //                 ),
-    //                 fit: BoxFit.cover,
-    //               ),
-    //             ),
-    //             Container(
-    //               decoration: BoxDecoration(
-    //                 gradient: LinearGradient(
-    //                   begin: Alignment.bottomCenter,
-    //                   end: Alignment.topCenter,
-    //                   stops: [0.1, 0.4, 0.5, 0.9],
-    //                   colors: [
-    //                     Colors.black.withOpacity(.8),
-    //                     Colors.black54.withOpacity(.2),
-    //                     Colors.white.withOpacity(.1),
-    //                     Colors.white.withOpacity(.1),
-    //                   ],
-    //                 ),
-    //               ),
-    //             ),
-    //             Container(
-    //               child: Padding(
-    //                 padding: const EdgeInsets.only(
-    //                     left: 18.0, top: 12, right: 18, bottom: 10),
-    //                 child: Column(
-    //                   crossAxisAlignment: CrossAxisAlignment.start,
-    //                   children: [
-    //                     Text(
-    //                       title,
-    //                       style: textTheme.bodyText1.copyWith(
-    //                           color: Colors.white,
-    //                           fontSize: 20,
-    //                           fontWeight: FontWeight.w700),
-    //                     ),
-    //                     SizedBox(
-    //                       height: 8,
-    //                     ),
-    //                     Row(
-    //                       children: [
-    //                         Text(
-    //                           totalExercise.toString() + " Exercise",
-    //                           style: textTheme.bodyText2.copyWith(
-    //                               color: Colors.white,
-    //                               fontSize: 14,
-    //                               fontWeight: FontWeight.w600),
-    //                         ),
-    //                         SizedBox(width: 20,),
-    //                         getLastDate()
-    //                       ],
-    //                     ),
-    //                     Spacer(),
-    //                     Row(
-    //                       children: [
-    //                         getDuration(totalExercise),
-    //                         SizedBox(
-    //                           width: 40,
-    //                         ),
-    //                         getDifficulty(),
-    //                       ],
-    //                     ),
-    //                   ],
-    //                 ),
-    //               ),
-    //             )
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
 

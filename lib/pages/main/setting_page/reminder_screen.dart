@@ -53,7 +53,7 @@ class _ReminderTabState extends State<ReminderTab> {
   }
 
   _loadReminderToggle() async {
-    isChecked = await spHelper.loadBool(spKey.reminderToggle) ?? null;
+    isChecked = await spHelper.loadBool(spKey.reminderToggle) ?? false;
   }
 
   _loadInit() async {
