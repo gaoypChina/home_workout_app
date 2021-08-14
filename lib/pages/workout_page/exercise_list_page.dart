@@ -4,6 +4,7 @@ import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/widgets/custom_exercise_card.dart';
+import 'package:full_workout/widgets/push_up_level_dialog.dart';
 
 import '../../main.dart';
 import 'exercise_instruction_screen.dart';
@@ -37,8 +38,8 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   List<String> items;
   TabController tabContoller;
   double padValue = 0;
+  int pushUpIndex = 1;
   bool isLoading = true;
-
   bool lastStatus = true;
 
   _scrollListener() {
@@ -53,7 +54,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
     return _scrollController.hasClients &&
         _scrollController.offset > (200 - kToolbarHeight);
   }
-
 
   getTime() {
     int length = widget.workOutList.length;
@@ -71,16 +71,21 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   }
 
   getCountDown() async {
-    setState(() {
-      isLoading = true;
-    });
-
     countDownTime = await spHelper.loadDouble(spKey.countdownTime) ?? 30;
     restTime = await spHelper.loadDouble(spKey.trainingRest) ?? 30;
     setState(() {
       print('now tiime : $countDownTime');
     });
+  }
 
+  getPushUpLevel() async {
+    pushUpIndex = await spHelper.loadInt(spKey.pushUpLevel) ?? 1;
+  }
+
+  loadData() async {
+    await getCountDown();
+    await getPushUpLevel();
+    await getPadding();
     setState(() {
       isLoading = false;
     });
@@ -88,9 +93,8 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
 
   @override
   void initState() {
-    getPadding();
     super.initState();
-    getCountDown();
+    loadData();
     _scrollController = new ScrollController();
     _scrollController.addListener(_scrollListener);
     tabContoller = new TabController(vsync: this, length: 1);
@@ -155,35 +159,84 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return [
-                    SliverAppBar(backgroundColor:isDark?Colors.black: Colors.white,
+                    SliverAppBar(
+                      backgroundColor: isDark ? Colors.black : Colors.white,
                       leading: IconButton(
-                        icon: Icon(Icons.arrow_back,color:isDark?Colors.white: isShrink?Colors.black:Colors.white,),
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: isDark
+                              ? Colors.white
+                              : isShrink
+                                  ? Colors.black
+                                  : Colors.white,
+                        ),
                         onPressed: () {
                           Navigator.of(context).pop(true);
                         },
                       ),
+                      actions: [
+                        PopupMenuButton(
+                          icon: Icon(
+                            Icons.more_vert,
+                            color: isDark
+                                ? Colors.white
+                                : isShrink
+                                    ? Colors.black
+                                    : Colors.white,
+                          ),
+                          //don't specify icon if you want 3 dot menu
 
-                expandedHeight: 150.0,
-                pinned: true,
-                elevation: isDark?0:1,
-                floating: false,
-                forceElevated: innerBoxIsScrolled,
-                flexibleSpace: FlexibleSpaceBar(
-                  title: Text(
-                    widget.title,
-                   style: TextStyle(color:isDark?Colors.white: isShrink?Colors.black:Colors.white),
-                  ),
-                  background: Image.asset(
-                    "assets/cover/back-cover.jpg",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+                          itemBuilder: (context) => [
+                            PopupMenuItem<int>(
+                              value: 0,
+                              child: Text(
+                                "Push-ups level",
+                              ),
+                            ),
+                          ],
+                          onSelected: (int item) async {
+                            var res = await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return PushUpLevelDialog(
+                                    index: pushUpIndex,
+                                  );
+                                });
+                            if (res != null) {
+                              spHelper.saveInt(spKey.pushUpLevel, res);
+                              setState(() {
+                                pushUpIndex = res;
+                              });
+                            }
+                          },
+                        ),
+                      ],
+                      expandedHeight: 150.0,
+                      pinned: true,
+                      elevation: isDark ? 0 : 1,
+                      floating: false,
+                      forceElevated: innerBoxIsScrolled,
+                      flexibleSpace: FlexibleSpaceBar(
+                        title: Text(
+                          widget.title,
+                          style: TextStyle(
+                              color: isDark
+                                  ? Colors.white
+                                  : isShrink
+                                      ? Colors.black
+                                      : Colors.white),
+                        ),
+                        background: Image.asset(
+                          "assets/cover/back-cover.jpg",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
             ];
           },
           body: Scaffold(
-            backgroundColor: isDark?Colors.black:Colors.white,
-            body: TabBarView(
+            //     backgroundColor: isDark?Colors.black:Colors.white,
+                  body: TabBarView(
               controller: tabContoller,
               children: [
                 ListView.builder(
@@ -224,19 +277,22 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                         if (index == 0)
                           AnimatedPadding(
                             duration: Duration(milliseconds: 400),
-                            padding:  EdgeInsets.only(
-                                left: padValue*20, right: padValue, top: padValue*8),
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 6,
-                                  backgroundColor: Colors.red,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  widget.workOutList.length.toString() +
+                                  padding: EdgeInsets.only(
+                                      left: padValue * 20,
+                                      right: padValue,
+                                      top: padValue * 8,
+                                      bottom: padValue * 8),
+                                  child: Row(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 6,
+                                        backgroundColor: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        widget.workOutList.length.toString() +
                                       " Workouts",
                                   style: textTheme.headline6.copyWith(
                                       fontWeight: FontWeight.w500,
@@ -251,28 +307,37 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                                 ),
                                 SizedBox(
                                   width: 10,
+                                      ),
+                                      Text(
+                                        getTime().toString() + " Minutes",
+                                        style: textTheme.headline6.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                Text(
-                                  getTime().toString() + " Minutes",
-                                  style: textTheme.headline6.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16),
+                              if (index == 0)
+                                Divider(
+                                  thickness: .5,
                                 ),
-                              ],
-                            ),
-                          ),
-                        AnimatedPadding(
-                          duration:Duration(milliseconds: 1000),
-curve: Curves.easeOutCubic,
-                          padding:
-                          EdgeInsets.only(top:padValue* 12, left:padValue* 16, right:padValue* 16),
-                          child: CustomExerciseCard(
-                            index: index,
-                            workOutList: widget.workOutList,
-                            time: time,
-                          ),
-                        ),
-                      ],
+                              AnimatedPadding(
+                                duration: Duration(milliseconds: 1000),
+                                curve: Curves.easeOutCubic,
+                                padding: EdgeInsets.only(
+                                    top: padValue * 1,
+                                    left: padValue * 1,
+                                    right: padValue * 1),
+                                child: CustomExerciseCard(
+                                  index: index,
+                                  workOutList: widget.workOutList,
+                                  time: time,
+                                ),
+                              ),
+                              Divider(
+                                thickness: .5,
+                              ),
+                            ],
                     );
                   },
                   padding: EdgeInsets.only(bottom: 100),

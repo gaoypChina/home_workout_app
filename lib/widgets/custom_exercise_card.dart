@@ -22,15 +22,9 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     var item = widget.workOutList[widget.index];
-    return  Card(
-        elevation: 0,
-        margin: EdgeInsets.only(bottom: 0),
-        shape: RoundedRectangleBorder(side: BorderSide(color:isDark?Colors.blue.shade100: Colors.blue.shade700,width: 1.5),
-          borderRadius: BorderRadius.circular(16),
-        ),
+    return  Container(
         child:InkWell(
           onTap: () {
             showDialog(
@@ -43,33 +37,24 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
           },
           child: Row(
           children: <Widget>[
+            SizedBox(width: 10,),
             Expanded(
               flex: 2,
               child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20,),
-
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(16),bottomLeft: Radius.circular(16) ),
-                  child: Container(
-                    color: Colors.white,
-                    height: 100,
-                    child: Center(
-
-                        child: Image.asset(
-                          item.imageSrc,
-                          fit: BoxFit.scaleDown,
-
-                      ),
+                child: Container(
+                  height: 100,
+                  child: Center(
+                      child: Image.asset(
+                        item.imageSrc,
+                        fit: BoxFit.scaleDown,
                     ),
                   ),
                 ),
               ),
             ),
-            Container(width: 1.5,height: 100,color:isDark?Colors.blue.shade100: Colors.blue.shade700,),
+            SizedBox(width: 10,),
             Expanded(
-              flex: 3,
+              flex: 4,
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,16 +65,16 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                       child: Text(
                         item.title,
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w700,
                           fontSize: 18,
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 16,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 18.0),
+                      padding: const EdgeInsets.only(left: 12.0),
                       child: Row(
                         children: <Widget>[
                           if(!item.showTimer)   Text("X ", style: textTheme.subtitle1,),

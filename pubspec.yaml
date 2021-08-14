@@ -72,10 +72,9 @@ flutter:
   assets:
     - assets/
     - assets/cover/
-    - assets/bg_cover/
-    - assets/splash/
     - assets/all-workouts/
     - assets/other/
     - assets/animated-cover/
     - assets/sound/
+    - assets/workout_cover/
 

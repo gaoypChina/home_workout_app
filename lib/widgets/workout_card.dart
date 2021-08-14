@@ -110,7 +110,7 @@ class WorkoutCard extends StatelessWidget {
         child: Container(
           width: width * .45,
           child: Image.asset(
-            "assets/all-workouts/cobraStratch.png",
+            imaUrl.toString(),
             fit: BoxFit.fill,
           ),
         ),

@@ -25,17 +25,17 @@ List<String> exerciseName = [
 List<ExerciseCard> absExercise = [
   ExerciseCard(
       workoutList: absBeginner,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/abdominal_crunches.png",
       title: "Abs Beginner",
       tag: "Beginner"),
   ExerciseCard(
       workoutList: absIntermediate,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/elbowPlank.png",
       title: "Abs Intermediate",
       tag: "Intermediate"),
   ExerciseCard(
       workoutList: absAdvance,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/walking_plack.png",
       title: "Abs Advance",
       tag: "Advance")
 ];
@@ -43,17 +43,17 @@ List<ExerciseCard> absExercise = [
 List<ExerciseCard> chestExercise = [
   ExerciseCard(
       workoutList: chestBeginner,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/elbowPlank.png",
       title: "Chest Beginner",
       tag: "Beginner"),
   ExerciseCard(
       workoutList: chestIntermediate,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/cobraStratch.png",
       title: "Chest Intermediate",
       tag: "Intermediate"),
   ExerciseCard(
       workoutList: chestAdvance,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/hindu_push_ups.png",
       title: "Chest Advance",
       tag: "Advance")
 ];
@@ -61,17 +61,17 @@ List<ExerciseCard> chestExercise = [
 List<ExerciseCard> shoulderExercise = [
   ExerciseCard(
       workoutList: shoulderBeginner,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/arm_circle.png",
       title: "Shoulder Beginner",
       tag: "Beginner"),
   ExerciseCard(
       workoutList: shoulderIntermediate,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/arm_curls_crunches.png",
       title: "Shoulder Intermediate",
       tag: "Intermediate"),
   ExerciseCard(
       workoutList: shoulderAdvance,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/pick_pushups.png",
       title: "Shoulder Advance",
       tag: "Advance")
 ];
@@ -79,17 +79,17 @@ List<ExerciseCard> shoulderExercise = [
 List<ExerciseCard> legsExercise = [
   ExerciseCard(
       workoutList: legsBeginner,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/lateral_sqrart.png",
       title: "Legs Beginner",
       tag: "Beginner"),
   ExerciseCard(
       workoutList: legsIntermediate,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/knee_hug.png",
       title: "Legs Intermediate",
       tag: "Intermediate"),
   ExerciseCard(
       workoutList: legsAdvance,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/squarts.png",
       title: "Legs Advance",
       tag: "Advance")
 ];
@@ -97,17 +97,17 @@ List<ExerciseCard> legsExercise = [
 List<ExerciseCard> armsExercise = [
   ExerciseCard(
       workoutList: armsBeginner,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/triceps_strech.png",
       title: "Arms Beginner",
       tag: "Beginner"),
   ExerciseCard(
       workoutList: armsIntermediate,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/pushpus_rotation.png",
       title: "Arms Intermediate",
       tag: "Intermediate"),
   ExerciseCard(
       workoutList: armsAdvance,
-      imageUrl: "imageUrl",
+      imageUrl: "assets/workout_cover/diagonal_plack.png",
       title: "Arms Advance",
       tag: "Advance")
 ];

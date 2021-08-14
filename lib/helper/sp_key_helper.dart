@@ -40,4 +40,7 @@ class SpKey {
   String hourTime = "hourTime";
   String minuteTime = "minuteTime";
   String reminderToggle = "reminderToggle";
+
+  /// Push-up Level
+  String pushUpLevel = "pushUpLevel";
 }
