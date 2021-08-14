@@ -165,10 +165,26 @@ Workout diagonalPlank = Workout(
     videoLink:
         'https://www.youtube.com/watch?v=lsoQDZkmQ0c&ab_channel=BrianAganad',
     showTimer: false,
-    beginnerRap: 10,
+    beginnerRap: 12,
     intermediateRap: 14,
     advanceRap: 18,
     imageSrc: 'assets/all-workouts/diagonalPlank.gif');
+
+Workout diagonalPlank2 = Workout(
+    title: 'Diagonal Plank',
+    steps: [
+      'Start in the straight arm plank position',
+      'Lift your right arm and left leg until they are parallel with the ground',
+      'Return to the start position and repeat with the other side',
+    ],
+    videoLink:
+    'https://www.youtube.com/watch?v=lsoQDZkmQ0c&ab_channel=BrianAganad',
+    showTimer: false,
+    beginnerRap: 10,
+    intermediateRap: 12,
+    advanceRap: 16,
+    imageSrc: 'assets/all-workouts/diagonalPlank.gif');
+
 Workout punches = Workout(
   title: 'Punches',
   steps: [
@@ -306,7 +322,27 @@ Workout buttBridge = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=wPM8icPu6H8&ab_channel=Well%2BGood',
   showTimer: false,
+  beginnerRap: 12,
+  intermediateRap: 14,
+  advanceRap: 18,
+  imageSrc: 'assets/all-workouts/buttBridge.gif',
+);
+
+Workout buttBridge2 = Workout(
+  title: 'Butt Bridge',
+  steps: [
+    'Lie on your back with your hands at your sides, knees bent, and feet flat on the floor under your knees.',
+    'Tighten your abdominal and buttock muscles by pushing your low back into the ground before you push up.',
+    'Raise your hips to create a straight line from your knees to shoulders.',
+    'Squeeze your core and pull your belly button back toward your spine.',
+    'Hold for 20 to 30 seconds, and then return to your starting position.',
+  ],
+  videoLink:
+  'https://www.youtube.com/watch?v=wPM8icPu6H8&ab_channel=Well%2BGood',
+  showTimer: false,
+  beginnerRap: 10,
   intermediateRap: 12,
+  advanceRap: 16,
   imageSrc: 'assets/all-workouts/buttBridge.gif',
 );
 Workout curtsyLunges = Workout(
@@ -897,9 +933,9 @@ Workout abdominalCrunches = Workout(
       'Inhale and return to the starting position.'
     ],
     showTimer: false,
-    beginnerRap: 20,
+    beginnerRap: 16,
     intermediateRap: 20,
-    advanceRap: 20,
+    advanceRap: 24,
     imageSrc: 'assets/all-workouts/abdominalCrunches.gif');
 Workout russianTwist = Workout(
   title: 'Russian Twist',
@@ -1017,6 +1053,7 @@ Workout abdominalCrunches2 = Workout(
   ],
   showTimer: false,
   beginnerRap: 12,
+  intermediateRap: 14,
   advanceRap: 20,
   imageSrc: 'assets/all-workouts/abdominalCrunches.gif',
 );
@@ -1144,7 +1181,7 @@ Workout vUps2 = Workout(
     imageSrc: 'assets/all-workouts/VUps.gif');
 Workout reverseCrunches2 = Workout(
   title: 'Reverse Crunches',
-  showTimer: true,
+  showTimer: false,
   steps: [
     'Lie on your back with your knees together and your legs bent to 90 degrees,feet planted on the floor.',
     'Place your palms face down on the floor for support.',
@@ -1225,7 +1262,7 @@ Workout spineLumberL = Workout(
     duration: 30,
     imageSrc: 'assets/all-workouts/spineLumberL.png');
 Workout spineLumberR = Workout(
-  title: 'Spine Lumber Right)',
+  title: 'Spine Lumber Right',
   steps: [
     'Begin lying comfortably on the back. Bend your knees in to your chest and extend your arms out alongside the body in a “T” formation, with your palms facing up toward the ceiling.',
     'Inhale here, lengthening your tailbone down toward the ground. As you exhale, drop both of your bent knees over to the right, and send your gaze over to the left.',
@@ -1698,62 +1735,62 @@ List<Workout> absBeginner = [
   beginnerJumpingJacks,
   abdominalCrunches,
   russianTwist,
-  flutterKikes,
+  buttBridge,
   pulseUp,
   mountainClimbing,
   russianTwist2,
   elbowPlanks,
   abdominalCrunches2,
   pulseUp2,
-  flutterKikes2,
+  buttBridge2,
   mountainClimbing2,
   wipers,
+  cobraStretch,
   spineLumberL,
   spineLumberR,
-  cobraStretch,
-
 ];
 
 List<Workout> absIntermediate = [
   jumpingJacks,
   reverseCrunches,
   mountainClimbing,
-  tricepsDips,
+  buttBridge,
   abdominalCrunches,
   russianTwist,
   vUps,
+  diagonalPlank,
   sidePlankRight,
   sidePlankLeft,
-  tricepsDips,
   russianTwist2,
-  mountainClimbing2,
+  buttBridge2,
+  diagonalPlank2,
   reverseCrunches2,
   vUps2,
   abdominalCrunches2,
   sidePlankRight2,
   sidePlankLeft2,
+  cobraStretch,
   spineLumberL,
   spineLumberR,
-  cobraStretch,
 ];
 
 List<Workout> absAdvance = [
   jumpingJacks,
-  tricepsDips,
+  reverseCrunches,
   sidePlankLeft,
   sidePlankRight,
-  reverseCrunches,
+  walkingPlank,
   vUps,
   pushUpsRotation,
+  buttBridge,
   abdominalCrunches,
   russianTwist,
   reverseCrunches2,
   tricepsDips2,
-  flutterKikes,
   abdominalCrunches2,
   vUps2,
   russianTwist2,
-  flutterKikes2,
+  buttBridge2,
   walkingPlank,
   advanceElbowPlanks,
   wipers,
