@@ -3,7 +3,7 @@ import '../workout_list.dart';
 List<Workout> armDay1 = [
   jumpingJacks,
   sideArmRaise,
-  tricepsDips,
+  benchDips,
   armCircleClockWise,
   punches,
   armCircleCounterClockWise,
@@ -18,7 +18,7 @@ List<Workout> armDay1 = [
 List<Workout> armDay2 = [
   jumpingJacks,
   sideArmRaise,
-  tricepsDips,
+  benchDips,
   armCircleClockWise,
   pushUps,
   armCircleCounterClockWise,
@@ -33,7 +33,7 @@ List<Workout> armDay2 = [
 List<Workout> armDay3 = [
   jumpingJacks,
   sideArmRaise,
-  tricepsDips,
+  benchDips,
   armCircleClockWise,
   punches,
   armCircleCounterClockWise,
@@ -48,7 +48,7 @@ List<Workout> armDay3 = [
 List<Workout> armDay4 = [
   jumpingJacks,
   sideArmRaise,
-  tricepsDips,
+  benchDips,
   armCircleClockWise,
   pushUps,
   armCircleCounterClockWise,
@@ -62,14 +62,14 @@ List<Workout> armDay4 = [
 ];
 List<Workout> armDay5 = [
   jumpingJacks,
-  tricepsDips,
+  benchDips,
   inclinePushUps,
   rhomboidPulls,
-  tricepsDips,
+  benchDips,
   catCowPose,
   diamond2,
   pushUps,
-  tricepsDips2,
+  benchDips2,
   threadTheNeedleL,
   threadTheNeedleR,
   inchWorm,
@@ -78,14 +78,14 @@ List<Workout> armDay5 = [
 ];
 List<Workout> armDay6 = [
   jumpingJacks,
-  tricepsDips,
+  benchDips,
   inclinePushUps,
   rhomboidPulls,
-  tricepsDips,
+  benchDips,
   catCowPose,
   diamond2,
   pushUps,
-  tricepsDips2,
+  benchDips2,
   threadTheNeedleL,
   threadTheNeedleR,
   inchWorm,

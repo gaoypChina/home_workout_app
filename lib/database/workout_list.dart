@@ -1245,7 +1245,8 @@ Workout pushUpsRotation = Workout(
   ],
   videoLink: 'https://youtu.be/YU0gWh72a3k',
   showTimer: false,
-  advanceRap: 24,
+  advanceRap: 20,
+  beginnerRap: 10,
   intermediateRap: 12,
   imageSrc: 'assets/all-workouts/pushUpsRotation.gif',
 );
@@ -1259,8 +1260,9 @@ Workout pushUpsRotation2 = Workout(
   ],
   videoLink: 'https://youtu.be/YU0gWh72a3k',
   showTimer: false,
-  advanceRap: 20,
+  advanceRap: 18,
   intermediateRap: 10,
+  beginnerRap: 8,
   imageSrc: 'assets/all-workouts/pushUpsRotation.gif',
 );
 Workout spineLumberL = Workout(
@@ -1400,8 +1402,8 @@ Workout tricepsDipsChest2 = Workout(
   advanceRap: 24,
   imageSrc: 'assets/all-workouts/tricepsdips.gif',
 );
-Workout tricepsDips = Workout(
-  title: 'Triceps Dips',
+Workout benchDips = Workout(
+  title: 'Bench Dips',
   steps: [
     'Grip the front edges of a chair or bench with your hand.',
     'Hover your butt just off and in front of the seat, feet flat, and legs bent so thighs are parallel to the floor.',
@@ -1446,8 +1448,8 @@ Workout kneePushUps2 = Workout(
   intermediateRap: 12,
   imageSrc: 'assets/all-workouts/kneePushUps.gif',
 );
-Workout tricepsDips2 = Workout(
-  title: 'Triceps Dips',
+Workout benchDips2 = Workout(
+  title: 'Bench Dips',
   steps: [
     'Grip the front edges of a chair or bench with your hand.',
     'Hover your butt just off and in front of the seat, feet flat, and legs bent so thighs are parallel to the floor.',
@@ -1845,7 +1847,7 @@ List<Workout> absAdvance = [
   abdominalCrunches,
   russianTwist,
   reverseCrunches2,
-  tricepsDips2,
+  benchDips2,
   abdominalCrunches2,
   vUps2,
   russianTwist2,
@@ -1881,7 +1883,7 @@ List<Workout> shoulderBeginner = [
 
 List<Workout> shoulderIntermediate = [
   jumpingJacks,
-  tricepsDips,
+  benchDips,
   inclinePushUps,
   rhomboidPulls,
   floorTricepsDips,
@@ -2037,7 +2039,7 @@ List<Workout> legsAdvance = [
 List<Workout> armsBeginner = [
   jumpingJacks,
   sideArmRaise,
-  tricepsDips,
+  benchDips,
   armCircleClockWise,
   armCircleCounterClockWise,
   diamond,
@@ -2093,7 +2095,7 @@ List<Workout> armsAdvance = [
   floorTricepsDips,
   punches,
   tricepsPushUp,
-  tricepsDips,
+  benchDips,
   floorTricepsDips2,
   declinePushUps,
   punches2,
@@ -2101,7 +2103,7 @@ List<Workout> armsAdvance = [
   armCurlsCrunchLeft2,
   armCurlsCrunchRight2,
   tricepsPushUp2,
-  tricepsDips2,
+  benchDips2,
   threadTheNeedleL,
   threadTheNeedleR,
   wideArmPushUps,
@@ -2202,10 +2204,10 @@ List<Workout> workoutList = [
   kneePushUps,
   inclinePushUps,
   inclinePushUps2,
-  tricepsDips,
+  benchDips,
   pushUps,
   kneePushUps2,
-  tricepsDips2,
+  benchDips2,
   pushUps2,
   cobraStretch,
   chestStretch,

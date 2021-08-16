@@ -298,7 +298,7 @@ List<Workout> absDay21 = [
 ];
 List<Workout> absDay22 = [
   jumpingJacks,
-  tricepsDips,
+  benchDips,
   sidePlankLeft,
   sidePlankRight,
   reverseCrunches,
@@ -307,7 +307,7 @@ List<Workout> absDay22 = [
   abdominalCrunches,
   russianTwist,
   reverseCrunches2,
-  tricepsDips2,
+  benchDips2,
   flutterKikes,
   russianTwist2,
   flutterKikes2,
@@ -320,7 +320,7 @@ List<Workout> absDay22 = [
 ];
 List<Workout> absDay23 = [
   jumpingJacks,
-  tricepsDips,
+  benchDips,
   sidePlankLeft,
   sidePlankRight,
   reverseCrunches,
@@ -329,7 +329,7 @@ List<Workout> absDay23 = [
   abdominalCrunches,
   russianTwist,
   reverseCrunches2,
-  tricepsDips2,
+  benchDips2,
   flutterKikes,
   russianTwist2,
   flutterKikes2,
@@ -342,7 +342,7 @@ List<Workout> absDay23 = [
 ];
 List<Workout> absDay24 = [
   jumpingJacks,
-  tricepsDips,
+  benchDips,
   sidePlankLeft,
   sidePlankRight,
   reverseCrunches,
@@ -350,7 +350,7 @@ List<Workout> absDay24 = [
   abdominalCrunches,
   russianTwist,
   reverseCrunches2,
-  tricepsDips2,
+  benchDips2,
   flutterKikes,
   abdominalCrunches2,
   vUps2,
@@ -365,7 +365,7 @@ List<Workout> absDay24 = [
 ];
 List<Workout> absDay25 = [
   jumpingJacks,
-  tricepsDips,
+  benchDips,
   sidePlankLeft,
   sidePlankRight,
   reverseCrunches,
@@ -373,7 +373,7 @@ List<Workout> absDay25 = [
   abdominalCrunches,
   russianTwist,
   reverseCrunches2,
-  tricepsDips2,
+  benchDips2,
   flutterKikes,
   abdominalCrunches2,
   vUps2,

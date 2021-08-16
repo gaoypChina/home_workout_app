@@ -82,7 +82,7 @@ List<Workout> fullBodyDay10 = [
 ];
 List<Workout> fullBodyDay11 = [
   jumpingJacks,
-  tricepsDips,
+  benchDips,
   inclinePushUps,
   rhomboidPulls,
   floorTricepsDips,

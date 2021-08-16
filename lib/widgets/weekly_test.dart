@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/database/workout_list.dart';
+import 'package:full_workout/database/workout_plan/abs_challenges.dart';
+import 'package:full_workout/database/workout_plan/chest_challenge.dart';
 import 'package:full_workout/database/workout_plan/full_body_challenge.dart';
 
 class WeeklyTest extends StatefulWidget {
@@ -16,7 +18,7 @@ class _WeeklyTestState extends State<WeeklyTest> {
       child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: Column(children: [
-          ...fullBodyChallenge
+          ...chestChallenge
               .map((challenge) => Column(children: [
                     Container(
                       height: 20,
@@ -52,8 +54,8 @@ class _WeeklyTestState extends State<WeeklyTest> {
                       return Column(
                         children: [
                           Row(children: [
-                            Image.asset(curr.imageSrc,height: 20,),
-                           // Text(curr.title.toString()),
+                          Image.asset(curr.imageSrc,height: 20,),
+                            //   Text(curr.title.toString()),
                             Spacer(),
                             time.toString() == "null"
                                 ? Container(

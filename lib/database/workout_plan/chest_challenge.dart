@@ -3,7 +3,7 @@ import '../workout_list.dart';
 List<Workout> chestDay1 = [
   jumpingJacks,
   kneePushUps,
-  tricepsDips2,
+  benchDips2,
   inclinePushUps,
   pushUps2,
   chestStretch,
@@ -12,65 +12,64 @@ List<Workout> chestDay1 = [
 List<Workout> chestDay2 = [
   jumpingJacks,
   kneePushUps,
-  tricepsDips2,
+  benchDips2,
   inclinePushUps,
   pushUps2,
   walkingPlank,
   chestStretch,
   cobraStretch,
 ];
-List<Workout> chestDay3 = [...chestBeginner];
-List<Workout> chestDay4 = [...chestBeginner];
-List<Workout> chestDay5 = [
+
+List<Workout> chestDay3 = [
   jumpingJacks,
   kneePushUps,
   inclinePushUps,
-  tricepsDips,
+  benchDips,
   pushUps,
-  tricepsDips2,
+  benchDips2,
   pushUps2,
   walkingPlank,
   inclinePushUps,
-  tricepsDips,
   chestStretch,
   cobraStretch,
 ];
-List<Workout> chestDay6 = [
+List<Workout> chestDay4 = [
   jumpingJacks,
   kneePushUps,
   inclinePushUps,
-  tricepsDips,
+  benchDips,
   pushUps,
   kneePushUps2,
   pushUps2,
   walkingPlank,
   inclinePushUps,
-  tricepsDips,
   chestStretch,
   cobraStretch,
 ];
-List<Workout> chestDay7 = []; //rest
+List<Workout> chestDay5 = [...chestBeginner];
+List<Workout> chestDay6 = [...chestBeginner];
+List<Workout> chestDay7 = [...chestBeginner]; //rest
 List<Workout> chestDay8 = [
   jumpingJacks,
   inclinePushUps,
-  tricepsDips,
+  benchDips,
   pushUps,
   kneePushUps2,
-  tricepsDips2,
+  benchDips2,
   pushUps2,
-  tricepsDips,
+  benchDips,
   chestStretch,
   cobraStretch,
 ];
 List<Workout> chestDay9 = [
   jumpingJacks,
   inclinePushUps,
-  tricepsDips,
+  benchDips,
   pushUps,
   kneePushUps2,
-  tricepsDips2,
+  benchDips2,
   pushUps2,
-  tricepsDips,
+  benchDips,
   chestStretch,
   cobraStretch,
 ];
@@ -112,7 +111,22 @@ List<Workout> chestDay13 = [
   cobraStretch,
   chestStretch
 ];
-List<Workout> chestDay14 = []; //rest
+List<Workout> chestDay14 = [ jumpingJacks,
+  armCircleClockWise,
+  pushUps,
+  wideArmPushUps,
+  hinduPushUps,
+  staggeredPushUps,
+  ployMetricPushUps2,
+  ployMetricPushUps,
+  pushUps2,
+  hinduPushUps2,
+  staggeredPushUps2,
+  ployMetricPushUps2,
+  declinePushUps,
+  walkingPlank,
+  cobraStretch,
+  chestStretch];
 List<Workout> chestDay15 = [
   jumpingJacks,
   armCircleClockWise,
@@ -223,7 +237,25 @@ List<Workout> chestDay20 = [
   cobraStretch,
   chestStretch
 ];
-List<Workout> chestDay21 = []; //rest
+List<Workout> chestDay21 = [
+  jumpingJacks,
+  armCircleClockWise,
+  pushUps,
+  wideArmPushUps,
+  hinduPushUps,
+  staggeredPushUps,
+  ployMetricPushUps,
+  pushUps2,
+  hinduPushUps2,
+  staggeredPushUps2,
+  ployMetricPushUps2,
+  pushUps2,
+  declinePushUps,
+  wideArmPushUps,
+  walkingPlank,
+  cobraStretch,
+  chestStretch
+];
 List<Workout> chestDay22 = [
   jumpingJacks,
   armCircleClockWise,
@@ -300,7 +332,7 @@ List<Workout> chestDay25 = [
 ];
 List<Workout> chestDay26 = [...chestAdvance];
 List<Workout> chestDay27 = [...chestAdvance];
-List<Workout> chestDay28 = []; //rest
+List<Workout> chestDay28 = [...chestAdvance]; //rest
 
 List<List<Workout>> chestChallenge = [
   chestDay1,
