@@ -504,7 +504,7 @@ Workout wallResistingSingleLegLeft = Workout(
   advanceRap: 16,
   beginnerRap: 12,
   intermediateRap: 14,
-  imageSrc: 'assets/all-workouts/wallRestingSinglCalfRise_L.gif',
+  imageSrc: 'assets/all-workouts/wallResistingSingleLeg_L.png',
 );
 Workout wallResistingSingleLegRight = Workout(
   title: 'Wall Resisting Single Leg Right',
@@ -519,7 +519,7 @@ Workout wallResistingSingleLegRight = Workout(
   advanceRap: 16,
   beginnerRap: 12,
   intermediateRap: 14,
-  imageSrc: 'assets/all-workouts/wallRestingSinglCalfRise_R.gif',
+  imageSrc: 'assets/all-workouts/wallResistingSingleLeg_R.png',
 );
 Workout lyingButterFlyStretch = Workout(
     title: 'Lying ButterFly Stretch',
@@ -636,7 +636,9 @@ Workout reclinedRhomboidSqueezes = Workout(
       'https://www.youtube.com/watch?v=olv2Sv9DwmA&ab_channel=LeapFitness',
   showTimer: false,
   beginnerRap: 12,
-  imageSrc: 'assets/all-workouts/reclinedRomboidSqueeze.gif',
+  intermediateRap: 14,
+  //TODO:add missing assets folder
+  imageSrc: 'assets/all-workouts/armScissor.gif',
 );
 Workout armScissors = Workout(
   title: 'Arm Scissors',
@@ -680,6 +682,7 @@ Workout sideArmRaise2 = Workout(
       'https://www.youtube.com/watch?v=eEcUyYlf8UI&ab_channel=LeapFitness',
   showTimer: false,
   beginnerRap: 10,
+  intermediateRap: 14,
   imageSrc: 'assets/all-workouts/side arm raise.gif',
 );
 Workout reclinedRhomboidSqueezes2 = Workout(
@@ -693,7 +696,9 @@ Workout reclinedRhomboidSqueezes2 = Workout(
       'https://www.youtube.com/watch?v=olv2Sv9DwmA&ab_channel=LeapFitness',
   showTimer: false,
   beginnerRap: 10,
-  imageSrc: 'assets/all-workouts/reclinedRomboidSqueeze.gif',
+  intermediateRap: 12,
+  //TODO: add missing folder
+  imageSrc: 'assets/all-workouts/floorTricepsDipes.gif',
 );
 Workout floorTricepsDips = Workout(
   title: 'Floor Triceps Dips',
@@ -707,8 +712,10 @@ Workout floorTricepsDips = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=s3Mppxwx1o8&ab_channel=MoveItMonday',
   showTimer: false,
-  intermediateRap: 12,
-  advanceRap: 16,
+
+  beginnerRap: 10,
+  intermediateRap: 16,
+  advanceRap: 18,
   imageSrc: 'assets/all-workouts/floorTricepsDipes.gif',
 );
 Workout pikePushUps = Workout(
@@ -811,7 +818,7 @@ Workout reversePushUps2 = Workout(
       'https://www.youtube.com/watch?v=a00N2M7I1_o&ab_channel=Men%27sHealth',
   showTimer: false,
   advanceRap: 12,
-  imageSrc: 'assets/all-workouts/reversePushups.gif.gif',
+  imageSrc: 'assets/all-workouts/reversePushups.gif',
 );
 Workout catCowPose = Workout(
   title: 'Cat Cow Pose',
@@ -903,7 +910,7 @@ Workout childPose = Workout(
       'https://www.youtube.com/watch?v=qYvYsFrTI0U&ab_channel=ViveHealth',
   showTimer: true,
   duration: 30,
-  imageSrc: 'assets/all-workouts/child\'sPose.png',
+  imageSrc: 'assets/all-workouts/child_sPose.png',
 );
 Workout inchWorm2 = Workout(
   title: 'Inch Worm',
@@ -1230,7 +1237,7 @@ Workout pushUpsRotation = Workout(
   videoLink: 'https://youtu.be/YU0gWh72a3k',
   showTimer: false,
   advanceRap: 24,
-  intermediateRap: 16,
+  intermediateRap: 12,
   imageSrc: 'assets/all-workouts/pushUpsRotation.gif',
 );
 Workout pushUpsRotation2 = Workout(
@@ -1244,7 +1251,7 @@ Workout pushUpsRotation2 = Workout(
   videoLink: 'https://youtu.be/YU0gWh72a3k',
   showTimer: false,
   advanceRap: 20,
-  intermediateRap: 12,
+  intermediateRap: 10,
   imageSrc: 'assets/all-workouts/pushUpsRotation.gif',
 );
 Workout spineLumberL = Workout(
@@ -1351,6 +1358,39 @@ Workout inclinePushUps2 = Workout(
   intermediateRap: 10,
   imageSrc: 'assets/all-workouts/inclinePushUps.gif',
 );
+Workout tricepsDipsChest = Workout(
+  title: 'Triceps Dips',
+  steps: [
+    'Grip the front edges of a chair or bench with your hand.',
+    'Hover your butt just off and in front of the seat, feet flat, and legs bent so thighs are parallel to the floor.',
+    'Straighten your arms. This is your start position.'
+        'Lower your body toward the floor until your arms form 90-degree angles.',
+    'Then, engage your triceps to press back to start.',
+  ],
+  videoLink: 'https://www.youtube.com/watch?v=6kALZikXxLc&ab_channel=Howcast',
+  showTimer: false,
+  beginnerRap: 10,
+  intermediateRap: 16,
+  advanceRap: 24,
+  imageSrc: 'assets/all-workouts/tricepsdips.gif',
+);
+
+Workout tricepsDipsChest2 = Workout(
+  title: 'Triceps Dips',
+  steps: [
+    'Grip the front edges of a chair or bench with your hand.',
+    'Hover your butt just off and in front of the seat, feet flat, and legs bent so thighs are parallel to the floor.',
+    'Straighten your arms. This is your start position.'
+        'Lower your body toward the floor until your arms form 90-degree angles.',
+    'Then, engage your triceps to press back to start.',
+  ],
+  videoLink: 'https://www.youtube.com/watch?v=6kALZikXxLc&ab_channel=Howcast',
+  showTimer: false,
+  beginnerRap: 8,
+  intermediateRap: 16,
+  advanceRap: 24,
+  imageSrc: 'assets/all-workouts/tricepsdips.gif',
+);
 Workout tricepsDips = Workout(
   title: 'Triceps Dips',
   steps: [
@@ -1394,6 +1434,7 @@ Workout kneePushUps2 = Workout(
       'https://www.youtube.com/watch?v=utzhPQuXWcA&ab_channel=GetExerciseConfident',
   showTimer: false,
   beginnerRap: 8,
+  intermediateRap: 12,
   imageSrc: 'assets/all-workouts/kneePushUps.gif',
 );
 Workout tricepsDips2 = Workout(
@@ -1408,6 +1449,7 @@ Workout tricepsDips2 = Workout(
   videoLink: 'https://www.youtube.com/watch?v=6kALZikXxLc&ab_channel=Howcast',
   showTimer: false,
   beginnerRap: 10,
+  intermediateRap: 16,
   advanceRap: 22,
   imageSrc: 'assets/all-workouts/tricepsdips.gif',
 );
@@ -1641,6 +1683,7 @@ Workout diamond2 = Workout(
   ],
   videoLink: 'https://www.youtube.com/watch?v=pD3mD6WgykM&ab_channel=Howcast',
   showTimer: false,
+  beginnerRap: 6,
   advanceRap: 12,
   intermediateRap: 10,
   imageSrc: 'assets/all-workouts/diamond.gif',
@@ -1656,6 +1699,7 @@ Workout diamond = Workout(
   videoLink: 'https://www.youtube.com/watch?v=pD3mD6WgykM&ab_channel=Howcast',
   showTimer: false,
   advanceRap: 16,
+  beginnerRap: 10,
   intermediateRap: 12,
   imageSrc: 'assets/all-workouts/diamond.gif',
 );
@@ -1680,10 +1724,10 @@ List<Workout> chestBeginner = [
   jumpingJacks,
   kneePushUps,
   inclinePushUps,
-  tricepsDips,
+  tricepsDipsChest,
   pushUps,
   kneePushUps2,
-  tricepsDips2,
+  tricepsDipsChest2,
   pushUps2,
   walkingPlank,
   chestStretch,
@@ -1697,11 +1741,11 @@ List<Workout> chestIntermediate = [
   wideArmPushUps,
   hinduPushUps,
   staggeredPushUps,
-  ployMetricPushUps,
+  pushUpsRotation,
   pushUps2,
   hinduPushUps2,
   staggeredPushUps2,
-  ployMetricPushUps2,
+  pushUpsRotation2,
   declinePushUps,
   walkingPlank,
   cobraStretch,
@@ -1832,8 +1876,9 @@ List<Workout> shoulderIntermediate = [
   plankUp,
   sideArmRaise,
   floorTricepsDips2,
+  sidePlankRight,
+  sidePlankLeft,
   inchWorm,
-  pulseUp2,
   threadTheNeedleL,
   threadTheNeedleR,
   childPose,
@@ -1842,10 +1887,10 @@ List<Workout> shoulderIntermediate = [
 List<Workout> shoulderAdvance = [
   jumpingJacks,
   floorTricepsDips,
-  pikePushUps,
-  reversePushUps,
   threadTheNeedleL,
   threadTheNeedleR,
+  pikePushUps,
+  reversePushUps,
   floorTricepsDips2,
   pikePushUps2,
   reversePushUps2,
@@ -1980,7 +2025,7 @@ List<Workout> armsBeginner = [
   tricepsDips,
   armCircleClockWise,
   armCircleCounterClockWise,
-  pulseUp,
+  diamond,
   sideArmRaise2,
   inchWorm,
   diagonalPlank,
@@ -2023,31 +2068,31 @@ List<Workout> armsIntermediate = [
 
 List<Workout> armsAdvance = [
   //ToDo: remove all comments
-  // armCircleClockWise,
-  // armCircleCounterClockWise,
-  // skippingWithOutRope,
-  // burpee,
-  // armCurlsCrunchLeft,
-  // armCurlsCrunchRight,
-  // declinePushUps,
-  // floorTricepsDips,
-  // punches,
-  // tricepsPushUp,
-  // tricepsDips,
-  // floorTricepsDips2,
-  // declinePushUps,
-  // punches2,
-  // burpee,
-  // armCurlsCrunchLeft2,
-  // armCurlsCrunchRight2,
-  // tricepsPushUp2,
-  // tricepsDips2,
-  // threadTheNeedleL,
-  // threadTheNeedleR,
-  // wideArmPushUps,
-  // inchWorm2,
-  // pushUpsRotation,
-  // tricepsStretchLeft,
+  armCircleClockWise,
+  armCircleCounterClockWise,
+  skippingWithOutRope,
+  burpee,
+  armCurlsCrunchLeft,
+  armCurlsCrunchRight,
+  declinePushUps,
+  floorTricepsDips,
+  punches,
+  tricepsPushUp,
+  tricepsDips,
+  floorTricepsDips2,
+  declinePushUps,
+  punches2,
+  burpee,
+  armCurlsCrunchLeft2,
+  armCurlsCrunchRight2,
+  tricepsPushUp2,
+  tricepsDips2,
+  threadTheNeedleL,
+  threadTheNeedleR,
+  wideArmPushUps,
+  inchWorm2,
+  pushUpsRotation,
+  tricepsStretchLeft,
   tricepsStretchRight,
   standingBicepsStretchLeft,
   standingBicepsStretchRight

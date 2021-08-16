@@ -13,7 +13,6 @@ import 'package:full_workout/pages/main/setting_page/training_settings_screen.da
 import 'package:full_workout/pages/main/setting_page/faq_page.dart';
 import 'package:share/share.dart';
 import 'package:device_info/device_info.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../main.dart';
 
@@ -50,7 +49,7 @@ class _SettingPageState extends State<SettingPage> {
     });
     await spHelper.loadDouble(spKey.countdownTime).then((value) {
       setState(() {
-        countdownTime = (value == null) ? 30.0 : value;
+        countdownTime = (value == null) ? 10.0 : value;
       });
     });
   }

@@ -25,12 +25,12 @@ List<String> exerciseName = [
 List<ExerciseCard> absExercise = [
   ExerciseCard(
       workoutList: absBeginner,
-      imageUrl: "assets/workout_cover/abdominal_crunches.png",
+      imageUrl: "assets/workout_cover/elbowPlank.png",
       title: "Abs Beginner",
       tag: "Beginner"),
   ExerciseCard(
       workoutList: absIntermediate,
-      imageUrl: "assets/workout_cover/elbowPlank.png",
+      imageUrl: "assets/workout_cover/abdominal_crunches.png",
       title: "Abs Intermediate",
       tag: "Intermediate"),
   ExerciseCard(
@@ -79,7 +79,7 @@ List<ExerciseCard> shoulderExercise = [
 List<ExerciseCard> legsExercise = [
   ExerciseCard(
       workoutList: legsBeginner,
-      imageUrl: "assets/workout_cover/lateral_sqrart.png",
+      imageUrl: "assets/workout_cover/mountain_climbilng.png",
       title: "Legs Beginner",
       tag: "Beginner"),
   ExerciseCard(
@@ -97,7 +97,7 @@ List<ExerciseCard> legsExercise = [
 List<ExerciseCard> armsExercise = [
   ExerciseCard(
       workoutList: armsBeginner,
-      imageUrl: "assets/workout_cover/triceps_strech.png",
+      imageUrl: "assets/workout_cover/walking_plack.png",
       title: "Arms Beginner",
       tag: "Beginner"),
   ExerciseCard(

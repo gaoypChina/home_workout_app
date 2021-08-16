@@ -5,12 +5,10 @@ List<Workout> armDay1 = [
   sideArmRaise,
   tricepsDips,
   armCircleClockWise,
+  punches,
   armCircleCounterClockWise,
-  diamond,
   sideArmRaise2,
   inchWorm2,
-  diagonalPlank,
-  punches,
   pushUps,
   tricepsStretchLeft,
   tricepsStretchRight,
@@ -22,13 +20,11 @@ List<Workout> armDay2 = [
   sideArmRaise,
   tricepsDips,
   armCircleClockWise,
+  pushUps,
   armCircleCounterClockWise,
-  diamond,
   sideArmRaise2,
   inchWorm2,
-  diagonalPlank,
   punches,
-  pushUps,
   tricepsStretchLeft,
   tricepsStretchRight,
   standingBicepsStretchLeft,
@@ -39,11 +35,10 @@ List<Workout> armDay3 = [
   sideArmRaise,
   tricepsDips,
   armCircleClockWise,
+  punches,
   armCircleCounterClockWise,
-  diamond,
   sideArmRaise2,
   diagonalPlank,
-  punches,
   pushUps,
   tricepsStretchLeft,
   tricepsStretchRight,
@@ -55,12 +50,11 @@ List<Workout> armDay4 = [
   sideArmRaise,
   tricepsDips,
   armCircleClockWise,
+  pushUps,
   armCircleCounterClockWise,
-  diamond,
   sideArmRaise2,
   diagonalPlank,
   punches,
-  pushUps,
   tricepsStretchLeft,
   tricepsStretchRight,
   standingBicepsStretchLeft,
@@ -68,23 +62,54 @@ List<Workout> armDay4 = [
 ];
 List<Workout> armDay5 = [
   jumpingJacks,
-  armCircleClockWise,
+  tricepsDips,
+  inclinePushUps,
   rhomboidPulls,
-  sideArmRaise,
-  kneePushUps,
-  reclinedRhomboidSqueezes,
+  tricepsDips,
+  catCowPose,
+  diamond2,
+  pushUps,
+  tricepsDips2,
   threadTheNeedleL,
   threadTheNeedleR,
-  armScissors,
-  rhomboidPulls2,
-  sideArmRaise2,
-  kneePushUps2,
-  catCowPose,
-  reclinedRhomboidSqueezes2,
+  inchWorm,
+  pulseUp2,
   childPose,
 ];
 List<Workout> armDay6 = [
   jumpingJacks,
+  tricepsDips,
+  inclinePushUps,
+  rhomboidPulls,
+  tricepsDips,
+  catCowPose,
+  diamond2,
+  pushUps,
+  tricepsDips2,
+  threadTheNeedleL,
+  threadTheNeedleR,
+  inchWorm,
+  pulseUp2,
+  childPose,
+];
+List<Workout> armDay7 = [
+  jumpingJacks,
+  armCircleClockWise,
+  rhomboidPulls,
+  sideArmRaise,
+  kneePushUps,
+  reclinedRhomboidSqueezes,
+  threadTheNeedleL,
+  threadTheNeedleR,
+  armScissors,
+  rhomboidPulls2,
+  sideArmRaise2,
+  kneePushUps2,
+  catCowPose,
+  reclinedRhomboidSqueezes2,
+  childPose];
+List<Workout> armDay8 = [
+  jumpingJacks,
   armCircleClockWise,
   rhomboidPulls,
   sideArmRaise,
@@ -100,60 +125,40 @@ List<Workout> armDay6 = [
   reclinedRhomboidSqueezes2,
   childPose,
 ];
-List<Workout> armDay7 = []; //rest
-List<Workout> armDay8 = [...shoulderBeginner];
-List<Workout> armDay9 = [...shoulderBeginner];
-List<Workout> armDay10 = [...armsBeginner];
-List<Workout> armDay11 = [...armsBeginner];
-List<Workout> armDay12 = [
+List<Workout> armDay9 = [
   jumpingJacks,
-  tricepsDips,
-  inclinePushUps,
+  armCircleClockWise,
   rhomboidPulls,
-  floorTricepsDips,
-  catCowPose,
-  diamond2,
-  inclinePushUps2,
-  floorTricepsDips2,
+  sideArmRaise,
+  kneePushUps,
+  reclinedRhomboidSqueezes,
   threadTheNeedleL,
   threadTheNeedleR,
-  inchWorm,
-  pulseUp2,
-  childPose,
-];
-List<Workout> armDay13 = [
-  jumpingJacks,
-  tricepsDips,
-  inclinePushUps,
-  rhomboidPulls,
-  floorTricepsDips,
+  armScissors,
+  rhomboidPulls2,
+  sideArmRaise2,
+  kneePushUps2,
   catCowPose,
-  diamond2,
-  inclinePushUps2,
-  floorTricepsDips2,
-  threadTheNeedleL,
-  threadTheNeedleR,
-  inchWorm,
-  pulseUp2,
+  reclinedRhomboidSqueezes2,
   childPose,
 ];
-List<Workout> armDay14 = []; //rest
+
+
+List<Workout> armDay10 = [...shoulderBeginner];
+List<Workout> armDay11 = [...shoulderBeginner];
+List<Workout> armDay12 = [...shoulderBeginner];
+List<Workout> armDay13 = [...armsBeginner];
+List<Workout> armDay14 = [...armsBeginner];
 List<Workout> armDay15 = [
-  jumpingJacks,
-  tricepsDips,
-  inclinePushUps,
-  rhomboidPulls,
-  floorTricepsDips,
-  catCowPose,
-  diamond2,
-  inclinePushUps2,
-  floorTricepsDips2,
-  threadTheNeedleL,
-  threadTheNeedleR,
-  pulseUp2,
-  childPose,
+  ...armsBeginner
 ];
-List<Workout> armDay16 = [
+List<Workout> armDay16 = [...shoulderIntermediate];
+List<Workout> armDay17 = [...shoulderIntermediate];
+List<Workout> armDay18 = [...shoulderIntermediate];
+List<Workout> armDay20 = [
+...armsIntermediate
+];
+List<Workout> armDay21 = [
   armCircleClockWise,
   armCircleCounterClockWise,
   tricepsPushUp,
@@ -177,31 +182,7 @@ List<Workout> armDay16 = [
   standingBicepsStretchLeft,
   standingBicepsStretchRight,
 ];
-List<Workout> armDay17 = [
-  armCircleClockWise,
-  armCircleCounterClockWise,
-  tricepsPushUp,
-  floorTricepsDips,
-  punches,
-  pushUpsRotation,
-  armCurlsCrunchLeft,
-  armCurlsCrunchRight,
-  floorTricepsDips2,
-  tricepsPushUp2,
-  pushUpsRotation2,
-  armCurlsCrunchLeft,
-  armCurlsCrunchRight,
-  skippingWithOutRope,
-  pushUps,
-  burpee,
-  armScissors,
-  skippingWithOutRope,
-  tricepsStretchLeft,
-  tricepsStretchRight,
-  standingBicepsStretchLeft,
-  standingBicepsStretchRight,
-];
-List<Workout> armDay18 = [
+List<Workout> armDay22 = [
   armCircleClockWise,
   armCircleCounterClockWise,
   tricepsPushUp,
@@ -224,15 +205,13 @@ List<Workout> armDay18 = [
   standingBicepsStretchRight,
 ];
 List<Workout> armDay19 = [...shoulderIntermediate];
-List<Workout> armDay20 = [...armsIntermediate];
-List<Workout> armDay21 = []; //rest
-List<Workout> armDay22 = [...shoulderIntermediate];
+
 List<Workout> armDay23 = [...armsIntermediate];
-List<Workout> armDay24 = [...shoulderAdvance];
-List<Workout> armDay25 = [...shoulderAdvance];
+List<Workout> armDay24 = [...armsIntermediate];
+List<Workout> armDay25 = [...armsIntermediate];
 List<Workout> armDay26 = [...armsAdvance];
 List<Workout> armDay27 = [...armsAdvance];
-List<Workout> armDay28 = []; //rest
+List<Workout> armDay28 = [...armsAdvance]; //rest
 
 List<List<Workout>> armChallenges = [
   armDay1,

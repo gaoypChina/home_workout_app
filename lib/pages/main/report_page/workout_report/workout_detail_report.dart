@@ -4,6 +4,7 @@ import 'package:full_workout/helper/recent_workout_db_helper.dart';
 import 'package:full_workout/models/recent_workout.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class WorkoutDetailReport extends StatefulWidget {
   static const routeName = "workout-detail-report";
@@ -209,13 +210,11 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                           ),
                           Spacer(),
                           Icon(
-                            Icons.local_fire_department_outlined,
+                            SimpleLineIcons.fire,
                             color: Colors.grey,
-                            size: 20,
+                            size: 18,
                           ),
-                          SizedBox(
-                            width: 5,
-                          ),
+
                           Text(
                             (workout.activeTime * (18 / 60))
                                     .toStringAsFixed(2) +
@@ -313,7 +312,21 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                                     event.year, event.month, event.day)];
                             },
                             startingDayOfWeek: StartingDayOfWeek.monday,
-                            calendarStyle: CalendarStyle(),
+                            daysOfWeekStyle: DaysOfWeekStyle(
+                              weekdayStyle: TextStyle(color: isDark?Colors.white:Colors.black),
+                                weekendStyle: TextStyle(color: isDark?Colors.white:Colors.black)
+
+                            ),
+                            calendarStyle: CalendarStyle(
+                              weekendTextStyle: TextStyle(color: isDark?Colors.white:Colors.black),
+                                todayDecoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(34))),
+                                markerDecoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12)))),
                             onFormatChanged: (format) {
                               if (_calendarFormat != format) {
                                 setState(() {

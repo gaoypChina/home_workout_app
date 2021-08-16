@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
                     actions: getLeading(context),
                     backgroundColor: isDark?Colors.black:Colors.white,
                     automaticallyImplyLeading: false,
-                    expandedHeight: height * .46,
+                    expandedHeight: height * .36,
                     elevation: 5,
                     title: RichText(
                         text: TextSpan(children: [
@@ -98,8 +98,9 @@ class HomePage extends StatelessWidget {
                                 onTap: () => Navigator.pushNamed(
                                     context, WorkoutDetailReport.routeName),
                               ),
-                              Spacer(),
+                            SizedBox(height: 10,),
                               ActiveGoal(),
+
                             ],
                           )),
                     ),
@@ -110,7 +111,6 @@ class HomePage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 // physics: BouncingScrollPhysics(),
                 children: [
-
                   getTitle(exerciseName[0]),
                   for (int i = 0; i < 3; i++)
                     WorkoutCard(

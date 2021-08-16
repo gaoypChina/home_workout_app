@@ -46,7 +46,7 @@ class WorkoutCard extends StatelessWidget {
                       fontWeight: FontWeight.w500)),
             );
           } else
-            return Container();
+            return Container(height: 8,);
         },
       );
     }
@@ -107,7 +107,7 @@ class WorkoutCard extends StatelessWidget {
       return ClipRRect(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16), bottomLeft: Radius.circular(16)),
-        child: Container(
+        child: Container(height: 150,
           width: width * .45,
           child: Image.asset(
             imaUrl.toString(),
@@ -119,12 +119,12 @@ class WorkoutCard extends StatelessWidget {
 
     getTitle() {
       return Expanded(
-          flex: 2,
           child: Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 10,),
 
                 Text(
                   title,
@@ -134,8 +134,7 @@ class WorkoutCard extends StatelessWidget {
                       fontWeight: FontWeight.w600),
                 ),
                 getLastDate(),
-                SizedBox(height: 12,),
-
+                SizedBox(height: 8,),
                 Row(
                   children: [
                     Column(
@@ -169,6 +168,8 @@ class WorkoutCard extends StatelessWidget {
                   ],
                 ),
 
+                SizedBox(height: 10,),
+
               ],
             ),
           ));
@@ -191,7 +192,6 @@ class WorkoutCard extends StatelessWidget {
           );
         },
         child: Container(
-
           decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -206,6 +206,9 @@ class WorkoutCard extends StatelessWidget {
                   width: 8,
                 ),
                 getImage(),
+                SizedBox(
+                  width: 16,
+                ),
                 getTitle(),
                 SizedBox(
                   width: 8,

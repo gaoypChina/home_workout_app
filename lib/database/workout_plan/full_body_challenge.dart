@@ -10,6 +10,20 @@ List<Workout> fullBodyDay5 = [
   pushUps,
   abdominalCrunches,
   squats,
+  russianTwist,
+  flutterKikes,
+  lateralSquat,
+  pushUps2,
+  walkingPlank,
+  chestStretch,
+  cobraStretch,
+];
+List<Workout> fullBodyDay6 = [
+  jumpingJacks,
+  armCircleClockWise,
+  pushUps,
+  abdominalCrunches,
+  squats,
   squats,
   russianTwist,
   flutterKikes,
@@ -18,12 +32,8 @@ List<Workout> fullBodyDay5 = [
   chestStretch,
   cobraStretch,
 ];
-List<Workout> fullBodyDay6 = [...legsBeginner];
-List<Workout> fullBodyDay7 = [
-  jumpingJacks,
-  armCircleClockWise,
-  pushUps,
-]; //rest
+List<Workout> fullBodyDay7 = [...legsBeginner];
+
 List<Workout> fullBodyDay8 = [
   jumpingJacks,
   armCircleClockWise,
@@ -97,13 +107,30 @@ List<Workout> fullBodyDay12 = [
   rhomboidPulls2,
   sideArmRaise2,
   squats,
+  sidePlankRight2,
+  sidePlankLeft2,
+  wipers,
+  cobraStretch,
+];
+
+List<Workout> fullBodyDay13 = [
+  jumpingJacks,
+  armCircleClockWise,
+  pushUps,
+  wideArmPushUps,
+  threadTheNeedleL,
+  threadTheNeedleR,
+  armScissors,
+  rhomboidPulls2,
+  sideArmRaise2,
+  squats,
   squats,
   sidePlankRight2,
   sidePlankLeft2,
   wipers,
   cobraStretch,
 ];
-List<Workout> fullBodyDay13 = [
+List<Workout> fullBodyDay14 = [
   jumpingJacks,
   squats,
   squats,
@@ -129,7 +156,7 @@ List<Workout> fullBodyDay13 = [
   calfStretchLeft,
   calfStretchRight
 ];
-List<Workout> fullBodyDay14 = []; //rest
+
 List<Workout> fullBodyDay15 = [...chestIntermediate];
 List<Workout> fullBodyDay16 = [...absIntermediate];
 List<Workout> fullBodyDay17 = [...shoulderIntermediate];

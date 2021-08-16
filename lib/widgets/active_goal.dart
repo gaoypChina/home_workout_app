@@ -206,7 +206,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
           borderRadius: BorderRadius.all(Radius.circular(16)),
           elevation: 2,
         child: Container(
-          height: height*.22,
+          height: height*.16,
 
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
