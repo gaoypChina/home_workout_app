@@ -182,11 +182,13 @@ List<Workout> fullBodyDay19 = [
   calfStretchRight
 ];
 List<Workout> fullBodyDay20 = [...legsIntermediate];
-List<Workout> fullBodyDay21 = []; //rest
-List<Workout> fullBodyDay22 = [...chestAdvance];
+List<Workout> fullBodyDay21 = [
+  ...chestIntermediate
+];
+List<Workout> fullBodyDay22 = [...armsAdvance];
 List<Workout> fullBodyDay23 = [...absAdvance];
 List<Workout> fullBodyDay24 = [...shoulderAdvance];
-List<Workout> fullBodyDay25 = [...armsAdvance];
+List<Workout> fullBodyDay25 = [...chestAdvance];
 List<Workout> fullBodyDay26 = [
   jumpingJacks,
   armCircleClockWise,
@@ -209,8 +211,8 @@ List<Workout> fullBodyDay26 = [
   standingBicepsStretchLeft,
   standingBicepsStretchRight
 ];
-List<Workout> fullBodyDay27 = [...legsAdvance];
-List<Workout> fullBodyDay28 = []; //rest
+List<Workout> fullBodyDay27 = [...armsAdvance];
+List<Workout> fullBodyDay28 = [...legsAdvance]; //rest
 
 List<List<Workout>> fullBodyChallenge = [
   fullBodyDay1,

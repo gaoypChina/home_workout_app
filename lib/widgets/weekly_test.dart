@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/database/workout_plan/arm_challenges.dart';
+import 'package:full_workout/database/workout_plan/full_body_challenge.dart';
 
 class WeeklyTest extends StatefulWidget {
   @override
@@ -16,14 +16,14 @@ class _WeeklyTestState extends State<WeeklyTest> {
       child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: Column(children: [
-          ...armChallenges
+          ...fullBodyChallenge
               .map((challenge) => Column(children: [
                     Container(
                       height: 20,
-                         width: double.infinity,
-                         color: Colors.blue,
-                         child: Row(
-                           children: [
+                      width: double.infinity,
+                      color: Colors.blue,
+                      child: Row(
+                        children: [
                           Text("Day ${++i}"),
                           Spacer(),
                           Text(challenge.length.toString())
@@ -52,8 +52,8 @@ class _WeeklyTestState extends State<WeeklyTest> {
                       return Column(
                         children: [
                           Row(children: [
-                            Image.asset(curr.imageSrc,height: 50,),
-                     //   Text(curr.title.toString()),
+                            Image.asset(curr.imageSrc,height: 20,),
+                           // Text(curr.title.toString()),
                             Spacer(),
                             time.toString() == "null"
                                 ? Container(

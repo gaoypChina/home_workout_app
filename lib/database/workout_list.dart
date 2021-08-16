@@ -990,6 +990,7 @@ Workout pulseUp = Workout(
   showTimer: false,
   beginnerRap: 16,
   intermediateRap: 20,
+  advanceRap: 24,
   imageSrc: 'assets/all-workouts/pulseUp.gif',
 );
 Workout mountainClimbing = Workout(
@@ -1003,7 +1004,8 @@ Workout mountainClimbing = Workout(
   ],
   showTimer: false,
   beginnerRap: 16,
-  intermediateRap: 20,
+  intermediateRap: 18,
+  advanceRap: 20,
   imageSrc: 'assets/all-workouts/mountainClimbing.gif',
 );
 Workout russianTwist2 = Workout(
@@ -1092,6 +1094,8 @@ Workout mountainClimbing2 = Workout(
     ],
     showTimer: false,
     beginnerRap: 16,
+    intermediateRap: 20,
+    advanceRap: 24,
     imageSrc: 'assets/all-workouts/mountainClimbing.gif');
 Workout pulseUp2 = Workout(
     title: 'Pulse Up',
@@ -1105,6 +1109,7 @@ Workout pulseUp2 = Workout(
     showTimer: false,
     beginnerRap: 12,
     intermediateRap: 16,
+    advanceRap: 20,
     imageSrc: 'assets/all-workouts/pulseUp.gif');
 Workout wipers = Workout(
     title: 'Wipers',
@@ -1130,6 +1135,7 @@ Workout reverseCrunches = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=gAyTBB4lm3I&ab_channel=LivestrongWoman',
   intermediateRap: 20,
+  beginnerRap: 12,
   advanceRap: 30,
   imageSrc: 'assets/all-workouts/reverseCrunches.gif',
 );
@@ -1145,6 +1151,7 @@ Workout vUps = Workout(
       'https://www.youtube.com/watch?v=t6OC23JDQLU&ab_channel=PaleoHacks',
   showTimer: false,
   intermediateRap: 20,
+  beginnerRap: 14,
   advanceRap: 24,
   imageSrc: 'assets/all-workouts/VUps.gif',
 );
@@ -1184,6 +1191,7 @@ Workout vUps2 = Workout(
         'https://www.youtube.com/watch?v=t6OC23JDQLU&ab_channel=PaleoHacks',
     showTimer: false,
     intermediateRap: 16,
+    beginnerRap: 12,
     advanceRap: 20,
     imageSrc: 'assets/all-workouts/VUps.gif');
 Workout reverseCrunches2 = Workout(
@@ -1198,6 +1206,7 @@ Workout reverseCrunches2 = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=gAyTBB4lm3I&ab_channel=LivestrongWoman',
   intermediateRap: 16,
+  beginnerRap: 10,
   advanceRap: 24,
   imageSrc: 'assets/all-workouts/reverseCrunches.gif',
 ); //
@@ -1507,6 +1516,7 @@ Workout hinduPushUps = Workout(
   videoLink: 'https://www.youtube.com/watch?v=nBLy1IGtSJ8&ab_channel=AnyUp',
   showTimer: false,
   intermediateRap: 12,
+  beginnerRap: 8,
   advanceRap: 16,
   imageSrc: 'assets/all-workouts/hinduPushUps.gif',
 );
@@ -1523,6 +1533,7 @@ Workout wideArmPushUps = Workout(
         'https://www.youtube.com/watch?v=kBREQ4OSds8&ab_channel=LeapFitness',
     showTimer: false,
     intermediateRap: 16,
+    beginnerRap: 12,
     advanceRap: 16,
     imageSrc: 'assets/all-workouts/wideArmPushUps.gif');
 Workout staggeredPushUps = Workout(
@@ -1536,6 +1547,7 @@ Workout staggeredPushUps = Workout(
   'https://www.youtube.com/watch?v=odAdPR3ypSs&ab_channel=Exercises.com.au',
   showTimer: false,
   intermediateRap: 12,
+  beginnerRap: 10,
   advanceRap: 16,
   imageSrc: 'assets/all-workouts/staggeredPushUps.gif',
 );
@@ -1565,6 +1577,7 @@ Workout hinduPushUps2 = Workout(
   videoLink: 'https://www.youtube.com/watch?v=nBLy1IGtSJ8&ab_channel=AnyUp',
   showTimer: false,
   intermediateRap: 10,
+  beginnerRap: 8,
   advanceRap: 12,
   imageSrc: 'assets/all-workouts/hinduPushUps.gif',
 );
@@ -1579,6 +1592,7 @@ Workout staggeredPushUps2 = Workout(
     'https://www.youtube.com/watch?v=odAdPR3ypSs&ab_channel=Exercises.com.au',
     showTimer: false,
     intermediateRap: 10,
+    beginnerRap: 8,
     advanceRap: 12,
     imageSrc: 'assets/all-workouts/staggeredPushUps.gif');
 Workout ployMetricPushUps2 = Workout(
@@ -1609,6 +1623,7 @@ Workout declinePushUps = Workout(
     'https://www.youtube.com/watch?v=b_CC4kAF1HQ&ab_channel=LIVESTRONG.COM',
     showTimer: false,
     intermediateRap: 12,
+    beginnerRap: 8,
     advanceRap: 16,
     imageSrc: 'assets/all-workouts/declinePushUps.gif');
 Workout walkingPlank = Workout(

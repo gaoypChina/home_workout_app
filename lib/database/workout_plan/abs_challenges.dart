@@ -54,10 +54,7 @@ List<Workout> absDay4 = [
   wipers,
   cobraStretch,
 ];
-List<Workout> absDay5 = [...absBeginner];
-List<Workout> absDay6 = [...absBeginner];
-List<Workout> absDay7 = []; //rest
-List<Workout> absDay8 = [
+List<Workout> absDay5 = [
   jumpingJacks,
   reverseCrunches,
   russianTwist2,
@@ -74,7 +71,7 @@ List<Workout> absDay8 = [
   wipers,
   cobraStretch,
 ];
-List<Workout> absDay9 = [
+List<Workout> absDay6 = [
   jumpingJacks,
   reverseCrunches,
   russianTwist2,
@@ -91,6 +88,10 @@ List<Workout> absDay9 = [
   wipers,
   cobraStretch,
 ];
+
+List<Workout> absDay7 = [...absBeginner];
+List<Workout> absDay8 = [...absBeginner];
+List<Workout> absDay9 = [...absBeginner];
 List<Workout> absDay10 = [
   jumpingJacks,
   reverseCrunches,
@@ -127,21 +128,20 @@ List<Workout> absDay11 = [
   wipers,
   cobraStretch,
 ];
+
 List<Workout> absDay12 = [
   jumpingJacks,
   reverseCrunches,
   russianTwist,
-  vUps2,
-  pulseUp2,
+  pulseUp,
+  vUps,
   mountainClimbing,
   sidePlankRight,
   sidePlankLeft,
   flutterKikes,
-  vUps2,
   russianTwist2,
   mountainClimbing2,
   reverseCrunches2,
-  pulseUp2,
   flutterKikes2,
   sidePlankRight2,
   sidePlankLeft2,
@@ -152,25 +152,22 @@ List<Workout> absDay13 = [
   jumpingJacks,
   reverseCrunches,
   russianTwist,
-  vUps2,
-  pulseUp2,
+  pulseUp,
+  vUps,
   mountainClimbing,
   sidePlankRight,
   sidePlankLeft,
   flutterKikes,
-  vUps2,
   russianTwist2,
   mountainClimbing2,
   reverseCrunches2,
-  pulseUp2,
   flutterKikes2,
   sidePlankRight2,
   sidePlankLeft2,
   wipers,
   cobraStretch,
 ];
-List<Workout> absDay14 = []; //rest
-List<Workout> absDay15 = [
+List<Workout> absDay14 = [
   jumpingJacks,
   reverseCrunches,
   russianTwist,
@@ -183,6 +180,27 @@ List<Workout> absDay15 = [
   russianTwist2,
   mountainClimbing2,
   reverseCrunches2,
+  flutterKikes2,
+  sidePlankRight2,
+  sidePlankLeft2,
+  wipers,
+  cobraStretch,
+];
+List<Workout> absDay15 = [
+  jumpingJacks,
+  reverseCrunches,
+  russianTwist,
+  vUps2,
+  pulseUp2,
+  mountainClimbing,
+  sidePlankRight,
+  sidePlankLeft,
+  flutterKikes,
+  vUps2,
+  russianTwist2,
+  mountainClimbing2,
+  reverseCrunches2,
+  pulseUp2,
   flutterKikes2,
   sidePlankRight2,
   sidePlankLeft2,
@@ -193,15 +211,17 @@ List<Workout> absDay16 = [
   jumpingJacks,
   reverseCrunches,
   russianTwist,
-  pulseUp,
-  vUps,
+  vUps2,
+  pulseUp2,
   mountainClimbing,
   sidePlankRight,
   sidePlankLeft,
   flutterKikes,
+  vUps2,
   russianTwist2,
   mountainClimbing2,
   reverseCrunches2,
+  pulseUp2,
   flutterKikes2,
   sidePlankRight2,
   sidePlankLeft2,
@@ -254,7 +274,28 @@ List<Workout> absDay20 = [
   wipers,
   cobraStretch,
 ];
-List<Workout> absDay21 = []; //rest
+List<Workout> absDay21 = [
+  jumpingJacks,
+  reverseCrunches,
+  russianTwist,
+  pulseUp,
+  vUps,
+  mountainClimbing,
+  sidePlankRight,
+  sidePlankLeft,
+  flutterKikes,
+  vUps2,
+  russianTwist2,
+  mountainClimbing2,
+  reverseCrunches2,
+  walkingPlank,
+  pulseUp2,
+  flutterKikes2,
+  sidePlankRight2,
+  sidePlankLeft2,
+  wipers,
+  cobraStretch,
+];
 List<Workout> absDay22 = [
   jumpingJacks,
   tricepsDips,
@@ -347,7 +388,7 @@ List<Workout> absDay25 = [
 ];
 List<Workout> absDay26 = [...absAdvance];
 List<Workout> absDay27 = [...absAdvance];
-List<Workout> absDay28 = []; //rest
+List<Workout> absDay28 = [...absAdvance]; //rest
 
 List<List<Workout>> absChallenges = [
   absDay1,
