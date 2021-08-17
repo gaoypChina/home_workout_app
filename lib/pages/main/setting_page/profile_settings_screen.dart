@@ -106,9 +106,9 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
         theme:isDark?ThemeData.dark(): ThemeData(primaryColor: Colors.blue.shade700),
         context: context,
         height: MediaQuery.of(context).size.height * .4,
-        initialDate: DateTime.now(),
+        initialDate: DateTime(2000,08,12),
         firstDate: DateTime(DateTime.now().year - 110),
-        lastDate: DateTime.now(),
+        lastDate: DateTime(DateTime.now().year-12),
         borderRadius: 16,
       );
       if (picked != null && picked.toString() != date) {
@@ -166,7 +166,9 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
           children: [
 
             CustomProfileTile(
+
               title: "Name",
+              data: name,
               subTitle: (name != null) ? name : "Enter your name",
               onPressed: () async {
                 String previousValue = name;
@@ -187,6 +189,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
             ),
             CustomProfileTile(
                 title: "Date of Birth",
+                data:date,
                 subTitle: (date == null) ? "Select your birthday" : date,
                 onPressed: () {
                   _selectDate();
@@ -198,6 +201,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 iconColor: iconColor[1],
               ),
             CustomProfileTile(
+              data:gender,
               title: "Gender",
               subTitle: (gender == null)
                   ? "Select your gender"
@@ -227,6 +231,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
             ),
             CustomProfileTile(
               title: "Unit",
+              data: unit,
               subTitle: (unit == null)
                   ? "Select unit"
                   : (unit == 0)
@@ -255,6 +260,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
             ),
             CustomProfileTile(
               title: "Height",
+              data: unit,
               subTitle: (unit == null)
                   ? "Enter your height"
                   : (unit == 0)
@@ -291,6 +297,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
             ),
             CustomProfileTile(
               title: "Weight",
+              data:weightValue,
               subTitle: (weightValue == null)
                   ? "Enter your weight"
                   : (unit == 0)
@@ -459,19 +466,18 @@ class _RadioSelectorState extends State<RadioSelector> {
 class CustomProfileTile extends StatelessWidget {
   final String title;
   final String subTitle;
-  final Color backgroundColor;
   final IconData icon;
   final Function onPressed;
   final Color iconColor;
-
+  final  data;
 
   CustomProfileTile(
-      {this.title,
-      this.subTitle,
-      this.backgroundColor,
-      this.icon,
-      this.onPressed,
-      this.iconColor});
+      {@required this.title,
+      @required this.subTitle,
+      @required this.icon,
+      @required this.onPressed,
+      @required this.data,
+      @required this.iconColor});
 
   @override
   Widget build(BuildContext context) {
@@ -480,13 +486,22 @@ class CustomProfileTile extends StatelessWidget {
 
     return ListTile(
 
-      contentPadding: EdgeInsets.only(left: 24,right: 30),
+      contentPadding: EdgeInsets.only(left: 24, right: 30),
 
       title: Text(title),
-      leading: Icon(icon,color: iconColor,),
+      leading: Icon(
+        icon,
+        color: iconColor,
+      ),
       onTap: onPressed,
-      trailing: Text(subTitle.length > 20 ? '${subTitle.substring(0, 20)}...' : subTitle,   overflow: TextOverflow.ellipsis,style: TextStyle(color:isDark? Colors.white:Colors.black,fontSize: 15,)),
-     // trailing: constants.trailingIcon,
+      trailing: Text(
+          subTitle.length > 20 ? '${subTitle.substring(0, 20)}...' : subTitle,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            color:data.toString() == "null"? Colors.grey:isDark ? Colors.white : Colors.black,
+            fontSize:data.toString() == "null"? 12:14,
+          )),
+      // trailing: constants.trailingIcon,
 
     );
 
