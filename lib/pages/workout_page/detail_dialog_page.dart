@@ -89,12 +89,9 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                                           ? Colors.white
                                           : Colors.grey.shade100,
                                       child: Center(
-                                        child: Hero(
-                                          tag: item[index].title,
-                                          child: Image.asset(
-                                            item[index].imageSrc,
-                                            fit: BoxFit.scaleDown,
-                                          ),
+                                        child: Image.asset(
+                                          item[index].imageSrc,
+                                          fit: BoxFit.scaleDown,
                                         ),
                                       ),
                                       height: height * .2,

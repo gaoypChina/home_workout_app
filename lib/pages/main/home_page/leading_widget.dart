@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/pages/main/setting_page/reminder_screen.dart';
-import 'package:full_workout/widgets/test_file.dart';
-import 'package:full_workout/widgets/weekly_test.dart';
 
 List<Widget>  getLeading(BuildContext context, {Color color}){
   return  [
@@ -29,43 +27,32 @@ List<Widget>  getLeading(BuildContext context, {Color color}){
       padding: EdgeInsets.only(right: 8, top: 0),
       splashRadius: 24,
     ),
-    IconButton(
-      onPressed: () =>
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return Test();
-      })),
-      icon: Icon(
-        Ionicons.md_alarm,
-        size: 26,
-      ),
-      padding: EdgeInsets.only(right: 8, top: 0),
-      splashRadius: 24,
-    ),
+    // IconButton(
+    //   onPressed: () =>
+    //       Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+    //     return Test();
+    //   })),
+    //   icon: Icon(
+    //     Ionicons.md_alarm,
+    //     size: 26,
+    //   ),
+    //   padding: EdgeInsets.only(right: 8, top: 0),
+    //   splashRadius: 24,
+    // ),
+    //
+    // IconButton(
+    //   onPressed: () =>
+    //       Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+    //         return WeeklyTest();
+    //       })),
+    //   icon: Icon(
+    //     Ionicons.ios_add,
+    //     size: 26,
+    //   ),
+    //   padding: EdgeInsets.only(right: 8, top: 0),
+    //   splashRadius: 24,
+    // ),
 
-    IconButton(
-      onPressed: () =>
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return WeeklyTest();
-          })),
-      icon: Icon(
-        Ionicons.ios_add,
-        size: 26,
-      ),
-      padding: EdgeInsets.only(right: 8, top: 0),
-      splashRadius: 24,
-    ),
 
-    IconButton(
-      onPressed: () =>
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return DailyTest();
-          })),
-      icon: Icon(
-        Ionicons.ios_remove,
-        size: 26,
-      ),
-      padding: EdgeInsets.only(right: 8, top: 0),
-      splashRadius: 24,
-    ),
   ];
 }

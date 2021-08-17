@@ -156,6 +156,8 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
     super.initState();
   }
 
+
+
   /// widget functions
 
   getProgressBar(double width, int currIndex,bool isDark) {
@@ -170,7 +172,11 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
       progressColor: Colors.blue.shade700,
     );
   }
-
+@override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -393,7 +399,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
               getProgressBar(width, 3,isDark),
               Container(
                 height: height * .25 - 5,
-                color:isDark? Colors.black87:Colors.white,
+                color:isDark? Colors.grey.shade800:Colors.white,
                 child: Row(
                   children: [
                     Expanded(

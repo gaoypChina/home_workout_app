@@ -61,7 +61,7 @@ dev_dependencies:
 
 flutter_native_splash:
   color: "#0362fc"
-  image: "assets/splash_full.png"
+  image: "assets/splash_image.png"
   android: true
   ios: true
   android_gravity: fill

@@ -33,6 +33,7 @@ class ExplorePage extends StatelessWidget {
         tag: _spKey.fullBodyChallenge,
         currentDay: i,
         imageUrl: "assets/workout_cover/arm_curls_crunches.png",
+        coverImage: "assets/workout_list_cover/legs.jpg",
         challengeList: fullBodyChallenge,
         color1: Color(0xff2f7336),
         color2: Colors.orange.shade300,
@@ -42,6 +43,7 @@ class ExplorePage extends StatelessWidget {
           currentDay: i,
           tag: _spKey.absChallenge,
           imageUrl: "assets/workout_cover/elbowPlank.png",
+          coverImage: "assets/workout_list_cover/abs.jpg",
           challengeList: absChallenges,
           // color1: Colors.blue,
           color1: Color(0xffff4b1f),
@@ -51,6 +53,7 @@ class ExplorePage extends StatelessWidget {
           title: "Chest Workout Challenge",
           currentDay: i,
           imageUrl:"assets/workout_cover/mountain_climbilng.png",
+          coverImage: "assets/workout_list_cover/chest.jpg",
           challengeList: chestChallenge,
           color1: Color(0xff4da0b0),
           color2: Color(0xffd39d38)),
@@ -59,6 +62,7 @@ class ExplorePage extends StatelessWidget {
         tag: _spKey.armChallenge,
         currentDay: i,
         imageUrl: "assets/all-workouts/cobraStratch.png",
+        coverImage: "assets/workout_list_cover/arms.jpg",
         challengeList: armChallenges,
         color1: Color(0xffff5f6d),
         color2: Color(0xffffc371),
@@ -251,6 +255,7 @@ class ExplorePage extends StatelessWidget {
 class ChallengesModel {
   final String title;
   final String imageUrl;
+  final String coverImage;
   final int currentDay;
   final Color color1;
   final String tag;
@@ -261,6 +266,7 @@ class ChallengesModel {
     @required this.title,
     @required this.tag,
     @required this.imageUrl,
+    @required this.coverImage,
     @required this.currentDay,
     @required this.color1,
     @required this.color2,

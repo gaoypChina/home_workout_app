@@ -74,7 +74,7 @@ class _WorkoutPageState extends State<WorkoutPage>
     String totalRap = widget.rapList[currIndex].toString();
     String message = "Start $totalRap $rapType $exerciseName";
     mediaHelper.playSoundOnce(audioPath).then((value) => Future.delayed(
-            Duration(milliseconds: 500))
+            Duration(seconds: 1))
         .then((value) => mediaHelper.speak(message))
         .then((value) => Future.delayed(Duration(seconds: 2))
             .then((value) => mediaHelper.speak(workout.steps[0]))
@@ -102,6 +102,7 @@ class _WorkoutPageState extends State<WorkoutPage>
   _onComplete(int currIndex) async {
 
     if (currIndex + 1 == widget.workOutList.length) {
+    await  mediaHelper.dispose();
        return Navigator.pushReplacement(
            context,
            MaterialPageRoute(
@@ -151,7 +152,7 @@ class _WorkoutPageState extends State<WorkoutPage>
     }
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: screenTime+1),
+      duration: Duration(seconds: item.showTimer?item.duration+1:30+1),
     );
 
     if (item.showTimer == true) {
@@ -163,6 +164,7 @@ class _WorkoutPageState extends State<WorkoutPage>
 
   @override
   void dispose() {
+
     controller.dispose();
     mediaHelper.dispose();
     super.dispose();
@@ -171,7 +173,10 @@ class _WorkoutPageState extends State<WorkoutPage>
   Widget getImage(double height, Workout item, int currIndex) {
     return Stack(
       children: [
-        Container(height: height / 2, child: Image.asset(item.imageSrc)),
+        Container(height: height / 2, child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Image.asset(item.imageSrc),
+        ),color: Colors.white,),
 
         Positioned(
             right: 10,
@@ -287,7 +292,10 @@ class _WorkoutPageState extends State<WorkoutPage>
                     height: 10,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+
                       Flexible(
                         child: Text(
                           item.title,

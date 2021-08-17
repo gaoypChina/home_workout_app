@@ -4,7 +4,7 @@ import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/widgets/custom_exercise_card.dart';
-import 'package:full_workout/widgets/push_up_level_dialog.dart';
+import 'package:full_workout/widgets/coach_tip_dialog.dart';
 
 import '../../main.dart';
 import 'exercise_instruction_screen.dart';
@@ -40,7 +40,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   int pushUpIndex = 1;
   bool isLoading = true;
   bool lastStatus = true;
-  String coverImgPath ="assets/workout_list_cover/abs.jpg";
+  String coverImgPath ="assets/workout_list_cover/arms.jpg";
 
   _scrollListener() {
     if (isShrink != lastStatus) {
@@ -90,9 +90,9 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
    }else if(tag.contains("chest")){
      coverImgPath = "assets/workout_list_cover/chest.jpg";
    }else if(tag.contains("arms")){
-     coverImgPath = "assets/workout_list_cover/cover.jpg";
+     coverImgPath = "assets/workout_list_cover/arms.jpg";
    }else{
-     coverImgPath = "assets/workout_list_cover/abs.jpg";
+     coverImgPath = "assets/workout_list_cover/legs.jpg";
    }
   }
 
@@ -189,43 +189,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                           Navigator.of(context).pop(true);
                         },
                       ),
-                      actions: [
-                        PopupMenuButton(
-                          icon: Icon(
-                            Icons.more_vert,
-                            color: isDark
-                                ? Colors.white
-                                : isShrink
-                                    ? Colors.black
-                                    : Colors.white,
-                          ),
-                          //don't specify icon if you want 3 dot menu
 
-                          itemBuilder: (context) => [
-                            PopupMenuItem<int>(
-                              value: 0,
-                              child: Text(
-                                "Push-ups level",
-                              ),
-                            ),
-                          ],
-                          onSelected: (int item) async {
-                            var res = await showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return PushUpLevelDialog(
-                                    index: pushUpIndex,
-                                  );
-                                });
-                            if (res != null) {
-                              spHelper.saveInt(spKey.pushUpLevel, res);
-                              setState(() {
-                                pushUpIndex = res;
-                              });
-                            }
-                          },
-                        ),
-                      ],
                       expandedHeight: 150.0,
                       pinned: true,
                       elevation: isDark ? 0 : 1,
@@ -250,7 +214,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
             ];
           },
           body: Scaffold(
-            //     backgroundColor: isDark?Colors.black:Colors.white,
                   body: TabBarView(
               controller: tabContoller,
               children: [
@@ -288,85 +251,75 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                           rapList.add(time);
 
                     return
-                      Row(children: [
-                        Text(widget.workOutList[index].title.toString() + "Currtag:  :  " ),
-                        Spacer(),
-                        time.toString() == "null"
-                            ? Container(
-                          child: Text("null"),
-                          width: 100,
-                          color: Colors.red,
-                        )
-                            : Text(time.toString())
-                      ]);
 
-                    //   Column(
-                    //   children: [
-                    //     if (index == 0)
-                    //       AnimatedPadding(
-                    //         duration: Duration(milliseconds: 400),
-                    //               padding: EdgeInsets.only(
-                    //                   left: padValue * 20,
-                    //                   right: padValue,
-                    //                   top: padValue * 8,
-                    //                   bottom: padValue * 8),
-                    //               child: Row(
-                    //                 children: [
-                    //                   CircleAvatar(
-                    //                     radius: 6,
-                    //                     backgroundColor: Colors.red,
-                    //                   ),
-                    //                   SizedBox(
-                    //                     width: 10,
-                    //                   ),
-                    //                   Text(
-                    //                     widget.workOutList.length.toString() +
-                    //                   " Workouts",
-                    //               style: textTheme.headline6.copyWith(
-                    //                   fontWeight: FontWeight.w500,
-                    //                   fontSize: 16),
-                    //             ),
-                    //             SizedBox(
-                    //               width: 30,
-                    //             ),
-                    //             CircleAvatar(
-                    //               radius: 6,
-                    //               backgroundColor: Colors.orange,
-                    //             ),
-                    //             SizedBox(
-                    //               width: 10,
-                    //                   ),
-                    //                   Text(
-                    //                     getTime().toString() + " Minutes",
-                    //                     style: textTheme.headline6.copyWith(
-                    //                         fontWeight: FontWeight.w500,
-                    //                         fontSize: 16),
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //           if (index == 0)
-                    //             Divider(
-                    //               thickness: .5,
-                    //             ),
-                    //           AnimatedPadding(
-                    //             duration: Duration(milliseconds: 1000),
-                    //             curve: Curves.easeOutCubic,
-                    //             padding: EdgeInsets.only(
-                    //                 top: padValue * 1,
-                    //                 left: padValue * 1,
-                    //                 right: padValue * 1),
-                    //             child: CustomExerciseCard(
-                    //               index: index,
-                    //               workOutList: widget.workOutList,
-                    //               time: time,
-                    //             ),
-                    //           ),
-                    //           Divider(
-                    //             thickness: .5,
-                    //           ),
-                    //         ],
-                    // );
+
+                      Column(
+                      children: [
+                        if (index == 0)
+                          AnimatedPadding(
+                            duration: Duration(milliseconds: 400),
+                                  padding: EdgeInsets.only(
+                                      left: padValue * 20,
+                                      right: padValue,
+                                      top: padValue * 8,
+                                      bottom: padValue * 8),
+                                  child: Row(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 6,
+                                        backgroundColor: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        widget.workOutList.length.toString() +
+                                      " Workouts",
+                                  style: textTheme.headline6.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                CircleAvatar(
+                                  radius: 6,
+                                  backgroundColor: Colors.orange,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                      ),
+                                      Text(
+                                        getTime().toString() + " Minutes",
+                                        style: textTheme.headline6.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              if (index == 0)
+                                Divider(
+                                  thickness: .5,
+                                ),
+                              AnimatedPadding(
+                                duration: Duration(milliseconds: 1000),
+                                curve: Curves.easeOutCubic,
+                                padding: EdgeInsets.only(
+                                    top: padValue * 1,
+                                    left: padValue * 1,
+                                    right: padValue * 1),
+                                child: CustomExerciseCard(
+                                  index: index,
+                                  workOutList: widget.workOutList,
+                                  time: time,
+                                ),
+                              ),
+                              Divider(
+                                thickness: .5,
+                              ),
+                            ],
+                    );
                   },
                   padding: EdgeInsets.only(bottom: 100),
                   physics: BouncingScrollPhysics(),

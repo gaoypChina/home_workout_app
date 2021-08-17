@@ -25,7 +25,7 @@ class Constants{
   TextStyle titleStyle =   textTheme.subtitle1.copyWith(fontWeight: FontWeight.w700);
 
   var textStyle =textTheme.subtitle1.copyWith(wordSpacing:4,fontWeight: FontWeight.w700,fontSize: 18,color: Color(0xffA9A9A9));
-  var listTileTitleStyle = TextStyle(fontWeight: FontWeight.w500,fontSize: 17);
+  var listTileTitleStyle = TextStyle(fontWeight: FontWeight.w500,fontSize: 16);
   Icon trailingIcon = Icon(Icons.arrow_forward_ios,color: Colors.grey,size: 16,);
 
 

@@ -28,7 +28,7 @@ class WorkoutCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-
+    double height = MediaQuery.of(context).size.height;
     getLastDate() {
       return FutureBuilder(
         future: SpHelper().loadString(title),
@@ -107,7 +107,7 @@ class WorkoutCard extends StatelessWidget {
       return ClipRRect(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16), bottomLeft: Radius.circular(16)),
-        child: Container(height: 150,
+        child: Container(height: height*.18,
           width: width * .45,
           child: Image.asset(
             imaUrl.toString(),

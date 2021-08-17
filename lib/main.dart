@@ -90,7 +90,6 @@ class _MyAppState extends State<MyApp> {
                 elevation: 0,
                 iconTheme: IconThemeData(color: Colors.black),
                 titleTextStyle: TextStyle(color: Colors.black),
-                //  toolbarTextStyle: TextStyle(color: Colors.black),
                 actionsIconTheme: IconThemeData(color: Colors.black)),
             radioTheme: RadioThemeData(
               fillColor: MaterialStateProperty.all(Colors.blue.shade700),
@@ -100,9 +99,8 @@ class _MyAppState extends State<MyApp> {
               filled: true,
               fillColor: Colors.white,
               enabledBorder: OutlineInputBorder(
-
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.transparent)),
+                  borderSide: BorderSide(color: Colors.grey)),
               contentPadding: EdgeInsets.symmetric(horizontal: 16),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),

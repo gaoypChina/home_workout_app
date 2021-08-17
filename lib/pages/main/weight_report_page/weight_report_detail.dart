@@ -244,11 +244,14 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
         }
         return Column(
           children: [
+            Divider(thickness: 1,color: Colors.grey,height: 0,),
                   Slidable(
                     actionPane: SlidableDrawerActionPane(),
                     actionExtentRatio: 0.25,
                     child: Container(
+                      height: 60,
                       padding: EdgeInsets.only(left: 18,right: 18,top: 14,bottom: 14),
+
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -328,10 +331,12 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                           onTap: () => onEdit()),
                     ],
                   ),
+
                 ],
               );
       }).toList(),
-    ]);
+
+     ]);
   }
 
   getEmptyList() {
@@ -363,7 +368,7 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
 
   getDateRange() {
     return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 18, top: 18, bottom: 2),
+      padding: const EdgeInsets.only(left: 18.0, right: 18, top: 12, bottom: 12),
       child: Container(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -573,23 +578,23 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                 Tab(
                   icon: Icon(
                     Icons.history,
-                    color: isDark ? Colors.white : Colors.grey.shade700,
+                    color: isDark ? Colors.white : Colors.black,
                   ),
                   child: Text(
                     "HISTORY",
                     style:
-                        TextStyle(color: isDark ? Colors.white :  Colors.grey.shade700),
+                        TextStyle(color: isDark ? Colors.white :  Colors.black),
                   ),
                 ),
                 Tab(
                   icon: Icon(
                     Icons.stacked_line_chart_outlined,
-                    color: isDark ? Colors.white : Colors.grey.shade700,
+                    color: isDark ? Colors.white : Colors.black,
                   ),
                   child: Text(
                     "STATICS",
                     style:
-                        TextStyle(color: isDark ? Colors.white : Colors.grey.shade700),
+                        TextStyle(color: isDark ? Colors.white : Colors.black),
                   ),
                 ),
               ],

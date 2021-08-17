@@ -31,6 +31,20 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
   Constants constants = Constants();
   bool _isLoading = true;
   int currentDay = 0;
+  bool lastStatus = true;
+
+  _scrollListener() {
+    if (isShrink != lastStatus) {
+      setState(() {
+        lastStatus = isShrink;
+      });
+    }
+  }
+
+  bool get isShrink {
+    return _scrollController.hasClients &&
+        _scrollController.offset > (200 - kToolbarHeight);
+  }
 
   getCurrentDate() async {
     setState(() {
@@ -41,7 +55,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
       _isLoading = false;
     });
   }
-  
+
   onComplete(int currIndex){
     Navigator.push(
       context,
@@ -61,6 +75,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
   void initState() {
     getCurrentDate();
     _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
     tabController = new TabController(
       vsync: this,
       length: 1,
@@ -316,16 +331,28 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverAppBar(
-                    backgroundColor:
-                        isDark ? Colors.black : Colors.blue.shade700,
+                    backgroundColor: isDark ? Colors.black : Colors.white,
                     leading: IconButton(
                       icon: Icon(
                         Icons.arrow_back,
-                        color: Colors.white,
+                        color: isDark
+                            ? Colors.white
+                            : isShrink
+                                ? Colors.black
+                                : Colors.white,
                       ),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
-                    title: Text(item.title),
+                    title: Text(
+                      item.title,
+                      style: TextStyle(
+                        color: isDark
+                            ? Colors.white
+                            : isShrink
+                                ? Colors.black
+                                : Colors.white,
+                      ),
+                    ),
                     elevation: 0,
                     centerTitle: false,
                     expandedHeight: 190.0,
@@ -338,7 +365,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                         Container(
                           decoration: new BoxDecoration(
                             image: new DecorationImage(
-                              image: new ExactAssetImage(item.imageUrl),
+                              image: new ExactAssetImage(item.coverImage),
                               fit: BoxFit.cover,
                             ),
                             gradient: LinearGradient(

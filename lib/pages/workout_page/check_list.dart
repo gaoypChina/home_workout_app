@@ -28,6 +28,7 @@ class _ExerciseListScreenState extends State<CheckListScreen>
   ScrollController _scrollController;
   List<String> items;
   TabController tabContoller;
+  double padValue = 1;
 
   getTime() {
     int length = widget.workOutList.length;
@@ -113,86 +114,107 @@ class _ExerciseListScreenState extends State<CheckListScreen>
                 ListView.builder(
                   itemBuilder: (context, index) {
                     if (widget.workOutList[index].showTimer == false) {
-                      if (widget.tag.toLowerCase() == 'beginner') {
-                        time = widget.workOutList[index].beginnerRap;
-                      } else if (widget.tag.toLowerCase() == "intermediate") {
-                        time = widget.workOutList[index].intermediateRap;
-                      } else
-                        time = widget.workOutList[index].advanceRap;
-                    } else if (widget.workOutList[index].showTimer == true) {
+                      List<String> splitTitle = widget.title.split(" ");
+                      if (splitTitle.length == 5) {
+                        int currDay = int.tryParse(splitTitle[4]);
+                        print(currDay);
+                        if (currDay <= 10) {
+                          time = widget.workOutList[index].beginnerRap;
+                        } else if (currDay <= 20) {
+                          time =
+                              widget.workOutList[index].intermediateRap;
+                        } else
+                          time = widget.workOutList[index].advanceRap;
+                      } else {
+                        String tag = widget.tag.toLowerCase();
+                        if (tag == 'beginner') {
+                          time = widget.workOutList[index].beginnerRap;
+                        } else if (tag ==
+                            "intermediate") {
+                          time =
+                              widget.workOutList[index].intermediateRap;
+                        } else
+                          time = widget.workOutList[index].advanceRap;
+                      }
+                    } else if (widget.workOutList[index].showTimer ==
+                        true) {
                       time = widget.workOutList[index].duration;
                     } else {
-                      time = 69;
+                      time = 30;
                     }
                     rapList.add(time);
-                    return Column(
-                      children: [
-                        if (index == 0)
-                          Column(
-                            children: [
-                              LinearPercentIndicator(
-                                padding: EdgeInsets.all(0),
-                                animation: true,
-                                lineHeight: 5.0,
-                                percent: widget.progress,
-                                backgroundColor: Colors.grey.shade300,
-                                linearStrokeCap: LinearStrokeCap.round,
-                                progressColor: Colors.blue.shade700,
+
+                    return
+                      Column(
+                        children: [
+                          if (index == 0)
+                            AnimatedPadding(
+                              duration: Duration(milliseconds: 400),
+                              padding: EdgeInsets.only(
+                                  left: padValue * 20,
+                                  right: padValue,
+                                  top: padValue * 8,
+                                  bottom: padValue * 8),
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 6,
+                                    backgroundColor: Colors.red,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    widget.workOutList.length.toString() +
+                                        " Workouts",
+                                    style: textTheme.headline6.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16),
+                                  ),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  CircleAvatar(
+                                    radius: 6,
+                                    backgroundColor: Colors.orange,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    getTime().toString() + " Minutes",
+                                    style: textTheme.headline6.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 14.0, right: 10, top: 10),
-                                child: Row(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 8,
-                                      backgroundColor: Colors.red,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      widget.workOutList.length.toString() +
-                                          " Workouts",
-                                      style: textTheme.headline6.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16),
-                                    ),
-                                    SizedBox(
-                                      width: 30,
-                                    ),
-                                    CircleAvatar(
-                                      radius: 8,
-                                      backgroundColor: Colors.orange,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      getTime().toString() + " Minutes",
-                                      style: textTheme.headline6.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                            ),
+                          if (index == 0)
+                            Divider(
+                              thickness: .5,
+                            ),
+                          AnimatedPadding(
+                            duration: Duration(milliseconds: 1000),
+                            curve: Curves.easeOutCubic,
+                            padding: EdgeInsets.only(
+                                top: padValue * 1,
+                                left: padValue * 1,
+                                right: padValue * 1),
+                            child: CustomExerciseCard(
+                              index: index,
+                              workOutList: widget.workOutList,
+                              time: time,
+                            ),
                           ),
-                        Padding(
-                          padding:
-                              EdgeInsets.only(top: 10, left: 10, right: 10),
-                          child: CustomExerciseCard(
-                            index: index,
-                            workOutList: widget.workOutList,
-                            time: time,
+                          Divider(
+                            thickness: .5,
                           ),
-                        ),
-                      ],
-                    );
+                        ],
+                      );
                   },
-                  padding: EdgeInsets.only(bottom: 70),
-                  // physics: BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: 100),
+                  physics: BouncingScrollPhysics(),
                   itemCount: widget.workOutList.length,
                 )
               ],

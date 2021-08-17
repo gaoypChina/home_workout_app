@@ -2,7 +2,7 @@
     package="com.akash.full_workout">
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
-        android:label="full_workout"
+        android:label="Home Workout"
         android:icon="@mipmap/ic_launcher">
 
         <activity
