@@ -8,7 +8,7 @@ import '../main.dart';
 import 'main/explore_page/explore_page.dart';
 import 'main/report_page/report_page.dart';
 import 'main/setting_page/setting_screen.dart';
-import 'main/weight_report_page/weight_report_detail.dart';
+import 'main/weight_report_page/weight_report_details/weight_report_detail.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = "main-page";

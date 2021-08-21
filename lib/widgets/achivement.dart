@@ -103,7 +103,7 @@ class _AchievementState extends State<Achievement> {
 
       return Container(
 
-padding: EdgeInsets.symmetric(horizontal: 8),
+        padding: EdgeInsets.symmetric(horizontal: 8),
 
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -36,7 +36,7 @@ class WorkoutCard extends StatelessWidget {
           print("Last Date : ${snapShot.data}");
           if (snapShot.hasData) {
             String date =
-                DateFormat.MMMd().format(DateTime.parse(snapShot.data));
+            DateFormat.MMMd().format(DateTime.parse(snapShot.data));
             return Padding(
               padding: const EdgeInsets.only(top: 2.0, bottom: 8),
               child: Text("Last Time : $date",
@@ -184,11 +184,11 @@ class WorkoutCard extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => ExerciseListScreen(
-                      workOutList: workoutList,
-                      tag: tag,
-                      title: title,
-                      tagValue: tagValue,
-                    )),
+                  workOutList: workoutList,
+                  tag: tag,
+                  title: title,
+                  tagValue: tagValue,
+                )),
           );
         },
         child: Container(

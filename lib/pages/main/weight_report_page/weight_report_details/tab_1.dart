@@ -1,32 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:full_workout/components/height_weightSelector.dart';
 import 'package:full_workout/constants/constants.dart';
-import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
+import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/models/weight_list_model.dart';
 import 'package:full_workout/models/weight_model.dart';
-import 'package:full_workout/pages/main/home_page/leading_widget.dart';
-import 'package:full_workout/components/height_weightSelector.dart';
-import 'package:full_workout/pages/main/weight_report_page/weight_chart.dart';
-import 'package:full_workout/pages/main/weight_report_page/weight_report_statics.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 import '../../../../main.dart';
 
-class WeightReportDetail extends StatefulWidget {
-  final Function onBack;
-  WeightReportDetail({ this.onBack});
-
-  static const routeName = "weight-report-detail";
-
+class WeightDetailTab1 extends StatefulWidget {
   @override
-  _WeightReportDetailState createState() => _WeightReportDetailState();
+  _WeightDetailTab1State createState() => _WeightDetailTab1State();
 }
 
-class _WeightReportDetailState extends State<WeightReportDetail> {
+class _WeightDetailTab1State extends State<WeightDetailTab1> {
   bool isLoading = true;
   var weightDb = WeightDatabaseHelper();
   SpHelper spHelper = SpHelper();
@@ -40,30 +31,13 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
   String rangeType = "Month";
   double initWeight = 0.0;
   DateTime selectedMnth;
-
   String firstDate = "";
   String lastDate = "";
 
-  _loadData() async {
-
-    double value =  await spHelper.loadDouble(spKey.weight)??0;
-    setState(() {
-      weightValue = value;
-      lbsWeight = value * 2.20462 == null ? 0 : value * 2.20462;
-    });
-
-    DateTime now = DateTime.now();
-    await _loadRangeData(
-        DateTime(now.year, now.month, 1).subtract(Duration(days: 1)),
-        DateTime(now.year, now.month + 1, 1));
-
-    firstDate = DateFormat.yMMMd().format(DateTime(now.year, now.month, 1));
-    lastDate = DateFormat.yMMMd().format(
-        DateTime(now.year, now.month + 1, 1).subtract(Duration(days: 1)));
-
-    setState(() {
-      isLoading = false;
-    });
+  loadWeightData() async {
+    double value = await spHelper.loadDouble(spKey.weight) ?? 0;
+    weightValue = value;
+    lbsWeight = value * 2.20462 == null ? 0 : value * 2.20462;
   }
 
   _loadRangeData(DateTime startDate, DateTime endDate) async {
@@ -77,6 +51,22 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
       weight.add(
           WeightList(weightModel: WeightModel.map(items[idx]), index: idx));
     }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  _loadData() async {
+    await loadWeightData();
+    DateTime now = DateTime.now();
+    await _loadRangeData(
+        DateTime(now.year, now.month, 1).subtract(Duration(days: 1)),
+        DateTime(now.year, now.month + 1, 1));
+
+    firstDate = DateFormat.yMMMd().format(DateTime(now.year, now.month, 1));
+    lastDate = DateFormat.yMMMd().format(
+        DateTime(now.year, now.month + 1, 1).subtract(Duration(days: 1)));
+
     setState(() {
       isLoading = false;
     });
@@ -153,7 +143,7 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
 
   getDetail(bool isDark) {
     print(weight.length.toString() + ": weight length");
-    return (weight.length == 0)
+    return isLoading ? Center(child: CircularProgressIndicator(),): (weight.length == 0)
         ? getEmptyList()
         : Column(children: [
             ...weight.map((item) {
@@ -166,7 +156,6 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(16))),
                         title: Text("Do you want to delete weight record?"),
-
                         actions: [
                           TextButton(
                               onPressed: () => Navigator.pop(context, true),
@@ -233,31 +222,36 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                 }
               }
 
-        String formatedDay =
-            DateFormat.yMMMd().format(DateTime.parse(item.weightModel.date));
-        double wd = 0;
-        if (item.index == weight.length - 1) {
-          wd = 0;
-        } else {
-          wd = weight[item.index].weightModel.weight -
-              weight[item.index + 1].weightModel.weight;
-        }
-        return Column(
-          children: [
-            Divider(thickness: 1,color: Colors.grey,height: 0,),
+              String formatedDay = DateFormat.yMMMd()
+                  .format(DateTime.parse(item.weightModel.date));
+              double wd = 0;
+              if (item.index == weight.length - 1) {
+                wd = 0;
+              } else {
+                wd = weight[item.index].weightModel.weight -
+                    weight[item.index + 1].weightModel.weight;
+              }
+              return Column(
+                children: [
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                    height: 0,
+                  ),
                   Slidable(
                     actionPane: SlidableDrawerActionPane(),
                     actionExtentRatio: 0.25,
                     child: Container(
                       height: 60,
-                      padding: EdgeInsets.only(left: 18,right: 18,top: 14,bottom: 14),
-
+                      padding: EdgeInsets.only(
+                          left: 18, right: 18, top: 14, bottom: 14),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             formatedDay,
-                            style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 15),
                           ),
                           RichText(
                             text: TextSpan(children: [
@@ -273,8 +267,8 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                                 text: " Kg",
                                 style: TextStyle(
                                     fontSize: 18,
-                                    color:
-                                        isDark ? Colors.white : Colors.black, fontWeight: FontWeight.w300),
+                                    color: isDark ? Colors.white : Colors.black,
+                                    fontWeight: FontWeight.w300),
                               ),
                             ]),
                           ),
@@ -291,10 +285,11 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                                       ? Icon(Icons.compare_arrows,
                                           color: Colors.blue, size: 25)
                                       : Icon(Icons.arrow_upward_outlined,
-                                          color: Colors.green,
-                                          size: 25),
+                                          color: Colors.green, size: 25),
                               SizedBox(
-                                width:wd.abs().toStringAsFixed(2).length>=5? 3:10,
+                                width: wd.abs().toStringAsFixed(2).length >= 5
+                                    ? 3
+                                    : 10,
                               ),
                               RichText(
                                   text: TextSpan(children: [
@@ -302,14 +297,16 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                                   text: wd.abs().toStringAsFixed(2),
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
-                                      color:isDark?Colors.white:Colors.black,
+                                      color:
+                                          isDark ? Colors.white : Colors.black,
                                       fontSize: 16),
                                 ),
                                 TextSpan(
                                   text: "Kg",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
-                                      color:isDark?Colors.white:Colors.black,
+                                      color:
+                                          isDark ? Colors.white : Colors.black,
                                       fontSize: 14),
                                 ),
                               ]))
@@ -331,19 +328,18 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                           onTap: () => onEdit()),
                     ],
                   ),
-
                 ],
               );
-      }).toList(),
-
-     ]);
+            }).toList(),
+          ]);
   }
 
   getEmptyList() {
     return Column(
       children: [
         Container(
-            child: Image.asset("assets/other/list2.png", fit: BoxFit.fitHeight)),
+            child:
+                Image.asset("assets/other/list2.png", fit: BoxFit.fitHeight)),
         Column(
           children: [
             SizedBox(
@@ -368,7 +364,8 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
 
   getDateRange() {
     return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 18, top: 12, bottom: 12),
+      padding:
+          const EdgeInsets.only(left: 18.0, right: 18, top: 12, bottom: 12),
       child: Container(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -396,46 +393,10 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
     );
   }
 
-  ///widget
+  @override
+  Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
-  tab2(bool isDark) {
-    return Scaffold(
-
-      backgroundColor: isDark ? Colors.black : Colors.white,
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-          // Center(
-          //   child: Text(
-          //         "Weight Statics",
-          //         style: textTheme.subtitle1
-          //             .copyWith(fontWeight: FontWeight.w500, fontSize: 18),
-          //       ),
-          // ),
-
-            SizedBox(
-              height: 18,
-            ),
-            WeightChart(),
-            SizedBox(
-              height: 10,
-            ),
-            WeightReportStatics(),
-            SizedBox(
-              height: 100,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  tab1(bool isDark) {
     return Scaffold(
       backgroundColor: isDark ? Colors.black : Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -457,7 +418,7 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
               await spHelper.saveDouble(spKey.weight, toSave);
               String key = DateFormat.yMd().format(selectedDate).toString();
               WeightModel weightModel =
-              WeightModel(selectedDate.toIso8601String(), toSave, key);
+                  WeightModel(selectedDate.toIso8601String(), toSave, key);
               if (weightModel.weight == null) return;
               await weightDb.addWeight(toSave, weightModel, key);
 
@@ -469,10 +430,8 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                 weight.insert(
                     0, WeightList(index: 0, weightModel: weightModel));
               }
-
               setState(() {});
-              if (weightModel.weight == null)
-                constants.getToast("Weight added successfully");
+                 constants.getToast("Weight added successfully");
             },
             icon: Icon(
               Icons.add,
@@ -482,7 +441,7 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
             label: Text(
               "Add weight",
               style:
-              textTheme.button.copyWith(fontSize: 16, color: Colors.white),
+                  textTheme.button.copyWith(fontSize: 16, color: Colors.white),
               textAlign: TextAlign.end,
             ),
           ),
@@ -551,65 +510,6 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
               height: 80,
             )
           ],
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
-
-    return WillPopScope(
-      onWillPop: ()=>widget.onBack(),
-      child: DefaultTabController(
-        initialIndex: 0,
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: isDark ? Colors.black : Colors.white,
-            title: Text(
-              "Weight Tracker",
-              style: TextStyle(color: isDark ? Colors.white : Colors.black),
-            ),
-            bottom: TabBar(
-              indicatorColor: Colors.blue.shade700,
-              tabs: [
-                Tab(
-                  icon: Icon(
-                    Icons.history,
-                    color: isDark ? Colors.white : Colors.black,
-                  ),
-                  child: Text(
-                    "HISTORY",
-                    style:
-                        TextStyle(color: isDark ? Colors.white :  Colors.black),
-                  ),
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.stacked_line_chart_outlined,
-                    color: isDark ? Colors.white : Colors.black,
-                  ),
-                  child: Text(
-                    "STATICS",
-                    style:
-                        TextStyle(color: isDark ? Colors.white : Colors.black),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          body: TabBarView(
-            children: [
-              isLoading == true
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : tab1(isDark),
-              tab2(isDark)
-            ],
-          ),
         ),
       ),
     );
