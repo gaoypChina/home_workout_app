@@ -10,7 +10,7 @@ import 'package:full_workout/pages/main/setting_page/profile_settings_screen.dar
 import 'package:full_workout/pages/main/setting_page/reminder_screen.dart';
 import 'package:full_workout/pages/main/setting_page/setting_screen.dart';
 import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
-import 'package:full_workout/pages/main/weight_report_page/weight_report_detail.dart';
+import 'package:full_workout/pages/main/weight_report_page/weight_report_details/weight_report_detail.dart';
 import 'package:full_workout/pages/main_page.dart';
 import 'package:full_workout/pages/main/setting_page/faq_page.dart';
 import 'package:google_fonts/google_fonts.dart';

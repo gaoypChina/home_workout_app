@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
 
     getTitle(String title) {
       return Container(
-        padding: EdgeInsets.only(left: 8, right: 8, top: 12, bottom: 4),
+        padding: EdgeInsets.only(left: 18, right: 8, top: 12, bottom: 6),
         child: Text(title,
             style: textTheme.bodyText1.copyWith(
               fontWeight: FontWeight.w600,
@@ -68,8 +68,8 @@ class HomePage extends StatelessWidget {
                     actions: [...getLeading(context)],
                     backgroundColor: isDark?Colors.black:Colors.white,
                     automaticallyImplyLeading: false,
-                    expandedHeight:height<600?height*.5: height * .36,
-                    elevation: 5,
+                    expandedHeight:height * .16,
+                    elevation: 0,
                     title:
                     RichText(
                         text: TextSpan(children: [
@@ -77,13 +77,13 @@ class HomePage extends StatelessWidget {
                           text: "Home ",
                           style: TextStyle(
                               color: Colors.blue.shade700,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w700,
                               fontSize: 22)),
                       TextSpan(
                           text: "Workout",
                           style: TextStyle(
                               color:  isDark?Colors.white:Colors.black,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w700,
                               fontSize: 22))
                     ])),
 
@@ -92,16 +92,18 @@ class HomePage extends StatelessWidget {
                     flexibleSpace: FlexibleSpaceBar(
                       collapseMode: CollapseMode.parallax,
                       background: Container(
-                          padding: EdgeInsets.only(top: 85, bottom: 0),
+                        decoration: BoxDecoration(
+                          color:isDark?Colors.black: Colors.white,
+                        ),
+                          padding: EdgeInsets.only(top: 85,),
                           child: Column(
                             children: [
                               Achievement(
                                 onTap: () => Navigator.pushNamed(
                                     context, WorkoutDetailReport.routeName),
                               ),
-                            SizedBox(height: 10,),
-                              ActiveGoal(),
-
+                              Spacer(),
+                              Divider(height: 8,thickness: .5,color:isDark?Colors.grey: Colors.grey.shade300,)
                             ],
                           )),
                     ),
@@ -109,9 +111,17 @@ class HomePage extends StatelessWidget {
                 ];
               },
               body: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: EdgeInsets.symmetric(horizontal: 0),
                 // physics: BouncingScrollPhysics(),
                 children: [
+
+                  SizedBox(height: 10,),
+
+                  ActiveGoal(),
+
+                  SizedBox(height: 2,),
+
+
                   getTitle(exerciseName[0]),
                   for (int i = 0; i < 3; i++)
                     WorkoutCard(

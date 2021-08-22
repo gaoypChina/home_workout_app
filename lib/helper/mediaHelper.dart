@@ -23,13 +23,18 @@ class MediaHelper {
   }
 
   Future speak(String text) async {
-
     bool voice = await spHelper.loadBool(spKey.voice);
     bool coach = await spHelper.loadBool(spKey.coach);
     if(voice || coach){
     await  tts.speak(text);
-      // await flutterTts.setPitch(1);
-      // await flutterTts.speak(text);
+    }
+  }
+
+  Future speakTestVoice(String text) async {
+    bool voice = await spHelper.loadBool(spKey.voice);
+    bool coach = await spHelper.loadBool(spKey.coach);
+    if(voice || coach){
+      await  tts.speak(text);
     }
   }
 
@@ -40,16 +45,7 @@ class MediaHelper {
   }
 
 
-  Future dispose() async{
-    await audio.dispose();
 
-    await tts.stop();
-
-
-   // await flutterTts.pause();
-
-   // await flutterTts.stop();
-  }
 
 }
 

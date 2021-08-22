@@ -15,6 +15,7 @@ List<Widget>  getLeading(BuildContext context, {Color color}){
       icon: Icon(
         Feather.calendar,
         size: 22,
+        color: color,
       ),
       tooltip: "Report",
     ),
@@ -23,6 +24,7 @@ List<Widget>  getLeading(BuildContext context, {Color color}){
       icon: Icon(
         Ionicons.md_alarm,
         size: 26,
+        color: color,
       ),
       padding: EdgeInsets.only(right: 8, top: 0),
       splashRadius: 24,

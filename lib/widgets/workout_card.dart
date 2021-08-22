@@ -176,7 +176,7 @@ class WorkoutCard extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
+      padding: const EdgeInsets.only(bottom: 12.0,left: 8,right: 8),
       child: InkWell(
         borderRadius: BorderRadius.all(Radius.circular(16)),
         onTap: () {

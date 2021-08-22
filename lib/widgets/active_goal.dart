@@ -25,10 +25,12 @@ class _ActiveGoalState extends State<ActiveGoal> {
   int completed;
   int daySelected;
   int trainingDay;
+  bool isGoalSet = true;
 
   _loadData() async {
-    trainingDay = await spHelper.loadInt(spKey.trainingDay) ?? 7;
-    daySelected = await spHelper.loadInt(spKey.firstDay) ?? 7;
+    trainingDay = await spHelper.loadInt(spKey.trainingDay)??7;
+    daySelected = await spHelper.loadInt(spKey.firstDay)??7;
+    isGoalSet = await spHelper.loadBool(spKey.isGoalSet) ?? false;
     setState(() {});
     _getWorkDoneList();
   }
@@ -83,21 +85,24 @@ class _ActiveGoalState extends State<ActiveGoal> {
   Widget build(BuildContext context) {
     Color textColor = Colors.white;
     double height =MediaQuery.of(context).size.height;
-    getTitle() {
-      onTap() async {
-        var res = await showDialog(
-            context: context,
-            builder: (context) {
-              return WeekGoalSettings();
-            });
-        if (res != null) {
-          setState(() {
-            daySelected = res[0];
-            trainingDay = res[1];
-            _getWorkDoneList();
+
+    onTap() async {
+      var res = await showDialog(
+          context: context,
+          builder: (context) {
+            return WeekGoalSettings();
           });
-        }
+      if (res != null) {
+        setState(() {
+          daySelected = res[0];
+          trainingDay = res[1];
+          isGoalSet = res[2] == 0 ?true :false;
+          _getWorkDoneList();
+        });
       }
+    }
+    getTitle() {
+
 
       return InkWell(
         onTap: onTap,
@@ -111,7 +116,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
                 "Week Goal ",
                 style: textTheme.bodyText1.copyWith(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                     color: textColor),
               ),
               InkWell(
@@ -130,10 +135,10 @@ class _ActiveGoalState extends State<ActiveGoal> {
                 ),
               ),
               Spacer(),
-              Text(
+         isGoalSet?     Text(
                 "$completed/$trainingDay",
                 style: TextStyle(color: textColor),
-              )
+              ):Container()
             ],
           ),
         ),
@@ -150,21 +155,25 @@ class _ActiveGoalState extends State<ActiveGoal> {
                     children: [
                       Text(
                         DateFormat('EEEE').format(activeDay.date)[0],
-                        style: TextStyle(fontWeight: FontWeight.w600,color: textColor),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, color: textColor),
                       ),
                       SizedBox(
                         height: 6,
                       ),
                       CircleAvatar(
-                          backgroundColor: DateTime.now().day == activeDay.date.day
-                              ?Colors.white: activeDay.isDone
-                             ?Colors.white
-                              : Colors.grey.shade200,
+                          backgroundColor:
+                              DateTime.now().day == activeDay.date.day
+                                  ? Colors.white
+                                  : activeDay.isDone
+                                      ? Colors.white
+                                      : Colors.grey.shade200,
                           child: CircleAvatar(
                             backgroundColor: activeDay.isDone
                                 ? Colors.white
-                                :  DateTime.now().day == activeDay.date.day
-                                ?Colors.white:Colors.grey.shade200,
+                                : DateTime.now().day == activeDay.date.day
+                                    ? Colors.white
+                                    : Colors.grey.shade200,
                             radius: 12,
                             child: activeDay.isDone
                                 ? Icon(
@@ -176,7 +185,10 @@ class _ActiveGoalState extends State<ActiveGoal> {
                                     backgroundColor:
                                         DateTime.now().day == activeDay.date.day
                                             ? Colors.blue
-                                            :DateTime.now().day >= activeDay.date.day?Colors.grey: Colors.grey.shade400,
+                                            : DateTime.now().day >=
+                                                    activeDay.date.day
+                                                ? Colors.grey
+                                                : Colors.grey.shade400,
                                   ),
                           ),
                           radius: 15),
@@ -185,7 +197,8 @@ class _ActiveGoalState extends State<ActiveGoal> {
                       ),
                       Text(
                         activeDay.date.day.toString(),
-                        style: TextStyle(fontWeight: FontWeight.w500,color: textColor),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, color: textColor),
                       ),
                       SizedBox(
                         height: 6,
@@ -197,28 +210,41 @@ class _ActiveGoalState extends State<ActiveGoal> {
       );
     }
 
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8),
-        child:InkWell(
-    borderRadius: BorderRadius.all(Radius.circular(16)),
-    onTap: () => Navigator.pushNamed(context, WorkoutDetailReport.routeName),
-    child:  Material(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-          elevation: 2,
-        child: Container(
-          height: height*.16,
+    getEmptyGoal() {
+      return Container(
+        padding: EdgeInsets.only(left: 18,right: 18, bottom: 8),
+        height: height * .06,
+        child: Text(
+          "Select week goal to achieve your fitness goal",textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w300),
+        ),
+      );
+    }
 
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      child: InkWell(
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+        onTap: () =>
+          isGoalSet ?  Navigator.pushNamed(context, WorkoutDetailReport.routeName):onTap(),
+        child: Material(
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+          elevation: 0,
+          child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 gradient: LinearGradient(
-                  colors: [Colors.blue.shade300,Colors.blue.shade700],
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft
-                )),
+                    colors: [Colors.blue, Colors.blue],
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft)),
             child: Column(
               children: [
                 getTitle(),
-                getWeeklyUpdate(),
+                isGoalSet ? getWeeklyUpdate() : getEmptyGoal(),
+                SizedBox(
+                  height: 10,
+                )
               ],
             ),
           ),

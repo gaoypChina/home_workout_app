@@ -10,7 +10,7 @@ class Constants{
 
   // ToDo: Update version number
 
-  String versionNumber ="1.0.0";
+  String versionNumber ="1.1.0";
 
 
 

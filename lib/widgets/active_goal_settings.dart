@@ -16,7 +16,7 @@ class _WeekGoalSettingsState extends State<WeekGoalSettings> {
   SpKey spKey = SpKey();
   SpHelper spHelper = SpHelper();
 
-  List<DayIndex> trainingDay = [
+  List<DayIndex> trainingDayList = [
     DayIndex(index: 1, value: "1 Day"),
     DayIndex(index: 2, value: "2 Days"),
     DayIndex(index: 3, value: "3 Days"),
@@ -26,17 +26,17 @@ class _WeekGoalSettingsState extends State<WeekGoalSettings> {
     DayIndex(index: 7, value: "7 Days"),
   ];
 
-  List<DayIndex> firstDay = [
+  List<DayIndex> firstDayList = [
     DayIndex(index: 1, value: "Saturday"),
     DayIndex(index: 2, value: "Sunday"),
     DayIndex(index: 3, value: "Monday")
   ];
 
 
-  String totalActiveDay = "";
-  String startDay = "Sunday";
+  String trainingDay = "";
+  String firstDay = "Sunday";
 
-  int firstDayVal;
+  int trainingDayVal;
   int activeDayVal;
 
   loadData() async{
@@ -48,9 +48,9 @@ class _WeekGoalSettingsState extends State<WeekGoalSettings> {
    int firstDayRes =await spHelper.loadInt(spKey.firstDay) ?? 7;
    int trainingDayRes = await spHelper.loadInt(spKey.trainingDay)?? 2;
    setState(() {
-     totalActiveDay =trainingDayRes==1?trainingDayRes.toString() + " Day": trainingDayRes.toString() + " Days";
-     startDay = loadDay(firstDayRes);
-     firstDayVal = firstDayRes;
+     trainingDay =trainingDayRes==1?trainingDayRes.toString() + " Day": trainingDayRes.toString() + " Days";
+     firstDay = loadDay(firstDayRes);
+     trainingDayVal = firstDayRes;
      activeDayVal = trainingDayRes;
    });
   }
@@ -129,13 +129,13 @@ super.initState();
                             return DaySelector(
                               title: "Weekly training days",
                               initialValue: activeDayVal,
-                              dayList: trainingDay,
+                              dayList: trainingDayList,
                             );
                           });
 
                           if (res != null) {
                             setState(() {
-                              totalActiveDay =res==1?res.toString() + " Day": res.toString() + " Days";
+                              trainingDay =res==1?res.toString() + " Day": res.toString() + " Days";
                               activeDayVal = res;
                             });
                           }
@@ -150,7 +150,7 @@ super.initState();
                           width: 200,
                           child: Row(
                             children: [
-                              Text(totalActiveDay,style: TextStyle(color: Colors.black),),
+                              Text(trainingDay,style: TextStyle(color: Colors.black),),
                               Spacer(),
                               Icon(Icons.arrow_drop_down_rounded,color: Colors.black,)
                             ],
@@ -175,8 +175,8 @@ super.initState();
                               builder: (context) {
                                 return DaySelector(
                                   title: "First Day of week",
-                                  initialValue:firstDayVal==6? 1:firstDayVal==7?2:3,
-                                  dayList: firstDay,
+                                  initialValue:trainingDayVal==6? 1:trainingDayVal==7?2:3,
+                                  dayList: firstDayList,
                                 );
                               });
 
@@ -184,16 +184,16 @@ super.initState();
                             String resString = "";
                             if (res == 1) {
                               resString = "Saturday";
-                              firstDayVal = 6;
+                              trainingDayVal = 6;
                             } else if (res == 2) {
                               resString = "Sunday";
-                              firstDayVal = 7;
+                              trainingDayVal = 7;
                             } else {
                               resString = "Monday";
-                              firstDayVal = 1;
+                              trainingDayVal = 1;
                             }
                             setState(() {
-                              startDay = resString;
+                              firstDay = resString;
                             });
                           }
                         },
@@ -207,7 +207,7 @@ super.initState();
                           width: 200,
                           child: Row(
                             children: [
-                              Text(startDay,style: TextStyle(color: Colors.black),),
+                              Text(firstDay,style: TextStyle(color: Colors.black),),
                               Spacer(),
                               Icon(Icons.arrow_drop_down_rounded,color: Colors.black,)
                             ],
@@ -222,9 +222,11 @@ super.initState();
                           child: FloatingActionButton.extended(
                             backgroundColor: Colors.blue.shade700,
                             onPressed: () {
-                              spHelper.saveInt(spKey.firstDay, firstDayVal);
+                              spHelper.saveInt(spKey.firstDay, trainingDayVal);
                               spHelper.saveInt(spKey.trainingDay, activeDayVal);
-                              Navigator.pop(context, [firstDayVal, activeDayVal]);
+                              spHelper.saveBool(spKey.isGoalSet, true);
+                              Navigator.pop(
+                                  context, [trainingDayVal, activeDayVal,0]);
                             },
                             label: Text(
                               "SAVE",

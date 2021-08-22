@@ -23,8 +23,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
-  String title = "WinkWack";
-
   onBack() {
     setState(() {
       currentIndex = 0;
@@ -50,11 +48,11 @@ class _MainPageState extends State<MainPage> {
           child: BottomNavigationBar(
 
             selectedLabelStyle: textTheme.bodyText1
-                .copyWith(fontWeight: FontWeight.bold, fontSize: 15),
+                .copyWith(fontWeight: FontWeight.w700, fontSize: 13),
             elevation: 010,
             showSelectedLabels: true,
             unselectedLabelStyle: textTheme.subtitle1
-                .copyWith(fontSize: 12, fontWeight: FontWeight.w700),
+                .copyWith(fontSize: 12, fontWeight: FontWeight.w600),
             selectedItemColor: constants.primaryColor,
             iconSize: 20,
             unselectedItemColor: Colors.blueGrey,
@@ -67,21 +65,21 @@ class _MainPageState extends State<MainPage> {
                 label: "Home",
               ),
               BottomNavigationBarItem(
-                  icon: Icon(AntDesign.appstore_o),
-                  activeIcon: Icon(AntDesign.appstore1),
+                  icon: Icon(EvaIcons.gridOutline),
+                  activeIcon: Icon(EvaIcons.grid),
                   label: "Explore"),
               BottomNavigationBarItem(
                   icon: Icon(SimpleLineIcons.chart),
                   activeIcon: Icon(Entypo.bar_graph),
                   label: "Report"),
               BottomNavigationBarItem(
-                  icon: Icon(Entypo.line_graph),
-                  activeIcon: Icon(Entypo.line_graph),
+                  icon: Icon(EvaIcons.pieChartOutline,),
+                  activeIcon: Icon(EvaIcons.pieChart,),
                   label: "Weight"),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.settings_outlined),
-                  activeIcon: Icon(Icons.settings),
-                  label: "Settings"),
+                  icon: Icon(EvaIcons.settingsOutline),
+                  activeIcon: Icon(EvaIcons.settings),
+                  label: "Setting"),
             ],
             type: BottomNavigationBarType.fixed,
             onTap: (index) async {

@@ -102,7 +102,6 @@ class _WorkoutPageState extends State<WorkoutPage>
   _onComplete(int currIndex) async {
 
     if (currIndex + 1 == widget.workOutList.length) {
-    await  mediaHelper.dispose();
        return Navigator.pushReplacement(
            context,
            MaterialPageRoute(
@@ -164,9 +163,7 @@ class _WorkoutPageState extends State<WorkoutPage>
 
   @override
   void dispose() {
-
     controller.dispose();
-    mediaHelper.dispose();
     super.dispose();
   }
 

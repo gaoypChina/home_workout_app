@@ -18,7 +18,6 @@ class _AchievementState extends State<Achievement> {
   bool isLoading = true;
   SpHelper _spHelper = SpHelper();
   SpKey _spKey = SpKey();
-
   int time = 0;
   int exercise = 0;
   double calories = 0;
@@ -49,52 +48,37 @@ class _AchievementState extends State<Achievement> {
   }
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     Widget getAchievementCard(
         int time, int exercise, double calories, bool isLoading) {
       getCard(String title, String subTitle, List<Color> color) {
         return Container(
-          height: MediaQuery.of(context).size.height * .13,
-          child: Card(
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16))),
-            child: Container(
-              width: MediaQuery.of(context).size.width / 3.5,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.blue.shade700,Colors.blue.shade300],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight),
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-              ),
-              child: InkWell(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                onTap: () => widget.onTap(),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        isLoading ? "" : subTitle,
-                        style: textTheme.bodyText2.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        title,
-                        style: textTheme.bodyText1.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18),
-                      ),
-                    ],
+          padding: EdgeInsets.symmetric(horizontal: 18),
+          child: InkWell(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+            onTap: () => widget.onTap(),
+            child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 12,),
+                  Text(
+                    isLoading ? "" : subTitle,
+                    style: textTheme.bodyText2.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: isDark?Colors.white:Colors.blue.shade700,
+                        fontSize: 28),
                   ),
-                ),
+
+                  Text(
+                    title,
+                    style: textTheme.bodyText1.copyWith(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 15),
+                  ),
+                ],
               ),
             ),
           ),

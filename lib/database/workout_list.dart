@@ -637,8 +637,7 @@ Workout reclinedRhomboidSqueezes = Workout(
   showTimer: false,
   beginnerRap: 12,
   intermediateRap: 14,
-  //TODO:add missing assets folder
-  imageSrc: 'assets/all-workouts/armScissor.gif',
+  imageSrc: 'assets/all-workouts/reclinedRomboidSqueeze.gif',
 );
 Workout armScissors = Workout(
   title: 'Arm Scissors',
@@ -697,8 +696,7 @@ Workout reclinedRhomboidSqueezes2 = Workout(
   showTimer: false,
   beginnerRap: 10,
   intermediateRap: 12,
-  //TODO: add missing folder
-  imageSrc: 'assets/all-workouts/floorTricepsDipes.gif',
+  imageSrc: 'assets/all-workouts/reclinedRomboidSqueeze.gif',
 );
 Workout floorTricepsDips = Workout(
   title: 'Floor Triceps Dips',
@@ -1505,7 +1503,7 @@ Workout chestStretch = Workout(
       'https://www.youtube.com/watch?v=CEQMx4zFwYs&ab_channel=MidwestOrtho',
   showTimer: true,
   duration: 30,
-  imageSrc: 'assets/all-workouts/ChestStretches.png',
+  imageSrc: 'assets/all-workouts/chestStretches.png',
 );
 Workout hinduPushUps = Workout(
   title: 'Hindu Push-ups',
@@ -2084,7 +2082,6 @@ List<Workout> armsIntermediate = [
 ];
 
 List<Workout> armsAdvance = [
-  //ToDo: remove all comments
   armCircleClockWise,
   armCircleCounterClockWise,
   skippingWithOutRope,
