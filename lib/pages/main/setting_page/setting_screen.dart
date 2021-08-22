@@ -1,8 +1,10 @@
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/helper/mediaHelper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/pages/main/setting_page/privacy_policy.dart';
@@ -11,6 +13,7 @@ import 'package:full_workout/pages/main/setting_page/reminder_screen.dart';
 import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
 import 'package:full_workout/pages/main/setting_page/training_settings_screen.dart';
 import 'package:full_workout/pages/main/setting_page/faq_page.dart';
+import 'package:full_workout/pages/main/setting_page/voice_option_setting.dart';
 import 'package:share/share.dart';
 import 'package:device_info/device_info.dart';
 
@@ -263,6 +266,46 @@ class _SettingPageState extends State<SettingPage> {
                         Navigator.of(context).pushNamed(ReminderTab.routeName);
                       },
                       trailing: trailingIcon),
+                  CustomTile(
+                    color: colorList[2],
+                    icon: Icons.restart_alt,
+                    title: "Restart Progress",
+                    trailing: trailingIcon,
+                    onPress: () {},
+                  ),
+                  getTitle("Voice Options (TTS)"),
+                  CustomTile(
+                      title: "Test Voice",
+                      icon: Icons.volume_down,
+                      trailing: trailingIcon,
+                      onPress: () async {
+                        bool value = await MediaHelper()
+                            .speak("Did you Hear the test voice")
+                            .then((value) => showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return ConfirmVoiceDialog();
+                                }));
+                        if (value == false) {
+                      await   showDialog(
+                              context: context,
+                              builder: (context) {
+                                return OpenDeviceTTSSettingsDialog();
+                              });
+                        }
+                      },
+                      color: colorList[6]),
+                  CustomTile(
+                      title: "Device TTS Setting",
+                      icon: Icons.settings_applications,
+                      trailing: trailingIcon,
+                      onPress: () async {
+                        AndroidIntent intent = AndroidIntent(
+                          action: 'com.android.settings.TTS_SETTINGS',
+                        );
+                        await intent.launch();
+                      },
+                      color: colorList[1]),
                   getTitle("Support Us"),
                   CustomTile(
                     color: colorList[5],
