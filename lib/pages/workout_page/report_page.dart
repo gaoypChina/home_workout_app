@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
@@ -72,7 +71,7 @@ class _MyAppState extends State<ReportScreen> {
           widget.tag == spKey.chestChallenge) {
         print(widget.tag.toString() + " : tag");
         print(widget.tagValue.toString() + " : tagValue");
-        int currVal = await spHelper.loadInt(widget.tag);
+        int currVal = await spHelper.loadInt(widget.tag) ?? 0;
         spHelper.saveInt(widget.tag, currVal + 1);
       } else {
         spHelper.saveString(widget.tag, widget.dateTime);

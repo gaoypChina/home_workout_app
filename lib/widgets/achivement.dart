@@ -63,20 +63,21 @@ class _AchievementState extends State<Achievement> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 12,),
+
                   Text(
                     isLoading ? "" : subTitle,
                     style: textTheme.bodyText2.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: isDark?Colors.white:Colors.blue.shade700,
+                        fontWeight: FontWeight.w400,
+                        color: isDark?Colors.blue:Colors.blue.shade700,
                         fontSize: 28),
                   ),
 
                   Text(
                     title,
                     style: textTheme.bodyText1.copyWith(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 15),
+                      color: Colors.blueGrey,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 13),
                   ),
                 ],
               ),

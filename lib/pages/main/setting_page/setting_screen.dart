@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +12,7 @@ import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/pages/main/setting_page/privacy_policy.dart';
 import 'package:full_workout/pages/main/setting_page/profile_settings_screen.dart';
 import 'package:full_workout/pages/main/setting_page/reminder_screen.dart';
+import 'package:full_workout/pages/main/setting_page/reset_progress.dart';
 import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
 import 'package:full_workout/pages/main/setting_page/training_settings_screen.dart';
 import 'package:full_workout/pages/main/setting_page/faq_page.dart';
@@ -89,13 +92,13 @@ class _SettingPageState extends State<SettingPage> {
     List<Color> colorList = [
       Colors.red,
       Colors.green,
-      Colors.orange,
+      Colors.pink,
       Colors.amberAccent,
-      Colors.redAccent,
-      Colors.deepOrangeAccent,
-      Colors.redAccent,
+      Colors.blue,
+      Colors.green,
+      Colors.amberAccent,
       Colors.red,
-      Colors.orange,
+      Colors.purpleAccent,
       Colors.green,
     ];
 
@@ -110,7 +113,7 @@ class _SettingPageState extends State<SettingPage> {
                 wordSpacing: 4,
                 fontWeight: FontWeight.w700,
                 fontSize: 18,
-                color: Colors.blue.shade700),
+                color:isDark? Colors.blue:Colors.blue.shade700),
           ));
     }
 
@@ -267,13 +270,14 @@ class _SettingPageState extends State<SettingPage> {
                       },
                       trailing: trailingIcon),
                   CustomTile(
-                    color: colorList[2],
-                    icon: Icons.restart_alt,
-                    title: "Restart Progress",
-                    trailing: trailingIcon,
-                    onPress: () {},
-                  ),
-                  getTitle("Voice Options (TTS)"),
+                      color: colorList[2],
+                      icon: Icons.restart_alt,
+                      title: "Restart Progress",
+                      trailing: trailingIcon,
+                      onPress: () => showDialog(
+                          context: context,
+                          builder: (context) => ResetProgress())),
+                  getTitle("Voice Options"),
                   CustomTile(
                       title: "Test Voice",
                       icon: Icons.volume_down,
@@ -326,7 +330,17 @@ class _SettingPageState extends State<SettingPage> {
                     icon: Icons.star,
                     title: "5 star Ratting",
                     trailing: trailingIcon,
-                    onPress: () {},
+                    onPress: () async{
+                      if (Platform.isAndroid) {
+                        AndroidIntent intent = AndroidIntent(
+                          action: 'action_view',
+                          data: 'https://play.google.com/store/apps/details?'
+                              'id=com.google.android.apps.myapp',
+                          arguments: {'authAccount': "currentUserEmail"},
+                        );
+                        await intent.launch();
+                      }
+                    },
                   ),
                   getTitle("About us"),
                   CustomTile(
@@ -377,7 +391,7 @@ class _SettingPageState extends State<SettingPage> {
                     padding: const EdgeInsets.all(12.0),
                     child: Center(
                       child: Text(
-                        "Version 1.0.0",
+                        "Version "+constants.versionNumber,
                         style: TextStyle(fontSize: 14,color: Colors.grey),
                       ),
                     ),
@@ -413,7 +427,7 @@ class CustomTile extends StatelessWidget {
         contentPadding: EdgeInsets.only(left: 20, right: 24),
         leading: Icon(
           icon,
-          color: color,
+          color: color.withOpacity(.9),
         ),
         onTap: onPress,
         title: Text(

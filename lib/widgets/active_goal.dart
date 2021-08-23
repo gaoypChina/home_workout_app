@@ -22,9 +22,9 @@ class _ActiveGoalState extends State<ActiveGoal> {
 
   List<Workout> workoutList = [];
   List<ActiveDay> activeDayList = [];
-  int completed;
-  int daySelected;
-  int trainingDay;
+  int completed = 0;
+  int daySelected = 0;
+  int trainingDay = 0;
   bool isGoalSet = true;
 
   _loadData() async {

@@ -115,7 +115,7 @@ class _QuitPageState extends State<QuitPage> {
                       .height * .3,
                   width: double.infinity,
                   child: SvgPicture.asset(
-                    "assets/other/bee.svg",
+                    "assets/other/rest.svg",
                   ),
                 ),
                 Spacer(),

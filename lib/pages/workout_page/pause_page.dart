@@ -61,7 +61,7 @@ class StopPage extends StatelessWidget {
                       .height * .4,
                   width: double.infinity,
                   child: SvgPicture.asset(
-                    "assets/other/bee.svg",
+                    "assets/other/rest.svg",
                   ),
                 ),
                 Spacer(),

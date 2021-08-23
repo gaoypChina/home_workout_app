@@ -4,7 +4,6 @@ import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/widgets/custom_exercise_card.dart';
-import 'package:full_workout/widgets/coach_tip_dialog.dart';
 
 import '../../main.dart';
 import 'exercise_instruction_screen.dart';
@@ -41,6 +40,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   bool isLoading = true;
   bool lastStatus = true;
   String coverImgPath ="assets/workout_list_cover/arms.jpg";
+  String title = "";
 
   _scrollListener() {
     if (isShrink != lastStatus) {
@@ -96,10 +96,20 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
    }
   }
 
+  getTitle(){
+   List<String> curr =widget.title.split(" ");
+   if(curr.length == 5 && curr[0].toLowerCase() != "full"){
+      title = "${curr[0]} ${curr[1]} ${curr[3]} ${curr[4]}";
+   }else{
+     title = widget.title;
+   }
+  }
+
   loadData() async {
     await getCountDown();
     await getPushUpLevel();
     await getPadding();
+    getTitle();
     getCoverImage();
     setState(() {
       isLoading = false;
@@ -197,7 +207,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                       forceElevated: innerBoxIsScrolled,
                       flexibleSpace: FlexibleSpaceBar(
                         title: Text(
-                          widget.title,
+                          title,
                           style: TextStyle(
                               color: isDark
                                   ? Colors.white

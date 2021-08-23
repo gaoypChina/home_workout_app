@@ -76,14 +76,15 @@ class HomePage extends StatelessWidget {
                       TextSpan(
                           text: "Home ",
                           style: TextStyle(
-                              color: Colors.blue.shade700,
-                              fontWeight: FontWeight.w700,
+                              color:
+                                  isDark ? Colors.blue : Colors.blue.shade700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 22)),
                       TextSpan(
                           text: "Workout",
                           style: TextStyle(
-                              color:  isDark?Colors.white:Colors.black,
-                              fontWeight: FontWeight.w700,
+                              color: isDark ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.w600,
                               fontSize: 22))
                     ])),
 
@@ -92,19 +93,24 @@ class HomePage extends StatelessWidget {
                     flexibleSpace: FlexibleSpaceBar(
                       collapseMode: CollapseMode.parallax,
                       background: Container(
-                        decoration: BoxDecoration(
-                          color:isDark?Colors.black: Colors.white,
-                        ),
-                          padding: EdgeInsets.only(top: 85,),
-                          child: Column(
-                            children: [
-                              Achievement(
-                                onTap: () => Navigator.pushNamed(
-                                    context, WorkoutDetailReport.routeName),
-                              ),
-                              Spacer(),
-                              Divider(height: 8,thickness: .5,color:isDark?Colors.grey: Colors.grey.shade300,)
-                            ],
+                          decoration: BoxDecoration(
+                            color: isDark ? Colors.black : Colors.white,
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Spacer(
+                                  flex: 4,
+                                ),
+                                Achievement(
+                                  onTap: () => Navigator.pushNamed(
+                                      context, WorkoutDetailReport.routeName),
+                                ),
+                                Spacer(),
+                                // Divider(height: 8,thickness:isDark? .1 : .1,color:isDark?Colors.grey: Colors.grey.shade300,)
+                              ],
+                            ),
                           )),
                     ),
                   ),
@@ -112,16 +118,9 @@ class HomePage extends StatelessWidget {
               },
               body: ListView(
                 padding: EdgeInsets.symmetric(horizontal: 0),
-                // physics: BouncingScrollPhysics(),
                 children: [
-
-                  SizedBox(height: 10,),
-
                   ActiveGoal(),
-
                   SizedBox(height: 2,),
-
-
                   getTitle(exerciseName[0]),
                   for (int i = 0; i < 3; i++)
                     WorkoutCard(

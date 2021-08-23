@@ -33,6 +33,8 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
   int currentDay = 0;
   bool lastStatus = true;
 
+
+
   _scrollListener() {
     if (isShrink != lastStatus) {
       setState(() {
@@ -56,8 +58,9 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
     });
   }
 
+
   onComplete(int currIndex){
-    Navigator.push(
+        Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => ExerciseListScreen(
@@ -73,6 +76,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
 
   @override
   void initState() {
+
     getCurrentDate();
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
@@ -85,6 +89,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
 
   @override
   Widget build(BuildContext context) {
+
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     List<String> title = ["Week 1", "Week 2", "Week 3", "Week 4"];
@@ -125,10 +130,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
               borderRadius: BorderRadius.all(Radius.circular(40)),
               onTap: () => currIndex <= currentDay
                   ? onComplete(currIndex)
-                  :  onComplete(currIndex)
-          )
-            //TODO: uncomment below code
-              //constants.getToast("Please complete previous challenges first")),
+                  :    constants.getToast("Complete previous challenges to unlock")),
         );
       }
 
@@ -442,7 +444,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                         size: 30,
                       ),
                       label: Text(
-                        "Start Workout",
+                        "Start Workout" ,
                         style: textTheme.button
                             .copyWith(fontSize: 16, color: Colors.white),
                         textAlign: TextAlign.end,
