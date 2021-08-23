@@ -192,7 +192,7 @@ class _ReminderTabState extends State<ReminderTab> {
               child: Text(
                 "Set a workout reminder to help you meet your goals faster. you can change the frequency or turn off in your account settings at any time.",
                 style: constants.textStyle
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
+                    .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
               ),
             ),
             SizedBox(

@@ -25,7 +25,6 @@ class RestScreen extends StatefulWidget {
   final String title;
   final String tag;
   final int tagValue;
-  final int countDownTime;
   final int restTime;
 
   RestScreen(
@@ -37,7 +36,6 @@ class RestScreen extends StatefulWidget {
       @required this.title,
       @required this.tag,
       @required this.tagValue,
-      @required this.countDownTime,
       @required this.restTime});
 
   @override
@@ -113,7 +111,6 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                 rapList: widget.rapList,
                 workOutList: widget.workOutList,
                 title: widget.title,
-                countDownTime: widget.countDownTime,
                 restTime: widget.restTime,
                 index: index)));
   }
@@ -318,7 +315,8 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                             onPress: () async {
 
                               controller.stop(canceled: true);
-                              await showDialog(
+                              await
+                              showDialog(
                                   context: context,
                                   builder: (builder) => CheckListScreen(
                                       workOutList: widget.workOutList,

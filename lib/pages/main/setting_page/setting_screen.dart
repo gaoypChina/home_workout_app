@@ -37,7 +37,7 @@ class _SettingPageState extends State<SettingPage> {
   SpHelper spHelper = SpHelper();
   SpKey spKey = SpKey();
   Constants constants = Constants();
-  double trainingRest = 10;
+  double trainingRest = 15;
   double countdownTime = 10;
   bool enable = true;
   bool isLoading = true;

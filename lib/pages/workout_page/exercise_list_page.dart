@@ -71,7 +71,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   }
 
   getCountDown() async {
-    countDownTime = await spHelper.loadDouble(spKey.countdownTime) ?? 30;
+    countDownTime = await spHelper.loadDouble(spKey.countdownTime) ?? 10;
     restTime = await spHelper.loadDouble(spKey.trainingRest) ?? 30;
   }
 

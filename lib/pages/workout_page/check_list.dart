@@ -2,20 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/widgets/custom_exercise_card.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
+
 import '../../main.dart';
 
 class CheckListScreen extends StatefulWidget {
   final List<Workout> workOutList;
+  final String tag;
   final String title;
   final double progress;
-  final String tag;
 
   CheckListScreen(
       {@required this.workOutList,
-      @required this.tag,
-      @required this.progress,
-      @required this.title});
+        @required this.tag,
+        @required this.progress,
+        @required this.title});
 
   @override
   _ExerciseListScreenState createState() => _ExerciseListScreenState();
@@ -23,12 +23,28 @@ class CheckListScreen extends StatefulWidget {
 
 class _ExerciseListScreenState extends State<CheckListScreen>
     with TickerProviderStateMixin {
-  AnimationController _controller;
   List<int> rapList = [];
   ScrollController _scrollController;
   List<String> items;
   TabController tabContoller;
-  double padValue = 1;
+  double padValue = 0;
+  bool isLoading = true;
+  bool lastStatus = true;
+  String coverImgPath ="assets/workout_list_cover/arms.jpg";
+  String title = "";
+
+  _scrollListener() {
+    if (isShrink != lastStatus) {
+      setState(() {
+        lastStatus = isShrink;
+      });
+    }
+  }
+
+  bool get isShrink {
+    return _scrollController.hasClients &&
+        _scrollController.offset > (200 - kToolbarHeight);
+  }
 
   getTime() {
     int length = widget.workOutList.length;
@@ -37,22 +53,72 @@ class _ExerciseListScreenState extends State<CheckListScreen>
     return length + 6;
   }
 
+  getPadding() async {
+    Future.delayed(Duration(milliseconds: 100)).then((value) {
+      setState(() {
+        padValue = 1;
+      });
+    });
+  }
+
+
+
+
+  getCoverImage(){
+    String tag = widget.title.toLowerCase();
+    if(tag.contains("abs")){
+      coverImgPath = "assets/workout_list_cover/abs.jpg";
+    }else if(tag.contains("shoulder")){
+      coverImgPath="assets/workout_list_cover/shoulder.jpg";
+    }else if(tag.contains("legs")){
+      coverImgPath = "assets/workout_list_cover/legs.jpg";
+    }else if(tag.contains("chest")){
+      coverImgPath = "assets/workout_list_cover/chest.jpg";
+    }else if(tag.contains("arms")){
+      coverImgPath = "assets/workout_list_cover/arms.jpg";
+    }else{
+      coverImgPath = "assets/workout_list_cover/legs.jpg";
+    }
+  }
+
+  getTitle(){
+    List<String> curr =widget.title.split(" ");
+    if(curr.length == 5 && curr[0].toLowerCase() != "full"){
+      title = "${curr[0]} ${curr[1]} ${curr[3]} ${curr[4]}";
+    }else{
+      title = widget.title;
+    }
+  }
+
+  loadData() async {
+    await getPadding();
+    getTitle();
+    getCoverImage();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    loadData();
     _scrollController = new ScrollController();
+    _scrollController.addListener(_scrollListener);
     tabContoller = new TabController(vsync: this, length: 1);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     tabContoller.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     int time;
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -61,11 +127,9 @@ class _ExerciseListScreenState extends State<CheckListScreen>
           padding: EdgeInsets.only(bottom: 0.0),
           child: Align(
             alignment: Alignment.bottomCenter,
-            child: FloatingActionButton.extended(
+            child:FloatingActionButton.extended(
               backgroundColor: Colors.blue.shade700,
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: () =>Navigator.of(context).pop(),
               icon: Icon(
                 Icons.play_arrow,
                 color: Colors.white,
@@ -80,27 +144,47 @@ class _ExerciseListScreenState extends State<CheckListScreen>
             ),
           ),
         ),
-        body: NestedScrollView(
+        body: isLoading
+            ? CircularProgressIndicator()
+            : NestedScrollView(
           controller: _scrollController,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          physics: BouncingScrollPhysics(),
+          headerSliverBuilder:
+              (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverAppBar(
+                backgroundColor: isDark ? Colors.black : Colors.white,
                 leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: isDark
+                        ? Colors.white
+                        : isShrink
+                        ? Colors.black
+                        : Colors.white,
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
                 ),
-                backgroundColor: Colors.blue.shade700,
-                automaticallyImplyLeading: false,
+
                 expandedHeight: 150.0,
                 pinned: true,
+                elevation: isDark ? 0 : 1,
                 floating: false,
                 forceElevated: innerBoxIsScrolled,
                 flexibleSpace: FlexibleSpaceBar(
-                  title: Text(widget.title),
+                  title: Text(
+                    title,
+                    style: TextStyle(
+                        color: isDark
+                            ? Colors.white
+                            : isShrink
+                            ? Colors.black
+                            : Colors.white),
+                  ),
                   background: Image.asset(
-                    "assets/cover/back-cover.jpg",
+                    coverImgPath,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -145,6 +229,8 @@ class _ExerciseListScreenState extends State<CheckListScreen>
                     rapList.add(time);
 
                     return
+
+
                       Column(
                         children: [
                           if (index == 0)

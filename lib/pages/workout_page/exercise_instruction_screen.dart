@@ -68,7 +68,6 @@ class _InstructionScreenState extends State<InstructionScreen>
                   workOutList: widget.workOutList,
                   index: 0,
               restTime: widget.restTime,
-              countDownTime: widget.countDownTime,
               currTime: DateTime.now().toIso8601String(),
                 )));
   }
@@ -116,8 +115,6 @@ class _InstructionScreenState extends State<InstructionScreen>
 
   @override
   void initState() {
-    print("countdownTime : ${widget.countDownTime}");
-
     introMessage();
     awakeScreen();
     super.initState();
@@ -147,6 +144,7 @@ class _InstructionScreenState extends State<InstructionScreen>
         children: [
           Container(
             height: height / 2,
+            color: Colors.white,
             child: Image.asset(item.imageSrc),
           ),
 
@@ -178,7 +176,9 @@ class _InstructionScreenState extends State<InstructionScreen>
                           builder: (builder) => CheckListScreen(
                               workOutList: widget.workOutList,
                               tag: "continue",
-                              progress: 0,
+                              progress: 0 / widget.workOutList.length,
+
+                              //  progress: 0,
                               title: "title"));
 
                       controller.reverse(
