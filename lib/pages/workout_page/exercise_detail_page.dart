@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/pages/services/youtube_player.dart';
+import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
 
 import '../../main.dart';
 
@@ -87,8 +87,14 @@ class DetailPage extends StatelessWidget {
     getTitle(Workout workout){
       String rap = workout.showTimer == true ? "${rapCount}s": "X $rapCount";
      return Container(
-        height: 60,
-         child:   Text("${workout.title} $rap",style: textTheme.bodyText1.copyWith(fontSize: 22,fontWeight: FontWeight.w600,color: Colors.white),),
+       padding: EdgeInsets.only(left: 18,bottom: 12,top: 4),
+
+         child:   Row(
+           mainAxisAlignment: MainAxisAlignment.start,
+           children: [
+             Text("${workout.title} $rap",style: textTheme.bodyText1.copyWith(fontSize: 22,fontWeight: FontWeight.w600,color: Colors.white),textAlign: TextAlign.center,),
+           ],
+         ),
 
       );
     }

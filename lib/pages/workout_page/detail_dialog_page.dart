@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/components/info_button.dart';
-import 'package:full_workout/pages/services/youtube_player.dart';
+import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
 
 import '../../main.dart';
 

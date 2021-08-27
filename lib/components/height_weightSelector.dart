@@ -23,29 +23,7 @@ class _HeightSelectorState extends State<HeightSelector> {
   TextEditingController _feetController = TextEditingController();
   TextEditingController _inchController = TextEditingController();
 
-  onSubmit() {
-    if (heightIndex == 0) {
-      height = double.tryParse(_cmController.text);
-      if (height == null || height <= 50) {
-        constants.getToast("Please enter valid height value");
-      }
-    }
 
-    if (heightIndex == 1) {
-      double feet = double.tryParse(_feetController.text);
-      double inch = double.tryParse(_inchController.text);
-      if (feet == null || inch == null || feet <= 2) {
-        constants.getToast("Please enter valid height value");
-      } else {
-        double inchHeight = (feet * 12) + inch;
-        height = inchHeight * 2.54;
-      }
-    }
-
-
-    if(height >50)
-      Navigator.pop(context, height);
-  }
 
   @override
   void initState() {
@@ -83,6 +61,30 @@ class _HeightSelectorState extends State<HeightSelector> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    onSubmit() {
+      if (heightIndex == 0) {
+        height = double.tryParse(_cmController.text);
+        if (height == null || height <= 50) {
+          constants.getToast("Please enter valid height value", isDark);
+        }
+      }
+
+      if (heightIndex == 1) {
+        double feet = double.tryParse(_feetController.text);
+        double inch = double.tryParse(_inchController.text);
+        if (feet == null || inch == null || feet <= 2) {
+          constants.getToast("Please enter valid height value",isDark);
+        } else {
+          double inchHeight = (feet * 12) + inch;
+          height = inchHeight * 2.54;
+        }
+      }
+
+
+      if(height >50)
+        Navigator.pop(context, height);
+    }
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: AlertDialog(
@@ -230,28 +232,7 @@ class _WeightSelectorState extends State<WeightSelector> {
   TextEditingController _kgController = TextEditingController();
   TextEditingController _lbsController = TextEditingController();
 
-  onSubmit(){
-    if (weightIndex == 0) {
-      weight = double.tryParse(_kgController.text);
-      if (weight == null|| weight <=20 ) {
-        constants.getToast("Please enter valid weight value");
-      }
 
-    }
-
-    if (weightIndex == 1) {
-      double lbsWeight = double.tryParse(_lbsController.text);
-      if (lbsWeight == null || lbsWeight <=50) {
-        constants.getToast("Please enter valid weight value");
-      } else {
-        weight = lbsWeight / 2.205;
-        print(weight);
-      }
-    }
-    if ( weight != null && weight >20){
-      Navigator.pop(context, weight);
-    }
-  }
 
   @override
   void initState() {
@@ -263,6 +244,32 @@ class _WeightSelectorState extends State<WeightSelector> {
   }
   @override
   Widget build(BuildContext context) {
+
+
+
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    onSubmit(){
+      if (weightIndex == 0) {
+        weight = double.tryParse(_kgController.text);
+        if (weight == null|| weight <=20 ) {
+          constants.getToast("Please enter valid weight value",isDark);
+        }
+      }
+
+      if (weightIndex == 1) {
+        double lbsWeight = double.tryParse(_lbsController.text);
+        if (lbsWeight == null || lbsWeight <=50) {
+          constants.getToast("Please enter valid weight value",isDark);
+        } else {
+          weight = lbsWeight / 2.205;
+          print(weight);
+        }
+      }
+      if ( weight != null && weight >20){
+        Navigator.pop(context, weight);
+      }
+    }
+
 
     return Scaffold(
       backgroundColor: Colors.transparent,

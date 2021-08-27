@@ -41,6 +41,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   bool lastStatus = true;
   String coverImgPath ="assets/workout_list_cover/arms.jpg";
   String title = "";
+  int time = 20;
 
   _scrollListener() {
     if (isShrink != lastStatus) {
@@ -53,6 +54,41 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   bool get isShrink {
     return _scrollController.hasClients &&
         _scrollController.offset > (200 - kToolbarHeight);
+  }
+
+  getWorkoutList(){
+    for( int index = 0; index <widget.workOutList.length; index++){
+      if (widget.workOutList[index].showTimer == false) {
+        List<String> splitTitle = widget.title.split(" ");
+        if (splitTitle.length == 5) {
+          int currDay = int.tryParse(splitTitle[4]);
+          print(currDay);
+          if (currDay <= 10) {
+            time = widget.workOutList[index].beginnerRap;
+          } else if (currDay <= 20) {
+            time =
+                widget.workOutList[index].intermediateRap;
+          } else
+            time = widget.workOutList[index].advanceRap;
+        } else {
+          String tag = widget.tag.toLowerCase();
+          if (tag == 'beginner') {
+            time = widget.workOutList[index].beginnerRap;
+          } else if (tag ==
+              "intermediate") {
+            time =
+                widget.workOutList[index].intermediateRap;
+          } else
+            time = widget.workOutList[index].advanceRap;
+        }
+      } else if (widget.workOutList[index].showTimer ==
+          true) {
+        time = widget.workOutList[index].duration;
+      } else {
+        time = 30;
+      }
+      rapList.add(time);
+    }
   }
 
   getTime() {
@@ -109,6 +145,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
     await getCountDown();
     await getPushUpLevel();
     await getPadding();
+    getWorkoutList();
     getTitle();
     getCoverImage();
     setState(() {
@@ -136,7 +173,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   Widget build(BuildContext context) {
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
-    int time;
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
@@ -229,40 +265,8 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
               children: [
                 ListView.builder(
                   itemBuilder: (context, index) {
-                          if (widget.workOutList[index].showTimer == false) {
-                            List<String> splitTitle = widget.title.split(" ");
-                            if (splitTitle.length == 5) {
-                              int currDay = int.tryParse(splitTitle[4]);
-                              print(currDay);
-                              if (currDay <= 10) {
-                                time = widget.workOutList[index].beginnerRap;
-                              } else if (currDay <= 20) {
-                                time =
-                                    widget.workOutList[index].intermediateRap;
-                              } else
-                                time = widget.workOutList[index].advanceRap;
-                            } else {
-                              String tag = widget.tag.toLowerCase();
-                              if (tag == 'beginner') {
-                                time = widget.workOutList[index].beginnerRap;
-                              } else if (tag ==
-                                  "intermediate") {
-                                time =
-                                    widget.workOutList[index].intermediateRap;
-                              } else
-                                time = widget.workOutList[index].advanceRap;
-                            }
-                          } else if (widget.workOutList[index].showTimer ==
-                              true) {
-                            time = widget.workOutList[index].duration;
-                          } else {
-                            time = 30;
-                          }
-                          rapList.add(time);
 
                     return
-
-
                       Column(
                       children: [
                         if (index == 0)
@@ -322,7 +326,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                                 child: CustomExerciseCard(
                                   index: index,
                                   workOutList: widget.workOutList,
-                                  time: time,
+                                  time: rapList[index],
                                 ),
                               ),
                               Divider(

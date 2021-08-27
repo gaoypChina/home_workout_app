@@ -29,6 +29,22 @@ List<Widget>  getLeading(BuildContext context, {Color color}){
       padding: EdgeInsets.only(right: 8, top: 0),
       splashRadius: 24,
     ),
+    // InfoButton(
+    //   onPress: () {
+    //     Navigator.push(context,
+    //         MaterialPageRoute(builder: (context) => WorkoutDetailReport()));
+    //   },
+    //   icon: Feather.calendar,
+    //   tooltip: "Report",
+    // ),
+    // SizedBox(width: 8,),
+    // InfoButton(
+    //   onPress:  () => Navigator.of(context).pushNamed(ReminderTab.routeName),
+    //  icon:
+    //     Ionicons.md_alarm,
+    //   tooltip: "Reminder",
+    //
+    // )
     // IconButton(
     //   onPressed: () =>
     //       Navigator.of(context).push(MaterialPageRoute(builder: (context) {

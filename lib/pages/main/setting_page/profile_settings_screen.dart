@@ -156,7 +156,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
             ),
               onPressed: () {
                 Navigator.of(context).pop();
-                constants.getToast("Profile Saved Successfully");
+                constants.getToast("Profile Saved Successfully",isDark);
               }):Container(),
         ],
       ),

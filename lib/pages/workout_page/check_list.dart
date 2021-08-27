@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/widgets/custom_exercise_card.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../main.dart';
 
@@ -183,9 +184,29 @@ class _ExerciseListScreenState extends State<CheckListScreen>
                             ? Colors.black
                             : Colors.white),
                   ),
-                  background: Image.asset(
-                    coverImgPath,
-                    fit: BoxFit.cover,
+                  background: Column(
+                    children: [
+                   Expanded(
+                     child:
+                     Container(
+                       width:double.infinity,
+                       child: Image.asset(
+                              coverImgPath,
+                              fit: BoxFit.cover,
+                            ),
+                     ),
+                   ),
+                      
+                      LinearPercentIndicator(
+                        padding: EdgeInsets.all(0),
+                        animation: true,
+                        lineHeight: 5.0,
+                        percent: widget.progress,
+                        backgroundColor:isDark?Colors.grey.shade800: Colors.blue.shade50,
+                        linearStrokeCap: LinearStrokeCap.round,
+                        progressColor:isDark? Colors.blue:Colors.blue.shade700,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -229,57 +250,13 @@ class _ExerciseListScreenState extends State<CheckListScreen>
                     rapList.add(time);
 
                     return
-
-
                       Column(
                         children: [
-                          if (index == 0)
-                            AnimatedPadding(
-                              duration: Duration(milliseconds: 400),
-                              padding: EdgeInsets.only(
-                                  left: padValue * 20,
-                                  right: padValue,
-                                  top: padValue * 8,
-                                  bottom: padValue * 8),
-                              child: Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 6,
-                                    backgroundColor: Colors.red,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    widget.workOutList.length.toString() +
-                                        " Workouts",
-                                    style: textTheme.headline6.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16),
-                                  ),
-                                  SizedBox(
-                                    width: 30,
-                                  ),
-                                  CircleAvatar(
-                                    radius: 6,
-                                    backgroundColor: Colors.orange,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    getTime().toString() + " Minutes",
-                                    style: textTheme.headline6.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          if (index == 0)
-                            Divider(
-                              thickness: .5,
-                            ),
+                
+
+
+                    if (index == 0)
+                            Container(height: 12,),
                           AnimatedPadding(
                             duration: Duration(milliseconds: 1000),
                             curve: Curves.easeOutCubic,

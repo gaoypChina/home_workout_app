@@ -10,7 +10,7 @@ import 'package:full_workout/pages/workout_page/check_list.dart';
 import 'package:full_workout/pages/workout_page/pause_page.dart';
 import 'package:full_workout/pages/workout_page/workout_page.dart';
 import 'package:full_workout/components/info_button.dart';
-import 'package:full_workout/pages/services/youtube_player.dart';
+import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../main.dart';
@@ -86,7 +86,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
       controller.stop(canceled: true);
     }
     value =
-        await showDialog(context: context, builder: (builder) => StopPage());
+        await Navigator.of(context).push(MaterialPageRoute(builder:  (builder) => StopPage()));
     if (value == "resume") {
       controller.reverse(
           from: controller.value == 0.0 ? 1.0 : controller.value);
@@ -222,22 +222,20 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                               builder: (BuildContext context, Widget child) {
                                 //playLocalAsset();
 
-                                if (timerValue <= 5000 && timerValue > 4950) {
-                                  // flutterTts.speak('Ready to go');
+                                if (timerValue <= 6000 && timerValue > 5950) {
+                                   mediaHelper.speak('Ready to go');
                                 }
-                                if (timerValue <= 3000 && timerValue > 2950) {
-                                  mediaHelper.playSoundOnce(
-                                      'assets/sound/countdown.wav');
+                                if (timerValue <= 3000 &&
+                                    timerValue > 2950) {
                                   mediaHelper.speak('Three');
                                 }
-                                if (timerValue <= 2000 && timerValue > 1950) {
+                                if (timerValue <= 1600 &&
+                                    timerValue > 1550) {
                                   mediaHelper.speak('Two');
                                 }
-                                if (timerValue <= 1000 && timerValue > 950) {
+                                if (timerValue <= 200 &&
+                                    timerValue > 150) {
                                   mediaHelper.speak('One');
-                                }
-                                if (timerValue <= 200 && timerValue > 150) {
-                                  //playLocalAsset();
                                 }
 
                                 return Text(
@@ -313,16 +311,17 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                             icon: Icons.list_alt_outlined,
                             tooltip: "Exercise Plane",
                             onPress: () async {
-
                               controller.stop(canceled: true);
-                              await
-                              showDialog(
-                                  context: context,
-                                  builder: (builder) => CheckListScreen(
+                              await Navigator.of(context).push(
+                                MaterialPageRoute (
+                                  builder: (BuildContext context) =>  CheckListScreen(
                                       workOutList: widget.workOutList,
                                       tag: widget.tag,
-                                     progress: index / widget.workOutList.length,
-                                      title: widget.title));
+                                      progress: index / widget.workOutList.length,
+                                      title: widget.title),
+                                ),
+                              );
+
                               controller.reverse(
                                   from: controller.value == 0.0
                                       ? 1.0
@@ -336,12 +335,11 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                               print(controller.status);
                               if (controller.isAnimating) {
                                 controller.stop(canceled: true);
-                                await showDialog(
-                                    context: context,
-                                    builder: (builder) => YoutubeTutorial(
-                                      rapCount: widget.rapList[index],
-                                        workout: widget.workOutList[index],
-                                        ));
+                                await Navigator.of(context).push(MaterialPageRoute(builder: (context)=>YoutubeTutorial(
+                                  rapCount: widget.rapList[index],
+                                  workout: widget.workOutList[index],
+                                )));
+
                               }
 
                               controller.reverse(
@@ -358,9 +356,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
 
                               if (controller.isAnimating) {
                                 controller.stop(canceled: true);
-                                await showDialog(
-                                    context: context,
-                                    builder: (builder) => SoundSetting());
+                                await Navigator.of(context).push(MaterialPageRoute(builder:(builder) => SoundSetting() ));
                               }
 
                               controller.reverse(
@@ -377,12 +373,11 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
 
                               if (controller.isAnimating) {
                                 controller.stop(canceled: true);
-                                 await showDialog(
-                                    context: context,
-                                    builder: (builder) => DetailPage(
-                                          workout: item,
-                                          rapCount: widget.rapList[index],
-                                        ));
+                                 await Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DetailPage(
+                                   workout: item,
+                                   rapCount: widget.rapList[index],
+                                 )));
+
                               }
                               controller.reverse(
                                   from: controller.value == 0.0

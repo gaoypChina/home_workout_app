@@ -7,6 +7,8 @@ import 'package:full_workout/helper/sp_key_helper.dart';
 class ResetProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     SpKey spKey = SpKey();
     SpHelper spHelper = SpHelper();
     Constants constants = Constants();
@@ -20,7 +22,7 @@ class ResetProgress extends StatelessWidget {
               await spHelper.saveInt(spKey.armChallenge, 0);
               await spHelper.saveInt(spKey.chestChallenge, 0);
               
-              constants.getToast("Progress Reset Successfully");
+              constants.getToast("Progress Reset Successfully",isDark);
 
               Navigator.of(context).pop();
               

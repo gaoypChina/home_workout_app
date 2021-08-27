@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constants.dart';
 
 import '../../../main.dart';
 

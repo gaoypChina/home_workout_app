@@ -45,8 +45,7 @@ class StopPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: isDark?Colors.black:Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(18.0),
+      body: SafeArea(
         child: Stack(
           children: [
 
@@ -55,6 +54,7 @@ class StopPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
+                  padding: EdgeInsets.only(top: 18),
                   height: MediaQuery
                       .of(context)
                       .size
@@ -99,8 +99,8 @@ class StopPage extends StatelessWidget {
                 getButton(
                     title: "Quit",
                     onPress: () async {
-                      bool value = await showDialog(
-                          context: context, builder: (builder) => QuitPage());
+                      bool value = await
+                      Navigator.of(context).push(MaterialPageRoute(builder: (builder) => QuitPage()));
                       value == true ?? Navigator.of(context).pop();
                     },
                     backgroundColor: defaultBackgroundColor,

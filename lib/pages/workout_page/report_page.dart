@@ -121,7 +121,7 @@ class _MyAppState extends State<ReportScreen> {
       [myImagePath],
       subject: "Install app",
       text:
-          "I have completed ${activeTime ~/ 60} minutes of home workout \nYou can start working out at home too with Home workout app: \n https://play.google.com/my_app",
+          "I have completed ${activeTime ~/ 60} minutes of home workout \nYou can start working out at home too with Home workout app: \n ${constants.playStoreLink}",
     );
     setState(() {
       isLoading = false;
@@ -270,6 +270,7 @@ class _MyAppState extends State<ReportScreen> {
         ),
         IgnorePointer(
           child: WeeklyWorkoutReport(
+            showToday: true,
             onTap: () {},
           ),
         ),
@@ -459,10 +460,12 @@ class _MyAppState extends State<ReportScreen> {
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return WillPopScope(
-      onWillPop: ()=>Navigator.pushNamedAndRemoveUntil(
+      onWillPop: (){
+        return Navigator.pushNamedAndRemoveUntil(
           context,
           WorkoutDetailReport.routeName,
-          ModalRoute.withName('/')),
+          ModalRoute.withName('/'));
+      },
       child: Scaffold(
         backgroundColor: isDark ? Colors.black : Colors.white,
         body: Stack(
