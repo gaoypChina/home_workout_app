@@ -25,14 +25,16 @@ class _ActiveGoalState extends State<ActiveGoal> {
   int completed = 0;
   int daySelected = 0;
   int trainingDay = 0;
-  bool isGoalSet = true;
+  bool isGoalSet = true, isLoading = true;
 
   _loadData() async {
-    trainingDay = await spHelper.loadInt(spKey.trainingDay)??7;
-    daySelected = await spHelper.loadInt(spKey.firstDay)??7;
+    trainingDay = await spHelper.loadInt(spKey.trainingDay) ?? 7;
+    daySelected = await spHelper.loadInt(spKey.firstDay) ?? 7;
     isGoalSet = await spHelper.loadBool(spKey.isGoalSet) ?? false;
-    setState(() {});
-    _getWorkDoneList();
+    await _getWorkDoneList();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   _getWorkDoneList() async {
@@ -70,8 +72,6 @@ class _ActiveGoalState extends State<ActiveGoal> {
       activeDayList.add(ActiveDay(
           index: i, isDone: value, date: startDate.add(Duration(days: i))));
     }
-
-    setState(() {});
   }
 
   @override
@@ -87,23 +87,20 @@ class _ActiveGoalState extends State<ActiveGoal> {
     double height =MediaQuery.of(context).size.height;
 
     onTap() async {
-      var res = await showDialog(
-          context: context,
-          builder: (context) {
-            return WeekGoalSettings();
-          });
+      var res = await Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) {
+        return WeekGoalSettings();
+      }));
       if (res != null) {
         setState(() {
           daySelected = res[0];
           trainingDay = res[1];
-          isGoalSet = res[2] == 0 ?true :false;
+          isGoalSet = res[2] == 0 ? true : false;
           _getWorkDoneList();
         });
       }
     }
     getTitle() {
-
-
       return InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.only(
@@ -116,29 +113,33 @@ class _ActiveGoalState extends State<ActiveGoal> {
                 "Week Goal ",
                 style: textTheme.bodyText1.copyWith(
                     fontSize: 18,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     color: textColor),
               ),
-              InkWell(
-                onTap: onTap,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 4.0, right: 8),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Feather.edit,
-                        size: 18,
-                        color: textColor,
+              isGoalSet
+                  ? InkWell(
+                      onTap: onTap,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 4.0, right: 8),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Feather.edit,
+                              size: 18,
+                              color: textColor,
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    )
+                  : Container(),
               Spacer(),
-         isGoalSet?     Text(
-                "$completed/$trainingDay",
-                style: TextStyle(color: textColor),
-              ):Container()
+              isGoalSet
+                  ? Text(
+                      "$completed/$trainingDay",
+                      style: TextStyle(color: textColor),
+                    )
+                  : Container()
             ],
           ),
         ),
@@ -212,12 +213,35 @@ class _ActiveGoalState extends State<ActiveGoal> {
 
     getEmptyGoal() {
       return Container(
-        padding: EdgeInsets.only(left: 18,right: 18, bottom: 8),
-        height: height * .06,
-        child: Text(
-          "Select week goal to achieve your fitness goal",textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w300),
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        height: height * .09,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(
+              "Set weekly goals for better body shape",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w300),
+            ),
+            ElevatedButton(
+              onPressed: () => onTap(),
+              child: Text(
+                "Set A Goal",
+                style: TextStyle(color: Colors.black),
+              ),
+              style: ButtonStyle(
+                  padding: MaterialStateProperty.all(
+                      EdgeInsets.symmetric(horizontal: 24)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                  )),
+                  backgroundColor: MaterialStateProperty.all(Colors.white)),
+            )
+          ],
         ),
       );
     }
@@ -226,8 +250,9 @@ class _ActiveGoalState extends State<ActiveGoal> {
       padding: EdgeInsets.symmetric(horizontal: 8),
       child: InkWell(
         borderRadius: BorderRadius.all(Radius.circular(16)),
-        onTap: () =>
-          isGoalSet ?  Navigator.pushNamed(context, WorkoutDetailReport.routeName):onTap(),
+        onTap: () => isGoalSet
+            ? Navigator.pushNamed(context, WorkoutDetailReport.routeName)
+            : onTap(),
         child: Material(
           borderRadius: BorderRadius.all(Radius.circular(16)),
           elevation: 0,
@@ -238,15 +263,22 @@ class _ActiveGoalState extends State<ActiveGoal> {
                     colors: [Colors.blue, Colors.blue],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft)),
-            child: Column(
-              children: [
-                getTitle(),
-                isGoalSet ? getWeeklyUpdate() : getEmptyGoal(),
-                SizedBox(
-                  height: 10,
-                )
-              ],
-            ),
+            child: isLoading
+                ? Container(
+                    height: height * .15,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        gradient: LinearGradient(
+                            colors: [Colors.blue, Colors.blue.shade300])))
+                : Column(
+                    children: [
+                      getTitle(),
+                      isGoalSet ? getWeeklyUpdate() : getEmptyGoal(),
+                      SizedBox(
+                        height: 10,
+                      )
+                    ],
+                  ),
           ),
         ),
       ),
