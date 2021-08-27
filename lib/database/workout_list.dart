@@ -945,7 +945,7 @@ Workout abdominalCrunches = Workout(
 Workout russianTwist = Workout(
   title: 'Russian Twist',
   videoLink:
-      'https://www.youtube.com/watch?v=BlJQtdcCzeA&ab_channel=StephanieSequeira',
+      'https://www.youtube.com/watch?v=xcLqUjo8IeE',
   steps: [
     'Lie down on your back, facing up.',
     'Place both your hands underneath your buttocks.',
@@ -1009,7 +1009,7 @@ Workout mountainClimbing = Workout(
 Workout russianTwist2 = Workout(
   title: 'Russian Twist',
   videoLink:
-      'https://www.youtube.com/watch?v=BlJQtdcCzeA&ab_channel=StephanieSequeira',
+      'https://www.youtube.com/watch?v=xcLqUjo8IeE',
   steps: [
     'Lie down on your back, facing up.',
     'Place both your hands underneath your buttocks.',
