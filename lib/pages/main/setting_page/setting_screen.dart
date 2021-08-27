@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +16,13 @@ import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
 import 'package:full_workout/pages/main/setting_page/training_settings_screen.dart';
 import 'package:full_workout/pages/main/setting_page/faq_page.dart';
 import 'package:full_workout/pages/main/setting_page/voice_option_setting.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 import 'package:share/share.dart';
 import 'package:device_info/device_info.dart';
 
 import '../../../main.dart';
+import '../../rate_my_app/rate_dialog_page.dart';
+import '../../rate_my_app/rate_my_app.dart';
 
 class SettingPage extends StatefulWidget {
   final Function onBack;
@@ -318,29 +320,19 @@ class _SettingPageState extends State<SettingPage> {
                     trailing: trailingIcon,
                     onPress: () async {
                       final RenderBox box = context.findRenderObject();
-                      final String text = "my app link";
+                      final String text =
+                          "I\'m training with Home Workout and am getting great results. \n\nHere are workouts for every muscle group to achieve your fitness goal. no equipment is needed. \n\nDownload the app : ${constants.playStoreLink}";
+
                       await Share.share(text,
-                          subject: "",
+                          subject:
+                              "",
                           sharePositionOrigin:
                               box.globalToLocal(Offset.zero) & box.size);
                     },
                   ),
-                  CustomTile(
-                    color: colorList[6],
-                    icon: Icons.star,
-                    title: "5 star Ratting",
-                    trailing: trailingIcon,
-                    onPress: () async{
-                      if (Platform.isAndroid) {
-                        AndroidIntent intent = AndroidIntent(
-                          action: 'action_view',
-                          data: 'https://play.google.com/store/apps/details?'
-                              'id=com.google.android.apps.myapp',
-                          arguments: {'authAccount': "currentUserEmail"},
-                        );
-                        await intent.launch();
-                      }
-                    },
+                  RateAppInitWidget(
+                      builder: (rateMyApp) =>
+                          RateDialogPage(rateMyApp: rateMyApp,),
                   ),
                   getTitle("About us"),
                   CustomTile(
@@ -365,7 +357,7 @@ class _SettingPageState extends State<SettingPage> {
                       try {
                         await FlutterEmailSender.send(email);
                       } catch (e) {
-                        constants.getToast("Not able to send email");
+                        constants.getToast("Not able to send email", isDark);
                       }
                     },
                   ),

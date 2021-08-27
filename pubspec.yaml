@@ -1,7 +1,7 @@
 name: full_workout
 description: A new Flutter application.
 
-version: 1.0.0+1
+version: 1.1.0+2
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -52,6 +52,7 @@ dependencies:
   flutter_email_sender: ^5.0.2
   text_to_speech: ^0.2.3
   android_intent_plus: ^2.0.0
+  rate_my_app: ^1.1.1
 
 
 dev_dependencies:
@@ -62,7 +63,7 @@ dev_dependencies:
 
 flutter_native_splash:
   color: "#0362fc"
-  image: "assets/splash_image.png"
+  image: "assets/splash.png"
   android: true
   ios: true
   android_gravity: fill
