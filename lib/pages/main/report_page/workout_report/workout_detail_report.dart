@@ -165,7 +165,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
               Expanded(
                 flex: 5,
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
+                  padding: const EdgeInsets.only(right: 8.0,left: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -215,7 +215,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                             size: 18,
                           ),
 
-                          Text(
+                          Text(" "+
                             (workout.activeTime * (18 / 60))
                                     .toStringAsFixed(2) +
                                 " Cal",
@@ -337,6 +337,9 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                           ),
                         ),
                         constants.getDivider(isDark),
+                        SizedBox(
+                          height: 8,
+                        ),
                         getDetail(MediaQuery.of(context).size, isDark),
                         SizedBox(
                           height: 18,

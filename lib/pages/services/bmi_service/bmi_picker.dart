@@ -36,15 +36,13 @@ class _BMIPickerState extends State<BMIPicker> {
     TextEditingController _lbsController = TextEditingController();
 
 
-    showToast(String msg) {
-      return constants.getToast(msg);
-    }
 
-    onSubmit() {
+
+    onSubmit(bool isDark) {
       if (heightIndex == 0) {
         height = double.tryParse(_cmController.text);
         if (height == null || height <=50) {
-          showToast("Please enter valid height value");
+          constants.getToast("Please enter valid height value",isDark);
         }
       }
 
@@ -52,7 +50,7 @@ class _BMIPickerState extends State<BMIPicker> {
         double feet = double.tryParse(_feetController.text);
         double inch = double.tryParse(_inchController.text);
         if (feet == null || inch == null || feet <=2) {
-          showToast("Please enter valid height value");
+          constants.getToast("Please enter valid height value",isDark);
         } else {
           double inchHeight = (feet * 12) + inch;
           height = inchHeight * 2.54;
@@ -62,7 +60,7 @@ class _BMIPickerState extends State<BMIPicker> {
       if (weightIndex == 0) {
         weight = double.tryParse(_kgController.text);
         if (weight == null|| weight <=20 ) {
-          showToast("Please enter valid weight value");
+          constants.getToast("Please enter valid weight value",isDark);
         }
 
       }
@@ -70,7 +68,7 @@ class _BMIPickerState extends State<BMIPicker> {
       if (weightIndex == 1) {
         double lbsWeight = double.tryParse(_lbsController.text);
         if (lbsWeight == null || lbsWeight <=50) {
-          showToast("Please enter valid weight value");
+          constants.getToast("Please enter valid weight value",isDark);
         } else {
           weight = lbsWeight / 2.205;
           print(weight);
@@ -81,6 +79,8 @@ class _BMIPickerState extends State<BMIPicker> {
       }
 
     }
+
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -281,7 +281,7 @@ class _BMIPickerState extends State<BMIPicker> {
                 style: textTheme.button.copyWith(color: Colors.grey),
               )),
           TextButton(
-              onPressed: () => onSubmit(),
+              onPressed: () => onSubmit(isDark),
               child: Text(
                 "Submit",
                 style: textTheme.button.copyWith(color: Colors.blue.shade700),

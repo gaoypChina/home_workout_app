@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import 'package:full_workout/pages/main/weight_report_page/weight_report_details/tab_1.dart';
 import 'package:full_workout/pages/main/weight_report_page/weight_report_details/tab_2.dart';
 
 class WeightReportDetail extends StatelessWidget {
   final Function onBack;
+  final int index;
 
-  WeightReportDetail({this.onBack});
+
+
+  WeightReportDetail({ this.onBack, @required this.index});
 
   static const routeName = "weight-report-detail";
 
@@ -18,33 +20,33 @@ class WeightReportDetail extends StatelessWidget {
     return WillPopScope(
       onWillPop: () => onBack(),
       child: DefaultTabController(
-        initialIndex: 0,
+        initialIndex: index,
+
         length: 2,
         child: Scaffold(
+
           body: NestedScrollView(
             headerSliverBuilder: (context, _) => [
               SliverAppBar(
+                brightness: Brightness.dark,
                 pinned: true,
                 floating: true,
                 snap: true,
+                backgroundColor:isDark?Colors.black: Colors.blue.shade700,
                 flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                      // image: DecorationImage(
-                      //     image: AssetImage("assets/weight_tracker.jpg"),
-                      //     fit: BoxFit.cover,
-                      //     colorFilter: ColorFilter.mode(
-                      //         Colors.black.withOpacity(.6), BlendMode.colorBurn)),
-                      gradient:
-                          LinearGradient(colors: [Colors.blue.shade700, Colors.blue.shade700])),
+
                 ),
+
                 title: Text(
                   "Weight Tracker",
                 ),
+                automaticallyImplyLeading: false,
                 bottom: TabBar(
                   tabs: [
                     Tab(
                       icon: Icon(
                         Icons.history,
+
                       ),
                       child: Text(
                         "HISTORY",
@@ -63,9 +65,7 @@ class WeightReportDetail extends StatelessWidget {
               ),
             ],
             body: TabBarView(
-
                 children: [WeightDetailTab1(), WeightDetailTab2()],
-
             ),
           ),
         ),

@@ -1,28 +1,35 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/pages/main/weight_report_page/weight_chart.dart';
 import 'package:full_workout/pages/main/weight_report_page/weight_report_statics.dart';
+import 'package:full_workout/pages/main_page.dart';
 
-class WeightReport extends StatefulWidget {
-  @override
-  _WeightReportState createState() => _WeightReportState();
-}
 
-class _WeightReportState extends State<WeightReport> {
-  WeightDatabaseHelper weightDatabaseHelper = WeightDatabaseHelper();
+
+
+
+class WeightReport extends StatelessWidget {
+  final bool isShow;
+  final String title;
+  WeightReport({@required this.isShow, @required this.title});
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: [
-        WeightChart(),
+        WeightChart(
+            showButton: isShow,
+            title: title,
+            onAdd:() {
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                  builder: (context) => MainPage(index: 2,)),
+                  ModalRoute.withName("/"));
+            }       ),
         SizedBox(height: 5,),
         WeightReportStatics(),
       ],
     );
   }
 }
-
-

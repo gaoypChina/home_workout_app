@@ -271,7 +271,7 @@ class _BmiCardState extends State<BmiCard> {
     }
 
     getEditButton(String title) {
-      return TextButton(
+      return TextButton(style: ButtonStyle(padding:MaterialStateProperty.all(EdgeInsets.all(0),)),
           onPressed: () async {
             var res = await showDialog(
                 context: context,
@@ -430,48 +430,46 @@ class _BmiCardState extends State<BmiCard> {
     }
 
     getMyHealth(String height, String weight) {
-      getDetail(String title, String value) {
-        return Column(
-          children: [
-            Text(
-              title,
-              style: textTheme.bodyText1.copyWith(fontWeight: FontWeight.w500),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Text(
-              value,
-              style: textTheme.headline2.copyWith(
-                  fontSize: 20,
-                  color: Colors.blue.shade700,
-                  fontWeight:FontWeight.w400,
-                  ),
-            ),
-          ],
+      getWeightDetail({String title, String value, Color color}) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4),
+          child: Row(
+            children: [
+              Icon(
+                Icons.circle,
+                size: 14.0,
+                color: color,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(title),
+              Spacer(),
+              isLoading?CircularProgressIndicator():
+              Text(value)
+            ],
+          ),
         );
       }
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: 18),
         child: Column(
           children: [
-            Row(
+        Padding(
+        padding: const EdgeInsets.only(left: 18.0,right: 4),child:  Row(
               children: [
                 Text(
-                  "My Health",
-                  style: titleStyle,
-                ),
+                    "My Health",
+                    style: titleStyle,
+                  ),
+
                 Spacer(),
                 getEditButton("EDIT")
               ],
-            ),
-            Row(
+            ),),
+            Column(
               children: [
-                Spacer(),
-                getDetail("Height",height),
-                Spacer(flex: 2,),
-                getDetail("Weight",weight),
-                Spacer(),
+                getWeightDetail(color: Colors.red,value: height,title: "Height"),
+                getWeightDetail(color: Colors.blue,value: weight,title: "Weight"),
               ],)
           ],
         ),
@@ -509,7 +507,7 @@ class _BmiCardState extends State<BmiCard> {
       children: [
 
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          padding: const EdgeInsets.only(left: 18.0,right: 2),
           child:
           Row(
                       children: [
