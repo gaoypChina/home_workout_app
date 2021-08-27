@@ -6,7 +6,10 @@ import '../main.dart';
 class Constants{
 
   // ToDo: update package name
-  String packageName = "";
+  String packageName = "com.akashlilhare.homeworkout";
+
+  String playStoreLink ="https://bit.ly/playstore-homeworkout";
+      //"https://play.google.com/store/apps/details?id=com.akashlilhare.homeworkout";
 
   // ToDo: Update version number
 
@@ -31,7 +34,7 @@ class Constants{
 
   getDivider(bool isDark) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.only(top: 10.0),
       child: Container(
         height: 8,
         width: double.infinity,
@@ -40,13 +43,13 @@ class Constants{
     );
   }
 
-  getToast(String message){
+  getToast(String message, bool isDark){
    return Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.blue,
+        backgroundColor:isDark? Colors.white:Colors.blue,
     //    textColor: Colors.white,
         fontSize: 16.0
     );

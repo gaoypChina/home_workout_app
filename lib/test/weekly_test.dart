@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/database/workout_plan/abs_challenges.dart';
 import 'package:full_workout/database/workout_plan/chest_challenge.dart';
-import 'package:full_workout/database/workout_plan/full_body_challenge.dart';
 
 class WeeklyTest extends StatefulWidget {
   @override

@@ -7,7 +7,7 @@ import 'package:full_workout/bloc_provider/connectivity_state_bloc.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../main.dart';
+import '../../../main.dart';
 
 class YoutubeTutorial extends StatefulWidget {
   final Workout workout;

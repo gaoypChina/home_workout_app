@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 
 class WeeklyWorkoutReport extends StatefulWidget {
  final Function onTap;
- WeeklyWorkoutReport({@required this.onTap});
+ final bool showToday;
+ WeeklyWorkoutReport({@required this.onTap, @required this.showToday});
   @override
   _WeeklyWorkoutReportState createState() => _WeeklyWorkoutReportState();
 }
@@ -68,7 +69,7 @@ for(int i=0; i<7; i++){
 
     getWeeklyUpdate() {
       return InkWell(
-        onTap: ()=> widget.onTap,
+        onTap: ()=> widget.onTap(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: activeDayList
@@ -83,7 +84,13 @@ for(int i=0; i<7; i++){
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
                       radius: 12,
-                      child: CircleAvatar(
+                      child:
+                          (widget.showToday && activeDay.date.day == DateTime.now().day)?CircleAvatar(
+                            radius: 6,
+                            backgroundColor:Colors.blue.shade700.withOpacity(.6) ,
+                          ):
+
+                      CircleAvatar(
                         radius: 6,
                         backgroundColor: activeDay.isDone
                             ? Colors.blue.shade700.withOpacity(.6)
@@ -93,6 +100,7 @@ for(int i=0; i<7; i++){
                     radius: 15),
                 SizedBox(height: 5,),
                 Text(activeDay.date.day.toString(),style: TextStyle(fontWeight: FontWeight.w500),),
+                SizedBox(height: 5,),
               ],
             ),
           ))

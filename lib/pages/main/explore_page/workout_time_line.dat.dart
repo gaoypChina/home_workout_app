@@ -130,7 +130,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
               borderRadius: BorderRadius.all(Radius.circular(40)),
               onTap: () => currIndex <= currentDay
                   ? onComplete(currIndex)
-                  :    constants.getToast("Complete previous challenges to unlock")),
+                  :    constants.getToast("Complete previous challenges to unlock",isDark)),
         );
       }
 

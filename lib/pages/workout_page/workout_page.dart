@@ -11,7 +11,7 @@ import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
 import 'package:full_workout/pages/workout_page/pause_page.dart';
 import 'package:full_workout/pages/workout_page/rest_page.dart';
 import 'package:full_workout/components/info_button.dart';
-import 'package:full_workout/pages/services/youtube_player.dart';
+import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../main.dart';
 import 'check_list.dart';
@@ -84,8 +84,8 @@ class _WorkoutPageState extends State<WorkoutPage>
     if (controller.isAnimating) {
       controller.stop(canceled: true);
     }
-    value =
-    await showDialog(context: context, builder: (builder) => StopPage());
+    value = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (builder) => StopPage()));
     if (value == "resume") {
       controller.reverse(
           from: controller.value == 0.0 ? 1.0 : controller.value);
@@ -168,12 +168,12 @@ class _WorkoutPageState extends State<WorkoutPage>
     return Stack(
       children: [
         Container(height: height / 2, child: Padding(
-          padding: const EdgeInsets.all(18.0),
+          padding: const EdgeInsets.only(top: 18.0,left: 18,right: 18),
           child: Image.asset(item.imageSrc),
         ),color: Colors.white,),
 
         Positioned(
-            right: 10,
+            right: 2,
             top: 20,
             child: Column(
               children: [
@@ -181,16 +181,16 @@ class _WorkoutPageState extends State<WorkoutPage>
                   icon: Icons.list_alt_outlined,
                   tooltip: "Exercise Plane",
                   onPress: () async {
-                    if (controller.isAnimating) {
-                      controller.stop(canceled: true);
-                    }
-                    await showDialog(
-                        context: context,
-                        builder: (builder) => CheckListScreen(
-                          progress: (currIndex + 1) / widget.workOutList.length,
-                            workOutList: widget.workOutList,
-                            tag: widget.tag,
-                            title: widget.title));
+                    controller.stop(canceled: true);
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => CheckListScreen(
+                              progress:
+                                  (currIndex + 1) / widget.workOutList.length,
+                              workOutList: widget.workOutList,
+                              tag: widget.tag,
+                              title: widget.title)),
+                    );
 
                     controller.reverse(
                         from: controller.value == 0.0 ? 1.0 : controller.value);
@@ -200,14 +200,15 @@ class _WorkoutPageState extends State<WorkoutPage>
                   icon: Icons.ondemand_video_outlined,
                   tooltip: "Video",
                   onPress: () async {
+                    print(controller.status);
                     if (controller.isAnimating) {
                       controller.stop(canceled: true);
+                      await Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => YoutubeTutorial(
+                                workout: item,
+                                rapCount: widget.rapList[currIndex],
+                              )));
                     }
-                    await showDialog(
-                        context: context,
-                        builder: (builder) => YoutubeTutorial(
-                          workout: item,
-                          rapCount: widget.rapList[currIndex],));
 
                     controller.reverse(
                         from: controller.value == 0.0 ? 1.0 : controller.value);
@@ -217,12 +218,13 @@ class _WorkoutPageState extends State<WorkoutPage>
                   icon: Icons.volume_up_outlined,
                   tooltip: "Sound",
                   onPress: () async {
+                    print(controller.status);
+
                     if (controller.isAnimating) {
                       controller.stop(canceled: true);
+                      await Navigator.of(context).push(MaterialPageRoute(
+                          builder: (builder) => SoundSetting()));
                     }
-
-                    await showDialog(
-                        context: context, builder: (builder) => SoundSetting());
 
                     controller.reverse(
                         from: controller.value == 0.0 ? 1.0 : controller.value);
@@ -232,15 +234,16 @@ class _WorkoutPageState extends State<WorkoutPage>
                   icon: FontAwesome5.question_circle,
                   tooltip: "Steps",
                   onPress: () async {
+                    print(controller.status);
+
                     if (controller.isAnimating) {
                       controller.stop(canceled: true);
+                      await Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DetailPage(
+                                workout: item,
+                                rapCount: widget.rapList[currIndex],
+                              )));
                     }
-                    await showDialog(
-                        context: context,
-                        builder: (builder) => DetailPage(
-                              workout: item,
-                              rapCount: widget.rapList[currIndex],
-                            ));
                     controller.reverse(
                         from: controller.value == 0.0 ? 1.0 : controller.value);
                   },
@@ -258,7 +261,7 @@ class _WorkoutPageState extends State<WorkoutPage>
       lineHeight: 5.0,
       percent: (currIndex + 1) / widget.workOutList.length,
       width: width,
-      backgroundColor:isDark?Colors.grey.shade800: Colors.grey.shade200,
+      backgroundColor:isDark?Colors.grey.shade800: Colors.blue.shade50,
       linearStrokeCap: LinearStrokeCap.round,
       progressColor: Colors.blue.shade700,
     );
@@ -268,7 +271,7 @@ class _WorkoutPageState extends State<WorkoutPage>
   getTitleCard(Workout item, int currIndex,bool isDark) {
     return Expanded(
       child: Container(
-          color:isDark? Colors.black:Colors.grey.shade100,
+          color:isDark? Colors.black:Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -317,23 +320,28 @@ class _WorkoutPageState extends State<WorkoutPage>
                   child: AnimatedBuilder(
                       animation: controller,
                       builder: (BuildContext context, Widget child) {
-                          if (timerValue <= 15000 && timerValue > 14950) {}
-                          if (timerValue <= 3000 && timerValue > 2950) {
-                            mediaHelper
-                                .playSoundOnce("assets/sound/countdown.wav");
-                            mediaHelper.speak('Three');
-                          }
-                          if (timerValue <= 2000 && timerValue > 1950) {
-                            mediaHelper.speak('Two');
-                          }
-                          if (timerValue <= 1000 && timerValue > 950) {
-                            mediaHelper.speak('One');
-                          }
-                          if (timerValue <= 200 && timerValue > 150) {
-                            //playLocalAsset();
-                          }
+                        // if (timerValue <= 4000 && timerValue > 3950){
+                        //   mediaHelper
+                        //       .playSoundOnce("assets/sound/countdown.wav");
+                        // }
 
-                          String parsedTime = timerString.length == 1
+                        if (timerValue <= 3000 &&
+                            timerValue > 2950) {
+                          mediaHelper.speak('Three');
+                        }
+                        if (timerValue <= 1600 &&
+                            timerValue > 1550) {
+                          mediaHelper.speak('Two');
+                        }
+                        if (timerValue <= 200 &&
+                            timerValue > 150) {
+                          mediaHelper.speak('One');
+                        }
+
+
+
+
+                        String parsedTime = timerString.length == 1
                               ? "0" + timerString
                               : timerString;
                           return Text(
@@ -345,7 +353,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                 )
                     : Text(
                   "X ${widget.rapList[currIndex]}",
-                  style: TextStyle(fontSize: 44, fontWeight: FontWeight.w300),
+                  style: TextStyle(fontSize: 44, fontWeight: FontWeight.w500),
                 ),
               ),
               SizedBox(

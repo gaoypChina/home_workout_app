@@ -15,7 +15,7 @@ class MainPage extends StatefulWidget {
 
   final int index;
 
-  MainPage({this.index});
+  MainPage({@required this.index});
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -105,6 +105,7 @@ class _MainPageState extends State<MainPage> {
     } else if (currentIndex == 3) {
       return WeightReportDetail(
         onBack: onBack,
+        index: 0,
       );
     } else if (currentIndex == 4) {
       return SettingPage(

@@ -70,7 +70,7 @@ class _QuitPageState extends State<QuitPage> {
               return Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MainPage()));
+                      builder: (context) => MainPage(index: 0,)));
             },
             icon: Icon(
               Icons.sentiment_dissatisfied_sharp,
@@ -86,122 +86,121 @@ class _QuitPageState extends State<QuitPage> {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all( 12.0),
-            child: Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: Icon(Icons.arrow_back),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blue.shade700,
-                    shape: CircleBorder(),
-                  ),
-                )
-              ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all( 12.0),
+              child: Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: Icon(Icons.arrow_back),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue.shade700,
+                      shape: CircleBorder(),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18.0),
-            child: Column(
-              children: [
-                Spacer(),
-                Container(
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * .3,
-                  width: double.infinity,
-                  child: SvgPicture.asset(
-                    "assets/other/rest.svg",
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              child: Column(
+                children: [
+                  Spacer(),
+                  Container(
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height * .3,
+                    width: double.infinity,
+                    child: SvgPicture.asset(
+                      "assets/other/rest.svg",
+                    ),
                   ),
-                ),
-                Spacer(),
+                  Spacer(),
 
 
-                Text(
-                  "Quit",
-                  style: textTheme.headline1.copyWith(
-                      color: isDark?Colors.white:Colors.black,
-                      fontSize: 40,
-                      letterSpacing: 1.5,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    "Please tell us what stopped you, so we can make your next workout perfect",
-                    textAlign: TextAlign.center,
-                    style: textTheme.bodyText1.copyWith(
-                        color:Colors.grey,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500),
+                  Text(
+                    "Quit",
+                    style: textTheme.headline1.copyWith(
+                        color: isDark?Colors.white:Colors.black,
+                        fontSize: 40,
+                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.bold),
                   ),
-                ),
-               Spacer(),
-                getButton(
-                    title: "Too hard",
-
-                    onPress: () {
-                      setState(() {
-                        index = 1;
-                      });
-                      print(index);
-                    },
-                    backgroundColor: index == 1
-                        ? defaultTextColor
-                        : defaultBackgroundColor,
-                    textColor: index == 1
-                        ?isDark?Colors.white: defaultBackgroundColor
-                        : defaultTextColor),
-                getButton(
-                    title: "Don't know how to do it",
-                    onPress: () {
-                      index = 2;
-                    },
-
-                    backgroundColor: index == 2
-                        ? defaultTextColor
-                        : defaultBackgroundColor,
-                    textColor: index == 2
-                        ?isDark?Colors.white: defaultBackgroundColor
-                        : defaultTextColor),
-                getButton(
-                    title: "Not enough time",
-                    onPress: () {
-                      index = 3;
-                    },
-
-
-                    backgroundColor: index == 3
-                        ? defaultTextColor
-                        : defaultBackgroundColor,
-                    textColor: index == 3
-                        ?isDark?Colors.white: defaultBackgroundColor
-                        : defaultTextColor),
-                getButton(
-                    title: "Other reason",
-                    onPress: () {
-                      index = 4;
-                    },
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      "Please tell us what stopped you, so we can make your next workout perfect",
+                      textAlign: TextAlign.center,
+                      style: textTheme.bodyText1.copyWith(
+                          color:Colors.grey,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                 Spacer(),
+                  getButton(
+                      title: "Too hard",
+                      onPress: () {
+                        setState(() {
+                          index = 1;
+                        });
+                        print(index);
+                      },
+                      backgroundColor: index == 1
+                          ? defaultTextColor
+                          : defaultBackgroundColor,
+                      textColor: index == 1
+                          ?isDark?Colors.white: defaultBackgroundColor
+                          : defaultTextColor),
+                  getButton(
+                      title: "Don't know how to do it",
+                      onPress: () {
+                        index = 2;
+                      },
+                      backgroundColor: index == 2
+                          ? defaultTextColor
+                          : defaultBackgroundColor,
+                      textColor: index == 2
+                          ?isDark?Colors.white: defaultBackgroundColor
+                          : defaultTextColor),
+                  getButton(
+                      title: "Not enough time",
+                      onPress: () {
+                        index = 3;
+                      },
 
 
-                    backgroundColor: index == 4
-                        ? defaultTextColor
-                        : defaultBackgroundColor,
-                    textColor: index == 4
-                        ?isDark?Colors.white: defaultBackgroundColor
-                        : defaultTextColor),
-                Spacer(flex: 3,),
-              ],
+                      backgroundColor: index == 3
+                          ? defaultTextColor
+                          : defaultBackgroundColor,
+                      textColor: index == 3
+                          ?isDark?Colors.white: defaultBackgroundColor
+                          : defaultTextColor),
+                  getButton(
+                      title: "Other reason",
+                      onPress: () {
+                        index = 4;
+                      },
+
+                      backgroundColor: index == 4
+                          ? defaultTextColor
+                          : defaultBackgroundColor,
+                      textColor: index == 4
+                          ?isDark?Colors.white: defaultBackgroundColor
+                          : defaultTextColor),
+                  Spacer(flex: 4,),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

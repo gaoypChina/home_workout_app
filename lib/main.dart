@@ -57,71 +57,75 @@ class _MyAppState extends State<MyApp> {
               ConnectivityCubit(connectivity: Connectivity(),),
         )
       ],
-      child: MaterialApp(
-        title: 'Home Workout',
-        darkTheme: ThemeData(
-            brightness: Brightness.dark,
-            appBarTheme: AppBarTheme(color: Colors.black),
-            backgroundColor: Colors.black,
-            primarySwatch: Colors.blue,
-            textTheme: textTheme,
-            radioTheme: RadioThemeData(
-              fillColor: MaterialStateProperty.all(Colors.blue.shade700),
-            ),
-            switchTheme: SwitchThemeData(
-              thumbColor: MaterialStateProperty.all(Colors.blue.shade100),),
-            inputDecorationTheme: InputDecorationTheme(
-              filled: true,
-              fillColor: Colors.grey.shade800,
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.blue.shade700)),
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.blue.shade700)),
-            )),
-        theme: ThemeData(
-            primaryColor: Colors.blue.shade700,
+      child:
 
-            textTheme: textTheme,
-            appBarTheme: AppBarTheme(
-                backgroundColor: Colors.blue.shade700,
-                elevation: 0,
-                iconTheme: IconThemeData(color: Colors.black),
-                titleTextStyle: TextStyle(color: Colors.black),
-                actionsIconTheme: IconThemeData(color: Colors.black)),
-            radioTheme: RadioThemeData(
-              fillColor: MaterialStateProperty.all(Colors.blue.shade700),
-            ),
+         MaterialApp(
+          title: 'Home Workout',
+          darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              appBarTheme: AppBarTheme(color: Colors.black),
+              backgroundColor: Colors.black,
+              primarySwatch: Colors.blue,
+              textTheme: textTheme,
+              radioTheme: RadioThemeData(
+                fillColor: MaterialStateProperty.all(Colors.blue.shade700),
+              ),
+              switchTheme: SwitchThemeData(
+                thumbColor: MaterialStateProperty.all(Colors.blue.shade100),),
+              inputDecorationTheme: InputDecorationTheme(
+                filled: true,
+                fillColor: Colors.grey.shade800,
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.blue.shade700)),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.blue.shade700)),
+              )),
+          theme: ThemeData(
+              primaryColor: Colors.blue.shade700,
 
-            inputDecorationTheme: InputDecorationTheme(
-              filled: true,
-              fillColor: Colors.white,
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.grey)),
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.blue.shade700)),
-            )),
+              textTheme: textTheme,
+              appBarTheme: AppBarTheme(
+                  backgroundColor: Colors.blue.shade700,
+                  elevation: 0,
+                  iconTheme: IconThemeData(color: Colors.black),
+                  titleTextStyle: TextStyle(color: Colors.black),
+                  actionsIconTheme: IconThemeData(color: Colors.black)),
+              radioTheme: RadioThemeData(
+                fillColor: MaterialStateProperty.all(Colors.blue.shade700),
+              ),
 
-        routes: {
-          '/': (ctx) => MainPage(),
-          ReminderTab.routeName: (ctx) => ReminderTab(),
-          FAQPage.routeName: (ctx) => FAQPage(),
-          ReportPage.routeName: (ctx) => ReportPage(),
-          MainPage.routeName: (ctx) => MainPage(),
-          ProfileSettingScreen.routeName: (ctx) => ProfileSettingScreen(),
-          SoundSetting.routeName: (ctx) => SoundSetting(),
-          WeightReportDetail.routeName: (ctx) => WeightReportDetail(),
-          WorkoutDetailReport.routeName: (ctx) => WorkoutDetailReport(),
-          SettingPage.routeName: (ctx) => SettingPage()
-        },
-        builder: EasyLoading.init(),
-        debugShowCheckedModeBanner: false,
-      ),
+              inputDecorationTheme: InputDecorationTheme(
+                filled: true,
+                fillColor: Colors.white,
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.grey)),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.blue.shade700)),
+              )),
+
+          routes: {
+            '/': (ctx) => MainPage(index: 0,),
+            ReminderTab.routeName: (ctx) => ReminderTab(),
+            FAQPage.routeName: (ctx) => FAQPage(),
+            ReportPage.routeName: (ctx) => ReportPage(),
+            MainPage.routeName: (ctx) => MainPage(index: 0,),
+            ProfileSettingScreen.routeName: (ctx) => ProfileSettingScreen(),
+            SoundSetting.routeName: (ctx) => SoundSetting(),
+            WeightReportDetail.routeName: (ctx) => WeightReportDetail(index: 0,),
+            WorkoutDetailReport.routeName: (ctx) => WorkoutDetailReport(),
+            SettingPage.routeName: (ctx) => SettingPage()
+
+          },
+          builder: EasyLoading.init(),
+          debugShowCheckedModeBanner: false,
+        ),
+
     );
   }
 }
