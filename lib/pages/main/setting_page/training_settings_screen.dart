@@ -27,6 +27,8 @@ class _WorkoutTimePickerState extends State<WorkoutTimePicker> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return AlertDialog(
       title: Text("Set Duration (${widget.minimumVal} ~ ${widget.maximumVal} Sec)"),
       content: NumberPicker(
@@ -34,6 +36,7 @@ class _WorkoutTimePickerState extends State<WorkoutTimePicker> {
         step:widget.maximumVal ==15?1: 5,
         minValue: widget.minimumVal,
         maxValue: widget.maximumVal,
+        selectedTextStyle: TextStyle(color:isDark? Colors.blue:Colors.blue.shade700, fontSize: 18,fontWeight: FontWeight.w500),
         textMapper: (title) {
           return "$title Sec";
         },

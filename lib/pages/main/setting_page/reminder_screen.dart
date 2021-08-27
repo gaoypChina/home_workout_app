@@ -167,7 +167,7 @@ class _ReminderTabState extends State<ReminderTab> {
             child: TextButton(
               onPressed: () {
                 _setReminder(isChecked);
-                constants.getToast("Your changes saved successfully");
+                constants.getToast("Your changes saved successfully",isDark);
                 Navigator.of(context).pop();
               },
               child: Text("Save"),

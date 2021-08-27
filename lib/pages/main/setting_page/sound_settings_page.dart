@@ -145,7 +145,7 @@ class _SoundSettingState extends State<SoundSetting> {
                   spHelper.saveBool(spKey.voice, voice);
                   spHelper.saveBool(spKey.effect, effect);
                   Navigator.of(context).pop();
-                  constants.getToast("Sound Settings Saved");
+                  constants.getToast("Sound Settings Saved",isDark);
                 },
                 child: Text("Save",
                     style: TextStyle(
