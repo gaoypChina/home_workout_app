@@ -1,4 +1,3 @@
-import 'package:device_info/device_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
@@ -54,7 +53,7 @@ class _RateDialogPageState extends State<RateDialogPage> {
 
                               final Email email = Email(
                                 body: toSend,
-                                subject: 'App Review',
+                                subject: 'App Review (${stars.toInt()} Stars)',
                                 recipients: ['workoutfeedback@gmail.com'],
                                 isHTML: false,
                               );
@@ -108,7 +107,7 @@ class _RateDialogPageState extends State<RateDialogPage> {
         widget.rateMyApp.showStarRateDialog(context,
             title: "Rate this App",
             message: "Do you like this app? Please leave a rating",
-            starRatingOptions: StarRatingOptions(initialRating: 4),
+            starRatingOptions: StarRatingOptions(initialRating: 0),
             actionsBuilder: (context, stars) {
           return actionsBuilder(context, stars, isDark);
         });

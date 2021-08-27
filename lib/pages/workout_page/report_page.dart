@@ -22,6 +22,7 @@ import 'package:share/share.dart';
 import 'package:wakelock/wakelock.dart';
 
 import '../../main.dart';
+import '../main_page.dart';
 
 class ReportScreen extends StatefulWidget {
   final String title;
@@ -70,9 +71,15 @@ class _MyAppState extends State<ReportScreen> {
           widget.tag == spKey.armChallenge ||
           widget.tag == spKey.chestChallenge) {
         print(widget.tag.toString() + " : tag");
-        print(widget.tagValue.toString() + " : tagValue");
+        print(widget.title.toString() + " : tagValue");
         int currVal = await spHelper.loadInt(widget.tag) ?? 0;
+      List<String> titleList =  widget.title.split(" ");
+      int currWorkoutDay =int.tryParse(titleList[4]);
+      if(currWorkoutDay > currVal){
         spHelper.saveInt(widget.tag, currVal + 1);
+
+      }
+
       } else {
         spHelper.saveString(widget.tag, widget.dateTime);
       }
@@ -131,6 +138,13 @@ class _MyAppState extends State<ReportScreen> {
   setAwakeScreen()async{
     bool isAwake = await spHelper.loadBool(spKey.awakeScreen) ?? false;
     isAwake ? Wakelock.enable() : Wakelock.disable();
+  }
+
+  _onNext(){
+  return  Navigator.pushNamedAndRemoveUntil(
+        context,
+        WorkoutDetailReport.routeName,
+        ModalRoute.withName('/'));
   }
 
   @override
@@ -248,10 +262,7 @@ class _MyAppState extends State<ReportScreen> {
                   ),
                   Spacer(),
                   TextButton(
-                      onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          WorkoutDetailReport.routeName,
-                          ModalRoute.withName('/')),
+                      onPressed: () =>_onNext(),
                       child: Text("Next")),
                 ],
               ),
@@ -423,8 +434,9 @@ class _MyAppState extends State<ReportScreen> {
                 color: Colors.blue.shade700, style: BorderStyle.solid, width: 0),
           ),
           onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(context, WorkoutDetailReport.routeName, ModalRoute.withName('/'));
-          },
+
+            _onNext();
+              },
           child: Text(
             "Continue",
             style: Theme.of(context).textTheme.button.merge(TextStyle(
@@ -460,11 +472,8 @@ class _MyAppState extends State<ReportScreen> {
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return WillPopScope(
-      onWillPop: (){
-        return Navigator.pushNamedAndRemoveUntil(
-          context,
-          WorkoutDetailReport.routeName,
-          ModalRoute.withName('/'));
+      onWillPop:() {
+       return _onNext();
       },
       child: Scaffold(
         backgroundColor: isDark ? Colors.black : Colors.white,

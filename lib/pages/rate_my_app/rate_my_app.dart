@@ -109,7 +109,7 @@ class _RateAppInitWidgetState extends State<RateAppInitWidget> {
           rateMyApp.showStarRateDialog(context,
               title: "Rate this App",
               message: "Do you like this app? Please leave a rating",
-              starRatingOptions: StarRatingOptions(initialRating: 4),
+              starRatingOptions: StarRatingOptions(initialRating: 0,),
               actionsBuilder: (context, stars) {
                 return actionsBuilder(context, stars, isDark);
               });
