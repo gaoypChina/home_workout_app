@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:full_workout/components/height_weightSelector.dart';
 import 'package:full_workout/constants/constants.dart';
 import 'package:full_workout/helper/sp_helper.dart';
@@ -9,6 +9,7 @@ import 'package:full_workout/models/weight_list_model.dart';
 import 'package:full_workout/models/weight_model.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:sliding_sheet/sliding_sheet.dart';
 
 import '../../../../main.dart';
 
@@ -33,6 +34,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
   DateTime selectedMnth;
   String firstDate = "";
   String lastDate = "";
+  
 
   loadWeightData() async {
     double value = await spHelper.loadDouble(spKey.weight) ?? 0;
@@ -47,6 +49,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
     DateTime parsedEndDate =
         DateTime(endDate.year, endDate.month, endDate.day + 1);
     List items = await weightDb.getRangeData(parsedStartDate, parsedEndDate);
+    print(items);
     for (int idx = 0; idx < items.length; idx++) {
       weight.add(
           WeightList(weightModel: WeightModel.map(items[idx]), index: idx));
@@ -71,6 +74,8 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
       isLoading = false;
     });
   }
+
+
 
   onRangeChange(String value) async {
     setState(() {
@@ -141,195 +146,280 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
     super.initState();
   }
 
-  getDetail(bool isDark) {
+  getBottomSheet(
+      {BuildContext context,
+      String date,
+      String weight,
+      Function onEdit,
+      Function onDelete,
+      bool isDark}) {
+    getButton({Icon icon, String label, Function onTap}) {
+      return TextButton(
+        style: TextButton.styleFrom(
+            padding: EdgeInsets.only(left: 18),
+            primary: isDark ? Colors.white : Colors.black),
+        onPressed: () async {
+          bool res = await onTap();
+          if (res == true) Navigator.of(context).pop();
+        },
+        child: Container(
+          height: 50,
+          child: Row(
+            children: [
+              icon,
+              SizedBox(
+                width: 20,
+              ),
+              Text(label),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return SlidingSheetDialog(
+        cornerRadius: 16,
+        snapSpec: SnapSpec(initialSnap: 1),
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 22),
+                title: Text(date),
+                subtitle: Text(weight + " Kg"),
+              ),
+              Divider(
+                height: 1,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              getButton(icon: Icon(Icons.edit), label: "Edit", onTap: onEdit),
+              getButton(
+                  icon: Icon(Icons.delete), label: "Delete", onTap: onDelete),
+              SizedBox(
+                height: 20,
+              )
+            ],
+          );
+        });
+  }
+
+    getDetail(bool isDark) {
     print(weight.length.toString() + ": weight length");
-    return isLoading ? Center(child: CircularProgressIndicator(),): (weight.length == 0)
-        ? getEmptyList()
-        : Column(children: [
-            ...weight.map((item) {
-              onDelete() async {
-                var userRes = await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(16))),
-                        title: Text("Do you want to delete weight record?"),
-                        actions: [
-                          TextButton(
-                              onPressed: () => Navigator.pop(context, true),
-                              child: Text("Yes")),
-                          TextButton(
-                              onPressed: () => Navigator.pop(context, false),
+    return isLoading
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : (weight.length == 0)
+            ? getEmptyList()
+            : Column(children: [
+                ...weight.map((item) {
+                  onDelete() async {
+                    var userRes = await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16))),
+                            title: Text("Do you want to delete weight record?"),
+                            actions: [
+                              TextButton(
+                                  onPressed: () => Navigator.pop(context, true),
+                                  child: Text("Yes")),
+                              TextButton(
+                                  onPressed: () => Navigator.pop(context, false),
                               child: Text("No")),
                         ],
                       );
-                    });
+                        });
 
-                if (userRes == true) {
-                  int res = await weightDb.deleteWeight(item.weightModel.key);
-                  if (res == 1) {
-                    weight.removeWhere((element) =>
-                        element.weightModel.key == item.weightModel.key);
-                    setState(() {});
-                    constants.getToast("Weight Record deleted successfully");
-                  }
-                } else
-                  return;
-              }
-
-              onEdit() async {
-                double value = await showDialog(
-                    context: context,
-                    builder: (context) => WeightSelector(
-                          weightIndex: 0,
-                          weight: item.weightModel.weight,
-                        ));
-
-                DateTime selectedDate = DateTime.parse(item.weightModel.date);
-                DateTime todayDate = DateTime.now();
-                double toSave =
-                    (value == null) ? item.weightModel.weight : value;
-                if (selectedDate.day == todayDate.day &&
-                    selectedDate.month == todayDate.month &&
-                    selectedDate.year == todayDate.year) {
-                  await spHelper.saveDouble(spKey.weight, toSave);
-                  String key = DateFormat.yMd().format(selectedDate).toString();
-                  WeightModel weightModel =
-                      WeightModel(selectedDate.toIso8601String(), toSave, key);
-                  if (weightModel.weight == null) return;
-                  await weightDb.addWeight(toSave, weightModel, key);
-                  setState(() {
-                    weightValue = toSave;
-                    lbsWeight = toSave * 2.20462;
-                  });
-                }
-                var currModel = item.weightModel;
-                WeightModel weightModel =
-                    WeightModel(currModel.date, toSave, currModel.key);
-                await weightDb.addWeight(toSave, weightModel, currModel.key);
-                if (value != null) {
-                  weight.forEach((element) {
-                    if (element.weightModel.key == currModel.key) {
-                      weight.removeAt(element.index);
-                      weight.insert(element.index,
-                          WeightList(weightModel: weightModel, index: 0));
-                      setState(() {});
+                    if (userRes == true) {
+                      int res =
+                          await weightDb.deleteWeight(item.weightModel.key);
+                      if (res == 1) {
+                        weight.removeWhere((element) =>
+                            element.weightModel.key == item.weightModel.key);
+                        Navigator.pop(context, true);
+                        setState(() {});
+                      }
+                    } else {
+                      Navigator.pop(context, false);
                     }
-                  });
-                  constants.getToast("Weight update successfully");
-                }
-              }
+                    constants.getToast("Weight Deleted Successfully", isDark);
+
+                  }
+
+                  onEdit() async {
+                double value = await showDialog(
+                        context: context,
+                        builder: (context) => WeightSelector(
+                              weightIndex: 0,
+                              weight: item.weightModel.weight,
+                            ));
+
+                    DateTime selectedDate =
+                        DateTime.parse(item.weightModel.date);
+                    DateTime todayDate = DateTime.now();
+                    if (value == null) return;
+
+                    if (selectedDate.day == todayDate.day &&
+                        selectedDate.month == todayDate.month &&
+                        selectedDate.year == todayDate.year) {
+                      await spHelper.saveDouble(spKey.weight, value);
+                      String key =
+                          DateFormat.yMd().format(selectedDate).toString();
+                      WeightModel weightModel = WeightModel(
+                          selectedDate.toIso8601String(), value, key);
+                      if (weightModel.weight == null) return;
+                      await weightDb.addWeight(value, weightModel, key);
+                      setState(() {
+                        weightValue = value;
+                        lbsWeight = value * 2.20462;
+                      });
+                    }
+                    var currModel = item.weightModel;
+                    WeightModel weightModel =
+                        WeightModel(currModel.date, value, currModel.key);
+                    await weightDb.addWeight(value, weightModel, currModel.key);
+                    if (value != null) {
+                      weight.forEach((element) {
+                        if (element.weightModel.key == currModel.key) {
+                          weight.removeAt(element.index);
+                          weight.insert(element.index,
+                              WeightList(weightModel: weightModel, index: 0));
+                          setState(() {});
+                        }
+                      });
+                      Navigator.pop(context, true);
+                    } else {
+                      Navigator.pop(context, false);
+                    }
+                constants.getToast("Weight Updated Successfully", isDark);
+                  }
 
               String formatedDay = DateFormat.yMMMd()
                   .format(DateTime.parse(item.weightModel.date));
               double wd = 0;
               if (item.index == weight.length - 1) {
                 wd = 0;
-              } else {
+              } else if(weight.length>1){
                 wd = weight[item.index].weightModel.weight -
                     weight[item.index + 1].weightModel.weight;
               }
               return Column(
                 children: [
-                  Divider(
-                    thickness: 1,
-                    color: Colors.grey,
-                    height: 0,
-                  ),
-                  Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.25,
-                    child: Container(
-                      height: 60,
-                      padding: EdgeInsets.only(
-                          left: 18, right: 18, top: 14, bottom: 14),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            formatedDay,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 15),
-                          ),
-                          RichText(
-                            text: TextSpan(children: [
-                              TextSpan(
-                                text:
+                      Divider(
+                        thickness: .2,
+                        color: Colors.grey,
+                        height: 0,
+                      ),
+                      InkWell(
+                        onLongPress: () {
+                          return showSlidingBottomSheet(context,
+                              builder: (context) {
+                            return getBottomSheet(
+                                context: context,
+                                weight:
                                     item.weightModel.weight.toStringAsFixed(2),
-                                style: TextStyle(
-                                    color: isDark ? Colors.white : Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w300),
-                              ),
-                              TextSpan(
-                                text: " Kg",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: isDark ? Colors.white : Colors.black,
-                                    fontWeight: FontWeight.w300),
-                              ),
-                            ]),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                date: formatedDay,
+                                onDelete: onDelete,
+                                onEdit: onEdit,
+                                isDark: isDark);
+                          });
+                        },
+                        child: Container(
+                          height: 60,
+                          padding: EdgeInsets.only(
+                              left: 18, right: 18, top: 14, bottom: 14),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              wd.isNegative
-                                  ? Icon(
-                                      Icons.arrow_downward_sharp,
-                                      color: Colors.red,
-                                      size: 25,
-                                    )
-                                  : wd == 0
-                                      ? Icon(Icons.compare_arrows,
-                                          color: Colors.blue, size: 25)
-                                      : Icon(Icons.arrow_upward_outlined,
-                                          color: Colors.green, size: 25),
-                              SizedBox(
-                                width: wd.abs().toStringAsFixed(2).length >= 5
-                                    ? 3
-                                    : 10,
+                              Text(
+                                formatedDay,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400, fontSize: 15),
                               ),
                               RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                  text: wd.abs().toStringAsFixed(2),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      color:
-                                          isDark ? Colors.white : Colors.black,
-                                      fontSize: 16),
-                                ),
-                                TextSpan(
-                                  text: "Kg",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      color:
-                                          isDark ? Colors.white : Colors.black,
-                                      fontSize: 14),
-                                ),
-                              ]))
+                                text: TextSpan(children: [
+                                  TextSpan(
+                                    text: item.weightModel.weight
+                                        .toStringAsFixed(2),
+                                    style: TextStyle(
+                                        color: isDark
+                                            ? Colors.white
+                                            : Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                  TextSpan(
+                                    text: " Kg",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: isDark
+                                            ? Colors.white
+                                            : Colors.black,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                ]),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  wd.isNegative
+                                      ? Icon(
+                                          Icons.arrow_downward_sharp,
+                                          color: Colors.red,
+                                          size: 25,
+                                        )
+                                      : wd == 0
+                                          ? Icon(Icons.compare_arrows,
+                                              color: Colors.blue, size: 25)
+                                          : Icon(Icons.arrow_upward_outlined,
+                                              color: Colors.green, size: 25),
+                                  SizedBox(
+                                    width:
+                                        wd.abs().toStringAsFixed(2).length >= 5
+                                            ? 3
+                                            : 10,
+                                  ),
+                                  RichText(
+                                      text: TextSpan(children: [
+                                    TextSpan(
+                                      text: wd.abs().toStringAsFixed(2),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          color: isDark
+                                              ? Colors.white
+                                              : Colors.black,
+                                          fontSize: 16),
+                                    ),
+                                    TextSpan(
+                                      text: "Kg",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          color: isDark
+                                              ? Colors.white
+                                              : Colors.black,
+                                          fontSize: 14),
+                                    ),
+                                  ])),
+                                ],
+                              ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                          caption: 'Delete',
-                          color: Colors.red,
-                          icon: Icons.delete,
-                          onTap: () => onDelete()),
-                      IconSlideAction(
-                          caption: 'Edit',
-                          color: Colors.green,
-                          icon: Icons.edit,
-                          onTap: () => onEdit()),
+                      Divider(
+                        thickness: .2,
+                        color: Colors.grey,
+                        height: 0,
+                      ),
                     ],
-                  ),
-                ],
-              );
+                  );
             }).toList(),
           ]);
   }
@@ -337,26 +427,27 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
   getEmptyList() {
     return Column(
       children: [
+        Padding(padding: EdgeInsets.only(top: 40)),
         Container(
-            child:
-                Image.asset("assets/other/list2.png", fit: BoxFit.fitHeight)),
-        Column(
-          children: [
-            SizedBox(
-              height: 45,
-            ),
-            Center(
-              child: Positioned(
-                  left: 20,
-                  child: Text(
-                    "No Record Found!",
-                    style: textTheme.subtitle1.copyWith(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey.shade600),
-                  )),
-            ),
-          ],
+            height: MediaQuery.of(context).size.height * .4,
+            child: SvgPicture.asset(
+              "assets/other/no_data.svg",
+            )),
+        Container(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                "No Record Found!",
+                style: textTheme.subtitle1.copyWith(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey.shade600),
+              )
+            ],
+          ),
         )
       ],
     );
@@ -408,30 +499,35 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
           child: FloatingActionButton.extended(
             backgroundColor: Colors.blue.shade700,
             onPressed: () async {
-              double previousValue = weightValue;
               double value = await showDialog(
                   context: context,
                   builder: (context) =>
                       WeightSelector(weight: weightValue, weightIndex: 0));
               DateTime selectedDate = DateTime.now();
-              double toSave = (value == null) ? previousValue : value;
-              await spHelper.saveDouble(spKey.weight, toSave);
+              if (value == null) return;
+              await spHelper.saveDouble(spKey.weight, value);
               String key = DateFormat.yMd().format(selectedDate).toString();
               WeightModel weightModel =
-                  WeightModel(selectedDate.toIso8601String(), toSave, key);
-              if (weightModel.weight == null) return;
-              await weightDb.addWeight(toSave, weightModel, key);
+                  WeightModel(selectedDate.toIso8601String(), value, key);
+              await weightDb.addWeight(value, weightModel, key);
 
-              if (weight[0].weightModel.key == key) {
-                weight.removeAt(0);
-                weight.insert(
-                    0, WeightList(index: 0, weightModel: weightModel));
-              } else {
-                weight.insert(
-                    0, WeightList(index: 0, weightModel: weightModel));
-              }
+           await   _loadData();
+              //
+              // if (weight.length == 0) {
+              //   weight.insert(
+              //       0, WeightList(index: 0, weightModel: weightModel));
+              // } else {
+              //   if (weight[0].weightModel.key == key) {
+              //     weight.removeAt(0);
+              //     weight.insert(
+              //         0, WeightList(index:0, weightModel: weightModel));
+              //   } else {
+              //     weight.insert(
+              //         0, WeightList(index: 0, weightModel: weightModel));
+              //   }
+              // }
+              constants.getToast("Weight Added Successfully", isDark);
               setState(() {});
-                 constants.getToast("Weight added successfully");
             },
             icon: Icon(
               Icons.add,
@@ -448,7 +544,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
         ),
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+    //    physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             Padding(

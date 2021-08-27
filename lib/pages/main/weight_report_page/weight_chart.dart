@@ -1,13 +1,25 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:full_workout/components/height_weightSelector.dart';
+import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/helper/sp_helper.dart';
+import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/models/weight_list_model.dart';
 import 'package:full_workout/models/weight_model.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 
+import '../../../main.dart';
+
 class WeightChart extends StatefulWidget {
+  final Function onAdd;
+  final bool showButton;
+ final String title;
+
+ WeightChart({@required this.onAdd, @required this.title,@required this.showButton});
+
 
   @override
   _WeightChartState createState() => _WeightChartState();
@@ -16,13 +28,24 @@ class WeightChart extends StatefulWidget {
 class _WeightChartState extends State<WeightChart> {
   bool isLoading = true;
   DateTime currDate = DateTime.now();
-  WeightDatabaseHelper weightDatabaseHelper = WeightDatabaseHelper();
+  var weightDb = WeightDatabaseHelper();
+  SpHelper spHelper = SpHelper();
+  SpKey spKey = SpKey();
+  Constants constants = Constants();
   List<WeightList> weightDataList = [];
   List<FlSpot> dataList = [];
   double maxWeight = 0;
   double minWeight = 0;
   int tillDate = 30;
   DateTime initMonth = DateTime.now();
+  double weightValue;
+  double lbsWeight;
+
+  loadWeightData() async {
+    double value = await spHelper.loadDouble(spKey.weight) ?? 0;
+    weightValue = value;
+    lbsWeight = value * 2.20462 == null ? 0 : value * 2.20462;
+  }
 
   _loadRangeData(DateTime startDate, DateTime endDate) async {
     setState(() {
@@ -30,18 +53,17 @@ class _WeightChartState extends State<WeightChart> {
     });
     weightDataList = [];
     dataList = [];
-    List<dynamic> minWeightDB = await weightDatabaseHelper.getMinWeight();
+    List<dynamic> minWeightDB = await weightDb.getMinWeight();
 
     minWeight = minWeightDB.length == 0 ? 0 : minWeightDB[0]["MIN(weight)"];
 
-    List<dynamic> maxWeightDB = await weightDatabaseHelper.getMaxWeight();
+    List<dynamic> maxWeightDB = await weightDb.getMaxWeight();
     maxWeight = maxWeightDB.length == 0 ? 0 : maxWeightDB[0]["MAX(weight)"];
     DateTime parsedStartDate =
         DateTime(startDate.year, startDate.month, startDate.day + 1);
     DateTime parsedEndDate =
         DateTime(endDate.year, endDate.month, endDate.day + 1);
-    List items =
-        await weightDatabaseHelper.getRangeData(parsedStartDate, parsedEndDate);
+    List items = await weightDb.getRangeData(parsedStartDate, parsedEndDate);
     for (int idx = 0; idx < items.length; idx++) {
       weightDataList.add(
           WeightList(weightModel: WeightModel.map(items[idx]), index: idx));
@@ -49,7 +71,6 @@ class _WeightChartState extends State<WeightChart> {
     setState(() {
       isLoading = false;
     });
-
   }
 
 
@@ -64,26 +85,45 @@ class _WeightChartState extends State<WeightChart> {
     print(tillDate.toString() + ": till date");
   }
 
-  loadData() async{
+  addWeight(bool isDark) async {
+    double previousValue = weightValue;
+    double value = await showDialog(
+        context: context,
+        builder: (context) =>
+            WeightSelector(weight: weightValue, weightIndex: 0));
+    DateTime selectedDate = DateTime.now();
+    double toSave = (value == null) ? previousValue : value;
+    await spHelper.saveDouble(spKey.weight, toSave);
+    String key = DateFormat.yMd().format(selectedDate).toString();
+    WeightModel weightModel =
+        WeightModel(selectedDate.toIso8601String(), toSave, key);
+    if (weightModel.weight == null) return;
+    await weightDb.addWeight(toSave, weightModel, key);
+    widget.onAdd();
+
+    constants.getToast("Weight Added Successfully", isDark);
+    setState(() {});
+  }
+
+  loadData() async {
     setState(() {
       isLoading = true;
     });
-   await _loadRangeData(DateTime(DateTime.now().year, DateTime.now().month, 01),
+   await  loadWeightData();
+    await _loadRangeData(
+        DateTime(DateTime.now().year, DateTime.now().month, 01),
         DateTime(DateTime.now().year, DateTime.now().month + 1, 01));
-   await loadCurrentMonth(DateTime.now());
+    await loadCurrentMonth(DateTime.now());
     setState(() {
       isLoading = false;
     });
-
   }
 
   @override
   void initState() {
     loadData();
-
     super.initState();
   }
-
 
 
   @override
@@ -99,52 +139,75 @@ class _WeightChartState extends State<WeightChart> {
               child: CircularProgressIndicator(),
             ),
           )
-        : Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            height: height*.55,
-            child: Stack(
-              children: [
-                LineChart(
-                  mainData(isDark),
+        : Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+
+                     Padding(
+                       padding:  EdgeInsets.only(left:18.0,bottom:widget.showButton?0: 18),
+                       child: Text(
+                        widget.title,
+                        style: textTheme.subtitle1
+                            .copyWith(fontWeight: FontWeight.w700),
+                    ),
+                     ),
+
+                  Spacer(),
+            widget.showButton?      TextButton(
+                      onPressed: () async => addWeight(isDark),
+                      child: Icon(Icons.add)):Container()
+                ],
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: height * .55,
+                child: Stack(
+                  children: [
+                    LineChart(
+                      mainData(isDark),
+                    ),
+                    Positioned(
+                        right: 5,
+                        child: TextButton(
+                            style: TextButton.styleFrom(
+                                padding: EdgeInsets.only(left: 4),
+                                backgroundColor: Colors.blue,
+                                primary: Colors.white),
+                            onPressed: () async {
+                              DateTime selectedMonth = await showMonthPicker(
+                                  lastDate: DateTime.now(),
+                                  context: context,
+                                  initialDate: initMonth);
+                              if (selectedMonth == null) {
+                                return;
+                              }
+                              await loadCurrentMonth(selectedMonth);
+                              setState(() {
+                                currDate = selectedMonth;
+                                _loadRangeData(
+                                    DateTime(selectedMonth.year,
+                                        selectedMonth.month, 01),
+                                    DateTime(selectedMonth.year,
+                                        selectedMonth.month + 1, 01));
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                Text(DateFormat.yMMM().format(currDate)),
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Icon(
+                                  Icons.arrow_drop_down_rounded,
+                                ),
+                              ],
+                            )))
+                  ],
                 ),
-                Positioned(
-                    right: 5,
-                    child: TextButton(
-                        style: TextButton.styleFrom(
-                            padding: EdgeInsets.only(left: 4),
-                            backgroundColor: Colors.blue,
-                            primary: Colors.white),
-                        onPressed: () async {
-                          DateTime selectedMonth = await showMonthPicker(
-                              lastDate: DateTime.now(),
-                              context: context,
-                              initialDate: initMonth);
-                          if (selectedMonth == null) {
-                            return;
-                          }
-                          await loadCurrentMonth(selectedMonth);
-                          setState(() {
-                            currDate = selectedMonth;
-                            _loadRangeData(
-                                DateTime(selectedMonth.year,
-                                    selectedMonth.month, 01),
-                                DateTime(selectedMonth.year,
-                                    selectedMonth.month + 1, 01));
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Text(DateFormat.yMMM().format(currDate)),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            Icon(
-                              Icons.arrow_drop_down_rounded,
-                            ),
-                          ],
-                        )))
-              ],
-            ),
+              ),
+            ],
           );
   }
 
