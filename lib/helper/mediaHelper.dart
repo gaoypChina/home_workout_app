@@ -12,7 +12,7 @@ class MediaHelper {
 
   Audio audio;
   Future playSoundOnce(String audioPath) async {
-    bool effect = await spHelper.loadBool(spKey.effect);
+    bool effect = await spHelper.loadBool(spKey.effect) ?? true;
     print(effect);
     if (effect) {
       audio = Audio.load(audioPath);
@@ -23,16 +23,16 @@ class MediaHelper {
   }
 
   Future speak(String text) async {
-    bool voice = await spHelper.loadBool(spKey.voice);
-    bool coach = await spHelper.loadBool(spKey.coach);
+    bool voice = await spHelper.loadBool(spKey.voice) ?? true;
+    bool coach = await spHelper.loadBool(spKey.coach) ?? true;
     if(voice || coach){
     await  tts.speak(text);
     }
   }
 
   Future speakTestVoice(String text) async {
-    bool voice = await spHelper.loadBool(spKey.voice);
-    bool coach = await spHelper.loadBool(spKey.coach);
+    bool voice = await spHelper.loadBool(spKey.voice) ?? true;
+    bool coach = await spHelper.loadBool(spKey.coach) ?? true;
     if(voice || coach){
       await  tts.speak(text);
     }

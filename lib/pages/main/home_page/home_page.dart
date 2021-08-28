@@ -65,11 +65,12 @@ class HomePage extends StatelessWidget {
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return [
                   SliverAppBar(
+
                     actions: [...getLeading(context,color:isDark? Colors.white:Colors.black)],
                     backgroundColor: isDark?Colors.black:Colors.white,
                     automaticallyImplyLeading: false,
-                    expandedHeight:height * .16,
-                    elevation: 0,
+                    expandedHeight:height * .165,
+                    elevation: 1,
                     title:
                     RichText(
                         text: TextSpan(children: [

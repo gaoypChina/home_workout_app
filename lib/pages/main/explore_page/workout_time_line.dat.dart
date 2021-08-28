@@ -151,7 +151,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
         return Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            Icon(Entypo.trophy,size: 50,color:presentDay<currentDay?Colors.amber:isDark? Colors.grey.shade500:Colors.grey.shade400.withOpacity(.7),
+            Icon(Entypo.trophy,size: 50,color:(presentDay+7)<=currentDay?Colors.amber:isDark? Colors.grey.shade500:Colors.grey.shade400.withOpacity(.7),
             ),
             Center(child: Padding(
               padding: const EdgeInsets.only(bottom: 3.0),

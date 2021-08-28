@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 import 'package:full_workout/pages/main/weight_report_page/weight_report_details/tab_1.dart';
 import 'package:full_workout/pages/main/weight_report_page/weight_report_details/tab_2.dart';
@@ -54,7 +55,8 @@ class WeightReportDetail extends StatelessWidget {
                     ),
                     Tab(
                       icon: Icon(
-                        Icons.stacked_line_chart_outlined,
+                        SimpleLineIcons
+                            .graph,
                       ),
                       child: Text(
                         "STATICS",

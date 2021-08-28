@@ -58,130 +58,132 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
         Navigator.pop(context, true);
         return Future.value(true);
       },
-      child: Container(
-          padding: EdgeInsets.symmetric(
-              horizontal: width * .07, vertical: height * .13),
-          decoration: BoxDecoration(color: Colors.black26),
-          child: StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              decoration: BoxDecoration(
-                  color: isDark ? Colors.grey.shade800 : Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(16))),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
-                      child: PageView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: item.length,
-                          controller: _controller,
-                          itemBuilder: (context, index) {
-                            currPage = index;
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Stack(
-                                  children: [
-                                    Container(
-                                      color: isDark
-                                          ? Colors.white
-                                          : Colors.grey.shade100,
-                                      child: Center(
-                                        child: Image.asset(
-                                          item[index].imageSrc,
-                                          fit: BoxFit.scaleDown,
-                                        ),
-                                      ),
-                                      height: height * .2,
-                                    ),
+      child: Dialog(
+        backgroundColor: Colors.black12,
+       insetPadding: EdgeInsets.symmetric(
+            horizontal: width * .07, vertical: height * .13),
+        child: Container(
 
-                                    Positioned(
-                                        right: 10,
-                                        top: 10,
-                                        child: InfoButton(
-                                            tooltip: "Video",
-                                            icon: Icons.ondemand_video,
-                                            onPress: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        YoutubeTutorial(
-                                                      rapCount: widget.rapCount,
-                                                      workout:
-                                                          widget.workoutList[
-                                                              widget.index],
-                                                    ),
-                                                  ));
-                                            })),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 16, bottom: 4),
-                                  child: Text(
-                                    item[index].title,
-                                    style: textTheme.headline2.copyWith(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 18),
+            decoration: BoxDecoration(color: Colors.black26),
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              return Container(
+                decoration: BoxDecoration(
+                    color: isDark ? Colors.grey.shade800 : Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(16))),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        child: PageView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: item.length,
+                            controller: _controller,
+                            itemBuilder: (context, index) {
+                              currPage = index;
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        color: isDark
+                                            ? Colors.white
+                                            : Colors.grey.shade100,
+                                        child: Center(
+                                          child: Image.asset(
+                                            item[index].imageSrc,
+                                            fit: BoxFit.scaleDown,
+                                          ),
+                                        ),
+                                        height: height * .2,
+                                      ),
+
+                                      Positioned(
+                                          right: 10,
+                                          top: 10,
+                                          child: InfoButton(
+                                              tooltip: "Video",
+                                              icon: Icons.ondemand_video,
+                                              onPress: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          YoutubeTutorial(
+                                                        rapCount: widget.rapCount,
+                                                        workout:
+                                                            widget.workoutList[
+                                                                widget.index],
+                                                      ),
+                                                    ));
+                                              })),
+                                    ],
                                   ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      left: 16, right: 16, top: 8),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: isDark
-                                          ? Colors.grey.shade800
-                                          : Colors.white),
-                                  height: height * .32,
-                                  child: ListView.separated(
-                                    padding: EdgeInsets.only(bottom: 8),
-                                    itemCount: item[index].steps.length,
-                                    itemBuilder: (ctx, i) {
-                                      return Container(
-                                          child: Text.rich(TextSpan(
-                                              text: "Step ${i + 1}: ",
-                                              style: textTheme.caption.copyWith(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: isDark
-                                                      ? Colors.white
-                                                      : Colors.black87),
-                                              children: <InlineSpan>[
-                                            TextSpan(
-                                                text: item[index].steps[i],
-                                                style:
-                                                    textTheme.caption.copyWith(
-                                                  fontSize: 14,
-                                                )),
-                                          ])));
-                                    },
-                                    separatorBuilder: (context, index) {
-                                      return Divider();
-                                    },
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 10, left: 16, bottom: 4),
+                                    child: Text(
+                                      item[index].title,
+                                      style: textTheme.headline2.copyWith(
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: 18),
+                                    ),
                                   ),
-                                ),
-                                Row(
-                                  children: [
-                                    Spacer(),
-                                    TextButton(
-                                      child: Text("Close"),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        left: 16, right: 16, top: 8),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: isDark
+                                            ? Colors.grey.shade800
+                                            : Colors.white),
+                                    height: height * .32,
+                                    child: ListView.separated(
+                                      padding: EdgeInsets.only(bottom: 8),
+                                      itemCount: item[index].steps.length,
+                                      itemBuilder: (ctx, i) {
+                                        return Container(
+                                            child: Text.rich(TextSpan(
+                                                text: "Step ${i + 1}: ",
+                                                style: textTheme.caption.copyWith(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: isDark
+                                                        ? Colors.white
+                                                        : Colors.black87),
+                                                children: <InlineSpan>[
+                                              TextSpan(
+                                                  text: item[index].steps[i],
+                                                  style:
+                                                      textTheme.caption.copyWith(
+                                                    fontSize: 14,
+                                                  )),
+                                            ])));
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return Divider();
                                       },
                                     ),
-                                  ],
-                                ),
-                              ],
-                            );
-                          }),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Spacer(),
+                                      TextButton(
+                                        child: Text("Close"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            }),
+                      ),
                     ),
-                  ),
-                  AbsorbPointer(
-                    child: Container(
+                    Container(
                       decoration: BoxDecoration(
                           color: Colors.blue.shade700,
                           borderRadius: BorderRadius.only(
@@ -233,12 +235,12 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                               ))
                         ],
                       ),
-                    ),
-                  )
-                ],
-              ),
-            );
-          })),
+                    )
+                  ],
+                ),
+              );
+            })),
+      ),
     );
   }
 }

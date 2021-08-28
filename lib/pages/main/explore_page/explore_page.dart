@@ -20,7 +20,6 @@ class ExplorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     SpHelper _spHelper = SpHelper();
@@ -218,6 +217,7 @@ class ExplorePage extends StatelessWidget {
       child: Scaffold(
         backgroundColor:isDark?Colors.black: Colors.white,
         appBar: AppBar(
+
           automaticallyImplyLeading: false,
           actions: getLeading(context),
           backgroundColor:isDark?Colors.black: Colors.white,
@@ -230,7 +230,7 @@ class ExplorePage extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(14),
-          physics: BouncingScrollPhysics(),
+     //     physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

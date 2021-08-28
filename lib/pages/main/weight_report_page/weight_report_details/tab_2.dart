@@ -12,13 +12,11 @@ class WeightDetailTab2 extends StatelessWidget {
 
         backgroundColor: isDark ? Colors.black : Colors.white,
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           child:
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-
               SizedBox(
                 height: 18,
               ),

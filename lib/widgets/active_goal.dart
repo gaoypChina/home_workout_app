@@ -72,6 +72,9 @@ class _ActiveGoalState extends State<ActiveGoal> {
       activeDayList.add(ActiveDay(
           index: i, isDone: value, date: startDate.add(Duration(days: i))));
     }
+    setState(() {
+
+    });
   }
 
   @override
@@ -147,6 +150,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
     }
 
     getWeeklyUpdate() {
+
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: activeDayList

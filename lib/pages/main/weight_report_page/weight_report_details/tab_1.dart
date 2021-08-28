@@ -237,18 +237,19 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                         });
 
                     if (userRes == true) {
-                      int res =
-                          await weightDb.deleteWeight(item.weightModel.key);
-                      if (res == 1) {
-                        weight.removeWhere((element) =>
-                            element.weightModel.key == item.weightModel.key);
-                        Navigator.pop(context, true);
-                        setState(() {});
-                      }
-                    } else {
-                      Navigator.pop(context, false);
+                      await weightDb.deleteWeight(item.weightModel.key);
+                      await _loadData();
+                      // if (res == 1) {
+                      //   weight.removeWhere((element) =>
+                      //       element.weightModel.key == item.weightModel.key);
+                      //   Navigator.pop(context, true);
+                      //   setState(() {});
+                      // }
+                      constants.getToast("Weight Deleted Successfully", isDark);
                     }
-                    constants.getToast("Weight Deleted Successfully", isDark);
+
+                      Navigator.pop(context, false);
+
 
                   }
 

@@ -263,7 +263,7 @@ class _WeightChartState extends State<WeightChart> {
         SideTitles(
           showTitles: true,
           reservedSize: 22,
-          getTextStyles: (value) =>
+          getTextStyles: (value,_) =>
           const TextStyle(
               color: color, fontWeight: FontWeight.w600, fontSize: 12),
           getTitles: (value) {
@@ -276,7 +276,7 @@ class _WeightChartState extends State<WeightChart> {
         ),
         leftTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (value) => const TextStyle(
+          getTextStyles: (value,_) => const TextStyle(
             color: color,
             fontWeight: FontWeight.bold,
             fontSize: 12,

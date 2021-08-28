@@ -68,7 +68,7 @@ class _WeightReportStaticsState extends State<WeightReportStatics> {
             Text(title),
             Spacer(),
             isLoading?CircularProgressIndicator():
-            Text(value)
+           value == "NaN" ? Text(value):Text(value +" Kg")
           ],
         ),
       );
