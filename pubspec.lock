@@ -231,7 +231,7 @@ packages:
       name: fl_chart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.36.4"
+    version: "0.40.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -251,13 +251,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.0"
-  flutter_easyloading:
-    dependency: "direct main"
-    description:
-      name: flutter_easyloading
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
   flutter_email_sender:
     dependency: "direct main"
     description:
@@ -285,7 +278,7 @@ packages:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.1"
+    version: "8.1.1+1"
   flutter_local_notifications_platform_interface:
     dependency: transitive
     description:
@@ -354,13 +347,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.0"
-  flutter_spinkit:
-    dependency: transitive
-    description:
-      name: flutter_spinkit
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.1.0"
   flutter_svg:
     dependency: "direct main"
     description:

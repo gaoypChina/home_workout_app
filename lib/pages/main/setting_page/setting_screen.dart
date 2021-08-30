@@ -1,4 +1,4 @@
-
+//TODO: includ android intet plus plugings
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -279,6 +279,8 @@ class _SettingPageState extends State<SettingPage> {
                       onPress: () => showDialog(
                           context: context,
                           builder: (context) => ResetProgress())),
+
+                //  TODO:Uncomment all
                   getTitle("Voice Options"),
                   CustomTile(
                       title: "Test Voice",

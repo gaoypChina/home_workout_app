@@ -59,7 +59,7 @@ class _AchievementState extends State<Achievement> {
             borderRadius: BorderRadius.all(Radius.circular(16)),
             onTap: () => widget.onTap(),
             child: Padding(
-              padding: const EdgeInsets.all(0.0),
+              padding: const EdgeInsets.only(top: 10.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

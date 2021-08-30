@@ -73,7 +73,6 @@ class _ActiveGoalState extends State<ActiveGoal> {
           index: i, isDone: value, date: startDate.add(Duration(days: i))));
     }
     setState(() {
-
     });
   }
 

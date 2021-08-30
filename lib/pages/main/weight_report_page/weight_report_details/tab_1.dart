@@ -34,7 +34,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
   DateTime selectedMnth;
   String firstDate = "";
   String lastDate = "";
-  
+
 
   loadWeightData() async {
     double value = await spHelper.loadDouble(spKey.weight) ?? 0;
@@ -146,6 +146,44 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
     super.initState();
   }
 
+  void showAsBottomSheet() async {
+    final result = await showSlidingBottomSheet(
+        context,
+        builder: (context) {
+          return SlidingSheetDialog(
+            elevation: 8,
+            cornerRadius: 16,
+            snapSpec: const SnapSpec(
+              snap: true,
+              snappings: [0.4, 0.7, 1.0],
+              positioning: SnapPositioning.relativeToAvailableSpace,
+            ),
+            builder: (context, state) {
+              return Container(
+                height: 400,
+                child: Center(
+                  child: Material(
+                    child: InkWell(
+                      onTap: () => Navigator.pop(context, 'This is the result.'),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                          'This is the content of the sheet',
+                          style: Theme.of(context).textTheme.body1,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        }
+    );
+
+    print(result); // This is the result.
+  }
+
   getBottomSheet(
       {BuildContext context,
       String date,
@@ -177,33 +215,37 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
       );
     }
 
-    return SlidingSheetDialog(
-        cornerRadius: 16,
-        snapSpec: SnapSpec(initialSnap: 1),
-        builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ListTile(
-                contentPadding: EdgeInsets.only(left: 22),
-                title: Text(date),
-                subtitle: Text(weight + " Kg"),
-              ),
-              Divider(
-                height: 1,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              getButton(icon: Icon(Icons.edit), label: "Edit", onTap: onEdit),
-              getButton(
-                  icon: Icon(Icons.delete), label: "Delete", onTap: onDelete),
-              SizedBox(
-                height: 20,
-              )
-            ],
-          );
-        });
+    
+
+     return SlidingSheetDialog(
+         cornerRadius: 16,
+         snapSpec: SnapSpec(initialSnap: 1),
+         builder: (context, state) {
+           return Material(
+             child: Column(
+               crossAxisAlignment: CrossAxisAlignment.start,
+               children: [
+                 ListTile(
+                   contentPadding: EdgeInsets.only(left: 22),
+                   title: Text(date),
+                   subtitle: Text(weight + " Kg"),
+                 ),
+                 Divider(
+                   height: 1,
+                 ),
+                 SizedBox(
+                   height: 10,
+                 ),
+                 getButton(icon: Icon(Icons.edit), label: "Edit", onTap: onEdit),
+                 getButton(
+                     icon: Icon(Icons.delete), label: "Delete", onTap: onDelete),
+                 SizedBox(
+                   height: 20,
+                 )
+               ],
+             ),
+           );
+         });
   }
 
     getDetail(bool isDark) {
@@ -274,30 +316,36 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                           DateFormat.yMd().format(selectedDate).toString();
                       WeightModel weightModel = WeightModel(
                           selectedDate.toIso8601String(), value, key);
-                      if (weightModel.weight == null) return;
+                      if (weightModel.weight == null) {
+                        Navigator.pop(context, false);
+                      }
                       await weightDb.addWeight(value, weightModel, key);
+
+                      await   _loadData();
+
                       setState(() {
                         weightValue = value;
                         lbsWeight = value * 2.20462;
                       });
                     }
-                    var currModel = item.weightModel;
-                    WeightModel weightModel =
-                        WeightModel(currModel.date, value, currModel.key);
-                    await weightDb.addWeight(value, weightModel, currModel.key);
-                    if (value != null) {
-                      weight.forEach((element) {
-                        if (element.weightModel.key == currModel.key) {
-                          weight.removeAt(element.index);
-                          weight.insert(element.index,
-                              WeightList(weightModel: weightModel, index: 0));
-                          setState(() {});
-                        }
-                      });
-                      Navigator.pop(context, true);
-                    } else {
-                      Navigator.pop(context, false);
-                    }
+                Navigator.pop(context, true);
+                    // var currModel = item.weightModel;
+                    // WeightModel weightModel =
+                    //     WeightModel(currModel.date, value, currModel.key);
+                    // await weightDb.addWeight(value, weightModel, currModel.key);
+                    // if (value != null) {
+                    //   weight.forEach((element) {
+                    //     if (element.weightModel.key == currModel.key) {
+                    //       weight.removeAt(element.index);
+                    //       weight.insert(element.index,
+                    //           WeightList(weightModel: weightModel, index: 0));
+                    //       setState(() {});
+                    //     }
+                    //   });
+                    //
+                    // } else {
+                    //
+                    // }
                 constants.getToast("Weight Updated Successfully", isDark);
                   }
 
@@ -319,6 +367,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                       ),
                       InkWell(
                         onLongPress: () {
+
                           return showSlidingBottomSheet(context,
                               builder: (context) {
                             return getBottomSheet(
@@ -330,7 +379,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                                 onEdit: onEdit,
                                 isDark: isDark);
                           });
-                        },
+                     },
                         child: Container(
                           height: 60,
                           padding: EdgeInsets.only(

@@ -1,7 +1,7 @@
 name: full_workout
 description: A new Flutter application.
 
-version: 1.1.0+2
+version: 1.4.0+5
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -15,9 +15,9 @@ dependencies:
   eva_icons_flutter: ^3.0.0
   toggle_switch: ^1.2.0
   connectivity_plus: ^1.0.6
+  flutter_local_notifications: ^8.1.1+1
   flutter_bloc: ^7.1.0
   share: ^2.0.1
-  flutter_easyloading: ^3.0.0
   shared_preferences: ^2.0.6
   flutter_tts: ^3.1.0
   flutter_phoenix: ^1.0.0
@@ -33,13 +33,12 @@ dependencies:
   wakelock: ^0.5.2
   device_info: ^2.0.2
   intl: ^0.17.0
-  flutter_local_notifications: ^6.0.0
   animated_text_kit: ^4.2.1
   cupertino_icons: ^1.0.2
   table_calendar: ^3.0.0
   month_picker_dialog: ^0.4.0
   fluttertoast: ^8.0.6
-  fl_chart: ^0.36.2
+  fl_chart: ^0.40.0
   animated_background: ^2.0.0
   flutter_slidable: ^0.6.0
   rxdart: ^0.26.0
@@ -51,9 +50,8 @@ dependencies:
   flutter_material_pickers: ^3.1.0
   flutter_email_sender: ^5.0.2
   text_to_speech: ^0.2.3
-  android_intent_plus: ^2.0.0
   rate_my_app: ^1.1.1
-
+  android_intent_plus: ^2.0.0
 
 dev_dependencies:
   flutter_test:

@@ -36,8 +36,8 @@ class _WeekGoalSettingsState extends State<WeekGoalSettings> {
   String trainingDay = "";
   String firstDay = "Sunday";
 
-  int trainingDayVal;
-  int activeDayVal;
+  int trainingDayVal = 0;
+  int activeDayVal = 0;
 
   loadData() async{
     loadDay(int val){
@@ -91,7 +91,7 @@ super.initState();
               )),
 
           child:
-              Expanded(
+              Container(
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18),

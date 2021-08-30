@@ -144,7 +144,6 @@ class _WeightChartState extends State<WeightChart> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-
                      Padding(
                        padding:  EdgeInsets.only(left:18.0,bottom:widget.showButton?0: 18),
                        child: Text(
@@ -161,8 +160,9 @@ class _WeightChartState extends State<WeightChart> {
                 ],
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.only(right: 18,left: 10,bottom: 5,top: 5),
                 height: height * .55,
+
                 child: Stack(
                   children: [
                     LineChart(
@@ -219,7 +219,7 @@ class _WeightChartState extends State<WeightChart> {
     ];
 
     double presentValue = 0;
-    const Color color = Colors.grey;
+    const Color color = Colors.blueGrey;
 
     if (weightDataList.length > 0) {
       presentValue =
@@ -240,10 +240,17 @@ class _WeightChartState extends State<WeightChart> {
 
 
     return LineChartData(
+
+      lineTouchData:LineTouchData(
+
+          enabled: true,
+          touchTooltipData: LineTouchTooltipData(tooltipBgColor:isDark? Colors.white:Colors.black87,) ) ,
+
       gridData: FlGridData(
         show: true,
         drawVerticalLine: true,
         horizontalInterval: 5,
+        verticalInterval: 2,
         getDrawingHorizontalLine: (value) {
           return FlLine(
             color: isDark ? Colors.white70 : Colors.black54,
@@ -259,36 +266,38 @@ class _WeightChartState extends State<WeightChart> {
       ),
       titlesData: FlTitlesData(
         show: true,
-        bottomTitles:
-        SideTitles(
-          showTitles: true,
-          reservedSize: 22,
-          getTextStyles: (value,_) =>
-          const TextStyle(
-              color: color, fontWeight: FontWeight.w600, fontSize: 12),
-          getTitles: (value) {
-            if (value.toInt() % 2 == 0) {
-              return value.toInt().toString();
-            }
-            return '';
-          },
-          margin: 5,
+        topTitles: SideTitles(
+          showTitles: false,
         ),
-        leftTitles: SideTitles(
+
+        bottomTitles: SideTitles(interval: 1,
           showTitles: true,
-          getTextStyles: (value,_) => const TextStyle(
-            color: color,
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
-          ),
+          reservedSize: 18,
+
+         getTextStyles: (value, _) => TextStyle(
+             color: color, fontWeight: FontWeight.w600, fontSize: 12),
           getTitles: (value) {
-            if (value.toInt() % 5 == 0) {
-              return value.toInt().toString();
+            print("value" + value.toString());
+            if (value.toInt() % 2 == 0) {
+              return (value.toInt()).toString();
             }
-            return '';
+            return "";
           },
-          reservedSize: 16,
-          margin: 8,
+
+
+        ),
+
+        leftTitles: SideTitles(
+          reservedSize: 18,
+          getTextStyles: (value, _) => TextStyle(
+
+              color: color, fontWeight: FontWeight.w600, fontSize: 12),
+          showTitles: true,
+        ),
+
+        rightTitles: SideTitles(
+          showTitles: false,
+          reservedSize: 18
         ),
       ),
       borderData: FlBorderData(
@@ -298,6 +307,7 @@ class _WeightChartState extends State<WeightChart> {
       maxX: 30,
       minY: weightDataList.length == 0 ? 0:minWeight -20,
       maxY: weightDataList.length == 0 ? 50 :maxWeight +20,
+
       lineBarsData: [
         LineChartBarData(
           spots: getData(),

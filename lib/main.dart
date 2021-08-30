@@ -14,7 +14,6 @@ import 'package:full_workout/pages/main/weight_report_page/weight_report_details
 import 'package:full_workout/pages/main_page.dart';
 import 'package:full_workout/pages/main/setting_page/faq_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 import 'bloc_provider/connectivity_state_bloc.dart';
@@ -122,7 +121,6 @@ class _MyAppState extends State<MyApp> {
             SettingPage.routeName: (ctx) => SettingPage()
 
           },
-          builder: EasyLoading.init(),
           debugShowCheckedModeBanner: false,
         ),
 
