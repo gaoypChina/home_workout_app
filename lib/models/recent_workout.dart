@@ -1,11 +1,11 @@
 class RecentWorkout {
-  String _date;
-  String _workoutTitle;
-  int _activeTime;
-  double _calories;
-  int _stars;
-  int _id;
-  int _exercise;
+ late String _date;
+ late String _workoutTitle;
+ late int _activeTime;
+ late double _calories;
+ late int _stars;
+ late int _id;
+ late  int _exercise;
 
   RecentWorkout(
     this._date,

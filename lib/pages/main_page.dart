@@ -1,8 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/pages/main/home_page/home_page.dart';
 import '../main.dart';
 import 'main/explore_page/explore_page.dart';
@@ -15,7 +15,7 @@ class MainPage extends StatefulWidget {
 
   final int index;
 
-  MainPage({@required this.index});
+  MainPage({required this.index});
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -48,11 +48,11 @@ class _MainPageState extends State<MainPage> {
           child: BottomNavigationBar(
 
             selectedLabelStyle: textTheme.bodyText1
-                .copyWith(fontWeight: FontWeight.w700, fontSize: 13),
+                !.copyWith(fontWeight: FontWeight.w700, fontSize: 13),
             elevation: 010,
             showSelectedLabels: true,
             unselectedLabelStyle: textTheme.subtitle1
-                .copyWith(fontSize: 12, fontWeight: FontWeight.w600),
+                !.copyWith(fontSize: 12, fontWeight: FontWeight.w600),
             selectedItemColor: constants.primaryColor,
             iconSize: 20,
             unselectedItemColor: Colors.blueGrey,
@@ -60,8 +60,8 @@ class _MainPageState extends State<MainPage> {
             currentIndex: currentIndex,
             items: [
               BottomNavigationBarItem(
-                icon: Icon(EvaIcons.homeOutline),
-                activeIcon: Icon(EvaIcons.home),
+                icon: Icon(CupertinoIcons.home),
+                activeIcon: FaIcon(FontAwesomeIcons.home),
                 label: "Home",
               ),
               BottomNavigationBarItem(
@@ -69,8 +69,8 @@ class _MainPageState extends State<MainPage> {
                   activeIcon: Icon(EvaIcons.grid),
                   label: "Explore"),
               BottomNavigationBarItem(
-                  icon: Icon(SimpleLineIcons.chart),
-                  activeIcon: Icon(Entypo.bar_graph),
+                  icon: Icon(FontAwesomeIcons.chartBar),
+                  activeIcon: Icon(FontAwesomeIcons.chartBar),
                   label: "Report"),
               BottomNavigationBarItem(
                   icon: Icon(EvaIcons.pieChartOutline,),

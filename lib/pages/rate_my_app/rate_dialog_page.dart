@@ -9,7 +9,7 @@ import '../main/setting_page/setting_screen.dart';
 class RateDialogPage extends StatefulWidget {
   final RateMyApp rateMyApp;
 
-  RateDialogPage({@required this.rateMyApp});
+  RateDialogPage({required this.rateMyApp});
 
   @override
   _RateDialogPageState createState() => _RateDialogPageState();
@@ -109,7 +109,7 @@ class _RateDialogPageState extends State<RateDialogPage> {
             message: "Do you like this app? Please leave a rating",
             starRatingOptions: StarRatingOptions(initialRating: 0),
             actionsBuilder: (context, stars) {
-          return actionsBuilder(context, stars, isDark);
+          return actionsBuilder(context, stars??0, isDark);
         });
         // showDialog(context: context, builder: (context)=>
         // RateDialogPage(rateMyApp: rateMyApp,));

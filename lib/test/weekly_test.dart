@@ -37,17 +37,17 @@ class _WeeklyTestState extends State<WeeklyTest> {
                       if (curr.showTimer == false) {
                           currDay = i;
                           if (currDay <= 10) {
-                            time = curr.beginnerRap;
+                            time = curr.beginnerRap??0;
 
                           } else if (currDay <= 20) {
-                            time = curr.intermediateRap;
+                            time = curr.intermediateRap??0;
 
                           } else{
-                            time = curr.advanceRap;
+                            time = curr.advanceRap??0;
 
                           }
                         } else if (curr.showTimer == true) {
-                           time = curr.duration;
+                           time = curr.duration ??30;
                          }
                       return Column(
                         children: [
@@ -86,11 +86,11 @@ class DailyTest extends StatelessWidget {
           child:Column(
             children: [
               ...chestBeginner.map((curr) {
-                int time = 0;
+                int? time = 0;
                 if (curr.showTimer == false) {
                   List<String> splitTitle = curr.title.split(" ");
                   if (splitTitle.length == 5) {
-                    int currDay = int.tryParse(splitTitle[4]);
+                    int? currDay = int.tryParse(splitTitle[4])??0;
                     if (currDay < 10) {
                       time = curr.beginnerRap;
                     } else if (currDay < 20) {

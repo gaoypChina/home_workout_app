@@ -8,7 +8,7 @@ import '../main.dart';
 class Achievement extends StatefulWidget {
   final Function onTap;
 
-  Achievement({@required this.onTap});
+  Achievement({required this.onTap});
 
   @override
   _AchievementState createState() => _AchievementState();
@@ -27,12 +27,8 @@ class _AchievementState extends State<Achievement> {
       isLoading = true;
     });
 
-    int loadedTime = await _spHelper.loadInt(_spKey.time) == null
-        ? 0
-        : await _spHelper.loadInt(_spKey.time);
-    int loadedExercise = await _spHelper.loadInt(_spKey.exercise) == null
-        ? 0
-        : await _spHelper.loadInt(_spKey.exercise);
+    int loadedTime = await _spHelper.loadInt(_spKey.time) ??0;
+    int loadedExercise = await _spHelper.loadInt(_spKey.exercise) ??0;
     calories = loadedTime * (18 / 60);
     time = loadedTime;
     exercise = loadedExercise;
@@ -66,7 +62,7 @@ class _AchievementState extends State<Achievement> {
 
                   Text(
                     isLoading ? "" : subTitle,
-                    style: textTheme.bodyText2.copyWith(
+                    style: textTheme.bodyText2!.copyWith(
                         fontWeight: FontWeight.w400,
                         color: isDark?Colors.blue:Colors.blue.shade700,
                         fontSize: 28),
@@ -74,7 +70,7 @@ class _AchievementState extends State<Achievement> {
 
                   Text(
                     title,
-                    style: textTheme.bodyText1.copyWith(
+                    style: textTheme.bodyText1!.copyWith(
                       color: Colors.blueGrey,
                         fontWeight: FontWeight.w400,
                         fontSize: 13),

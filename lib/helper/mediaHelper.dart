@@ -10,7 +10,7 @@ class MediaHelper {
   FlutterTts flutterTts = FlutterTts();
   TextToSpeech tts = TextToSpeech();
 
-  Audio audio;
+ late final Audio audio;
   Future playSoundOnce(String audioPath) async {
     bool effect = await spHelper.loadBool(spKey.effect) ?? true;
     print(effect);

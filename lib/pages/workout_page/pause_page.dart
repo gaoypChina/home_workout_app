@@ -9,10 +9,10 @@ class StopPage extends StatelessWidget {
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     getButton(
-        {Function onPress,
-        String title,
-        Color textColor,
-        Color backgroundColor}) {
+        {required Function onPress,
+        required String title,
+        required Color textColor,
+        required Color backgroundColor}) {
       return Container(
           height: 50,
         width: double.infinity,
@@ -28,13 +28,13 @@ class StopPage extends StatelessWidget {
                   style: BorderStyle.solid,
                   width: 2),
             ),
-            onPressed: onPress,
+            onPressed:()=> onPress(),
             child: Text(
                 title,
                 style: Theme
                     .of(context)
                     .textTheme
-                    .button
+                    .button!
                     .merge(TextStyle(color: textColor)),
               )),
         );
@@ -67,7 +67,7 @@ class StopPage extends StatelessWidget {
                 Spacer(),
                 Text(
                   "Pause",
-                  style: textTheme.headline1.copyWith(
+                  style: textTheme.headline1!.copyWith(
                       color: isDark?Colors.white:Colors.black,
                       fontSize: 40,
                       letterSpacing: 1.5,
@@ -99,9 +99,9 @@ class StopPage extends StatelessWidget {
                 getButton(
                     title: "Quit",
                     onPress: () async {
-                      bool value = await
+                      bool? value = await
                       Navigator.of(context).push(MaterialPageRoute(builder: (builder) => QuitPage()));
-                      value == true ?? Navigator.of(context).pop();
+                      if(value == true)  Navigator.of(context).pop();
                     },
                     backgroundColor: defaultBackgroundColor,
                     textColor: defaultTextColor),

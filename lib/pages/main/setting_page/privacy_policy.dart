@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/gestures.dart';
 
@@ -101,7 +101,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
         elevation: 0,
       ),
       body: SafeArea(
-        child: (loading)
+        child: loading
             ? CircularProgressIndicator()
             : SingleChildScrollView(
           physics: BouncingScrollPhysics(),

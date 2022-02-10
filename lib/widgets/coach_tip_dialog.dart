@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class PushUpLevelDialog extends StatelessWidget {
   final int index;
-  PushUpLevelDialog({@required this.index});
+  PushUpLevelDialog({required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -110,5 +110,5 @@ class PushUpLevelItem {
   String subTitle;
   int index;
 
-  PushUpLevelItem({this.title, this.subTitle, this.index});
+  PushUpLevelItem({required this.title, required this.subTitle, required this.index});
 }

@@ -18,14 +18,14 @@ class RecentDatabaseHelper {
   final String columnCalories = "calories";
   final String columnExercise = "exercise";
 
-  static Database _db;
+    Database? _db;
 
   Future<Database> get db async {
     if (_db != null) {
-      return _db;
+      return _db!;
     }
     _db = await initDb();
-    return _db;
+    return _db!;
   }
 
   RecentDatabaseHelper.internal();
@@ -65,13 +65,13 @@ class RecentDatabaseHelper {
     return result.toList();
   }
 
-  Future<int> getCount() async {
+  Future<int?> getCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(
         await dbClient.rawQuery("SELECT COUNT(*) FROM $tableName"));
   }
 
-  Future<RecentWorkout> getWorkOut(int id) async {
+  Future<RecentWorkout?> getWorkOut(int id) async {
     var dbClient = await db;
     var result = await dbClient
         .rawQuery("SELECT * FROM $tableName WHERE $columnId = $id");

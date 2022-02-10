@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class ReportShare extends StatelessWidget {
@@ -11,11 +11,11 @@ class ReportShare extends StatelessWidget {
   final String title;
 
   ReportShare(
-      {@required this.date,
-      @required this.title,
-      @required this.time,
-      @required this.calories,
-      @required this.exercise});
+      {required this.date,
+      required this.title,
+      required this.time,
+      required this.calories,
+      required this.exercise});
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +108,7 @@ class ReportShare extends StatelessWidget {
                     children: [
                       Expanded(
                           child: Icon(
-                        Entypo.google_play,
+                        FontAwesomeIcons.googlePlay,
                         color: Colors.white,
                         size: 35,
                       )),

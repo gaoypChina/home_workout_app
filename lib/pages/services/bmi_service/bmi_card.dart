@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:full_workout/constants/constants.dart';
-import 'package:full_workout/helper/weight_db_helper.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
+import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/models/bmi_remark.dart';
 import 'package:full_workout/models/weight_model.dart';
 import 'package:full_workout/pages/workout_page/report_page.dart';
 import 'package:intl/intl.dart';
+import 'package:sliding_sheet/sliding_sheet.dart';
+
 import '../../../main.dart';
 import 'bmi_picker.dart';
-import 'package:sliding_sheet/sliding_sheet.dart';
 
 class BmiCard extends StatefulWidget {
   final bool showBool;
-  BmiCard({@required this.showBool});
+
+  BmiCard({required this.showBool});
+
   @override
   _BmiCardState createState() => _BmiCardState();
 }
@@ -25,11 +27,10 @@ class _BmiCardState extends State<BmiCard> {
   var weightDb = WeightDatabaseHelper();
   Constants constants = Constants();
 
-
   bool _isLoading = true;
 
-  double weight = 0;
-  double height = 0;
+  double? weight = 0;
+  double? height = 0;
 
   @override
   void initState() {
@@ -47,15 +48,14 @@ class _BmiCardState extends State<BmiCard> {
 
   @override
   Widget build(BuildContext context) {
-    BmiRemark remark = BmiRemark();
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     double bmi = 0;
     TextStyle titleStyle =
-        textTheme.subtitle1.copyWith(fontWeight: FontWeight.w700);
+        textTheme.subtitle1!.copyWith(fontWeight: FontWeight.w700);
 
     double _calcBmi(double height, double weight) {
-      return  weight / (height * height);
+      return weight / (height * height);
     }
 
     getPadValue(double bmi) {
@@ -78,7 +78,7 @@ class _BmiCardState extends State<BmiCard> {
     }
 
     BmiRemark _getRemark(double bmi) {
-      BmiRemark bmiRemark = BmiRemark();
+      BmiRemark bmiRemark;
       if (bmi < 16) {
         bmiRemark = BmiRemark(
             remark: "Very severely Underweight", color: Colors.redAccent);
@@ -102,8 +102,11 @@ class _BmiCardState extends State<BmiCard> {
     }
 
 
-    showBmiSheet(){
-      getWeightDetail({String title, String value, Color color}) {
+    showBmiSheet() {
+      getWeightDetail(
+          {required String title,
+          required String value,
+          required Color color}) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4),
           child: Row(
@@ -118,16 +121,14 @@ class _BmiCardState extends State<BmiCard> {
               ),
               Text(
                 title,
-                style: textTheme.subtitle1.copyWith(
-
-                    fontWeight: FontWeight.w500),
+                style:
+                    textTheme.subtitle1!.copyWith(fontWeight: FontWeight.w500),
               ),
               Spacer(),
               Text(
                 value,
-                style: textTheme.subtitle1.copyWith(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700),
+                style: textTheme.subtitle1!
+                    .copyWith(fontSize: 15, fontWeight: FontWeight.w700),
               )
             ],
           ),
@@ -160,18 +161,15 @@ class _BmiCardState extends State<BmiCard> {
                         Spacer(),
                         Text(
                           "Weight Categories",
-                          style: textTheme.subtitle1.copyWith(
-
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18),
-                        ),
+                            style: textTheme.subtitle1!.copyWith(
+                                fontWeight: FontWeight.w600, fontSize: 18),
+                          ),
                         Spacer(),
                         Text(
                           "Index",
-                          style: textTheme.subtitle1.copyWith(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18),
-                        ),
+                            style: textTheme.subtitle1!.copyWith(
+                                fontWeight: FontWeight.w600, fontSize: 18),
+                          ),
                         SizedBox(
                           width: 18,
                         )
@@ -227,13 +225,12 @@ class _BmiCardState extends State<BmiCard> {
                   ),
                   SizedBox(height: 10),
                   Padding(
-                    padding:
-                        const EdgeInsets.only(left: 18.0,right: 18,  bottom: 4),
-                    child: Text("Healthy BMI Range",
-                        style: textTheme.subtitle1.copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600)),
-                  ),
+                    padding: const EdgeInsets.only(
+                          left: 18.0, right: 18, bottom: 4),
+                      child: Text("Healthy BMI Range",
+                          style: textTheme.subtitle1!.copyWith(
+                              fontSize: 16, fontWeight: FontWeight.w600)),
+                    ),
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 18.0,right: 18),
@@ -242,10 +239,10 @@ class _BmiCardState extends State<BmiCard> {
                         ),
                   ),
                   SizedBox(
-                    height: 30,
-                  )
-                ],
-              ),
+                      height: 30,
+                    )
+                  ],
+                ),
               ),
             );
           },
@@ -253,8 +250,10 @@ class _BmiCardState extends State<BmiCard> {
       });
     }
 
+    late BmiRemark remark;
+
     if (height != null && weight != null) {
-      bmi = double.parse(_calcBmi(height / 100, weight).toStringAsFixed(2));
+      bmi = double.parse(_calcBmi(height! / 100, weight!).toStringAsFixed(2));
       print(bmi);
       remark = _getRemark(bmi);
     }
@@ -329,7 +328,7 @@ class _BmiCardState extends State<BmiCard> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
-            FontAwesome.arrow_up,
+            Icons.arrow_upward,
             size: 20,
           ),
           SizedBox(height: 2,),
@@ -432,7 +431,10 @@ class _BmiCardState extends State<BmiCard> {
     }
 
     getMyHealth(String height, String weight) {
-      getWeightDetail({String title, String value, Color color}) {
+      getWeightDetail(
+          {required String title,
+          required String value,
+          required Color color}) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4),
           child: Row(
@@ -565,7 +567,7 @@ class _BmiCardState extends State<BmiCard> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("BMI : " + bmi.toStringAsFixed(1),
-                          style: textTheme.subtitle1.copyWith(
+                          style: textTheme.subtitle1!.copyWith(
                               color: remark.color,
                               fontWeight: FontWeight.w600,
                               fontSize: 18)),
@@ -573,7 +575,7 @@ class _BmiCardState extends State<BmiCard> {
                         width: 5,
                       ),
                       Text("(${remark.remark})",
-                          style: textTheme.subtitle1.copyWith(
+                          style: textTheme.subtitle1!.copyWith(
                               color: remark.color,
                               fontWeight: FontWeight.w600,
                               fontSize: 18)),
@@ -581,8 +583,8 @@ class _BmiCardState extends State<BmiCard> {
                   ),
                   if (widget.showBool) constants.getDivider(isDark),
                   if (widget.showBool)
-                    getMyHealth(height.toInt().toString() + " Cm",
-                        weight.toInt().toString() + " Kg"),
+                    getMyHealth(height!.toInt().toString() + " Cm",
+                        weight!.toInt().toString() + " Kg"),
                   if (widget.showBool) SizedBox(height: 20)
                 ],
               );

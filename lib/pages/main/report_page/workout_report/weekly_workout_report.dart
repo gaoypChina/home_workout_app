@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 class WeeklyWorkoutReport extends StatefulWidget {
  final Function onTap;
  final bool showToday;
- WeeklyWorkoutReport({@required this.onTap, @required this.showToday});
+ WeeklyWorkoutReport({required this.onTap, required this.showToday});
   @override
   _WeeklyWorkoutReportState createState() => _WeeklyWorkoutReportState();
 }
@@ -16,9 +16,9 @@ class _WeeklyWorkoutReportState extends State<WeeklyWorkoutReport> {
 
   List<Workout> workoutList = [];
   List<ActiveDay> activeDayList = [];
-  DateTime startDate;
+  late DateTime startDate;
 
-  DateTime endDate;
+  late DateTime endDate;
 
   _getWorkDoneList() async {
     int daySelected = 7;
@@ -120,5 +120,5 @@ class ActiveDay {
   bool isDone;
   DateTime date;
 
-  ActiveDay({this.index, this.isDone, this.date});
+  ActiveDay({required this.index, required this.isDone, required this.date});
 }

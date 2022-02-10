@@ -4,5 +4,5 @@ class BmiRemark{
 String remark;
 Color color;
 
-BmiRemark({this.remark,this.color});
+BmiRemark({required this.remark,required this.color});
 }

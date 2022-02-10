@@ -7,21 +7,21 @@ class Workout {
   String videoLink;
   List<String> steps;
   bool showTimer;
-  int beginnerRap;
-  int intermediateRap;
-  int advanceRap;
-  int duration;
+  int? beginnerRap;
+  int? intermediateRap;
+  int? advanceRap;
+  int? duration;
 
   Workout({
-    @required this.title,
-    @required this.imageSrc,
-    @required this.steps,
-    @required this.videoLink,
-    @required this.showTimer,
-    this.beginnerRap,
-    this.advanceRap,
-    this.intermediateRap,
-    this.duration,
+    required this.title,
+    required this.imageSrc,
+    required this.steps,
+    required this.videoLink,
+    required this.showTimer,
+     this.beginnerRap,
+     this.advanceRap,
+     this.intermediateRap,
+     this.duration,
   });
 }
 //Arm

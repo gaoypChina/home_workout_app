@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:full_workout/components/height_weightSelector.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/helper/weight_db_helper.dart';
@@ -26,12 +26,12 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
   Constants constants = Constants();
   List<WeightList> weight = [];
   bool isDateSelected = false;
-  double weightValue;
-  double lbsWeight;
+ late double weightValue;
+  late double lbsWeight;
   List<String> rangeTypeList = ['Week', 'Month', 'Custom'];
   String rangeType = "Month";
   double initWeight = 0.0;
-  DateTime selectedMnth;
+  late DateTime selectedMnth;
   String firstDate = "";
   String lastDate = "";
 
@@ -92,7 +92,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
       lastDate = DateFormat.yMMMd().format(DateTime.now());
     } else if (value == rangeTypeList[1]) {
       isLoading = true;
-      DateTime selectedMonth =
+      DateTime? selectedMonth =
           await showMonthPicker(context: context, initialDate: DateTime.now());
       if (selectedMonth == null) {
         setState(() {
@@ -114,7 +114,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
           DateTime(selectedMonth.year, selectedMonth.month + 1, 1)
               .subtract(Duration(days: 1)));
     } else if (value == rangeTypeList[2]) {
-      DateTimeRange dateSelected = await showDateRangePicker(
+      DateTimeRange? dateSelected = await showDateRangePicker(
           context: context,
           firstDate: DateTime(2019, 01, 01),
           lastDate: DateTime.now());
@@ -123,6 +123,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
           isLoading = false;
         });
       }
+      if(dateSelected == null) return;
       _loadRangeData(
           DateTime(dateSelected.start.year, dateSelected.start.month,
               dateSelected.start.day),
@@ -146,52 +147,15 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
     super.initState();
   }
 
-  void showAsBottomSheet() async {
-    final result = await showSlidingBottomSheet(
-        context,
-        builder: (context) {
-          return SlidingSheetDialog(
-            elevation: 8,
-            cornerRadius: 16,
-            snapSpec: const SnapSpec(
-              snap: true,
-              snappings: [0.4, 0.7, 1.0],
-              positioning: SnapPositioning.relativeToAvailableSpace,
-            ),
-            builder: (context, state) {
-              return Container(
-                height: 400,
-                child: Center(
-                  child: Material(
-                    child: InkWell(
-                      onTap: () => Navigator.pop(context, 'This is the result.'),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Text(
-                          'This is the content of the sheet',
-                          style: Theme.of(context).textTheme.body1,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          );
-        }
-    );
-
-    print(result); // This is the result.
-  }
 
   getBottomSheet(
-      {BuildContext context,
-      String date,
-      String weight,
-      Function onEdit,
-      Function onDelete,
-      bool isDark}) {
-    getButton({Icon icon, String label, Function onTap}) {
+      {required BuildContext context,
+      required String date,
+      required String weight,
+      required Function onEdit,
+      required Function onDelete,
+      required bool isDark}) {
+    getButton({required Icon icon, required String label, required Function onTap}) {
       return TextButton(
         style: TextButton.styleFrom(
             padding: EdgeInsets.only(left: 18),
@@ -368,9 +332,9 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                       InkWell(
                         onLongPress: () {
 
-                          return showSlidingBottomSheet(context,
+                           showSlidingBottomSheet(context,
                               builder: (context) {
-                            return getBottomSheet(
+                          return   getBottomSheet(
                                 context: context,
                                 weight:
                                     item.weightModel.weight.toStringAsFixed(2),
@@ -480,9 +444,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
         Padding(padding: EdgeInsets.only(top: 40)),
         Container(
             height: MediaQuery.of(context).size.height * .4,
-            child: SvgPicture.asset(
-              "assets/other/no_data.svg",
-            )),
+           ),
         Container(
           child: Column(
             children: [
@@ -491,7 +453,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
               ),
               Text(
                 "No Record Found!",
-                style: textTheme.subtitle1.copyWith(
+                style: textTheme.subtitle1!.copyWith(
                     fontSize: 30,
                     fontWeight: FontWeight.w400,
                     color: Colors.grey.shade600),
@@ -513,7 +475,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
         children: [
           Text(
             firstDate,
-            style: textTheme.headline4.copyWith(
+            style: textTheme.headline2!.copyWith(
               fontSize: 16,
             ),
           ),
@@ -527,7 +489,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
           SizedBox(width: 20),
           Text(
             lastDate,
-            style: textTheme.headline4.copyWith(fontSize: 16),
+            style: textTheme.headline2!.copyWith(fontSize: 16),
           )
         ],
       )),
@@ -587,7 +549,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
             label: Text(
               "Add weight",
               style:
-                  textTheme.button.copyWith(fontSize: 16, color: Colors.white),
+                  textTheme.button!.copyWith(fontSize: 16, color: Colors.white),
               textAlign: TextAlign.end,
             ),
           ),
@@ -604,7 +566,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                   Text(
                     "Weight History",
                     style: textTheme.subtitle1
-                        .copyWith(fontWeight: FontWeight.w500, fontSize: 19),
+                        !.copyWith(fontWeight: FontWeight.w500, fontSize: 19),
                   ),
                   Spacer(),
                   Container(
@@ -645,7 +607,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),
-                        onChanged: (String value) => onRangeChange(value)),
+                        onChanged: (String? value) => onRangeChange(value!)),
                   )
                 ],
               ),

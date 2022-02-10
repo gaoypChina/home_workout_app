@@ -27,26 +27,26 @@ class SpHelper {
     preferences.setDouble(key, value);
   }
 
-  Future<String> loadString(String key) async {
+  Future<String?> loadString(String key) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     if (preferences.getString(key) != null &&
-        preferences.getString(key).isNotEmpty) {
-      String value = preferences.getString(key);
+        preferences.getString(key)!.isNotEmpty) {
+      String? value = preferences.getString(key);
       return value;
     }
     return null;
   }
 
-  Future<int> loadInt(String key) async {
+  Future<int?> loadInt(String key) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     if (preferences.getInt(key) != null) {
-      int value = preferences.getInt(key);
+      int? value = preferences.getInt(key);
       return value;
     }
     return null;
   }
 
-  Future<double> loadDouble(String key) async {
+  Future<double?> loadDouble(String key) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     print(preferences.getDouble("weight"));
       return preferences.getDouble(key);
@@ -54,10 +54,10 @@ class SpHelper {
    // return null;
   }
 
-  Future<bool> loadBool(String key) async {
+  Future<bool?> loadBool(String key) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     if (preferences.getBool(key) != null) {
-      bool value = preferences.getBool(key);
+      bool? value = preferences.getBool(key);
       return value;
     }
     return null;
@@ -65,10 +65,10 @@ class SpHelper {
 
 
 
-  Future<bool> loadIsActive(String key) async {
+  Future<bool?> loadIsActive(String key) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     if (preferences.getBool(key) != null) {
-      bool rt = preferences.getBool(key);
+      bool? rt = preferences.getBool(key);
       return rt;
     } else {
       return true;

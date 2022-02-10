@@ -10,7 +10,7 @@ class CustomExerciseCard extends StatefulWidget {
   final List<Workout> workOutList;
   final int index;
   final int time;
-  CustomExerciseCard({this.workOutList, this.index, this.time});
+  CustomExerciseCard({required this.workOutList, required this.index, required this.time});
 
   @override
   _CustomExerciseCardState createState() => _CustomExerciseCardState();

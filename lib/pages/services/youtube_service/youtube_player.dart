@@ -2,7 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/bloc_provider/connectivity_state_bloc.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -13,7 +13,7 @@ class YoutubeTutorial extends StatefulWidget {
   final Workout workout;
   final int rapCount;
 
-  const YoutubeTutorial({@required this.workout, @required this.rapCount});
+  const YoutubeTutorial({required this.workout, required this.rapCount});
 
   @override
   _YoutubeTutorialState createState() => _YoutubeTutorialState();
@@ -21,7 +21,7 @@ class YoutubeTutorial extends StatefulWidget {
 
 class _YoutubeTutorialState extends State<YoutubeTutorial> {
 
-  YoutubePlayerController _controller;
+  late YoutubePlayerController _controller;
   bool isConnected = false;
   bool isLoading = true;
   bool loadVideo = true;
@@ -29,7 +29,7 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
   @override
   void initState() {
     _controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(widget.workout.videoLink));
+        initialVideoId: YoutubePlayer.convertUrlToId(widget.workout.videoLink)??"");
     checkConnectivity();
     super.initState();
   }
@@ -126,7 +126,7 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
 
-                Icon(MaterialIcons.network_check,color: Colors.white,size: height*.15,),
+                Icon(FontAwesomeIcons.wifi,color: Colors.white,size: height*.15,),
                 Text("No internet Connection found",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w600),textAlign: TextAlign.center,),
                 SizedBox(height: 5,),
 
@@ -148,7 +148,7 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
         child:
             Text(
               "${workout.title} $rap",
-              style: textTheme.bodyText1.copyWith(
+              style: textTheme.bodyText1!.copyWith(
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
                   color: Colors.white),
@@ -164,14 +164,14 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
               return ListTile(
                   minVerticalPadding: 0,
                   leading: Text("Step ${index + 1}: ",
-                      style: textTheme.bodyText2.copyWith(
+                      style: textTheme.bodyText2!.copyWith(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w700)),
                   title: Text(
                     "${workout.steps[index]}",
                     style: textTheme.bodyText2
-                        .copyWith(color: Colors.white, fontSize: 14),
+                        !.copyWith(color: Colors.white, fontSize: 14),
                   ));
             },
             itemCount: workout.steps.length,

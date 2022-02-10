@@ -19,7 +19,7 @@ class SlideFadeTransition extends StatefulWidget {
   final Duration animationDuration;
 
   SlideFadeTransition({
-    @required this.child,
+    required this.child,
     this.offset = 1.0,
     this.curve = Curves.easeIn,
     this.direction = Direction.vertical,
@@ -33,11 +33,11 @@ class SlideFadeTransition extends StatefulWidget {
 
 class _SlideFadeTransitionState extends State<SlideFadeTransition>
     with SingleTickerProviderStateMixin {
-  Animation<Offset> _animationSlide;
+ late Animation<Offset> _animationSlide;
 
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
-  Animation<double> _animationFade;
+  late Animation<double> _animationFade;
 
   @override
   void initState() {

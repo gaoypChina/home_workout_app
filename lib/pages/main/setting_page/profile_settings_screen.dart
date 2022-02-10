@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
-import 'package:full_workout/constants/constants.dart';
-import 'package:full_workout/helper/weight_db_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/models/weight_model.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/components/height_weightSelector.dart';
+import 'package:full_workout/constants/constant.dart';
+import 'package:full_workout/helper/sp_key_helper.dart';
+import 'package:full_workout/helper/weight_db_helper.dart';
+import 'package:full_workout/models/weight_model.dart';
 import 'package:intl/intl.dart';
+
 import '../../../helper/sp_helper.dart';
 import '../../../main.dart';
 
@@ -19,51 +20,44 @@ class ProfileSettingScreen extends StatefulWidget {
 
 class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   Constants constants = Constants();
-  String name;
-  String date;
-  int gender;
-  int unit;
-  double heightValue;
-  double weightValue;
-  DateTime actualDate;
+   String? name;
+   String? date;
+   int? gender;
+   int? unit;
+   double? heightValue;
+   double? weightValue;
+   DateTime? actualDate;
   bool showSaveButton = false;
 
   //derived values
 
-  double lbsWeight;
-  double feetHeight;
-  double inchHeight;
+  late double? lbsWeight;
+  late double? feetHeight;
+  late double? inchHeight;
 
   getSavedData() async {
-    await spHelper.loadString(spKey.date).then((value) {
-      actualDate = DateTime.parse(value);
-      String formatedDay = DateFormat.yMMMd().format(DateTime.parse(value));
-      setState(() {
-        date = formatedDay;
-      });
-    });
+    String? temp = await spHelper.loadString(spKey.date);
+    if (temp == null) {
+      date = null;
+    } else {
+      String formatedDay = DateFormat.yMMMd().format(DateTime.parse(temp));
+      date = formatedDay;
+    }
 
-    await spHelper.loadString(spKey.name).then((value) {
-      setState(() {
-        name = value;
-      });
-    });
+    name = await spHelper.loadString(spKey.name);
 
-    await spHelper.loadInt(spKey.gender).then((value) {
-      setState(() {
-        gender = value;
-      });
-    });
+    gender = await spHelper.loadInt(spKey.gender);
 
-    await spHelper.loadInt(spKey.unit).then((value) {
-      setState(() {
-        unit = value;
-      });
-    });
+    unit = await spHelper.loadInt(spKey.unit);
 
-    await spHelper.loadDouble(spKey.height).then((value) {
-      int feet = value ~/ 30.48;
-      double inch = (value - (feet * 30.48)) * 0.393701;
+    double? tempHeight = await spHelper.loadDouble(spKey.height);
+    if (tempHeight == null) {
+      feetHeight = null;
+      inchHeight = null;
+      heightValue = null;
+    } else {
+      int feet = tempHeight ~/ 30.48;
+      double inch = (tempHeight - (feet * 30.48)) * 0.393701;
       if (inch == 12) {
         inch = 0;
         feet = feet++;
@@ -72,22 +66,24 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
       setState(() {
         feetHeight = feet.toDouble();
         inchHeight = inch;
-        heightValue = value;
+        heightValue = tempHeight;
       });
-    });
+    }
 
-    await spHelper.loadDouble(spKey.weight).then((value) {
-      setState(() {
-        weightValue = value;
-        lbsWeight = value * 2.20462;
-      });
-    });
+    double? tempWeight = await spHelper.loadDouble(spKey.weight);
+    if (tempWeight == null) {
+      weightValue = null;
+      lbsWeight = null;
+    } else {
+      weightValue = tempWeight;
+      lbsWeight = tempWeight * 2.20462;
+    }
+
+    setState(() {});
   }
 
   SpHelper spHelper = SpHelper();
   SpKey spKey = SpKey();
-
-  // BmiReport bmiReport = BmiReport();
   WeightDatabaseHelper weightDatabaseHelper = WeightDatabaseHelper();
 
   @override
@@ -101,14 +97,15 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     _selectDate() async {
-      final DateTime picked = await showRoundedDatePicker(
-
-        theme:isDark?ThemeData.dark(): ThemeData(primaryColor: Colors.blue.shade700),
+      final DateTime? picked = await showRoundedDatePicker(
+        theme: isDark
+            ? ThemeData.dark()
+            : ThemeData(primaryColor: Colors.blue.shade700),
         context: context,
         height: MediaQuery.of(context).size.height * .4,
-        initialDate: DateTime(2000,08,12),
+        initialDate: DateTime(2000, 08, 12),
         firstDate: DateTime(DateTime.now().year - 110),
-        lastDate: DateTime(DateTime.now().year-12),
+        lastDate: DateTime(DateTime.now().year - 12),
         borderRadius: 16,
       );
       if (picked != null && picked.toString() != date) {
@@ -123,12 +120,6 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
 
 
     List<Color> iconColor = [
-      // Colors.blue.shade700,
-      // Colors.blue.shade700,
-      // Colors.blue.shade700,
-      // Colors.blue.shade700,
-      // Colors.blue.shade700,
-      // Colors.blue.shade700,
       Colors.red,
       Colors.green,
       Colors.amberAccent.shade200,
@@ -169,13 +160,13 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
 
               title: "Name",
               data: name,
-              subTitle: (name != null) ? name : "Enter your name",
+              subTitle:  name ?? "Enter your name",
               onPressed: () async {
-                String previousValue = name;
-                String a = await showDialog(
+                String previousValue = name??"";
+                String? a = await showDialog(
                     context: context,
                     builder: (context) => NameSelector(
-                          name: name,
+                          name: name??"",
                         ));
                 String toSave = (a == null) ? previousValue : a;
                 await spHelper.saveString(spKey.name, toSave);
@@ -190,7 +181,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
             CustomProfileTile(
                 title: "Date of Birth",
                 data:date,
-                subTitle: (date == null) ? "Select your birthday" : date,
+                subTitle: date ?? "Select your birthday",
                 onPressed: () {
                   _selectDate();
                   setState(() {
@@ -209,18 +200,18 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                       ? "Male"
                       : "Female",
               onPressed: () async {
-                int previousValue = gender;
-                int selectedGender = await showDialog(
+                int? previousValue = gender;
+                int? selectedGender = await showDialog(
                     context: context,
                     builder: (context) => RadioSelector(
                           title: "Select Gender",
                           radio1: "Male",
                           radio2: "Female",
-                          value: gender,
+                          value: gender??0,
                         ));
-                int toSave =
-                    (selectedGender == null) ? previousValue : selectedGender;
-                await spHelper.saveInt(spKey.gender, toSave);
+                int? toSave =
+                    selectedGender ?? previousValue;
+                await spHelper.saveInt(spKey.gender, toSave??0);
                 setState(() {
                   gender = toSave;
                   showSaveButton = true;
@@ -238,18 +229,18 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                       ? "Cm/Kg"
                       : "Inch/Lbs",
               onPressed: () async {
-                int previousValue = unit;
-                int selectedUnit = await showDialog(
+                int? previousValue = unit;
+                int? selectedUnit = await showDialog(
                     context: context,
                     builder: (context) => RadioSelector(
                           title: "Select Unit",
                           radio2: "Inch/Lbs",
                           radio1: "Cm/Kg",
-                          value: unit,
+                          value: unit??0,
                         ));
-                int toSave =
-                    (selectedUnit == null) ? previousValue : selectedUnit;
-                await spHelper.saveInt(spKey.unit, toSave);
+                int? toSave =
+                    selectedUnit ?? previousValue;
+                await spHelper.saveInt(spKey.unit, toSave??0);
                 setState(() {
                   unit = toSave;
                   showSaveButton = true;
@@ -269,50 +260,51 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                           : "$heightValue cm"
                       : (feetHeight == null)
                           ? ""
-                          : "${feetHeight.round().toString()} feet ${inchHeight.toInt()} inch",
+                          : "${feetHeight!.round().toString()} feet ${inchHeight!.toInt()} inch",
               onPressed: () async {
-                double previousValue = heightValue;
+                double? previousValue = heightValue;
                 double initVal = 0;
-                double value = await showDialog(
+                double? value = await showDialog(
                     context: context,
                     builder: (context) => HeightSelector(
-                          height: heightValue == null ? initVal : heightValue,
-                          unitValue: unit,
+                          height: heightValue ?? initVal,
+                          unitValue: unit??0,
                         ));
-                double toSave = (value == null) ? previousValue : value;
-                await spHelper.saveDouble(spKey.height, toSave);
+                double? toSave = value ?? previousValue;
+                await spHelper.saveDouble(spKey.height, toSave??0);
                 setState(() {
                   showSaveButton = true;
+                  if(toSave == null){
                   heightValue = toSave;
-                  feetHeight = (toSave ~/ 30.48).toDouble();
-                  inchHeight = (toSave - (feetHeight * 30.48)) * 0.393701;
+                  feetHeight = (toSave! ~/ 30.48).toDouble();
+                  inchHeight = (toSave - (feetHeight! * 30.48)) * 0.393701;
                   if (inchHeight == 12) {
                     inchHeight = 0;
-                    feetHeight = feetHeight++;
+                    feetHeight = feetHeight! + 1;
                   }
-                });
+                }});
               },
-              icon: AntDesign.barchart,
+              icon: FontAwesomeIcons.chartBar,
               iconColor: iconColor[4],
             ),
             CustomProfileTile(
               title: "Weight",
-              data:weightValue,
+              data: weightValue,
               subTitle: (weightValue == null)
                   ? "Enter your weight"
                   : (unit == 0)
-                      ? "${weightValue.toStringAsFixed(2)} Kg"
-                      : "${lbsWeight.round()} Lbs",
+                      ? "${weightValue!.toStringAsFixed(2)} Kg"
+                      : "${lbsWeight!.round()} Lbs",
               onPressed: () async {
-                double previousValue = weightValue;
-                double value = await showDialog(
+                double previousValue = weightValue??0;
+                double? value = await showDialog(
                     context: context,
                     builder: (context) => WeightSelector(
-                          weight: weightValue,
-                          weightIndex: unit,
+                          weight: weightValue??0,
+                          weightIndex: unit??0,
                         ));
                 DateTime selectedDate = DateTime.now();
-                double toSave = (value == null) ? previousValue : value;
+                double toSave = value ?? previousValue;
                 await spHelper.saveDouble(spKey.weight, toSave);
                 String key = DateFormat.yMd().format(selectedDate).toString();
                 WeightModel weightModel =
@@ -326,7 +318,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                   lbsWeight = toSave * 2.20462;
                 });
               },
-              icon: MaterialCommunityIcons.weight,
+              icon: FontAwesomeIcons.weight,
               iconColor: iconColor[5],
             ),
             SizedBox(
@@ -342,7 +334,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
 class NameSelector extends StatelessWidget {
   final String name;
 
-  NameSelector({this.name});
+  NameSelector({required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -372,13 +364,13 @@ class NameSelector extends StatelessWidget {
    TextButton(
             child: Text(
               "Cancel",
-              style: textTheme.button.copyWith(color: Colors.grey),
+              style: textTheme.button!.copyWith(color: Colors.grey),
             ),
             onPressed: () => Navigator.of(context).pop()),
         TextButton(
             child: Text(
               "Save",
-              style: textTheme.button.copyWith(color: contentColor),
+              style: textTheme.button!.copyWith(color: contentColor),
             ),
             onPressed: () => Navigator.of(context)
                 .pop(_nameInputController.text.toString())),
@@ -393,7 +385,11 @@ class RadioSelector extends StatefulWidget {
   final String radio2;
   final int value;
 
-  RadioSelector({this.title, this.radio1, this.radio2, this.value});
+  RadioSelector(
+      {required this.title,
+      required this.radio1,
+      required this.radio2,
+      required this.value});
 
   @override
   _RadioSelectorState createState() => _RadioSelectorState();
@@ -419,9 +415,9 @@ class _RadioSelectorState extends State<RadioSelector> {
         child: Column(
           children: [
             RadioListTile(
-              onChanged: (val) {
+              onChanged: (int? val) {
                 setState(() {
-                  radioValue = val;
+                  radioValue = val!;
                   print(val);
                 });
               },
@@ -430,9 +426,9 @@ class _RadioSelectorState extends State<RadioSelector> {
               title: Text(widget.radio1),
             ),
             RadioListTile(
-              onChanged: (val) {
+              onChanged: (int? val) {
                 setState(() {
-                  radioValue = val;
+                  radioValue = val??0;
                   print(val);
                 });
               },
@@ -449,14 +445,14 @@ class _RadioSelectorState extends State<RadioSelector> {
             Navigator.of(context).pop();
           },
           child: Text("Cancel",
-              style: textTheme.button.copyWith(color: Colors.grey)),
+              style: textTheme.button!.copyWith(color: Colors.grey)),
         ),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop(radioValue);
           },
           child: Text("Save",
-              style: textTheme.button.copyWith(color: Colors.blue.shade700)),
+              style: textTheme.button!.copyWith(color: Colors.blue.shade700)),
         ),
       ],
     );
@@ -472,12 +468,12 @@ class CustomProfileTile extends StatelessWidget {
   final  data;
 
   CustomProfileTile(
-      {@required this.title,
-      @required this.subTitle,
-      @required this.icon,
-      @required this.onPressed,
-      @required this.data,
-      @required this.iconColor});
+      {required this.title,
+      required this.subTitle,
+      required this.icon,
+      required this.onPressed,
+      required this.data,
+      required this.iconColor});
 
   @override
   Widget build(BuildContext context) {
@@ -493,13 +489,17 @@ class CustomProfileTile extends StatelessWidget {
         icon,
         color: iconColor,
       ),
-      onTap: onPressed,
+      onTap:()=> onPressed(),
       trailing: Text(
           subTitle.length > 20 ? '${subTitle.substring(0, 20)}...' : subTitle,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            color:data.toString() == "null"? Colors.grey:isDark ? Colors.white : Colors.black,
-            fontSize:data.toString() == "null"? 12:14,
+            color: data.toString() == "null"
+                ? Colors.grey
+                : isDark
+                    ? Colors.white
+                    : Colors.black,
+            fontSize: data.toString() == "null" ? 12 : 14,
           )),
       // trailing: constants.trailingIcon,
 

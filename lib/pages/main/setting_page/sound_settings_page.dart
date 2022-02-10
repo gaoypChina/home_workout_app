@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 
@@ -15,10 +15,10 @@ class _SoundSettingState extends State<SoundSetting> {
   SpHelper spHelper =new SpHelper();
   SpKey spKey =new SpKey();
   Constants constants = Constants();
-  bool mute;
-  bool voice;
-  bool coach;
-  bool effect;
+ late bool mute;
+  late bool voice;
+ late bool coach;
+ late bool effect;
   bool showSaveButton = false;
 
   @override
@@ -28,15 +28,10 @@ class _SoundSettingState extends State<SoundSetting> {
   }
 
   intiValue() async {
-    mute = await spHelper.loadBool(spKey.mute);
-    voice = await spHelper.loadBool(spKey.voice);
-    coach = await spHelper.loadBool(spKey.coach);
-    effect = await spHelper.loadBool(spKey.effect);
-
-    mute = mute == null ? false : mute;
-    voice = voice == null ? true : voice;
-    coach = coach == null ? true : coach;
-    effect = effect == null ? true : effect;
+    mute = await spHelper.loadBool(spKey.mute)?? false;
+    voice = await spHelper.loadBool(spKey.voice)??true;
+    coach = await spHelper.loadBool(spKey.coach)??true;
+    effect = await spHelper.loadBool(spKey.effect)??true;
     setState(() {});
   }
 
@@ -163,7 +158,7 @@ class _SoundSettingState extends State<SoundSetting> {
         shrinkWrap: true,
         children: [
           getSwitch(
-              "Mute", Icons.volume_up, mute, onMuteToggle, "Mute all Sound",colorList[0]),
+              "Mute", Icons.volume_mute, mute, onMuteToggle, "Mute all Sound",colorList[0]),
 
           getDivider(),
           getSwitch("Coach Assistant", Icons.record_voice_over, coach,
@@ -171,12 +166,12 @@ class _SoundSettingState extends State<SoundSetting> {
 
           getDivider(),
 
-          getSwitch("Voice Guid", MaterialCommunityIcons.speaker_wireless,
+          getSwitch("Voice Guid",  FontAwesomeIcons.volumeUp,
               voice, onVoiceToggle, "Voice Guid " + getSwitchValue(voice),colorList[2]),
 
           getDivider(),
 
-          getSwitch("Sound Effect", MaterialCommunityIcons.bell, effect,
+          getSwitch("Sound Effect", FontAwesomeIcons.bell, effect,
               onEffectToggle, "Sound Effect " + getSwitchValue(effect),colorList[3]),
 
           getDivider(),

@@ -52,7 +52,7 @@ class _WeightReportStaticsState extends State<WeightReportStatics> {
 
   @override
   Widget build(BuildContext context) {
-    getWeightDetail({String title, String value, Color color}) {
+    getWeightDetail({required String title, required String value, required Color color}) {
       return Padding(
 
         padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4),

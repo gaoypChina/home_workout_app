@@ -8,7 +8,7 @@ class InfoButton extends StatelessWidget {
   final Function onPress;
   final String tooltip;
 
-  InfoButton({this.icon, this.onPress, this.tooltip});
+  InfoButton({required this.icon, required this.onPress, required this.tooltip});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class InfoButton extends StatelessWidget {
         width: 35,
         child: FloatingActionButton(
           backgroundColor: Colors.blue,
-          onPressed: onPress,
+          onPressed:()=> onPress(),
           child: Icon(icon,color:Colors.white,size: 22,),
           tooltip: tooltip,
         ),

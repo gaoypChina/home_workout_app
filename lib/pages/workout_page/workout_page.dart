@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/mediaHelper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
@@ -26,14 +26,14 @@ class WorkoutPage extends StatefulWidget {
   final String tag;
   final int restTime;
   WorkoutPage({
-    @required this.workOutList,
-    @required this.title,
-    @required this.index,
-    @required this.rapList,
-    @required this.currTime,
-    @required this.tagValue,
-    @required this.tag,
-    @required this.restTime,
+    required this.workOutList,
+    required this.title,
+    required this.index,
+    required this.rapList,
+    required this.currTime,
+    required this.tagValue,
+    required this.tag,
+    required this.restTime,
   });
 
   @override
@@ -47,22 +47,22 @@ class _WorkoutPageState extends State<WorkoutPage>
   SpHelper spHelper = SpHelper();
   MediaHelper mediaHelper = MediaHelper();
   int screenTime = 30;
-  AnimationController controller;
-  DateTime currentTime;
+  late AnimationController controller;
+ late DateTime currentTime;
 
-  FlutterTts flutterTts;
+ late FlutterTts flutterTts;
 
   String get timerString {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = controller.duration! * controller.value;
     return '${duration.inSeconds}';
   }
 
   int get timerValue {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = controller.duration! * controller.value;
     return duration.inMilliseconds;
   }
 
-  Workout item;
+  late Workout item;
 
   introMessage() async {
     String audioPath = 'assets/sound/whistle-sound.mp3';
@@ -148,7 +148,7 @@ class _WorkoutPageState extends State<WorkoutPage>
     }
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: item.showTimer?item.duration+1:30+1),
+      duration: Duration(seconds: item.showTimer?item.duration!+1:30+1),
     );
 
     if (item.showTimer == true) {
@@ -231,7 +231,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                   },
                 ),
                 InfoButton(
-                  icon: FontAwesome5.question_circle,
+                  icon: FontAwesomeIcons.questionCircle,
                   tooltip: "Steps",
                   onPress: () async {
                     print(controller.status);
@@ -283,7 +283,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                   Text(
                     "${currIndex + 1} of ${widget.workOutList.length}",
                     style:
-                    textTheme.caption.copyWith(fontSize: 16, color: Colors.grey),
+                    textTheme.caption!.copyWith(fontSize: 16, color: Colors.grey),
                   ),
                   SizedBox(
                     height: 10,
@@ -298,7 +298,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                           item.title,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
-                          style: textTheme.headline1.copyWith(
+                          style: textTheme.headline1!.copyWith(
                               fontSize: item.title.length > 15 ? 25 : 30,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1.2,
@@ -319,11 +319,8 @@ class _WorkoutPageState extends State<WorkoutPage>
                   //  width: double.infinity,
                   child: AnimatedBuilder(
                       animation: controller,
-                      builder: (BuildContext context, Widget child) {
-                        // if (timerValue <= 4000 && timerValue > 3950){
-                        //   mediaHelper
-                        //       .playSoundOnce("assets/sound/countdown.wav");
-                        // }
+                      builder: (BuildContext context, Widget? child) {
+
 
                         if (timerValue <= 3000 &&
                             timerValue > 2950) {
@@ -365,7 +362,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                 },
                 child: Text(
                   "Done",
-              style: textTheme.button.copyWith(
+              style: textTheme.button!.copyWith(
                   fontSize: 20,
                   letterSpacing: 2,
                   fontWeight: FontWeight.w500,
@@ -400,7 +397,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                             ),
                             Text(
                               "Pause",
-                              style: textTheme.button.copyWith(
+                              style: textTheme.button!.copyWith(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 18,
                                   color: Colors.grey),
@@ -419,7 +416,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                         child: Row(
                           children: [
                             Text("Skip",
-                                style: textTheme.button.copyWith(
+                                style: textTheme.button!.copyWith(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 18,
                                     color: Colors.grey)),

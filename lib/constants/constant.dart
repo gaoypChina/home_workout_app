@@ -5,19 +5,14 @@ import '../main.dart';
 
 class Constants{
 
-  // ToDo: update package name
   String packageName = "com.akashlilhare.homeworkout";
 
   String playStoreLink ="https://bit.ly/playstore-homeworkout";
-      //"https://play.google.com/store/apps/details?id=com.akashlilhare.homeworkout";
+  //"https://play.google.com/store/apps/details?id=com.akashlilhare.homeworkout";
 
   // ToDo: Update version number
 
-  String versionNumber ="1.4.0";
-
-
-
-
+  String versionNumber ="1.5.1";
 
   Color bottomNavigationColor =  Color(0xffF2F2F2);
   Color darkSecondary = Colors.blueGrey.shade800;
@@ -25,9 +20,9 @@ class Constants{
   Color primaryColor = Colors.blue.shade700;
 
 
-  TextStyle titleStyle =   textTheme.subtitle1.copyWith(fontWeight: FontWeight.w700);
+  TextStyle titleStyle =   textTheme.subtitle1!.copyWith(fontWeight: FontWeight.w700);
 
-  var textStyle =textTheme.subtitle1.copyWith(wordSpacing:4,fontWeight: FontWeight.w700,fontSize: 18,color: Color(0xffA9A9A9));
+  var textStyle =textTheme.subtitle1!.copyWith(wordSpacing:4,fontWeight: FontWeight.w700,fontSize: 18,color: Color(0xffA9A9A9));
   var listTileTitleStyle = TextStyle(fontWeight: FontWeight.w500,fontSize: 16);
   Icon trailingIcon = Icon(Icons.arrow_forward_ios,color: Colors.grey,size: 16,);
 
@@ -44,13 +39,13 @@ class Constants{
   }
 
   getToast(String message, bool isDark){
-   return Fluttertoast.showToast(
+    return Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
         backgroundColor:isDark? Colors.white:Colors.blue,
-    //    textColor: Colors.white,
+        //    textColor: Colors.white,
         fontSize: 16.0
     );
   }

@@ -16,7 +16,7 @@ import '../../../main.dart';
 class ExplorePage extends StatelessWidget {
   final Function onBack;
 
-  ExplorePage({this.onBack});
+  ExplorePage({required this.onBack});
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class ExplorePage extends StatelessWidget {
         if(snapshot.hasData){
            return  Text(
             "${snapshot.data}/28",
-            style: textTheme.bodyText1.copyWith(
+            style: textTheme.bodyText1!.copyWith(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.w500),
@@ -86,7 +86,7 @@ class ExplorePage extends StatelessWidget {
         }else{
           return  Text(
             "0/28",
-            style: textTheme.bodyText1.copyWith(
+            style: textTheme.bodyText1!.copyWith(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.w500),
@@ -149,7 +149,7 @@ class ExplorePage extends StatelessWidget {
 
                             Text(
                               item.title,
-                              style: textTheme.headline2.copyWith(
+                              style: textTheme.headline2!.copyWith(
                                   color: Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w700),
@@ -163,7 +163,7 @@ class ExplorePage extends StatelessWidget {
                                   children: [
                                     Text(
                                       "Duration",
-                                      style: textTheme.bodyText1.copyWith(
+                                      style: textTheme.bodyText1!.copyWith(
                                           color: Colors.white, fontSize: 15),
                                     ),
                                     SizedBox(
@@ -171,7 +171,7 @@ class ExplorePage extends StatelessWidget {
                                     ),
                                     Text(
                                       "28 Days",
-                                      style: textTheme.bodyText1.copyWith(
+                                      style: textTheme.bodyText1!.copyWith(
                                           color: Colors.white,
                                           fontSize: 18,
                                           fontWeight: FontWeight.w500),
@@ -182,7 +182,7 @@ class ExplorePage extends StatelessWidget {
                                   children: [
                                     Text(
                                       "Progress",
-                                      style: textTheme.bodyText1.copyWith(
+                                      style: textTheme.bodyText1!.copyWith(
                                           color: Colors.white, fontSize: 15),
                                     ),
                                     SizedBox(
@@ -212,14 +212,12 @@ class ExplorePage extends StatelessWidget {
     return WillPopScope(
       onWillPop: ()=>
        onBack(),
-
-
       child: Scaffold(
         backgroundColor:isDark?Colors.black: Colors.white,
         appBar: AppBar(
 
           automaticallyImplyLeading: false,
-          actions: getLeading(context),
+          actions: getLeading(context, color:isDark?Colors.black: Colors.white),
           backgroundColor:isDark?Colors.black: Colors.white,
           titleSpacing: 14,
           title: Text(
@@ -240,7 +238,7 @@ class ExplorePage extends StatelessWidget {
                     top: 4.0, bottom: 18, left: 8, right: 8),
                 child: Text(
                   "Generally you can expect to notice results after two weeks. Your posture will improve and you'll feel more muscle tone. It takes three to four months for the muscles to grow.",
-                  style: textTheme.subtitle1
+                  style: textTheme.subtitle1!
                       .copyWith(color: Colors.grey, fontSize: 14),
                 ),
               ),
@@ -263,13 +261,13 @@ class ChallengesModel {
   final List<List<Workout>> challengeList;
 
   ChallengesModel({
-    @required this.title,
-    @required this.tag,
-    @required this.imageUrl,
-    @required this.coverImage,
-    @required this.currentDay,
-    @required this.color1,
-    @required this.color2,
-    @required this.challengeList,
+    required this.title,
+    required this.tag,
+    required this.imageUrl,
+    required this.coverImage,
+    required this.currentDay,
+    required this.color1,
+    required this.color2,
+    required this.challengeList,
   });
 }

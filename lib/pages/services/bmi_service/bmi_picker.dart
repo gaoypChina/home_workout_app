@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../../main.dart';
 
 class BMIPicker extends StatefulWidget {
-  final double height;
-  final double weight;
+  final double? height;
+  final double? weight;
 
-  BMIPicker({@required this.height, @required this.weight});
+  BMIPicker({required this.height, required this.weight});
   @override
   _BMIPickerState createState() => _BMIPickerState();
 }
@@ -19,15 +19,15 @@ class _BMIPickerState extends State<BMIPicker> {
 
   int weightIndex = 0;
   int heightIndex = 0;
-  double height = 0;
-  double weight = 0;
+  double? height = 0;
+  double? weight = 0;
 
   @override
   Widget build(BuildContext context) {
 
 
-    String heightCm = widget.height == null ? 0.toString() : widget.height.toStringAsFixed(0);
-    String weightKg = widget.weight == null ? 0.toString() : widget.weight.toStringAsFixed(0);
+    String? heightCm = widget.height == null ? 0.toString() : widget.height!.toStringAsFixed(0);
+    String? weightKg = widget.weight == null ? 0.toString() : widget.weight!.toStringAsFixed(0);
 
     TextEditingController _cmController = TextEditingController(text: heightCm);
     TextEditingController _feetController = TextEditingController();
@@ -41,14 +41,14 @@ class _BMIPickerState extends State<BMIPicker> {
     onSubmit(bool isDark) {
       if (heightIndex == 0) {
         height = double.tryParse(_cmController.text);
-        if (height == null || height <=50) {
+        if (height == null || height! <=50) {
           constants.getToast("Please enter valid height value",isDark);
         }
       }
 
       if (heightIndex == 1) {
-        double feet = double.tryParse(_feetController.text);
-        double inch = double.tryParse(_inchController.text);
+        double? feet = double.tryParse(_feetController.text);
+        double? inch = double.tryParse(_inchController.text);
         if (feet == null || inch == null || feet <=2) {
           constants.getToast("Please enter valid height value",isDark);
         } else {
@@ -58,15 +58,15 @@ class _BMIPickerState extends State<BMIPicker> {
       }
 
       if (weightIndex == 0) {
-        weight = double.tryParse(_kgController.text);
-        if (weight == null|| weight <=20 ) {
+        weight = double.tryParse(_kgController.text)!;
+        if (weight == null|| weight! <=20 ) {
           constants.getToast("Please enter valid weight value",isDark);
         }
 
       }
 
       if (weightIndex == 1) {
-        double lbsWeight = double.tryParse(_lbsController.text);
+        double? lbsWeight = double.tryParse(_lbsController.text);
         if (lbsWeight == null || lbsWeight <=50) {
           constants.getToast("Please enter valid weight value",isDark);
         } else {
@@ -74,7 +74,7 @@ class _BMIPickerState extends State<BMIPicker> {
           print(weight);
         }
       }
-      if (height != null && weight != null && height >50 && weight >20){
+      if (height != null && weight != null && height! >50 && weight! >20){
         Navigator.pop(context, [height, weight]);
       }
 
@@ -96,7 +96,7 @@ class _BMIPickerState extends State<BMIPicker> {
                 padding: const EdgeInsets.only(left: 4.0),
                 child: Text(
                   "Height",
-                  style: textTheme.bodyText1
+                  style: textTheme.bodyText1!
                       .copyWith(fontWeight: FontWeight.w700, fontSize: 20),
                 ),
               ),
@@ -123,7 +123,7 @@ class _BMIPickerState extends State<BMIPicker> {
                     ],
                     onToggle: (index) {
                       setState(() {
-                        heightIndex = index;
+                        heightIndex = index??0;
                       });
                     },
                   ),
@@ -200,7 +200,7 @@ class _BMIPickerState extends State<BMIPicker> {
                 padding: const EdgeInsets.only(left: 4.0),
                 child: Text(
                   "Weight",
-                  style: textTheme.bodyText1
+                  style: textTheme.bodyText1!
                       .copyWith(fontWeight: FontWeight.w700, fontSize: 20),
                 ),
               ),
@@ -228,7 +228,7 @@ class _BMIPickerState extends State<BMIPicker> {
                     onToggle: (index) {
                       print(index);
                       setState(() {
-                        weightIndex = index;
+                        weightIndex = index!;
                       });
                     },
                   ),
@@ -278,13 +278,13 @@ class _BMIPickerState extends State<BMIPicker> {
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
                 "Cancel",
-                style: textTheme.button.copyWith(color: Colors.grey),
+                style: textTheme.button!.copyWith(color: Colors.grey),
               )),
           TextButton(
               onPressed: () => onSubmit(isDark),
               child: Text(
                 "Submit",
-                style: textTheme.button.copyWith(color: Colors.blue.shade700),
+                style: textTheme.button!.copyWith(color: Colors.blue.shade700),
               )),
         ],
       ),

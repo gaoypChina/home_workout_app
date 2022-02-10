@@ -8,10 +8,10 @@ class ExerciseCard {
   final String tag;
 
   ExerciseCard(
-      {@required this.workoutList,
-      @required this.imageUrl,
-      @required this.title,
-      @required this.tag});
+      {required this.workoutList,
+      required this.imageUrl,
+      required this.title,
+      required this.tag});
 }
 
 List<String> exerciseName = [

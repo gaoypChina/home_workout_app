@@ -16,13 +16,13 @@ class WorkoutCard extends StatelessWidget {
   final List<Color> color;
 
   WorkoutCard({
-    @required this.title,
-    @required this.workoutList,
-    @required this.tagValue,
-    @required this.imaUrl,
-    @required this.tag,
-    @required this.index,
-    @required this.color,
+    required this.title,
+    required this.workoutList,
+    required this.tagValue,
+    required this.imaUrl,
+    required this.tag,
+    required this.index,
+    required this.color,
   });
 
   @override
@@ -36,11 +36,11 @@ class WorkoutCard extends StatelessWidget {
           print("Last Date : ${snapShot.data}");
           if (snapShot.hasData) {
             String date =
-            DateFormat.MMMd().format(DateTime.parse(snapShot.data));
+            DateFormat.MMMd().format(DateTime.parse(snapShot.data.toString()));
             return Padding(
               padding: const EdgeInsets.only(top: 2.0, bottom: 8),
               child: Text("Last Time : $date",
-                  style: textTheme.subtitle1.copyWith(
+                  style: textTheme.subtitle1!.copyWith(
                       color: Colors.white,
                       fontSize: 14,
                       fontWeight: FontWeight.w500)),
@@ -128,7 +128,7 @@ class WorkoutCard extends StatelessWidget {
 
                 Text(
                   title,
-                  style: textTheme.bodyText1.copyWith(
+                  style: textTheme.bodyText1!.copyWith(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.w600),
@@ -141,7 +141,7 @@ class WorkoutCard extends StatelessWidget {
                       children: [
                         Text(
                           "Difficulty",
-                          style: textTheme.headline3
+                          style: textTheme.headline3!
                               .copyWith(color: Colors.white, fontSize: 16),
                         ),
                         SizedBox(
@@ -155,7 +155,7 @@ class WorkoutCard extends StatelessWidget {
                       children: [
                         Text(
                           "Duration",
-                          style: textTheme.headline3
+                          style: textTheme.headline3!
                               .copyWith(color: Colors.white, fontSize: 16),
                         ),
                         SizedBox(

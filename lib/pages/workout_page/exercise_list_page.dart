@@ -15,10 +15,10 @@ class ExerciseListScreen extends StatefulWidget {
   final int tagValue;
 
   ExerciseListScreen(
-      {@required this.workOutList,
-      @required this.tag,
-      @required this.tagValue,
-      @required this.title});
+      {required this.workOutList,
+      required this.tag,
+      required this.tagValue,
+      required this.title});
 
   @override
   _ExerciseListScreenState createState() => _ExerciseListScreenState();
@@ -32,9 +32,9 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   double countDownTime = 30;
   double restTime = 30;
   final TextEditingController searchQuery = new TextEditingController();
-  ScrollController _scrollController;
-  List<String> items;
-  TabController tabContoller;
+ late ScrollController _scrollController;
+  late List<String> items;
+ late TabController tabContoller;
   double padValue = 0;
   int pushUpIndex = 1;
   bool isLoading = true;
@@ -61,29 +61,29 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
       if (widget.workOutList[index].showTimer == false) {
         List<String> splitTitle = widget.title.split(" ");
         if (splitTitle.length == 5) {
-          int currDay = int.tryParse(splitTitle[4]);
+          int currDay = int.tryParse(splitTitle[4])!;
           print(currDay);
           if (currDay <= 10) {
-            time = widget.workOutList[index].beginnerRap;
+            time = widget.workOutList[index].beginnerRap??0;
           } else if (currDay <= 20) {
             time =
-                widget.workOutList[index].intermediateRap;
+                widget.workOutList[index].intermediateRap??0;
           } else
-            time = widget.workOutList[index].advanceRap;
+            time = widget.workOutList[index].advanceRap??0;
         } else {
           String tag = widget.tag.toLowerCase();
           if (tag == 'beginner') {
-            time = widget.workOutList[index].beginnerRap;
+            time = widget.workOutList[index].beginnerRap??0;
           } else if (tag ==
               "intermediate") {
             time =
-                widget.workOutList[index].intermediateRap;
+                widget.workOutList[index].intermediateRap??0;
           } else
-            time = widget.workOutList[index].advanceRap;
+            time = widget.workOutList[index].advanceRap??0;
         }
       } else if (widget.workOutList[index].showTimer ==
           true) {
-        time = widget.workOutList[index].duration;
+        time = widget.workOutList[index].duration??0;
       } else {
         time = 30;
       }
@@ -206,7 +206,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
               label: Text(
                 "Start Workout",
                 style: textTheme.button
-                    .copyWith(fontSize: 16, color: Colors.white),
+                    !.copyWith(fontSize: 16, color: Colors.white),
                 textAlign: TextAlign.end,
               ),
             ),
@@ -289,7 +289,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                                       Text(
                                         widget.workOutList.length.toString() +
                                       " Workouts",
-                                  style: textTheme.headline6.copyWith(
+                                  style: textTheme.headline2!.copyWith(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16),
                                 ),
@@ -305,7 +305,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                                       ),
                                       Text(
                                         getTime().toString() + " Minutes",
-                                        style: textTheme.headline6.copyWith(
+                                        style: textTheme.headline2!.copyWith(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 16),
                                       ),

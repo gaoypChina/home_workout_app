@@ -8,9 +8,9 @@ class WorkoutTimePicker extends StatefulWidget {
   final int maximumVal;
 
   WorkoutTimePicker(
-      {@required this.value,
-      @required this.maximumVal,
-      @required this.minimumVal});
+      {required this.value,
+      required this.maximumVal,
+      required this.minimumVal});
 
   @override
   _WorkoutTimePickerState createState() => _WorkoutTimePickerState();

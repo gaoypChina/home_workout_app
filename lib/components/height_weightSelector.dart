@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../main.dart';
@@ -9,7 +9,7 @@ class HeightSelector extends StatefulWidget {
   final double height;
   final int unitValue;
 
-  HeightSelector({@required this.height, @required this.unitValue});
+  HeightSelector({required this.height, required this.unitValue});
 
   @override
   _HeightSelectorState createState() => _HeightSelectorState();
@@ -32,7 +32,7 @@ class _HeightSelectorState extends State<HeightSelector> {
   }
 
   setController() {
-    heightIndex = widget.unitValue ?? 0;
+    heightIndex = widget.unitValue;
     String cmHeight = "0";
     String feetHeight = "0";
     String inchHeight = "0";
@@ -64,15 +64,15 @@ class _HeightSelectorState extends State<HeightSelector> {
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     onSubmit() {
       if (heightIndex == 0) {
-        height = double.tryParse(_cmController.text);
+        height = double.tryParse(_cmController.text)!;
         if (height == null || height <= 50) {
           constants.getToast("Please enter valid height value", isDark);
         }
       }
 
       if (heightIndex == 1) {
-        double feet = double.tryParse(_feetController.text);
-        double inch = double.tryParse(_inchController.text);
+        double? feet = double.tryParse(_feetController.text);
+        double? inch = double.tryParse(_inchController.text);
         if (feet == null || inch == null || feet <= 2) {
           constants.getToast("Please enter valid height value",isDark);
         } else {
@@ -93,7 +93,7 @@ class _HeightSelectorState extends State<HeightSelector> {
         contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 16),
         title: Text(
           "Height",
-          style: textTheme.bodyText1
+          style: textTheme.bodyText1!
               .copyWith(fontWeight: FontWeight.w700, fontSize: 20),
         ),
         content: Column(
@@ -119,7 +119,7 @@ class _HeightSelectorState extends State<HeightSelector> {
                   onToggle: (index) {
                     print(index);
                     setState(() {
-                      heightIndex = index;
+                      heightIndex = index!;
                     });
                   },
                 ),
@@ -198,13 +198,13 @@ class _HeightSelectorState extends State<HeightSelector> {
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
                 "Cancel",
-                style: textTheme.button.copyWith(color: Colors.grey),
+                style: textTheme.button!.copyWith(color: Colors.grey),
               )),
           TextButton(
               onPressed: () => onSubmit(),
               child: Text(
                 "Save",
-                style: textTheme.button.copyWith(color: Colors.blue.shade700),
+                style: textTheme.button!.copyWith(color: Colors.blue.shade700),
               )),
         ],
       ),
@@ -219,7 +219,7 @@ class WeightSelector extends StatefulWidget {
 
   final double weight;
 
-  WeightSelector({@required this.weight, @required this.weightIndex});
+  WeightSelector({required this.weight, required this.weightIndex});
 
   @override
   _WeightSelectorState createState() => _WeightSelectorState();
@@ -236,10 +236,10 @@ class _WeightSelectorState extends State<WeightSelector> {
 
   @override
   void initState() {
-    double initWeight = widget.weight??0;
+    double initWeight = widget.weight;
     _kgController = TextEditingController(text: initWeight.toStringAsFixed(0));
     _lbsController = TextEditingController(text: initWeight.toStringAsFixed(0));
-    weightIndex = widget.weightIndex??0;
+    weightIndex = widget.weightIndex;
     super.initState();
   }
   @override
@@ -250,14 +250,14 @@ class _WeightSelectorState extends State<WeightSelector> {
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     onSubmit(){
       if (weightIndex == 0) {
-        weight = double.tryParse(_kgController.text);
-        if (weight == null|| weight <=20 ) {
+        weight = double.tryParse(_kgController.text)!;
+        if ( weight <=20 ) {
           constants.getToast("Please enter valid weight value",isDark);
         }
       }
 
       if (weightIndex == 1) {
-        double lbsWeight = double.tryParse(_lbsController.text);
+        double? lbsWeight = double.tryParse(_lbsController.text);
         if (lbsWeight == null || lbsWeight <=50) {
           constants.getToast("Please enter valid weight value",isDark);
         } else {
@@ -280,7 +280,7 @@ class _WeightSelectorState extends State<WeightSelector> {
 
         title:  Text(
           "Weight",
-          style: textTheme.bodyText1
+          style: textTheme.bodyText1!
               .copyWith(fontWeight: FontWeight.w700, fontSize: 20),
         ),
         content: Column(
@@ -306,7 +306,7 @@ class _WeightSelectorState extends State<WeightSelector> {
                   onToggle: (index) {
                     print(index);
                     setState(() {
-                      weightIndex = index;
+                      weightIndex = index!;
                     });
                   },
                 ),
@@ -361,13 +361,13 @@ class _WeightSelectorState extends State<WeightSelector> {
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
                 "Cancel",
-                style: textTheme.button.copyWith(color: Colors.grey),
+                style: textTheme.button!.copyWith(color: Colors.grey),
               )),
           TextButton(
               onPressed: () => onSubmit(),
               child: Text(
                 "Save",
-                style: textTheme.button.copyWith(color: Colors.blue.shade700),
+                style: textTheme.button!.copyWith(color: Colors.blue.shade700),
               )),
         ],
 

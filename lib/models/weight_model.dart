@@ -1,8 +1,8 @@
 class WeightModel {
-  String _date;
-  double _weight;
-  int _id;
-  String _key;
+  late String _date;
+  late double _weight;
+  int? _id;
+  late String _key;
 
   WeightModel(this._date, this._weight, this._key);
 
@@ -15,7 +15,7 @@ class WeightModel {
 
   String get date => _date;
   double get weight => _weight;
-  int get id => _id;
+  int? get id => _id;
   String get key => _key;
 
   Map<String, dynamic> toMap() {

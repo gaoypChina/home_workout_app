@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/recent_workout_db_helper.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/pages/services/bmi_service/bmi_card.dart';
@@ -18,7 +18,7 @@ import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/models/recent_workout.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:wakelock/wakelock.dart';
 
 import '../../main.dart';
@@ -32,11 +32,11 @@ class ReportScreen extends StatefulWidget {
   final int tagValue;
 
   ReportScreen(
-      {@required this.title,
-      @required this.dateTime,
-    @required this.totalExercise,
-      @required this.tag,
-      @required this.tagValue});
+      {required this.title,
+      required this.dateTime,
+    required this.totalExercise,
+      required this.tag,
+      required this.tagValue});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -51,7 +51,7 @@ int activeTime = 0;
 final _screenshotController = ScreenshotController();
 
 class _MyAppState extends State<ReportScreen> {
-  ConfettiController _controllerTopCenter;
+ late ConfettiController _controllerTopCenter;
 
   saveWorkoutData() async {
     try {
@@ -74,7 +74,7 @@ class _MyAppState extends State<ReportScreen> {
         print(widget.title.toString() + " : tagValue");
         int currVal = await spHelper.loadInt(widget.tag) ?? 0;
       List<String> titleList =  widget.title.split(" ");
-      int currWorkoutDay =int.tryParse(titleList[4]);
+      int currWorkoutDay = int.tryParse(titleList[4])!;
       if(currWorkoutDay > currVal){
         spHelper.saveInt(widget.tag, currVal + 1);
 
@@ -84,14 +84,10 @@ class _MyAppState extends State<ReportScreen> {
         spHelper.saveString(widget.tag, widget.dateTime);
       }
 
-      int savedActiveTime = await spHelper.loadInt(spKey.time) == null
-          ? 0
-          : await spHelper.loadInt(spKey.time);
+      int savedActiveTime = await spHelper.loadInt(spKey.time)??0;
       int totalActiveTime = savedActiveTime + activeTime;
 
-      int savedExercise = await spHelper.loadInt(spKey.exercise) == null
-          ? 0
-          : await spHelper.loadInt(spKey.exercise);
+      int savedExercise = await spHelper.loadInt(spKey.exercise) ??0;
       int totalExercise = savedExercise + widget.totalExercise;
 
       spHelper.saveInt(spKey.time, totalActiveTime);
@@ -118,7 +114,7 @@ class _MyAppState extends State<ReportScreen> {
     );
     final dir = await pp.getExternalStorageDirectory();
     String currDate = DateTime.now().toString();
-    final myImagePath = dir.path + "/$currDate.png";
+    final myImagePath = dir!.path + "/$currDate.png";
     File imageFile = File(myImagePath);
     if (!await imageFile.exists()) {
       imageFile.create(recursive: true);
@@ -199,7 +195,7 @@ class _MyAppState extends State<ReportScreen> {
                 direction: Direction.horizontal,
                 child: Text(
                   "Congratulations !",
-                  style: textTheme.bodyText1.copyWith(
+                  style: textTheme.bodyText1!.copyWith(
                       color: Colors.black,
                       fontWeight: FontWeight.w700,
                       fontSize: 30),
@@ -216,7 +212,7 @@ class _MyAppState extends State<ReportScreen> {
                   direction: Direction.vertical,
                   child: Text(
                     "You did it!",
-                    style: textTheme.bodyText2
+                    style: textTheme.bodyText2!
                         .copyWith(color: Colors.black, fontSize: 22),
                   )),
             ],
@@ -313,7 +309,7 @@ class _MyAppState extends State<ReportScreen> {
                 children: [
                   Text(
                     subTitle,
-                    style: textTheme.bodyText2.copyWith(
+                    style: textTheme.bodyText2!.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                         fontSize: 16),
@@ -324,7 +320,7 @@ class _MyAppState extends State<ReportScreen> {
                   ),
                   Text(
                     title,
-                    style: textTheme.bodyText1.copyWith(
+                    style: textTheme.bodyText1!.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
                         fontSize: 18),
@@ -358,7 +354,7 @@ class _MyAppState extends State<ReportScreen> {
   }
 
   getRatingBar(double height) {
-    TextStyle bodyStyle = textTheme.bodyText2.copyWith(
+    TextStyle bodyStyle = textTheme.bodyText2!.copyWith(
       fontSize: 16,
       fontWeight: FontWeight.w500,
     );
@@ -439,7 +435,7 @@ class _MyAppState extends State<ReportScreen> {
               },
           child: Text(
             "Continue",
-            style: Theme.of(context).textTheme.button.merge(TextStyle(
+            style: Theme.of(context).textTheme.button!.merge(TextStyle(
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.w500)),

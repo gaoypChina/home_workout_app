@@ -13,10 +13,10 @@ class CheckListScreen extends StatefulWidget {
   final double progress;
 
   CheckListScreen(
-      {@required this.workOutList,
-        @required this.tag,
-        @required this.progress,
-        @required this.title});
+      {required this.workOutList,
+       required this.tag,
+       required this.progress,
+       required this.title});
 
   @override
   _ExerciseListScreenState createState() => _ExerciseListScreenState();
@@ -25,9 +25,9 @@ class CheckListScreen extends StatefulWidget {
 class _ExerciseListScreenState extends State<CheckListScreen>
     with TickerProviderStateMixin {
   List<int> rapList = [];
-  ScrollController _scrollController;
-  List<String> items;
-  TabController tabContoller;
+  late ScrollController _scrollController;
+  late List<String> items;
+  late TabController tabContoller;
   double padValue = 0;
   bool isLoading = true;
   bool lastStatus = true;
@@ -138,7 +138,7 @@ class _ExerciseListScreenState extends State<CheckListScreen>
               ),
               label: Text(
                 "Continue",
-                style: textTheme.button
+                style: textTheme.button!
                     .copyWith(fontSize: 16, color: Colors.white),
                 textAlign: TextAlign.end,
               ),
@@ -221,29 +221,29 @@ class _ExerciseListScreenState extends State<CheckListScreen>
                     if (widget.workOutList[index].showTimer == false) {
                       List<String> splitTitle = widget.title.split(" ");
                       if (splitTitle.length == 5) {
-                        int currDay = int.tryParse(splitTitle[4]);
-                        print(currDay);
+                        int currDay = int.tryParse(splitTitle[4])!;
+
                         if (currDay <= 10) {
-                          time = widget.workOutList[index].beginnerRap;
+                          time = widget.workOutList[index].beginnerRap!;
                         } else if (currDay <= 20) {
                           time =
-                              widget.workOutList[index].intermediateRap;
+                              widget.workOutList[index].intermediateRap!;
                         } else
-                          time = widget.workOutList[index].advanceRap;
+                          time = widget.workOutList[index].advanceRap!;
                       } else {
                         String tag = widget.tag.toLowerCase();
                         if (tag == 'beginner') {
-                          time = widget.workOutList[index].beginnerRap;
+                          time = widget.workOutList[index].beginnerRap!;
                         } else if (tag ==
                             "intermediate") {
                           time =
-                              widget.workOutList[index].intermediateRap;
+                              widget.workOutList[index].intermediateRap!;
                         } else
-                          time = widget.workOutList[index].advanceRap;
+                          time = widget.workOutList[index].advanceRap!;
                       }
                     } else if (widget.workOutList[index].showTimer ==
                         true) {
-                      time = widget.workOutList[index].duration;
+                      time = widget.workOutList[index].duration!;
                     } else {
                       time = 30;
                     }

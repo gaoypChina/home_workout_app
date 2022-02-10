@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/components/info_button.dart';
 import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
@@ -13,7 +13,7 @@ class WorkoutDetailDialog extends StatefulWidget {
   final int index;
 
   WorkoutDetailDialog(
-      {@required this.workoutList, this.index, @required this.rapCount});
+      {required this.workoutList, required this.index, required this.rapCount});
 
   @override
   _WorkoutDetailDialogState createState() => _WorkoutDetailDialogState();
@@ -126,7 +126,7 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                                         top: 10, left: 16, bottom: 4),
                                     child: Text(
                                       item[index].title,
-                                      style: textTheme.headline2.copyWith(
+                                      style: textTheme.headline2!.copyWith(
                                           fontWeight: FontWeight.w800,
                                           fontSize: 18),
                                     ),
@@ -147,7 +147,7 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                                         return Container(
                                             child: Text.rich(TextSpan(
                                                 text: "Step ${i + 1}: ",
-                                                style: textTheme.caption.copyWith(
+                                                style: textTheme.caption!.copyWith(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w700,
                                                     color: isDark
@@ -157,7 +157,7 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                                               TextSpan(
                                                   text: item[index].steps[i],
                                                   style:
-                                                      textTheme.caption.copyWith(
+                                                      textTheme.caption!.copyWith(
                                                     fontSize: 14,
                                                   )),
                                             ])));
@@ -198,7 +198,7 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                                 _onLeftAction(setState);
                               },
                               icon: Icon(
-                                FontAwesome.step_backward,
+                                FontAwesomeIcons.stepBackward,
                                 color: (currPage > 0)
                                     ? Colors.white
                                     : Colors.grey.shade300.withOpacity(.5),
@@ -210,14 +210,14 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                               children: [
                                 Text(
                                   "${currPage + 1} / ",
-                                  style: textTheme.bodyText1.copyWith(
+                                  style: textTheme.bodyText1!.copyWith(
                                       color: Colors.white,
                                       fontSize: 20,
                                       fontWeight: FontWeight.w700),
                                 ),
                                 Text(
                                   "${item.length}",
-                                  style: textTheme.bodyText1.copyWith(
+                                  style: textTheme.bodyText1!.copyWith(
                                       color: Colors.white, fontSize: 16),
                                 )
                               ],
@@ -228,7 +228,7 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                                 _onRightAction(setState);
                               },
                               icon: Icon(
-                                FontAwesome.step_forward,
+                                FontAwesomeIcons.stepForward,
                                 color: (currPage < item.length - 1)
                                     ? Colors.white
                                     : Colors.grey.shade300.withOpacity(.5),

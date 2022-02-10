@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/mediaHelper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
@@ -28,15 +28,15 @@ class RestScreen extends StatefulWidget {
   final int restTime;
 
   RestScreen(
-      {@required this.exerciseNumber,
-      @required this.totalNumberOfExercise,
-      @required this.workOutList,
-      @required this.rapList,
-      @required this.currTime,
-      @required this.title,
-      @required this.tag,
-      @required this.tagValue,
-      @required this.restTime});
+      {required this.exerciseNumber,
+      required this.totalNumberOfExercise,
+      required this.workOutList,
+      required this.rapList,
+      required this.currTime,
+      required this.title,
+      required this.tag,
+      required this.tagValue,
+      required this.restTime});
 
   @override
   _RestScreenState createState() => _RestScreenState();
@@ -45,23 +45,23 @@ class RestScreen extends StatefulWidget {
 class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
   /// variables
 
-  AnimationController controller;
+ late AnimationController controller;
   MediaHelper mediaHelper =MediaHelper();
-  bool coachVoice;
-  bool soundEffect;
+ late bool coachVoice;
+ late bool soundEffect;
   SpHelper spHelper = SpHelper();
   SpKey spKey = SpKey();
 
-  int index;
-  Workout item;
+ late int index;
+late  Workout item;
 
   int get secValue {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = controller.duration! * controller.value;
     return duration.inSeconds;
   }
 
   int get timerValue {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = controller.duration! * controller.value;
     return duration.inMilliseconds;
   }
 
@@ -206,7 +206,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                         ),
                         Text(
                           "Rest",
-                          style: textTheme.bodyText1.copyWith(
+                          style: textTheme.bodyText1!.copyWith(
                               fontSize: 40,
                               fontWeight: FontWeight.w700,
                               color: Colors.white),
@@ -219,9 +219,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                           //  width: double.infinity,
                           child: AnimatedBuilder(
                               animation: controller,
-                              builder: (BuildContext context, Widget child) {
-                                //playLocalAsset();
-
+                              builder: (BuildContext context, Widget? child) {
                                 if (timerValue <= 6000 && timerValue > 5950) {
                                    mediaHelper.speak('Ready to go');
                                 }
@@ -258,7 +256,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                               },
                               child: Text(
                                 "Pause",
-                                style: textTheme.button.copyWith(
+                                style: textTheme.button!.copyWith(
                                     fontSize: 16,
                                     letterSpacing: 1,
                                     fontWeight: FontWeight.w500,
@@ -282,7 +280,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                               onPressed: () => _onComplete(),
                               child: Text(
                                 "Skip",
-                                style: textTheme.button.copyWith(
+                                style: textTheme.button!.copyWith(
                                     fontSize: 16,
                                     letterSpacing: 1,
                                     fontWeight: FontWeight.w500,
@@ -366,7 +364,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                             },
                           ),
                           InfoButton(
-                            icon: FontAwesome5.question_circle,
+                            icon: FontAwesomeIcons.questionCircle,
                             tooltip: "Steps",
                             onPress: () async {
                               print(controller.status);
@@ -408,14 +406,14 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                               ),
                               Text(
                                 "Next $index / ${widget.workOutList.length}",
-                                style: textTheme.bodyText2.copyWith(
+                                style: textTheme.bodyText2!.copyWith(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700,
                                     color: Colors.grey),
                               ),
                               Text(
                                 item.title,
-                                style: textTheme.bodyText2.copyWith(
+                                style: textTheme.bodyText2!.copyWith(
                                     fontSize: item.title.length > 15 ? 20 : 28,
                                     fontWeight: FontWeight.w700),
                               ),
@@ -423,7 +421,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                                 item.showTimer == true
                                     ? "${widget.rapList[index]} sec"
                                     : "X ${widget.rapList[index]}",
-                                style: textTheme.bodyText2.copyWith(
+                                style: textTheme.bodyText2!.copyWith(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.grey),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -49,7 +49,7 @@ class _WeekGoalSettingsState extends State<WeekGoalSettings> {
    int trainingDayRes = await spHelper.loadInt(spKey.trainingDay)?? 3;
    setState(() {
      trainingDay =trainingDayRes==1?trainingDayRes.toString() + " Day": trainingDayRes.toString() + " Days";
-     firstDay = loadDay(firstDayRes);
+     firstDay = loadDay(firstDayRes)!;
      trainingDayVal = firstDayRes;
      activeDayVal = trainingDayRes;
    });
@@ -101,7 +101,7 @@ super.initState();
                         SizedBox(height: 20),
                         Text(
                           "Set your weekly goal",
-                          style: textTheme.bodyText1.copyWith(
+                          style: textTheme.bodyText1!.copyWith(
                               fontWeight: FontWeight.w600,
                               fontSize: 20,
                               color: Colors.white),
@@ -109,14 +109,14 @@ super.initState();
                         SizedBox(height: 20),
                         Text(
                           "We recommend training at least 3 days weekly for a better result",
-                          style: textTheme.bodyText1.copyWith(
+                          style: textTheme.bodyText1!.copyWith(
                               fontWeight: FontWeight.w400,
                               fontSize: 16,
                               color: Colors.grey),
                         ),
                         SizedBox(height: 30),
                         Text("Weekly training days",
-                            style: textTheme.bodyText1.copyWith(
+                            style: textTheme.bodyText1!.copyWith(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
                                 color: Colors.white)),
@@ -160,7 +160,7 @@ super.initState();
                           height: 30,
                         ),
                         Text("First day of week",
-                            style: textTheme.bodyText1.copyWith(
+                            style: textTheme.bodyText1!.copyWith(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
                                 color: Colors.white)),
@@ -169,7 +169,7 @@ super.initState();
                         ),
                         InkWell(
                           onTap: () async {
-                            int res = await showDialog(
+                            int? res = await showDialog(
                                 context: context,
                                 builder: (context) {
                                   return DaySelector(
@@ -230,7 +230,7 @@ super.initState();
                               label: Text(
                                 "SAVE",
                                 style: textTheme.button
-                                    .copyWith(fontSize: 16, color: Colors.white),
+                                    !.copyWith(fontSize: 16, color: Colors.white),
                                 textAlign: TextAlign.end,
                               ),
                             ),
@@ -255,7 +255,7 @@ class DaySelector extends StatefulWidget {
   final String title;
   final int initialValue;
 
-  DaySelector({this.dayList, this.title, this.initialValue});
+  DaySelector({required this.dayList, required this.title, required this.initialValue});
 
   @override
   _QuitPageState createState() => _QuitPageState();
@@ -311,6 +311,6 @@ class DayIndex {
   int index;
   String value;
 
-  DayIndex({this.index, this.value});
+  DayIndex({required this.index, required this.value});
 }
 

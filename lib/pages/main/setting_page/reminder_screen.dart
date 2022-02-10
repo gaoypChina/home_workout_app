@@ -1,18 +1,20 @@
+import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/notification_helper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 
 class ReminderTab extends StatefulWidget {
   static const routeName = "reminder-screen";
+
   @override
   _ReminderTabState createState() => _ReminderTabState();
 }
 
 class _ReminderTabState extends State<ReminderTab> {
-  FlutterLocalNotificationsPlugin fltrNotification;
+  late FlutterLocalNotificationsPlugin fltrNotification;
   Constants constants = Constants();
   SpHelper spHelper = SpHelper();
   SpKey spKey = SpKey();
@@ -33,8 +35,8 @@ class _ReminderTabState extends State<ReminderTab> {
   ];
 
   _loadReminderTime() async {
-    int hour = await spHelper.loadInt(spKey.hourTime);
-    int minute = await spHelper.loadInt(spKey.minuteTime);
+    int? hour = await spHelper.loadInt(spKey.hourTime);
+    int? minute = await spHelper.loadInt(spKey.minuteTime);
     if (hour != null && minute != null) {
       return reminderTime = TimeOfDay(hour: hour, minute: minute);
     }
@@ -44,9 +46,7 @@ class _ReminderTabState extends State<ReminderTab> {
   _loadIsActiveDay() async {
     for (int i = 0; i < selector.length; i++) {
       bool active;
-      await spHelper
-          .loadIsActive(selector[i].day)
-          .then((value) => active = value);
+      active = await spHelper.loadIsActive(selector[i].day) ?? false;
       selector[i].activate = active;
       activeDayList.insert(i, active);
     }
@@ -86,7 +86,7 @@ class _ReminderTabState extends State<ReminderTab> {
         title: "Home Workout Reminder",
         id: 1,
         body:
-            "Complete your daily workout task and move a step closer to your goal",
+        "Complete your daily workout task and move a step closer to your goal",
         time: Time(reminderTime.hour, reminderTime.minute));
   }
 
@@ -96,16 +96,16 @@ class _ReminderTabState extends State<ReminderTab> {
     super.initState();
   }
 
- String getTimeString(int hour, int minute){
-  String  getParsedTime(int time){
+  String getTimeString(int hour, int minute){
+    String  getParsedTime(int time){
       if(time.toString().length <=1)
         return "0$time";
       return time.toString();
     }
 
-   String getAbsolute(int time) {
-    if(time == 0)
-      return getParsedTime(12);
+    String getAbsolute(int time) {
+      if(time == 0)
+        return getParsedTime(12);
       if (time > 12)
         return getParsedTime(time - 12);
       return getParsedTime(time);
@@ -118,37 +118,33 @@ class _ReminderTabState extends State<ReminderTab> {
     }
 
     return getAbsolute(hour) + " : " + getParsedTime(minute) + getPrefix(hour);
-
-
   }
 
   _pickTime() async {
-    TimeOfDay t =
-        await showTimePicker(context: context, initialTime: reminderTime);
-    if (t != null) {
-      print(t.minute);
-      print(t.hour);
-      spHelper.saveInt(spKey.hourTime, t.hour);
-      spHelper.saveInt(spKey.minuteTime, t.minute);
-      setState(() {
-        reminderTime = t;
-      });
-    }
-    return;
+    Navigator.of(context).push(showPicker(
+      context: context,
+      iosStylePicker: true,
+      value: reminderTime,
+      onChange: (TimeOfDay t) {
+        spHelper.saveInt(spKey.hourTime, t.hour);
+        spHelper.saveInt(spKey.minuteTime, t.minute);
+        setState(() {
+          reminderTime = t;
+        });
+      },
+    ));
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     var titleStyle = TextStyle(
-        fontWeight: FontWeight.w500, fontSize: 17,);
+      fontWeight: FontWeight.w500, fontSize: 17,);
     var timeStyle = TextStyle(
-        fontWeight: FontWeight.w400, fontSize: 14,);
+      fontWeight: FontWeight.w400, fontSize: 14,);
 
-   Color tileColor = isDark?Colors.black:Colors.white;
+    Color tileColor = isDark?Colors.black:Colors.white;
 
     getDivider(){
       return  Container(
@@ -162,7 +158,7 @@ class _ReminderTabState extends State<ReminderTab> {
         backgroundColor: isDark ? Colors.black : Colors.white,
         elevation: 0,
         actions: [
-         showSaveButton? Padding(
+          showSaveButton? Padding(
             padding: const EdgeInsets.only(right: 10.0),
             child: TextButton(
               onPressed: () {
@@ -179,7 +175,7 @@ class _ReminderTabState extends State<ReminderTab> {
           style: TextStyle(color: isDark ? Colors.white : Colors.black),
         ),
       ),
-     backgroundColor:isDark?Colors.black: Colors.white,
+      backgroundColor:isDark?Colors.black: Colors.white,
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
@@ -240,7 +236,6 @@ class _ReminderTabState extends State<ReminderTab> {
                       setState(() {
                         showSaveButton = true;
                       });
-
                     },
                   ),
                   getDivider(),
@@ -255,7 +250,7 @@ class _ReminderTabState extends State<ReminderTab> {
                       Icons.edit,
                     ),
                     onTap: () async {
-                      List<ReminderDay> list = await showDialog(
+                      List<ReminderDay>? list = await showDialog(
                           context: context,
                           builder: (context) => DaySelector(selector));
                       setState(() {
@@ -277,9 +272,9 @@ class _ReminderTabState extends State<ReminderTab> {
                           itemBuilder: (context, index) {
                             return (selector[index].activate == true)
                                 ? Text(
-                                    '${selector[index].day.substring(0, 3)}    ',
-                                    style: timeStyle,
-                                  )
+                              '${selector[index].day.substring(0, 3)}    ',
+                              style: timeStyle,
+                            )
                                 : Text('');
                           }),
                     ),
@@ -313,86 +308,89 @@ class _DaySelectorState extends State<DaySelector> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(24))),
       backgroundColor: Colors.white,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 18,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 28.0),
-            child: Text(
-              "Select Repeat Day",
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.all(Radius.circular(24))),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 18,
             ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Container(
-            child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: widget.selector.length,
-                itemBuilder: (context, index) {
-                  return CheckboxListTile(
-                    title: Text(widget.selector[index].day),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 28),
-                    activeColor: Colors.blue,
-                    value: widget.selector[index].activate,
-                    onChanged: (value) {
-                      setState(() {
-                        widget.selector[index].activate = value;
-                      });
+            Padding(
+              padding: const EdgeInsets.only(left: 28.0),
+              child: Text(
+                "Select Repeat Day",
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Container(
+              child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: widget.selector.length,
+                  itemBuilder: (context, index) {
+                    return CheckboxListTile(
+                      title: Text(widget.selector[index].day),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 28),
+                      activeColor: Colors.blue,
+                      value: widget.selector[index].activate,
+                      onChanged: (value) {
+                        setState(() {
+                          widget.selector[index].activate = value!;
+                        });
+                      },
+                    );
+                  }),
+            ),
+            Row(
+              children: [
+                Spacer(
+                  flex: 6,
+                ),
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
                     },
-                  );
-                }),
-          ),
-          Row(
-            children: [
-              Spacer(
-                flex: 6,
-              ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("Cancel")),
-              SizedBox(
-                width: 18,
-              ),
-              TextButton(
-                  onPressed: () {
-                    widget.selector.forEach((element) {
-                      if (element.activate == true) {
-                        selectedDayList.add(element);
-                      }
-                    });
-                    Navigator.pop(context, selectedDayList);
-                  },
-                  child: Text("Save")),
-              Spacer(
-                flex: 1,
-              )
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-        ],
+                    child: Text("Cancel")),
+                SizedBox(
+                  width: 18,
+                ),
+                TextButton(
+                    onPressed: () {
+                      widget.selector.forEach((element) {
+                        if (element.activate == true) {
+                          selectedDayList.add(element);
+                        }
+                      });
+                      Navigator.pop(context, selectedDayList);
+                    },
+                    child: Text("Save")),
+                Spacer(
+                  flex: 1,
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
 class ReminderDay {
-  @required
   String day;
-  @required
   bool activate;
-  @required
   int dayValue;
 
-  ReminderDay({this.day, this.activate, this.dayValue});
+  ReminderDay(
+      {required this.day, required this.activate, required this.dayValue});
 }

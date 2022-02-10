@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:full_workout/components/height_weightSelector.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/helper/weight_db_helper.dart';
@@ -18,7 +18,7 @@ class WeightChart extends StatefulWidget {
   final bool showButton;
  final String title;
 
- WeightChart({@required this.onAdd, @required this.title,@required this.showButton});
+ WeightChart({required this.onAdd, required this.title,required this.showButton});
 
 
   @override
@@ -38,13 +38,13 @@ class _WeightChartState extends State<WeightChart> {
   double minWeight = 0;
   int tillDate = 30;
   DateTime initMonth = DateTime.now();
-  double weightValue;
-  double lbsWeight;
+  late double? weightValue;
+  late double? lbsWeight;
 
   loadWeightData() async {
     double value = await spHelper.loadDouble(spKey.weight) ?? 0;
     weightValue = value;
-    lbsWeight = value * 2.20462 == null ? 0 : value * 2.20462;
+    lbsWeight =  value * 2.20462;
   }
 
   _loadRangeData(DateTime startDate, DateTime endDate) async {
@@ -55,10 +55,10 @@ class _WeightChartState extends State<WeightChart> {
     dataList = [];
     List<dynamic> minWeightDB = await weightDb.getMinWeight();
 
-    minWeight = minWeightDB.length == 0 ? 0 : minWeightDB[0]["MIN(weight)"];
+    minWeight =(minWeightDB[0]["MIN(weight)"] == null|| minWeightDB.length == 0 )? 0 : minWeightDB[0]["MIN(weight)"];
 
     List<dynamic> maxWeightDB = await weightDb.getMaxWeight();
-    maxWeight = maxWeightDB.length == 0 ? 0 : maxWeightDB[0]["MAX(weight)"];
+    maxWeight = (maxWeightDB[0]["MAX(weight)"] == null|| maxWeightDB.length == 0 )? 0 : maxWeightDB[0]["MAX(weight)"];
     DateTime parsedStartDate =
         DateTime(startDate.year, startDate.month, startDate.day + 1);
     DateTime parsedEndDate =
@@ -82,23 +82,25 @@ class _WeightChartState extends State<WeightChart> {
       tillDate = 30;
     }
     initMonth = currMonth;
-    print(tillDate.toString() + ": till date");
   }
 
   addWeight(bool isDark) async {
-    double previousValue = weightValue;
-    double value = await showDialog(
+    double? previousValue = weightValue;
+    double? value = await showDialog(
         context: context,
         builder: (context) =>
-            WeightSelector(weight: weightValue, weightIndex: 0));
+            WeightSelector(weight: weightValue??0, weightIndex: 0));
     DateTime selectedDate = DateTime.now();
-    double toSave = (value == null) ? previousValue : value;
-    await spHelper.saveDouble(spKey.weight, toSave);
+    if(value == null){
+      return;
+    }
+
+    await spHelper.saveDouble(spKey.weight, value);
     String key = DateFormat.yMd().format(selectedDate).toString();
     WeightModel weightModel =
-        WeightModel(selectedDate.toIso8601String(), toSave, key);
-    if (weightModel.weight == null) return;
-    await weightDb.addWeight(toSave, weightModel, key);
+        WeightModel(selectedDate.toIso8601String(), value, key);
+
+    await weightDb.addWeight(value, weightModel, key);
     widget.onAdd();
 
     constants.getToast("Weight Added Successfully", isDark);
@@ -148,7 +150,7 @@ class _WeightChartState extends State<WeightChart> {
                        padding:  EdgeInsets.only(left:18.0,bottom:widget.showButton?0: 18),
                        child: Text(
                         widget.title,
-                        style: textTheme.subtitle1
+                        style: textTheme.subtitle1!
                             .copyWith(fontWeight: FontWeight.w700),
                     ),
                      ),
@@ -176,7 +178,7 @@ class _WeightChartState extends State<WeightChart> {
                                 backgroundColor: Colors.blue,
                                 primary: Colors.white),
                             onPressed: () async {
-                              DateTime selectedMonth = await showMonthPicker(
+                              DateTime? selectedMonth = await showMonthPicker(
                                   lastDate: DateTime.now(),
                                   context: context,
                                   initialDate: initMonth);
@@ -277,7 +279,6 @@ class _WeightChartState extends State<WeightChart> {
          getTextStyles: (value, _) => TextStyle(
              color: color, fontWeight: FontWeight.w600, fontSize: 12),
           getTitles: (value) {
-            print("value" + value.toString());
             if (value.toInt() % 2 == 0) {
               return (value.toInt()).toString();
             }
@@ -306,7 +307,7 @@ class _WeightChartState extends State<WeightChart> {
       minX: 1,
       maxX: 30,
       minY: weightDataList.length == 0 ? 0:minWeight -20,
-      maxY: weightDataList.length == 0 ? 50 :maxWeight +20,
+      maxY: weightDataList.length == 0 ? 50 :maxWeight ==0 ? 90 :maxWeight +20,
 
       lineBarsData: [
         LineChartBarData(

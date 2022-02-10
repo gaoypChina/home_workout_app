@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/recent_workout_db_helper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
@@ -113,7 +112,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
             children: [
               Text(
                 "Week Goal ",
-                style: textTheme.bodyText1.copyWith(
+                style: textTheme.bodyText1!.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: textColor),
@@ -126,7 +125,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
                         child: Row(
                           children: [
                             Icon(
-                              Feather.edit,
+                              Icons.edit,
                               size: 18,
                               color: textColor,
                             ),

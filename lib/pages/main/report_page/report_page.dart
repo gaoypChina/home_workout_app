@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/pages/main/weight_report_page/weight_report.dart';
@@ -11,7 +11,7 @@ import '../../rate_my_app/rate_my_app.dart';
 class ReportPage extends StatelessWidget {
   static const routeName = "report-page";
   final Function onBack;
-  ReportPage({this.onBack});
+  ReportPage({required this.onBack});
 
 
   @override
@@ -59,7 +59,7 @@ class ReportPage extends StatelessWidget {
                         Text(
                           "History",
                           style: textTheme.subtitle1
-                              .copyWith(fontWeight: FontWeight.w700),
+                              !.copyWith(fontWeight: FontWeight.w700),
                         ),
                         Spacer(),
                         TextButton(

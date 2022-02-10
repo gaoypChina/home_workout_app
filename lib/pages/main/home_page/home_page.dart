@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:full_workout/models/main_page_item.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/widgets/achivement.dart';
@@ -12,33 +13,50 @@ import 'leading_widget.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Future<bool> _onBackPressed() {
-      return showDialog(
-              context: context,
-              builder: (context) => new AlertDialog(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(16))),
-                    title: new Text('Are you sure?'),
-                    content: new Text('Do you want to exit Home Workout App'),
-                    actions: <Widget>[
-                      new TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                        child: Text("YES"),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(false),
-                        child: Text("NO"),
-                      ),
-                    ],
-                  )) ??
+    Future<bool> _onBackPressed() async{
+      bool value = await showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              elevation: 2,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(18))
+              ),
+              title: Text("Do you really want to exit the app?",style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),),
+              actions: [
+                ElevatedButton(
+
+                  child: const Text("Yes"),
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      primary: Theme.of(context).primaryColor.withOpacity(.5)),
+
+                  onPressed: () => Navigator.pop(context, true),
+                ),
+
+                ElevatedButton(
+                  child: const Text("No"),
+                  style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+                  onPressed: () => Navigator.pop(context, false),
+                ),
+              ],
+            );
+          }) ??
           false;
+
+      if (value) {
+        SystemNavigator.pop();
+        return true;
+      } else {
+        return false;
+      }
     }
 
     getTitle(String title) {
       return Container(
         padding: EdgeInsets.only(left: 18, right: 8, top: 12, bottom: 6),
         child: Text(title,
-            style: textTheme.bodyText1.copyWith(
+            style: textTheme.bodyText1!.copyWith(
               fontWeight: FontWeight.w600,
               fontSize: 18,
             )),
@@ -66,7 +84,7 @@ class HomePage extends StatelessWidget {
                 return [
                   SliverAppBar(
 
-                    actions: [...getLeading(context,color:isDark? Colors.white:Colors.black)],
+                    actions: [...getLeading(context,color:isDark? Colors.white70:Colors.black87)],
                     backgroundColor: isDark?Colors.black:Colors.white,
                     automaticallyImplyLeading: false,
                     expandedHeight:height * .16,

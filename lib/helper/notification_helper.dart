@@ -15,7 +15,6 @@ class NotificationHelper {
         android: AndroidNotificationDetails(
       'channel id',
       'channel name',
-      'channel description',
       importance: Importance.max,
     ));
   }
@@ -27,7 +26,7 @@ class NotificationHelper {
     final settings = InitializationSettings(android: android, iOS: ios);
     await _notification.initialize(settings,
         onSelectNotification: (payload) async {
-      onNotifications.add(payload);
+      onNotifications.add(payload??"");
         });
 
     if(initScheduled){
@@ -37,12 +36,12 @@ class NotificationHelper {
     }
   }
 
-  static void showNotification({int id =0, String title, String body, String payload })async{
+  static void showNotification({int id =0, required String title, required String body, required String payload })async{
     _notification.show(id, title, body,await _notificationDetails(),payload: payload);
   }
 
   static void showScheduledNotification(
-      {int id = 0, String title, String body, String payload, Time time, List<int> days}) async {
+      {int id = 0, required String title, required String body, required String payload, required Time time, required List<int> days}) async {
     print(time.hour.toString() + " : hour time");
     print(days.toString() + " : minute time");
 
@@ -70,7 +69,7 @@ class NotificationHelper {
         : scheduledDate;
   }
 
-  static tz.TZDateTime _scheduleWeekly(Time time, {List<int> days}) {
+  static tz.TZDateTime _scheduleWeekly(Time time, {required List<int> days}) {
     tz.TZDateTime scheduledDate = _scheduleDaily(time);
     while (!days.contains(scheduledDate.weekday)) {
       scheduledDate = scheduledDate.add(Duration(days: 1));

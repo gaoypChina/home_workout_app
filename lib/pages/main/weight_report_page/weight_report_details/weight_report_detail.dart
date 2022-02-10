@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:full_workout/pages/main/weight_report_page/weight_report_details/tab_1.dart';
 import 'package:full_workout/pages/main/weight_report_page/weight_report_details/tab_2.dart';
@@ -10,7 +10,7 @@ class WeightReportDetail extends StatelessWidget {
 
 
 
-  WeightReportDetail({ this.onBack, @required this.index});
+  WeightReportDetail({ required this.onBack, required this.index});
 
   static const routeName = "weight-report-detail";
 
@@ -22,14 +22,11 @@ class WeightReportDetail extends StatelessWidget {
       onWillPop: () => onBack(),
       child: DefaultTabController(
         initialIndex: index,
-
         length: 2,
         child: Scaffold(
-
           body: NestedScrollView(
             headerSliverBuilder: (context, _) => [
               SliverAppBar(
-                brightness: Brightness.dark,
                 pinned: true,
                 floating: true,
                 snap: true,
@@ -55,8 +52,7 @@ class WeightReportDetail extends StatelessWidget {
                     ),
                     Tab(
                       icon: Icon(
-                        SimpleLineIcons
-                            .graph,
+                        FontAwesomeIcons.chartLine,
                       ),
                       child: Text(
                         "STATICS",

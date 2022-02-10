@@ -31,7 +31,7 @@ class ScreenShort extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       fontSize: 22))
             ])),
-          actions: getLeading(context),
+          actions: getLeading(context, color: Colors.black),
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(

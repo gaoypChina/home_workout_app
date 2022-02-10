@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/recent_workout_db_helper.dart';
 import 'package:full_workout/models/recent_workout.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 
 class WorkoutDetailReport extends StatefulWidget {
   static const routeName = "workout-detail-report";
@@ -14,8 +14,8 @@ class WorkoutDetailReport extends StatefulWidget {
 class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
   RecentDatabaseHelper workoutDb = RecentDatabaseHelper();
   List<RecentWorkout> recentWorkout = [];
-  double weightValue;
-  double lbsWeight;
+  late double weightValue;
+  late double lbsWeight;
   Constants constants = Constants();
   Map<DateTime, List<dynamic>> events = {};
   List<List<RecentWorkout>> workoutModelList = [];
@@ -47,7 +47,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
     for (int i = 0; i < dateSet.length; i++) {
       currDateWorkout = [];
       workoutTitle = [];
-      RecentWorkout model;
+      late RecentWorkout model;
       for (int j = 0; j < recentWorkout.length; j++) {
         DateTime date = DateTime.parse(recentWorkout[j].date);
         String formatedDay = DateFormat.yMMMd().format(date);
@@ -210,7 +210,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                           ),
                           Spacer(),
                           Icon(
-                            SimpleLineIcons.fire,
+                            FontAwesomeIcons.fire,
                             color: Colors.grey,
                             size: 18,
                           ),
@@ -257,7 +257,9 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
         itemCount: workoutModelList.length,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
+
           List<RecentWorkout> events = workoutModelList[index];
+          print(events);
           return ListView.builder(
               shrinkWrap: true,
               itemCount: events.length,
@@ -307,9 +309,13 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                                       event.year, event.month, event.day)] ==
                                   null)
                                 return [];
-                              else
-                                return events[DateTime(
-                                    event.year, event.month, event.day)];
+                              else{
+                               List temp = events[
+                                DateTime(
+                                    event.year, event.month, event.day)]!;
+                               return temp ;
+                              }
+
                             },
                             startingDayOfWeek: StartingDayOfWeek.monday,
                             daysOfWeekStyle: DaysOfWeekStyle(

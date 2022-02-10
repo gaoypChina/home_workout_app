@@ -29,7 +29,7 @@ class FAQPage extends StatelessWidget {
                               initiallyExpanded: true,
                               title: Text(
                                 faq.question,
-                                style: textTheme.bodyText1.copyWith(
+                                style: textTheme.bodyText1!.copyWith(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 15),
                               ),
@@ -73,7 +73,7 @@ class FAQ {
   String question;
   String answer;
 
-  FAQ({this.question, this.answer});
+  FAQ({required this.question, required this.answer});
 }
 
 List<FAQ> faqList = [

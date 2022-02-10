@@ -9,7 +9,7 @@ class DetailPage extends StatelessWidget {
   final Workout workout;
   final int rapCount;
 
-  DetailPage({@required this.workout, @required this.rapCount});
+  DetailPage({required this.workout, required this.rapCount});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class DetailPage extends StatelessWidget {
               ),
               label: Text(
                 "Video",
-                style: textTheme.button.copyWith(
+                style: textTheme.button!.copyWith(
                   color: Colors.grey.shade800,
                 ),
               ),
@@ -92,7 +92,7 @@ class DetailPage extends StatelessWidget {
          child:   Row(
            mainAxisAlignment: MainAxisAlignment.start,
            children: [
-             Text("${workout.title} $rap",style: textTheme.bodyText1.copyWith(fontSize: 22,fontWeight: FontWeight.w600,color: Colors.white),textAlign: TextAlign.center,),
+             Text("${workout.title} $rap",style: textTheme.bodyText1!.copyWith(fontSize: 22,fontWeight: FontWeight.w600,color: Colors.white),textAlign: TextAlign.center,),
            ],
          ),
 
@@ -105,14 +105,14 @@ class DetailPage extends StatelessWidget {
                ListTile(
                  minVerticalPadding: 0,
                   leading: Text("Step ${index + 1}: ",
-                      style: textTheme.bodyText2.copyWith(
+                      style: textTheme.bodyText2!.copyWith(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w700)),
                   title: Text(
                     "${workout.steps[index]}",
                     style: textTheme.bodyText2
-                        .copyWith(color: Colors.white, fontSize: 14),
+                        !.copyWith(color: Colors.white, fontSize: 14),
                   ));
         },itemCount: workout.steps.length,));
     }

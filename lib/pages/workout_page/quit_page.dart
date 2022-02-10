@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/constants/constant.dart';
 
 import '../../main.dart';
 import '../main_page.dart';
@@ -16,10 +16,10 @@ class _QuitPageState extends State<QuitPage> {
   @override
   Widget build(BuildContext context) {
     getButton(
-        {Function onPress,
-          String title,
-          Color textColor,
-          Color backgroundColor}) {
+        {required Function onPress,
+          required String title,
+          required Color textColor,
+          required Color backgroundColor}) {
       return Container(
         height: 50,
         width: double.infinity,
@@ -44,7 +44,7 @@ class _QuitPageState extends State<QuitPage> {
               style: Theme
                   .of(context)
                   .textTheme
-                  .button
+                  .button!
                   .merge(TextStyle(
                   color:textColor, fontSize: title == "Quit" ? 18 : 14)),
             )),
@@ -67,7 +67,7 @@ class _QuitPageState extends State<QuitPage> {
           child: FloatingActionButton.extended(
             backgroundColor: Colors.blue.shade700,
             onPressed: () async {
-              return Navigator.pushReplacement(
+               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (context) => MainPage(index: 0,)));
@@ -79,7 +79,7 @@ class _QuitPageState extends State<QuitPage> {
             ),
             label: Text(
               "Quit Workout",
-              style: textTheme.button.copyWith(
+              style: textTheme.button!.copyWith(
                   fontSize: 16, color: Colors.white),
               textAlign: TextAlign.end,
             ),
@@ -124,7 +124,7 @@ class _QuitPageState extends State<QuitPage> {
 
                   Text(
                     "Quit",
-                    style: textTheme.headline1.copyWith(
+                    style: textTheme.headline1!.copyWith(
                         color: isDark?Colors.white:Colors.black,
                         fontSize: 40,
                         letterSpacing: 1.5,
@@ -138,7 +138,7 @@ class _QuitPageState extends State<QuitPage> {
                     child: Text(
                       "Please tell us what stopped you, so we can make your next workout perfect",
                       textAlign: TextAlign.center,
-                      style: textTheme.bodyText1.copyWith(
+                      style: textTheme.bodyText1!.copyWith(
                           color:Colors.grey,
                           fontSize: 14,
                           fontWeight: FontWeight.w500),

@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.akash.full_workout">
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="Home Workout"
         android:icon="@mipmap/ic_launcher">
@@ -12,6 +13,7 @@
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize">
             android:showWhenLocked="true"
             android:turnScreenOn="true">
@@ -48,12 +50,12 @@
     <queries>
         <!-- If your app opens https URLs -->
         <intent>
-            <action android:name="android.intent.action.VIEW" />
+            <action android:name="android.intent.action.VIEW" android:exported="true" />
             <data android:scheme="https" />
         </intent>
         <!-- If your app emails -->
         <intent>
-            <action android:name="android.intent.action.SEND" />
+            <action android:name="android.intent.action.SEND" android:exported="true" />
             <data android:mimeType="*/*" />
         </intent>
     </queries>

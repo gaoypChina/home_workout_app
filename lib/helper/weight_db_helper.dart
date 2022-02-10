@@ -16,14 +16,14 @@ class WeightDatabaseHelper {
   final String columnWeight = "weight";
   final String columnKey = "key";
 
-  static Database _db;
+   Database? _db;
 
   Future<Database> get db async {
     if (_db != null) {
-      return _db;
+      return _db!;
     }
     _db = await initDb();
-    return _db;
+    return _db!;
   }
 
   WeightDatabaseHelper.internal();
@@ -92,6 +92,8 @@ class WeightDatabaseHelper {
     var dbClient = await db;
     var result =
         await dbClient.rawQuery("SELECT MIN($columnWeight) FROM $tableName");
+    print("min len");
+    print(result);
     return result.toList();
   }
 
@@ -102,14 +104,14 @@ class WeightDatabaseHelper {
     return result.toList();
   }
 
-  Future<int> getCount(String key) async {
+  Future<int?> getCount(String key) async {
     var dbClient = await db;
-    var result = Sqflite.firstIntValue(await dbClient.rawQuery(
+    int? result = Sqflite.firstIntValue(await dbClient.rawQuery(
         "SELECT COUNT(*) FROM $tableName WHERE $columnKey =?", [key]));
     return result;
   }
 
-  Future<WeightModel> getWeight(int id) async {
+  Future<WeightModel?> getWeight(int id) async {
     var dbClient = await db;
     var result = await dbClient
         .rawQuery("SELECT * FROM $tableName WHERE $columnId = $id");
@@ -124,10 +126,10 @@ class WeightDatabaseHelper {
   }
 
 
-  Future<int> addWeight(double value, WeightModel weightModel, String key) async {
+  Future<int?> addWeight(double value, WeightModel weightModel, String key) async {
     var dbClient = await db;
-    int count =1;
-    await getCount(key).then((value) => count = value);
+    int? count;
+    count = await getCount(key)??0;
     if(count > 0){
      return await dbClient.rawUpdate('''
       UPDATE $tableName SET $columnWeight = ? 

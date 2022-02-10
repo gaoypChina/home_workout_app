@@ -12,7 +12,7 @@ import 'package:full_workout/pages/main_page.dart';
 class WeightReport extends StatelessWidget {
   final bool isShow;
   final String title;
-  WeightReport({@required this.isShow, @required this.title});
+  WeightReport({required this.isShow, required this.title});
 
   @override
   Widget build(BuildContext context) {

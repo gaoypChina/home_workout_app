@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/pages/main/explore_page/explore_page.dart';
 import 'package:full_workout/pages/workout_page/exercise_list_page.dart';
@@ -17,7 +17,7 @@ import '../../../main.dart';
 class WorkoutTimeLine extends StatefulWidget {
   final ChallengesModel challengesModel;
 
-  WorkoutTimeLine({this.challengesModel});
+  WorkoutTimeLine({required this.challengesModel});
 
   @override
   _WorkoutTimeLineState createState() => _WorkoutTimeLineState();
@@ -25,8 +25,8 @@ class WorkoutTimeLine extends StatefulWidget {
 
 class _WorkoutTimeLineState extends State<WorkoutTimeLine>
     with SingleTickerProviderStateMixin {
-  ScrollController _scrollController;
-  TabController tabController;
+ late ScrollController _scrollController;
+ late TabController tabController;
   SpHelper _spHelper = SpHelper();
   Constants constants = Constants();
   bool _isLoading = true;
@@ -151,7 +151,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
         return Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            Icon(Entypo.trophy,size: 50,color:(presentDay+7)<=currentDay?Colors.amber:isDark? Colors.grey.shade500:Colors.grey.shade400.withOpacity(.7),
+            Icon(FontAwesomeIcons.trophy,size: 50,color:(presentDay+7)<=currentDay?Colors.amber:isDark? Colors.grey.shade500:Colors.grey.shade400.withOpacity(.7),
             ),
             Center(child: Padding(
               padding: const EdgeInsets.only(bottom: 3.0),
@@ -295,7 +295,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                             title[index],
                             style: Theme.of(context)
                                 .textTheme
-                                .subtitle2
+                                .subtitle2!
                                 .merge(TextStyle(fontSize: 16)),
                           ),Spacer(),
                           Text(getSubTitle(index),style: TextStyle(color: Colors.blue.shade700,fontWeight: FontWeight.w700),),
@@ -446,7 +446,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                       label: Text(
                         "Start Workout" ,
                         style: textTheme.button
-                            .copyWith(fontSize: 16, color: Colors.white),
+                            !.copyWith(fontSize: 16, color: Colors.white),
                         textAlign: TextAlign.end,
                       ),
                     ),

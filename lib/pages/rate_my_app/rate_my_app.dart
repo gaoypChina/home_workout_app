@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 
 class RateAppInitWidget extends StatefulWidget {
   final Widget Function(RateMyApp) builder;
 
-  RateAppInitWidget({@required this.builder});
+  RateAppInitWidget({required this.builder});
 
   @override
   _RateAppInitWidgetState createState() => _RateAppInitWidgetState();
@@ -49,7 +49,6 @@ class _RateAppInitWidgetState extends State<RateAppInitWidget> {
                         TextButton(
                             onPressed: () async {
                               String toSend = "$comment\n\n";
-
                               final Email email = Email(
                                 body: toSend,
                                 subject: 'App Review',
@@ -111,7 +110,7 @@ class _RateAppInitWidgetState extends State<RateAppInitWidget> {
               message: "Do you like this app? Please leave a rating",
               starRatingOptions: StarRatingOptions(initialRating: 0,),
               actionsBuilder: (context, stars) {
-                return actionsBuilder(context, stars, isDark);
+                return actionsBuilder(context, stars??0, isDark);
               });
         }
       },

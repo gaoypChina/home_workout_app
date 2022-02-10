@@ -1,7 +1,6 @@
-import 'package:audiofileplayer/audiofileplayer.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/mediaHelper.dart';
 import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
@@ -28,13 +27,13 @@ class InstructionScreen extends StatefulWidget {
   final int restTime;
 
   InstructionScreen({
-    @required this.workOutList,
-    @required this.title,
-    @required this.rapList,
-    @required this.tagValue,
-    @required this.tag,
-    @required this.countDownTime,
-    @required this.restTime
+    required this.workOutList,
+    required this.title,
+    required this.rapList,
+    required this.tagValue,
+    required this.tag,
+    required this.countDownTime,
+    required this.restTime
   });
 
   @override
@@ -46,15 +45,15 @@ class _InstructionScreenState extends State<InstructionScreen>
 
 
   MediaHelper mediaHelper = MediaHelper();
-  AnimationController controller;
+ late AnimationController controller;
 
   String get timerString {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = controller.duration! * controller.value;
     return '${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
   int get timerValue {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = controller.duration! * controller.value;
     return duration.inMilliseconds;
   }
 
@@ -223,7 +222,7 @@ class _InstructionScreenState extends State<InstructionScreen>
                     },
                   ),
                   InfoButton(
-                    icon: FontAwesome5.question_circle,
+                    icon: FontAwesomeIcons.questionCircle,
                     tooltip: "Steps",
                     onPress: () async {
                       print(controller.status);
@@ -260,14 +259,14 @@ class _InstructionScreenState extends State<InstructionScreen>
             Text(
               "Ready to go!",
               style: textTheme.bodyText1
-                  .copyWith(fontSize: 30, fontWeight: FontWeight.bold),
+                  !.copyWith(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 20,
             ),
             Text(
               item.title,
-              style: textTheme.bodyText2.copyWith(
+              style: textTheme.bodyText2!.copyWith(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
                   color: Colors.grey),
@@ -291,7 +290,7 @@ class _InstructionScreenState extends State<InstructionScreen>
                           Positioned.fill(
                             child: AnimatedBuilder(
                               animation: controller,
-                              builder: (BuildContext context, Widget child) {
+                              builder: (BuildContext context, Widget? child) {
                                 return CustomPaint(
                                     painter: TimerPainter(
                                   animation: controller,
@@ -310,13 +309,8 @@ class _InstructionScreenState extends State<InstructionScreen>
                                 AnimatedBuilder(
                                     animation: controller,
                                     builder:
-                                        (BuildContext context, Widget child) {
-                                      //playLocalAsset();
+                                        (BuildContext context, Widget? child) {
 
-                                      // if (timerValue <= 3500 && timerValue > 3450){
-                                      //   mediaHelper
-                                      //       .playSoundOnce("assets/sound/countdown.wav");
-                                      // }
 
                                       if (timerValue <= 3000 &&
                                           timerValue > 2950) {
@@ -333,7 +327,7 @@ class _InstructionScreenState extends State<InstructionScreen>
 
                                       return Text(
                                         '${timerValue ~/ 1000}',
-                                        style: textTheme.headline1.copyWith(
+                                        style: textTheme.headline1!.copyWith(
                                             fontSize: 40,
                                             fontWeight: FontWeight.w700),
                                       );

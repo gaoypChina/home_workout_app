@@ -1,24 +1,24 @@
 //TODO: includ android intet plus plugings
 import 'package:android_intent_plus/android_intent.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:full_workout/constants/constants.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/mediaHelper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
+import 'package:full_workout/pages/main/setting_page/faq_page.dart';
 import 'package:full_workout/pages/main/setting_page/privacy_policy.dart';
 import 'package:full_workout/pages/main/setting_page/profile_settings_screen.dart';
 import 'package:full_workout/pages/main/setting_page/reminder_screen.dart';
 import 'package:full_workout/pages/main/setting_page/reset_progress.dart';
 import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
 import 'package:full_workout/pages/main/setting_page/training_settings_screen.dart';
-import 'package:full_workout/pages/main/setting_page/faq_page.dart';
 import 'package:full_workout/pages/main/setting_page/voice_option_setting.dart';
-import 'package:rate_my_app/rate_my_app.dart';
-import 'package:share/share.dart';
-import 'package:device_info/device_info.dart';
+import 'package:full_workout/pages/subscription_page.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../main.dart';
 import '../../rate_my_app/rate_dialog_page.dart';
@@ -27,7 +27,7 @@ import '../../rate_my_app/rate_my_app.dart';
 class SettingPage extends StatefulWidget {
   final Function onBack;
 
-  SettingPage({this.onBack});
+  SettingPage({required this.onBack});
 
   static const routeName = "setting-page";
 
@@ -94,15 +94,31 @@ class _SettingPageState extends State<SettingPage> {
     List<Color> colorList = [
       Colors.red,
       Colors.green,
-      Colors.pink,
-      Colors.amberAccent,
       Colors.blue,
+      Colors.amberAccent,
+      Colors.pink,
       Colors.green,
       Colors.amberAccent,
       Colors.red,
       Colors.purpleAccent,
       Colors.green,
     ];
+
+    buildPrimeButton() {
+      return Padding(
+        padding: const EdgeInsets.only(left: 18.0,right: 18, bottom: 18,top: 8),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (builder)=> SubscriptionPage()));
+          },
+          style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(18))),
+              minimumSize: Size(double.infinity, 45)),
+          child: Text("Get Premium now"),
+        ),
+      );
+    }
 
     getTitle(String text) {
       return Container(
@@ -111,11 +127,11 @@ class _SettingPageState extends State<SettingPage> {
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
           child: Text(
             text,
-            style: textTheme.subtitle1.copyWith(
+            style: textTheme.subtitle1!.copyWith(
                 wordSpacing: 4,
                 fontWeight: FontWeight.w700,
                 fontSize: 18,
-                color:isDark? Colors.blue:Colors.blue.shade700),
+                color: isDark ? Colors.blue : Colors.blue.shade700),
           ));
     }
 
@@ -130,9 +146,7 @@ class _SettingPageState extends State<SettingPage> {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return [
                 SliverAppBar(
-                  systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarColor: Colors.white,
-                  ),
+
                   backgroundColor: isDark ? Colors.black : Colors.white,
                   automaticallyImplyLeading: false,
                   expandedHeight: 150.0,
@@ -166,7 +180,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   CustomTile(
                     title: "Training Rest",
-                    icon: AntDesign.rest,
+                    icon: FontAwesomeIcons.mugHot,
                     color: colorList[2],
                     onPress: () async {
                       int num = await showDialog(
@@ -227,13 +241,14 @@ class _SettingPageState extends State<SettingPage> {
                           ),
                   ),
                   CustomTile(
-                    color: colorList[2],
+                    color: colorList[4],
                     title: "Sound",
                     trailing: trailingIcon,
                     icon: Icons.volume_up,
                     onPress: () =>
                         Navigator.of(context).pushNamed(SoundSetting.routeName),
                   ),
+                //  buildPrimeButton(),
                   getTitle("General Settings"),
                   isLoading
                       ? CustomTile(
@@ -287,15 +302,15 @@ class _SettingPageState extends State<SettingPage> {
                       icon: Icons.volume_down,
                       trailing: trailingIcon,
                       onPress: () async {
-                        bool value = await MediaHelper()
-                            .speak("Did you Hear the test voice")
-                            .then((value) => showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return ConfirmVoiceDialog();
-                                }));
+                        MediaHelper()
+                            .speak("Did you Hear the test voice");
+                       bool? value = await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return ConfirmVoiceDialog();
+                            });
                         if (value == false) {
-                      await   showDialog(
+                          await showDialog(
                               context: context,
                               builder: (context) {
                                 return OpenDeviceTTSSettingsDialog();
@@ -321,15 +336,13 @@ class _SettingPageState extends State<SettingPage> {
                     title: "Share With Friends",
                     trailing: trailingIcon,
                     onPress: () async {
-                      final RenderBox box = context.findRenderObject();
+                      final RenderObject? box = context.findRenderObject();
                       final String text =
                           "I\'m training with Home Workout and am getting great results. \n\nHere are workouts for every muscle group to achieve your fitness goal. no equipment is needed. \n\nDownload the app : ${constants.playStoreLink}";
 
-                      await Share.share(text,
-                          subject:
-                              "",
-                          sharePositionOrigin:
-                              box.globalToLocal(Offset.zero) & box.size);
+                      await Share.share(
+                        text,
+                      );
                     },
                   ),
                   RateAppInitWidget(
@@ -365,7 +378,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   CustomTile(
                     color: colorList[8],
-                    icon: FontAwesome.question_circle,
+                    icon: FontAwesomeIcons.questionCircle,
                     title: "FAQ",
                     onPress: () =>
                         Navigator.of(context).pushNamed(FAQPage.routeName),
@@ -407,11 +420,11 @@ class CustomTile extends StatelessWidget {
   final Color color;
 
   CustomTile(
-      {@required this.title,
-      @required this.icon,
-      @required this.trailing,
-      @required this.onPress,
-      @required this.color});
+      {required this.title,
+      required this.icon,
+      required this.trailing,
+      required this.onPress,
+      required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -423,7 +436,7 @@ class CustomTile extends StatelessWidget {
           icon,
           color: color.withOpacity(.9),
         ),
-        onTap: onPress,
+        onTap: () => onPress(),
         title: Text(
           title,
           style: constants.listTileTitleStyle,

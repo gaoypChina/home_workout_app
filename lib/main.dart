@@ -17,13 +17,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 import 'bloc_provider/connectivity_state_bloc.dart';
+import 'constants/app_theme.dart';
 
 Future<void> main() async {
   tz.initializeTimeZones();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.dark,
-    statusBarBrightness: Brightness.dark,
+
   ));
 
   runApp(MyApp());
@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
               appBarTheme: AppBarTheme(color: Colors.black),
               backgroundColor: Colors.black,
               primarySwatch: Colors.blue,
-              textTheme: textTheme,
+              textTheme: darkTextTheme,
               radioTheme: RadioThemeData(
                 fillColor: MaterialStateProperty.all(Colors.blue.shade700),
               ),
@@ -85,12 +85,11 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
               primaryColor: Colors.blue.shade700,
 
-              textTheme: textTheme,
+              textTheme: lightTextTheme,
               appBarTheme: AppBarTheme(
                   backgroundColor: Colors.blue.shade700,
                   elevation: 0,
                   iconTheme: IconThemeData(color: Colors.black),
-                  titleTextStyle: TextStyle(color: Colors.black),
                   actionsIconTheme: IconThemeData(color: Colors.black)),
               radioTheme: RadioThemeData(
                 fillColor: MaterialStateProperty.all(Colors.blue.shade700),
@@ -112,13 +111,13 @@ class _MyAppState extends State<MyApp> {
             '/': (ctx) => MainPage(index: 0,),
             ReminderTab.routeName: (ctx) => ReminderTab(),
             FAQPage.routeName: (ctx) => FAQPage(),
-            ReportPage.routeName: (ctx) => ReportPage(),
+         //   ReportPage.routeName: (ctx) => ReportPage(),
             MainPage.routeName: (ctx) => MainPage(index: 0,),
             ProfileSettingScreen.routeName: (ctx) => ProfileSettingScreen(),
             SoundSetting.routeName: (ctx) => SoundSetting(),
-            WeightReportDetail.routeName: (ctx) => WeightReportDetail(index: 0,),
+          //  WeightReportDetail.routeName: (ctx) => WeightReportDetail(index: 0,),
             WorkoutDetailReport.routeName: (ctx) => WorkoutDetailReport(),
-            SettingPage.routeName: (ctx) => SettingPage()
+          //  SettingPage.routeName: (ctx) => SettingPage()
 
           },
           debugShowCheckedModeBanner: false,
@@ -131,15 +130,10 @@ class _MyAppState extends State<MyApp> {
 
 var textTheme = TextTheme(
   headline1: GoogleFonts.montserrat(
-      fontSize: 97, fontWeight: FontWeight.w300, letterSpacing: -1.5),
+      fontSize: 28, fontWeight: FontWeight.w300, letterSpacing: -1.5),
   headline2: GoogleFonts.montserrat(
-      fontSize: 61, fontWeight: FontWeight.w300, letterSpacing: -0.5),
-  headline3: GoogleFonts.montserrat(fontSize: 48, fontWeight: FontWeight.w400),
-  headline4: GoogleFonts.montserrat(
-      fontSize: 34, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-  headline5: GoogleFonts.montserrat(fontSize: 24, fontWeight: FontWeight.w400),
-  headline6: GoogleFonts.montserrat(
-      fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.15),
+      fontSize: 24, fontWeight: FontWeight.w300, letterSpacing: -0.5),
+  headline3: GoogleFonts.montserrat(fontSize: 20, fontWeight: FontWeight.w400),
   subtitle1: GoogleFonts.montserrat(
       fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.15),
   subtitle2: GoogleFonts.montserrat(
