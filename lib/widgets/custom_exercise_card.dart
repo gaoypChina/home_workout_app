@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/main.dart';
 import 'package:full_workout/pages/workout_page/detail_dialog_page.dart';
 
 
@@ -77,10 +76,10 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                       padding: const EdgeInsets.only(left: 12.0),
                       child: Row(
                         children: <Widget>[
-                          if(!item.showTimer)   Text("X ", style: textTheme.subtitle1,),
-                            Text(widget.time.toString(),style: textTheme.subtitle1,),
+                          if(!item.showTimer)   Text("X ", style: Theme.of(context).textTheme.subtitle1,),
+                            Text(widget.time.toString(),style: Theme.of(context).textTheme.subtitle1,),
 
-                     if(item.showTimer)     Text(" Sec", style: textTheme.subtitle1,)
+                     if(item.showTimer)     Text(" Sec", style: Theme.of(context).textTheme.subtitle1,)
                         ],
                       ),
                     ),

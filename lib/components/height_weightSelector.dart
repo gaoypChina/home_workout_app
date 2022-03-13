@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:full_workout/constants/constant.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-import '../main.dart';
 
 class HeightSelector extends StatefulWidget {
   final double height;
@@ -61,12 +60,11 @@ class _HeightSelectorState extends State<HeightSelector> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     onSubmit() {
       if (heightIndex == 0) {
         height = double.tryParse(_cmController.text)!;
         if (height == null || height <= 50) {
-          constants.getToast("Please enter valid height value", isDark);
+          constants.getToast("Please enter valid height value");
         }
       }
 
@@ -74,7 +72,7 @@ class _HeightSelectorState extends State<HeightSelector> {
         double? feet = double.tryParse(_feetController.text);
         double? inch = double.tryParse(_inchController.text);
         if (feet == null || inch == null || feet <= 2) {
-          constants.getToast("Please enter valid height value",isDark);
+          constants.getToast("Please enter valid height value");
         } else {
           double inchHeight = (feet * 12) + inch;
           height = inchHeight * 2.54;
@@ -93,8 +91,7 @@ class _HeightSelectorState extends State<HeightSelector> {
         contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 16),
         title: Text(
           "Height",
-          style: textTheme.bodyText1!
-              .copyWith(fontWeight: FontWeight.w700, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -198,13 +195,13 @@ class _HeightSelectorState extends State<HeightSelector> {
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
                 "Cancel",
-                style: textTheme.button!.copyWith(color: Colors.grey),
+                style: TextStyle(color: Colors.grey),
               )),
           TextButton(
               onPressed: () => onSubmit(),
               child: Text(
                 "Save",
-                style: textTheme.button!.copyWith(color: Colors.blue.shade700),
+                style: TextStyle(color: Colors.blue.shade700),
               )),
         ],
       ),
@@ -244,22 +241,18 @@ class _WeightSelectorState extends State<WeightSelector> {
   }
   @override
   Widget build(BuildContext context) {
-
-
-
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     onSubmit(){
       if (weightIndex == 0) {
         weight = double.tryParse(_kgController.text)!;
         if ( weight <=20 ) {
-          constants.getToast("Please enter valid weight value",isDark);
+          constants.getToast("Please enter valid weight value");
         }
       }
 
       if (weightIndex == 1) {
         double? lbsWeight = double.tryParse(_lbsController.text);
         if (lbsWeight == null || lbsWeight <=50) {
-          constants.getToast("Please enter valid weight value",isDark);
+          constants.getToast("Please enter valid weight value");
         } else {
           weight = lbsWeight / 2.205;
           print(weight);
@@ -280,8 +273,7 @@ class _WeightSelectorState extends State<WeightSelector> {
 
         title:  Text(
           "Weight",
-          style: textTheme.bodyText1!
-              .copyWith(fontWeight: FontWeight.w700, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -361,13 +353,13 @@ class _WeightSelectorState extends State<WeightSelector> {
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
                 "Cancel",
-                style: textTheme.button!.copyWith(color: Colors.grey),
+                style: TextStyle(color: Colors.grey),
               )),
           TextButton(
               onPressed: () => onSubmit(),
               child: Text(
                 "Save",
-                style: textTheme.button!.copyWith(color: Colors.blue.shade700),
+                style: TextStyle(color: Colors.blue.shade700),
               )),
         ],
 

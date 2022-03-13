@@ -4,7 +4,7 @@ class RecentWorkout {
  late int _activeTime;
  late double _calories;
  late int _stars;
- late int _id;
+  int? _id;
  late  int _exercise;
 
   RecentWorkout(
@@ -32,7 +32,7 @@ class RecentWorkout {
 
   int get activeTime => _activeTime;
 
-  int get id => _id;
+  int? get id => _id;
 
   int get stars => _stars;
 

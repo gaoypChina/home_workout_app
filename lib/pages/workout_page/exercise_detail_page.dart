@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:full_workout/components/info_button.dart';
 
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
 
-import '../../main.dart';
 
 class DetailPage extends StatelessWidget {
   final Workout workout;
@@ -15,60 +15,11 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
-
-
-    getTopBar() {
-      return Container(
-        padding: EdgeInsets.only(top: 10),
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            TextButton.icon(
-              onPressed: () {
-                Navigator.pop(context, true);
-              },
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              label: Text(""),
-            ),
-            ElevatedButton.icon(
-              onPressed: ()  {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          YoutubeTutorial(
-                            rapCount:rapCount ,
-                            workout: workout,
-                          ),
-                    ));
-              },
-              style: ElevatedButton.styleFrom(
-                  primary:isDark?Colors.grey.shade200:Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 4)),
-              icon: Icon(
-                Icons.videocam,
-                color: Colors.grey.shade800,
-              ),
-              label: Text(
-                "Video",
-                style: textTheme.button!.copyWith(
-                  color: Colors.grey.shade800,
-                ),
-              ),
-            )
-          ],
-        ),
-      );
-    }
+    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
     getImage(Workout workout, double height, double width) {
       return Container(
-        height: height * .35,
+        height: height * .32,
         decoration: BoxDecoration(
           color: Colors.white,
             border: Border.all(
@@ -87,12 +38,12 @@ class DetailPage extends StatelessWidget {
     getTitle(Workout workout){
       String rap = workout.showTimer == true ? "${rapCount}s": "X $rapCount";
      return Container(
-       padding: EdgeInsets.only(left: 18,bottom: 12,top: 4),
+       padding: EdgeInsets.only(left: 18,bottom: 0,top: 18),
 
          child:   Row(
            mainAxisAlignment: MainAxisAlignment.start,
            children: [
-             Text("${workout.title} $rap",style: textTheme.bodyText1!.copyWith(fontSize: 22,fontWeight: FontWeight.w600,color: Colors.white),textAlign: TextAlign.center,),
+             Text("${workout.title} $rap",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w600,color: Colors.white),textAlign: TextAlign.center,),
            ],
          ),
 
@@ -100,38 +51,87 @@ class DetailPage extends StatelessWidget {
     }
 
     getSteps(Workout workout){
-      return Expanded(child: ListView.builder(itemBuilder: (BuildContext context, int index){
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (BuildContext context, int index){
         return
                ListTile(
-                 minVerticalPadding: 0,
+                 minVerticalPadding: 12,
                   leading: Text("Step ${index + 1}: ",
-                      style: textTheme.bodyText2!.copyWith(
+                      style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
-                          fontWeight: FontWeight.w700)),
+                          fontWeight: FontWeight.w500)),
                   title: Text(
                     "${workout.steps[index]}",
-                    style: textTheme.bodyText2
-                        !.copyWith(color: Colors.white, fontSize: 14),
+                    style: TextStyle(color: Colors.white, fontSize: 14,letterSpacing: 1.2,height: 1.5),
                   ));
-        },itemCount: workout.steps.length,));
+        },itemCount: workout.steps.length,);
     }
 
     return Scaffold(
 
-    backgroundColor:isDark?Colors.black: Colors.blue,
-      body: SafeArea(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Column(
-              children: [
-                getTopBar(),
-                getImage(workout, height, width),
-                getTitle(workout),
-                getSteps(workout)
-              ],
+      appBar: AppBar(
+        toolbarHeight: 50,
+        title:Text( workout.title,style: TextStyle(color: Colors.white),),
+        elevation: 0,
+        backgroundColor:isDark?Theme.of(context).scaffoldBackgroundColor: Colors.blue ,
+        leading:  TextButton.icon(
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          label: Text(""),
+        ),
+        actions: [
+
+          Container(
+            margin: EdgeInsets.all(8),
+
+          child: TextButton(
+            onPressed: ()  {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        YoutubeTutorial(
+                          rapCount:rapCount ,
+                          workout: workout,
+                        ),
+                  ));
+            },
+            style: ElevatedButton.styleFrom(
+              maximumSize: Size(150,40),
+               primary:isDark?Colors.grey.shade200:Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 4)),
+
+            child: Text(
+              "Video".toUpperCase(),
+              style: TextStyle(
+                fontSize: 16,
+             fontWeight: FontWeight.w500,
+             letterSpacing: 1.0
+             //   color: Colors.grey.shade800,
+              ),
             ),
+          ),
+        )],
+      ),
+    backgroundColor:isDark?Theme.of(context).scaffoldBackgroundColor: Colors.blue,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 10,),
+
+              getImage(workout, height, width),
+              getTitle(workout),
+              getSteps(workout)
+            ],
           ),
         ),
       ),

@@ -4,7 +4,6 @@ import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/widgets/custom_exercise_card.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-import '../../main.dart';
 
 class CheckListScreen extends StatefulWidget {
   final List<Workout> workOutList;
@@ -118,7 +117,7 @@ class _ExerciseListScreenState extends State<CheckListScreen>
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
     int time;
     return Scaffold(
@@ -138,8 +137,7 @@ class _ExerciseListScreenState extends State<CheckListScreen>
               ),
               label: Text(
                 "Continue",
-                style: textTheme.button!
-                    .copyWith(fontSize: 16, color: Colors.white),
+                style: TextStyle(fontSize: 16, color: Colors.white),
                 textAlign: TextAlign.end,
               ),
             ),
@@ -154,7 +152,6 @@ class _ExerciseListScreenState extends State<CheckListScreen>
               (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverAppBar(
-                backgroundColor: isDark ? Colors.black : Colors.white,
                 leading: IconButton(
                   icon: Icon(
                     Icons.arrow_back,
@@ -171,7 +168,6 @@ class _ExerciseListScreenState extends State<CheckListScreen>
 
                 expandedHeight: 150.0,
                 pinned: true,
-                elevation: isDark ? 0 : 1,
                 floating: false,
                 forceElevated: innerBoxIsScrolled,
                 flexibleSpace: FlexibleSpaceBar(

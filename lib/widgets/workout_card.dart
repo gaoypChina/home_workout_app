@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/sp_helper.dart';
-import 'package:intl/intl.dart';
 import 'package:full_workout/pages/workout_page/exercise_list_page.dart';
-
-import '../main.dart';
+import 'package:intl/intl.dart';
 
 class WorkoutCard extends StatelessWidget {
   final String title;
@@ -13,7 +11,7 @@ class WorkoutCard extends StatelessWidget {
   final String imaUrl;
   final String tag;
   final int index;
-  final List<Color> color;
+
 
   WorkoutCard({
     required this.title,
@@ -22,31 +20,32 @@ class WorkoutCard extends StatelessWidget {
     required this.imaUrl,
     required this.tag,
     required this.index,
-    required this.color,
+
   });
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
     getLastDate() {
+
       return FutureBuilder(
         future: SpHelper().loadString(tag),
         builder: (context, snapShot) {
-          print("Last Date : ${snapShot.data}");
           if (snapShot.hasData) {
             String date =
             DateFormat.MMMd().format(DateTime.parse(snapShot.data.toString()));
             return Padding(
-              padding: const EdgeInsets.only(top: 2.0, bottom: 8),
+              padding: const EdgeInsets.only(top: 2),
               child: Text("Last Time : $date",
-                  style: textTheme.subtitle1!.copyWith(
-                      color: Colors.white,
+                  style: TextStyle(
+                      color: Colors.white.withOpacity(.9),
                       fontSize: 14,
-                      fontWeight: FontWeight.w500)),
+                      letterSpacing: 1.3,
+                      fontWeight: FontWeight.w400)),
             );
           } else
-            return Container(height: 8,);
+            return Container();
         },
       );
     }
@@ -63,19 +62,19 @@ class WorkoutCard extends StatelessWidget {
 
       return Container(
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+            color: Colors.white.withOpacity(1),
+            borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
-          width: 35,
-          height: 18,
+          width: 30,
+          height: 16,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               for (int i = 0; i < 3; i++)
                 Icon(
                   Icons.circle,
-                  size: 8,
-                  color: getIValue() < i ? Colors.grey : Colors.blue.shade700,
+                  size: 7,
+                  color: getIValue() < i ? Colors.grey : Colors.red,
                 ),
             ],
           ));
@@ -85,8 +84,7 @@ class WorkoutCard extends StatelessWidget {
       return Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            //      border: Border.all(color: Colors.blue.shade700,width: 2)
+            borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
           width: 35,
           height: 18,
@@ -97,126 +95,122 @@ class WorkoutCard extends StatelessWidget {
                 Icon(
                   Icons.circle,
                   size: 7,
-                  color: tagValue < i ? Colors.grey : Colors.blue.shade700,
+                  color: tagValue < i ? Colors.grey.shade500 : Colors.red,
                 ),
             ],
           ));
     }
 
-    getImage() {
-      return ClipRRect(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16), bottomLeft: Radius.circular(16)),
-        child: Container(height: height*.18,
-          width: width * .45,
-          child: Image.asset(
-            imaUrl.toString(),
-            fit: BoxFit.fill,
-          ),
+
+    getTitle() {
+      return Padding(
+        padding: const EdgeInsets.only(
+          left: 18.0,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+           Spacer(flex: 3,),
+            Container(
+              child: Text(
+                title.toUpperCase(),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    letterSpacing: 1.5,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+            getLastDate(),
+            SizedBox(height: 12,),
+
+            Row(
+
+              children: [
+
+                Column(
+                  children: [
+                    Text(
+                      "Difficulty",
+                      style: TextStyle(
+                          color: Colors.white.withOpacity(.9),
+                          fontSize: 14,
+                          letterSpacing: 1.5),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    getDifficulty()
+                  ],
+                ),
+                SizedBox(
+                  width: 12,
+                ),
+                Column(
+                  children: [
+                    Text(
+                      "Duration",
+                      style: TextStyle(
+                          color: Colors.white.withOpacity(.9),
+                          fontSize: 14,
+                          letterSpacing: 1.5),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    getDuration(workoutList.length)
+                  ],
+                ),
+
+              ],
+            ),
+            Spacer(),
+
+          ],
         ),
       );
     }
 
-    getTitle() {
-      return Expanded(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 10,),
-
-                Text(
-                  title,
-                  style: textTheme.bodyText1!.copyWith(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600),
-                ),
-                getLastDate(),
-                SizedBox(height: 8,),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          "Difficulty",
-                          style: textTheme.headline3!
-                              .copyWith(color: Colors.white, fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        getDifficulty()
-                      ],
-                    ),
-                    Spacer(flex: 2,),
-                    Column(
-                      children: [
-                        Text(
-                          "Duration",
-                          style: textTheme.headline3!
-                              .copyWith(color: Colors.white, fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        getDuration(workoutList.length)
-                      ],
-                    ),
-                    Spacer(flex: 1,),
-                  ],
-                ),
-
-                SizedBox(height: 10,),
-
-              ],
-            ),
-          ));
-    }
-
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0,left: 8,right: 8),
-      child: InkWell(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ExerciseListScreen(
-                  workOutList: workoutList,
-                  tag: tag,
-                  title: title,
-                  tagValue: tagValue,
-                )),
-          );
-        },
-        child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [color[0], color[1]],
+      padding: const EdgeInsets.only(bottom: 8.0, left: 10, right: 10),
+      
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        child: InkWell(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ExerciseListScreen(
+                          workOutList: workoutList,
+                          tag: tag,
+                          title: title,
+                          tagValue: tagValue,
+                        )),
+              );
+            },
+            child: Container(
+              
+              height: 150,
+              child: Stack(
+                children: [
+                  ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                    isDark?      Colors.red.withOpacity(.3):Colors.black.withOpacity(.5),
+                          BlendMode.darken),
+                      child: Image.asset(
+                        imaUrl,
+                        height: 150,
+                        width: width,
+                        fit: BoxFit.fill,
+                      )),
+                  getTitle(),
+                ],
               ),
-              borderRadius: BorderRadius.all(Radius.circular(16))),
-          child: Container(
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 8,
-                ),
-                getImage(),
-                SizedBox(
-                  width: 16,
-                ),
-                getTitle(),
-                SizedBox(
-                  width: 8,
-                ),
-              ],
+            )
             ),
-          ),
-        ),
       ),
     );
 

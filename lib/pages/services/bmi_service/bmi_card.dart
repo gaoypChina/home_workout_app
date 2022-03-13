@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
@@ -9,7 +11,6 @@ import 'package:full_workout/pages/workout_page/report_page.dart';
 import 'package:intl/intl.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
-import '../../../main.dart';
 import 'bmi_picker.dart';
 
 class BmiCard extends StatefulWidget {
@@ -48,11 +49,8 @@ class _BmiCardState extends State<BmiCard> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     double bmi = 0;
-    TextStyle titleStyle =
-        textTheme.subtitle1!.copyWith(fontWeight: FontWeight.w700);
 
     double _calcBmi(double height, double weight) {
       return weight / (height * height);
@@ -122,13 +120,12 @@ class _BmiCardState extends State<BmiCard> {
               Text(
                 title,
                 style:
-                    textTheme.subtitle1!.copyWith(fontWeight: FontWeight.w500),
+                    TextStyle(fontWeight: FontWeight.w500),
               ),
               Spacer(),
               Text(
                 value,
-                style: textTheme.subtitle1!
-                    .copyWith(fontSize: 15, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
               )
             ],
           ),
@@ -147,6 +144,7 @@ class _BmiCardState extends State<BmiCard> {
           ),
           builder: (context, state) {
             return Material(
+              color: Theme.of(context).cardColor,
               child: SingleChildScrollView(
               child:    Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,13 +159,13 @@ class _BmiCardState extends State<BmiCard> {
                         Spacer(),
                         Text(
                           "Weight Categories",
-                            style: textTheme.subtitle1!.copyWith(
+                            style: TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 18),
                           ),
                         Spacer(),
                         Text(
                           "Index",
-                            style: textTheme.subtitle1!.copyWith(
+                            style: TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 18),
                           ),
                         SizedBox(
@@ -228,7 +226,7 @@ class _BmiCardState extends State<BmiCard> {
                     padding: const EdgeInsets.only(
                           left: 18.0, right: 18, bottom: 4),
                       child: Text("Healthy BMI Range",
-                          style: textTheme.subtitle1!.copyWith(
+                          style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600)),
                     ),
                   Padding(
@@ -266,7 +264,7 @@ class _BmiCardState extends State<BmiCard> {
     getBorder() {
       return Container(
         height: 50,
-        color: isDark ? Colors.black : Colors.white,
+        color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.2),
         width: borderWidth,
       );
     }
@@ -317,10 +315,11 @@ class _BmiCardState extends State<BmiCard> {
             borderRadius: BorderRadius.all(
               Radius.circular(30),
             ),
-            color: isDark ? Colors.white : Colors.black,
+            color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
+
           ),
-          height: 12,
-          width: 4,
+          height: 12.2,
+          width: 2.0,
         );
       }
       return Column(
@@ -328,8 +327,9 @@ class _BmiCardState extends State<BmiCard> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
-            Icons.arrow_upward,
+           Icons.arrow_upward,
             size: 20,
+            color: Theme.of(context).textTheme.bodyText1!.color,
           ),
           SizedBox(height: 2,),
           getContainer(),
@@ -338,6 +338,8 @@ class _BmiCardState extends State<BmiCard> {
           SizedBox(height: 4,),
           getContainer(),
           SizedBox(height: 4,),
+
+
 
 
         ],
@@ -463,7 +465,7 @@ class _BmiCardState extends State<BmiCard> {
               children: [
                 Text(
                     "My Health",
-                    style: titleStyle,
+                    style: Constants().titleStyle,
                   ),
 
                 Spacer(),
@@ -488,7 +490,7 @@ class _BmiCardState extends State<BmiCard> {
                     padding: const EdgeInsets.symmetric(horizontal: 18.0),
                     child: Row(
                       children: [
-                        Text("BMI Calculator", style: titleStyle),
+                        Text("BMI Calculator", style: Constants().titleStyle),
                         Spacer(),
                         getEditButton("Edit")
                       ],
@@ -515,7 +517,7 @@ class _BmiCardState extends State<BmiCard> {
           child:
           Row(
                       children: [
-                        Text("BMI Calculator", style: titleStyle),
+                        Text("BMI Calculator", style: Constants().titleStyle),
                         Spacer(),
                         getEditButton("EDIT")
                       ],
@@ -567,7 +569,7 @@ class _BmiCardState extends State<BmiCard> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("BMI : " + bmi.toStringAsFixed(1),
-                          style: textTheme.subtitle1!.copyWith(
+                          style: TextStyle(
                               color: remark.color,
                               fontWeight: FontWeight.w600,
                               fontSize: 18)),
@@ -575,13 +577,14 @@ class _BmiCardState extends State<BmiCard> {
                         width: 5,
                       ),
                       Text("(${remark.remark})",
-                          style: textTheme.subtitle1!.copyWith(
+                          style: TextStyle(
                               color: remark.color,
                               fontWeight: FontWeight.w600,
                               fontSize: 18)),
                     ],
                   ),
-                  if (widget.showBool) constants.getDivider(isDark),
+        if (widget.showBool)   SizedBox(height: 10,),
+        if (widget.showBool) constants.getDivider(context: context),
                   if (widget.showBool)
                     getMyHealth(height!.toInt().toString() + " Cm",
                         weight!.toInt().toString() + " Kg"),

@@ -11,7 +11,6 @@ import 'package:full_workout/models/weight_model.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 
-import '../../../main.dart';
 
 class WeightChart extends StatefulWidget {
   final Function onAdd;
@@ -84,8 +83,7 @@ class _WeightChartState extends State<WeightChart> {
     initMonth = currMonth;
   }
 
-  addWeight(bool isDark) async {
-    double? previousValue = weightValue;
+  addWeight() async {
     double? value = await showDialog(
         context: context,
         builder: (context) =>
@@ -103,7 +101,9 @@ class _WeightChartState extends State<WeightChart> {
     await weightDb.addWeight(value, weightModel, key);
     widget.onAdd();
 
-    constants.getToast("Weight Added Successfully", isDark);
+    constants.getToast(
+      "Weight Added Successfully",
+    );
     setState(() {});
   }
 
@@ -131,7 +131,6 @@ class _WeightChartState extends State<WeightChart> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return isLoading
         ? Container(
@@ -149,26 +148,25 @@ class _WeightChartState extends State<WeightChart> {
                      Padding(
                        padding:  EdgeInsets.only(left:18.0,bottom:widget.showButton?0: 18),
                        child: Text(
-                        widget.title,
-                        style: textTheme.subtitle1!
-                            .copyWith(fontWeight: FontWeight.w700),
+                         widget.title,
+                      style: Constants().titleStyle,
                     ),
                      ),
 
                   Spacer(),
             widget.showButton?      TextButton(
-                      onPressed: () async => addWeight(isDark),
+                      onPressed: () async => addWeight(),
                       child: Icon(Icons.add)):Container()
                 ],
               ),
               Container(
-                padding: EdgeInsets.only(right: 18,left: 10,bottom: 5,top: 5),
+                padding:
+                    EdgeInsets.only(right: 18, left: 10, bottom: 5, top: 5),
                 height: height * .55,
-
                 child: Stack(
                   children: [
                     LineChart(
-                      mainData(isDark),
+                      mainData(),
                     ),
                     Positioned(
                         right: 5,
@@ -213,15 +211,15 @@ class _WeightChartState extends State<WeightChart> {
           );
   }
 
-  LineChartData mainData(bool isDark) {
+  LineChartData mainData() {
     List<Color> gradientColors = [
-      isDark? Colors.blue.shade800:Colors.blue.shade300,
+     Colors.blue.shade500,
       Colors.blue,
 
     ];
 
     double presentValue = 0;
-    const Color color = Colors.blueGrey;
+     Color color = Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7);
 
     if (weightDataList.length > 0) {
       presentValue =
@@ -244,9 +242,8 @@ class _WeightChartState extends State<WeightChart> {
     return LineChartData(
 
       lineTouchData:LineTouchData(
-
           enabled: true,
-          touchTooltipData: LineTouchTooltipData(tooltipBgColor:isDark? Colors.white:Colors.black87,) ) ,
+          touchTooltipData: LineTouchTooltipData() ) ,
 
       gridData: FlGridData(
         show: true,
@@ -255,14 +252,14 @@ class _WeightChartState extends State<WeightChart> {
         verticalInterval: 2,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: isDark ? Colors.white70 : Colors.black54,
-            strokeWidth: .2,
+            color: color.withOpacity(.15),
+            strokeWidth: 1,
           );
         },
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: isDark ? Colors.white70 : Colors.black54,
-            strokeWidth: 0.2,
+            color: color.withOpacity(.15),
+            strokeWidth: 1,
           );
         },
       ),

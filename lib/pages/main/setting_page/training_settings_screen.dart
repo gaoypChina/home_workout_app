@@ -27,24 +27,30 @@ class _WorkoutTimePickerState extends State<WorkoutTimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
-    return AlertDialog(
-      title: Text("Set Duration (${widget.minimumVal} ~ ${widget.maximumVal} Sec)"),
-      content: NumberPicker(
-        value: selectedValue,
-        step:widget.maximumVal ==15?1: 5,
-        minValue: widget.minimumVal,
-        maxValue: widget.maximumVal,
-        selectedTextStyle: TextStyle(color:isDark? Colors.blue:Colors.blue.shade700, fontSize: 18,fontWeight: FontWeight.w500),
-        textMapper: (title) {
-          return "$title Sec";
-        },
-        onChanged: (value) {
-          setState(() {
-            selectedValue = value;
-          });
-        },
+    return CupertinoAlertDialog(
+
+      title: Text("Set Duration(${widget.minimumVal} ~ ${widget.maximumVal} Sec)",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w400,letterSpacing: 1),),
+      content: Container(
+        padding: EdgeInsets.only(top: 10),
+        child: NumberPicker(
+          haptics: true,
+          itemHeight: 50,
+          value: selectedValue,
+          step:widget.maximumVal ==15?1: 5,
+          minValue: widget.minimumVal,
+          maxValue: widget.maximumVal,
+
+          selectedTextStyle: TextStyle(color:Theme.of(context).primaryColor, fontSize: 18,fontWeight: FontWeight.w500),
+          textMapper: (title) {
+            return "$title Sec";
+          },
+          onChanged: (value) {
+            setState(() {
+              selectedValue = value;
+            });
+          },
+        ),
       ),
       actions: [
         TextButton(

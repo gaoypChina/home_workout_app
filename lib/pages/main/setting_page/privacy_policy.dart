@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:full_workout/constants/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/gestures.dart';
@@ -36,11 +37,9 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
 
 
 
-
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     var titleFontStyle = TextStyle(fontWeight: FontWeight.w800, fontSize: 19);
     var contentTextStyle = TextStyle(
-        fontWeight: FontWeight.w400, fontSize: 14,color:isDark?Colors.white: Colors.black);
+        fontWeight: FontWeight.w400);
     var hyperLinkStyle = TextStyle(
         fontWeight: FontWeight.w600, fontSize: 16, color: Colors.blue.shade400);
 
@@ -92,14 +91,14 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
       );
     }
 
+    String src = '''''';
     return Scaffold(
-      backgroundColor: isDark?Colors.black:Colors.white,
       appBar: AppBar(
-        backgroundColor: isDark?Colors.black:Colors.white,
-        title: Text("Privacy Policy",style: TextStyle(color: isDark?Colors.white:Colors.black,
-        ),),
+        title: Text("Privacy Policy"),
         elevation: 0,
       ),
+     // body: Markdown(data: src,),
+
       body: SafeArea(
         child: loading
             ? CircularProgressIndicator()
@@ -117,7 +116,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              style: contentTextStyle.copyWith(fontSize: 15,color:isDark?Colors.white: Colors.black),
+                              style: contentTextStyle.copyWith(fontSize: 15,),
                               text: informationCollection,
                             ),
                             WidgetSpan(child: Container(height: 5,)),
@@ -175,7 +174,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              style: contentTextStyle.copyWith(fontSize: 15,color:isDark?Colors.white: Colors.black),
+                              style: contentTextStyle.copyWith(fontSize: 15,),
                               text: serviceProvidedHeading,
                             ),
                             WidgetSpan(child: Container(height: 5,)),
@@ -186,7 +185,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                             WidgetSpan(child: Container(height: 5,)),
 
                             TextSpan(
-                              style: contentTextStyle.copyWith(fontSize: 15,color:isDark?Colors.white: Colors.black),
+                              style: contentTextStyle.copyWith(fontSize: 15,),
                               text: serviceProvidedTrailing,
                             ),
                           ],

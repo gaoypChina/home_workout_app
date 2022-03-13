@@ -48,14 +48,16 @@ class WeightDatabaseHelper {
   // Insert
   Future<int> saveWeight(WeightModel weightModel) async {
     var dbClient = await db;
+    print("weight db : " + dbClient.toString());
+
     int res = await dbClient.insert('$tableName', weightModel.toMap());
     return res;
   }
 
   // Get Weight
   Future<List> getAllWeight() async {
-    print("here");
-    var dbClient = await db;
+
+    Database dbClient = await db;
     var result = await dbClient
         .rawQuery("SELECT * FROM $tableName ORDER BY $columnId");
     return result.toList();

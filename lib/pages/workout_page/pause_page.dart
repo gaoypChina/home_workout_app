@@ -1,12 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:full_workout/pages/workout_page/quit_page.dart';
-import '../../main.dart';
+
+import '../main_page.dart';
 
 class StopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     getButton(
         {required Function onPress,
@@ -24,7 +25,7 @@ class StopPage extends StatelessWidget {
               ),
               backgroundColor: backgroundColor,
               side: BorderSide(
-                  color: Colors.blue.shade700,
+                  color: Colors.white70,
                   style: BorderStyle.solid,
                   width: 2),
             ),
@@ -40,107 +41,142 @@ class StopPage extends StatelessWidget {
         );
     }
 
-    Color defaultTextColor = Colors.blue.shade700;
-    Color defaultBackgroundColor =isDark?Colors.black: Colors.white;
+    Color defaultTextColor = Colors.white;
+    Color defaultBackgroundColor =Colors.transparent;
+
 
     return Scaffold(
-      backgroundColor: isDark?Colors.black:Colors.white,
-      body: SafeArea(
-        child: Stack(
-          children: [
+      body: Stack(
 
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(top: 18),
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * .4,
-                  width: double.infinity,
-                  child: SvgPicture.asset(
-                    "assets/other/rest.svg",
-                  ),
-                ),
-                Spacer(),
-                Text(
-                  "Pause",
-                  style: textTheme.headline1!.copyWith(
-                      color: isDark?Colors.white:Colors.black,
-                      fontSize: 40,
-                      letterSpacing: 1.5,
-                      fontWeight: FontWeight.bold),
-                ),
-                Spacer(),
+        children: [
+          ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(.6),
+                  BlendMode.darken),
+              child: Image.asset(
 
-                getButton(
-                    title: "Restart Program",
-                    onPress: () async {
-                      String res = await showDialog(
-                          context: context, builder: (context) {
-                        return AlertDialog(
-                          content: Text("Restart Program form Beginning"),
-                          actions: [
-                            TextButton(onPressed: () =>
-                                Navigator.pop(context, "resume"),
-                                child: Text("Cancel")),
-                            TextButton(onPressed: () =>
-                                Navigator.pop(context, "restart"),
-                                child: Text("Restart"))
-                          ],
-                        );
-                      });
+                "assets/other/backgroudnd_2.jpg",
+               height: double.infinity,
+
+
+               // width: width,
+                fit: BoxFit.cover,
+              )),
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.only(top: 18),
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * .4,
+
+              ),
+              Spacer(),
+              Text(
+                "Workout Paused",
+                style: TextStyle(
+                    fontSize: 36,
+                    color: Colors.white70,
+                    letterSpacing: 1.0,
+                    fontWeight: FontWeight.w700),
+              ),
+              Spacer(),
+
+              getButton(
+                  title: "Restart Program",
+                  onPress: () async {
+                    String res = await showDialog(
+
+                        context: context, builder: (context) {
+                      return CupertinoAlertDialog(
+                        content: Text("Restart Session form Beginning?",style: TextStyle(fontSize: 14,letterSpacing: 1.2),),
+                        actions: [
+                          TextButton(onPressed: () =>
+                              Navigator.pop(context, "resume"),
+                              child: Text("Cancel")),
+                          TextButton(onPressed: () =>
+                              Navigator.pop(context, "restart"),
+                              child: Text("Restart"))
+                        ],
+                      );
+                    });
+                    if(res == "restart"){
                       Navigator.pop(context, res);
-                    },
-                    backgroundColor: defaultBackgroundColor,
-                    textColor: defaultTextColor),
-                getButton(
-                    title: "Quit",
-                    onPress: () async {
-                      bool? value = await
-                      Navigator.of(context).push(MaterialPageRoute(builder: (builder) => QuitPage()));
-                      if(value == true)  Navigator.of(context).pop();
-                    },
-                    backgroundColor: defaultBackgroundColor,
-                    textColor: defaultTextColor),
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  margin: EdgeInsets.only(left: 25, right: 25, bottom: 10),
+                    }
+                  },
+                  backgroundColor: defaultBackgroundColor,
+                  textColor: defaultTextColor),
+              getButton(
+                  title: "Quit",
+                  onPress: () async {
+                    String res = await showDialog(
 
-                  child: ElevatedButton(
-                    child: Text("Resume",),
-                    onPressed: () => Navigator.pop(context, "resume"),
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.blue.shade700,
+                        context: context, builder: (context) {
+                      return CupertinoAlertDialog(
+                       // backgroundColor: Theme.of(context).cardColor,
+                        content: Text("Do you want to quit the exercise session?",style: TextStyle(fontSize: 14,letterSpacing: 1.2),),
+                        actions: [
+                          TextButton(onPressed: () =>
+                              Navigator.pop(context, "quit"),
+                              child: Text("Yes")),
+                          TextButton(onPressed: () =>
+                              Navigator.pop(context, "restart"),
+                              child: Text("No"))
+                        ],
+                      );
+                    });
 
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),)
-                    ),
+                    if(res == "quit"){
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MainPage(index: 0,)));
+                    }
+
+
+                  },
+                  backgroundColor: defaultBackgroundColor,
+                  textColor: defaultTextColor),
+              Container(
+                height: 50,
+                width: double.infinity,
+                margin: EdgeInsets.only(left: 25, right: 25, bottom: 10),
+
+                child: ElevatedButton(
+                  child: Text("Resume",),
+                  onPressed: () => Navigator.pop(context, "resume"),
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.blue.shade700,
+
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),)
                   ),
                 ),
-                Spacer(),
+              ),
+              Spacer(),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 40,horizontal: 12),
+            height: 50,
+            child: Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () => Navigator.pop(context, "resume"),
+                  child: Icon(Icons.arrow_back),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue.shade700,
+                    shape: CircleBorder(),
+                  ),
+                )
               ],
             ),
-            Container(
-              height: 50,
-              child: Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () => Navigator.pop(context, "resume"),
-                    child: Icon(Icons.arrow_back),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.blue.shade700,
-                      shape: CircleBorder(),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

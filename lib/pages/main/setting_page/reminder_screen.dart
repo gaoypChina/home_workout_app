@@ -137,14 +137,12 @@ class _ReminderTabState extends State<ReminderTab> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     var titleStyle = TextStyle(
       fontWeight: FontWeight.w500, fontSize: 17,);
     var timeStyle = TextStyle(
-      fontWeight: FontWeight.w400, fontSize: 14,);
+      fontWeight: FontWeight.w400, fontSize: 15,);
 
-    Color tileColor = isDark?Colors.black:Colors.white;
 
     getDivider(){
       return  Container(
@@ -155,15 +153,14 @@ class _ReminderTabState extends State<ReminderTab> {
     }
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: isDark ? Colors.black : Colors.white,
-        elevation: 0,
+      //  elevation: 0,
         actions: [
           showSaveButton? Padding(
             padding: const EdgeInsets.only(right: 10.0),
             child: TextButton(
               onPressed: () {
                 _setReminder(isChecked);
-                constants.getToast("Your changes saved successfully",isDark);
+                constants.getToast("Your changes saved successfully");
                 Navigator.of(context).pop();
               },
               child: Text("Save"),
@@ -172,23 +169,20 @@ class _ReminderTabState extends State<ReminderTab> {
         ],
         title: Text(
           "Workout Reminder",
-          style: TextStyle(color: isDark ? Colors.white : Colors.black),
         ),
       ),
-      backgroundColor:isDark?Colors.black: Colors.white,
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             SizedBox(
-              height: 10,
+              height: 16,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
                 "Set a workout reminder to help you meet your goals faster. you can change the frequency or turn off in your account settings at any time.",
-                style: constants.textStyle
-                    .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                style: TextStyle(fontSize: 14,height: 1.1, fontWeight: FontWeight.w400,letterSpacing: 1.5,color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7)),
               ),
             ),
             SizedBox(
@@ -198,7 +192,7 @@ class _ReminderTabState extends State<ReminderTab> {
               child: Column(
                 children: [
                   SwitchListTile(
-                    tileColor: tileColor,
+
                     contentPadding: EdgeInsets.only(left: 20, right: 4),
                     activeColor: Colors.blue,
                     title: Text(
@@ -220,7 +214,6 @@ class _ReminderTabState extends State<ReminderTab> {
                   ),
                   getDivider(),
                   ListTile(
-                    tileColor: tileColor,
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
                     title: Text(
                       "Workout Time",
@@ -241,7 +234,6 @@ class _ReminderTabState extends State<ReminderTab> {
                   getDivider(),
                   ListTile(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    tileColor: tileColor,
                     title: Text(
                       "Workout Day",
                       style: titleStyle,

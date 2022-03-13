@@ -5,7 +5,6 @@ import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/widgets/custom_exercise_card.dart';
 
-import '../../main.dart';
 import 'exercise_instruction_screen.dart';
 
 class ExerciseListScreen extends StatefulWidget {
@@ -64,26 +63,23 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
           int currDay = int.tryParse(splitTitle[4])!;
           print(currDay);
           if (currDay <= 10) {
-            time = widget.workOutList[index].beginnerRap??0;
+            time = widget.workOutList[index].beginnerRap ?? 8;
           } else if (currDay <= 20) {
-            time =
-                widget.workOutList[index].intermediateRap??0;
+            time = widget.workOutList[index].intermediateRap ?? 10;
           } else
-            time = widget.workOutList[index].advanceRap??0;
+            time = widget.workOutList[index].advanceRap ?? 14;
         } else {
           String tag = widget.tag.toLowerCase();
           if (tag == 'beginner') {
-            time = widget.workOutList[index].beginnerRap??0;
-          } else if (tag ==
-              "intermediate") {
-            time =
-                widget.workOutList[index].intermediateRap??0;
+            time = widget.workOutList[index].beginnerRap ?? 8;
+          } else if (tag == "intermediate") {
+            time = widget.workOutList[index].intermediateRap ?? 10;
           } else
-            time = widget.workOutList[index].advanceRap??0;
+            time = widget.workOutList[index].advanceRap ?? 14;
         }
       } else if (widget.workOutList[index].showTimer ==
           true) {
-        time = widget.workOutList[index].duration??0;
+        time = widget.workOutList[index].duration ?? 30;
       } else {
         time = 30;
       }
@@ -171,7 +167,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    bool isDark =Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -205,8 +201,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
               ),
               label: Text(
                 "Start Workout",
-                style: textTheme.button
-                    !.copyWith(fontSize: 16, color: Colors.white),
+                style: TextStyle(fontSize: 16, color: Colors.white),
                 textAlign: TextAlign.end,
               ),
             ),
@@ -221,7 +216,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return [
                     SliverAppBar(
-                      backgroundColor: isDark ? Colors.black : Colors.white,
                       leading: IconButton(
                         icon: Icon(
                           Icons.arrow_back,
@@ -238,7 +232,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
 
                       expandedHeight: 150.0,
                       pinned: true,
-                      elevation: isDark ? 0 : 1,
                       floating: false,
                       forceElevated: innerBoxIsScrolled,
                       flexibleSpace: FlexibleSpaceBar(
@@ -269,6 +262,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                     return
                       Column(
                       children: [
+                        SizedBox(height: 4,),
                         if (index == 0)
                           AnimatedPadding(
                             duration: Duration(milliseconds: 400),
@@ -289,9 +283,9 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                                       Text(
                                         widget.workOutList.length.toString() +
                                       " Workouts",
-                                  style: textTheme.headline2!.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
                                 ),
                                 SizedBox(
                                   width: 30,
@@ -305,7 +299,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                                       ),
                                       Text(
                                         getTime().toString() + " Minutes",
-                                        style: textTheme.headline2!.copyWith(
+                                        style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 16),
                                       ),
@@ -314,7 +308,8 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                                 ),
                               if (index == 0)
                                 Divider(
-                                  thickness: .5,
+                                  height: 8,
+                                  thickness: 1,
                                 ),
                               AnimatedPadding(
                                 duration: Duration(milliseconds: 1000),
@@ -330,7 +325,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                                 ),
                               ),
                               Divider(
-                                thickness: .5,
+                               thickness: 1,
                               ),
                             ],
                     );

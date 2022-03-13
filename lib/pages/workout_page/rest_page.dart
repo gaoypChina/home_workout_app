@@ -13,7 +13,6 @@ import 'package:full_workout/components/info_button.dart';
 import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-import '../../main.dart';
 import 'exercise_detail_page.dart';
 
 class RestScreen extends StatefulWidget {
@@ -100,7 +99,6 @@ late  Workout item;
 
   _onComplete() async{
     await mediaHelper.flutterTts.stop();
-
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -164,8 +162,8 @@ late  Workout item;
       lineHeight: 5.0,
       percent: index / widget.workOutList.length,
       width: width,
-      backgroundColor:isDark?Colors.grey.shade800: Colors.grey.shade200,
-      linearStrokeCap: LinearStrokeCap.round,
+      backgroundColor:isDark?Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8):Colors.blue.shade200,
+
       progressColor: Colors.blue.shade700,
     );
   }
@@ -180,13 +178,13 @@ late  Workout item;
     var height = size.height;
     var width = size.width;
     var safePadding = MediaQuery.of(context).padding.top;
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
     height = height - safePadding;
     return WillPopScope(
       onWillPop: ()=>_onPause(),
       child: Scaffold(
-        backgroundColor:isDark? Colors.black:Colors.blue.shade700,
+        backgroundColor:isDark? Theme.of(context).scaffoldBackgroundColor:Colors.blue.shade700,
 
         body: SafeArea(
           child: Column(
@@ -197,7 +195,7 @@ late  Workout item;
                   Container(
                     height: height * .75,
                     width: width,
-                    color:isDark? Colors.black:Colors.blue.shade700,
+                    color:isDark? Theme.of(context).scaffoldBackgroundColor:Colors.blue.shade700,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -206,7 +204,7 @@ late  Workout item;
                         ),
                         Text(
                           "Rest",
-                          style: textTheme.bodyText1!.copyWith(
+                          style: TextStyle(
                               fontSize: 40,
                               fontWeight: FontWeight.w700,
                               color: Colors.white),
@@ -256,7 +254,7 @@ late  Workout item;
                               },
                               child: Text(
                                 "Pause",
-                                style: textTheme.button!.copyWith(
+                                style: TextStyle(
                                     fontSize: 16,
                                     letterSpacing: 1,
                                     fontWeight: FontWeight.w500,
@@ -264,7 +262,7 @@ late  Workout item;
                               ),
                               style: OutlinedButton.styleFrom(
                                 elevation: 1,
-                                backgroundColor:isDark?Colors.black: Colors.blue.shade700,
+                                backgroundColor:isDark?Theme.of(context).scaffoldBackgroundColor: Colors.blue.shade700,
                                 side: BorderSide(
                                     style: BorderStyle.solid,
                                     color: isDark?Colors.white60:Colors.white70,
@@ -280,7 +278,7 @@ late  Workout item;
                               onPressed: () => _onComplete(),
                               child: Text(
                                 "Skip",
-                                style: textTheme.button!.copyWith(
+                                style: TextStyle(
                                     fontSize: 16,
                                     letterSpacing: 1,
                                     fontWeight: FontWeight.w500,
@@ -306,20 +304,19 @@ late  Workout item;
                       child: Column(
                         children: [
                           InfoButton(
-                            icon: Icons.list_alt_outlined,
-                            tooltip: "Exercise Plane",
+                            icon: FontAwesomeIcons.questionCircle,
+                            tooltip: "Steps",
                             onPress: () async {
-                              controller.stop(canceled: true);
-                              await Navigator.of(context).push(
-                                MaterialPageRoute (
-                                  builder: (BuildContext context) =>  CheckListScreen(
-                                      workOutList: widget.workOutList,
-                                      tag: widget.tag,
-                                      progress: index / widget.workOutList.length,
-                                      title: widget.title),
-                                ),
-                              );
+                              print(controller.status);
 
+                              if (controller.isAnimating) {
+                                controller.stop(canceled: true);
+                                await Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DetailPage(
+                                  workout: item,
+                                  rapCount: widget.rapList[index],
+                                )));
+
+                              }
                               controller.reverse(
                                   from: controller.value == 0.0
                                       ? 1.0
@@ -364,19 +361,20 @@ late  Workout item;
                             },
                           ),
                           InfoButton(
-                            icon: FontAwesomeIcons.questionCircle,
-                            tooltip: "Steps",
+                            icon: Icons.list_alt_outlined,
+                            tooltip: "Exercise Plane",
                             onPress: () async {
-                              print(controller.status);
+                              controller.stop(canceled: true);
+                              await Navigator.of(context).push(
+                                MaterialPageRoute (
+                                  builder: (BuildContext context) =>  CheckListScreen(
+                                      workOutList: widget.workOutList,
+                                      tag: widget.tag,
+                                      progress: index / widget.workOutList.length,
+                                      title: widget.title),
+                                ),
+                              );
 
-                              if (controller.isAnimating) {
-                                controller.stop(canceled: true);
-                                 await Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DetailPage(
-                                   workout: item,
-                                   rapCount: widget.rapList[index],
-                                 )));
-
-                              }
                               controller.reverse(
                                   from: controller.value == 0.0
                                       ? 1.0
@@ -390,7 +388,7 @@ late  Workout item;
               getProgressBar(width, 3,isDark),
               Container(
                 height: height * .25 - 5,
-                color:isDark? Colors.grey.shade800:Colors.white,
+                color:Theme.of(context).cardColor,
                 child: Row(
                   children: [
                     Expanded(
@@ -406,22 +404,22 @@ late  Workout item;
                               ),
                               Text(
                                 "Next $index / ${widget.workOutList.length}",
-                                style: textTheme.bodyText2!.copyWith(
+                                style: TextStyle(
                                     fontSize: 18,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w500,
                                     color: Colors.grey),
                               ),
                               Text(
                                 item.title,
-                                style: textTheme.bodyText2!.copyWith(
+                                style: TextStyle(
                                     fontSize: item.title.length > 15 ? 20 : 28,
-                                    fontWeight: FontWeight.w700),
+                                    fontWeight: FontWeight.w600),
                               ),
                               Text(
                                 item.showTimer == true
                                     ? "${widget.rapList[index]} sec"
                                     : "X ${widget.rapList[index]}",
-                                style: textTheme.bodyText2!.copyWith(
+                                style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.grey),
@@ -434,7 +432,9 @@ late  Workout item;
                         )),
                     Expanded(
 
-                           child: Image.asset(item.imageSrc)),
+                               child: Hero(
+                                 tag: widget.title,
+                                   child: Image.asset(item.imageSrc))),
                   ],
                 ),
               )

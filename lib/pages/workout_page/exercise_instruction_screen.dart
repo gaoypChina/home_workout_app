@@ -13,7 +13,6 @@ import 'package:full_workout/pages/services/youtube_service/youtube_player.dart'
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:wakelock/wakelock.dart';
 
-import '../../main.dart';
 import 'exercise_detail_page.dart';
 
 class InstructionScreen extends StatefulWidget {
@@ -138,7 +137,6 @@ class _InstructionScreenState extends State<InstructionScreen>
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     var item = widget.workOutList[0];
     Widget getImage() {
@@ -248,7 +246,6 @@ class _InstructionScreenState extends State<InstructionScreen>
     Widget getTimer() {
       return
         Container(
-          color: isDark ? Colors.black : Colors.white,
         height: height * .45,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -258,15 +255,14 @@ class _InstructionScreenState extends State<InstructionScreen>
             ),
             Text(
               "Ready to go!",
-              style: textTheme.bodyText1
-                  !.copyWith(fontSize: 30, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 20,
             ),
             Text(
               item.title,
-              style: textTheme.bodyText2!.copyWith(
+              style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
                   color: Colors.grey),
@@ -327,7 +323,7 @@ class _InstructionScreenState extends State<InstructionScreen>
 
                                       return Text(
                                         '${timerValue ~/ 1000}',
-                                        style: textTheme.headline1!.copyWith(
+                                        style: TextStyle(
                                             fontSize: 40,
                                             fontWeight: FontWeight.w700),
                                       );
@@ -367,7 +363,6 @@ class _InstructionScreenState extends State<InstructionScreen>
       onWillPop: () async =>
           _onPopBack(),
       child: Scaffold(
-        backgroundColor: isDark ? Colors.black : Colors.white,
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

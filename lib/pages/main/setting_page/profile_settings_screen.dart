@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/components/height_weightSelector.dart';
+import 'package:full_workout/constants/app_theme.dart';
 import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/helper/weight_db_helper.dart';
@@ -9,7 +11,6 @@ import 'package:full_workout/models/weight_model.dart';
 import 'package:intl/intl.dart';
 
 import '../../../helper/sp_helper.dart';
-import '../../../main.dart';
 
 class ProfileSettingScreen extends StatefulWidget {
   static const routeName = "profile-settings-screen";
@@ -94,50 +95,61 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     _selectDate() async {
-      final DateTime? picked = await showRoundedDatePicker(
-        theme: isDark
-            ? ThemeData.dark()
-            : ThemeData(primaryColor: Colors.blue.shade700),
-        context: context,
-        height: MediaQuery.of(context).size.height * .4,
-        initialDate: DateTime(2000, 08, 12),
-        firstDate: DateTime(DateTime.now().year - 110),
-        lastDate: DateTime(DateTime.now().year - 12),
-        borderRadius: 16,
-      );
-      if (picked != null && picked.toString() != date) {
-        String formatedDay = DateFormat.yMMMd().format(picked);
-        await spHelper.saveString(spKey.date, picked.toIso8601String());
-        setState(() {
-          date = formatedDay;
-        });
-      }
+      showCupertinoModalPopup<void>(
+          context: context,
+          builder: (BuildContext context) => Container(
+
+            height: 316,
+            padding: const EdgeInsets.only(top: 6.0),
+            // The Bottom margin is provided to align the popup above the system navigation bar.
+            margin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            // Provide a background color for the popup.
+            color: CupertinoColors.systemBackground.resolveFrom(context),
+            // Use a SafeArea widget to avoid system overlaps.
+            child: SafeArea(
+              top: false,
+              child: CupertinoDatePicker(
+                initialDateTime: DateTime(2000, 08, 12),
+                mode: CupertinoDatePickerMode.date,
+                use24hFormat: true,
+                onDateTimeChanged: (DateTime newDate) {
+                 // setState(() => date = newDate);
+                },
+              ),
+            ),
+            ),
+          );
+
+
+      // final DateTime? picked = await showRoundedDatePicker(
+      //  //theme: lightTheme,
+      //   context: context,
+      //   height: MediaQuery.of(context).size.height * .4,
+      //   initialDate: DateTime(2000, 08, 12),
+      //   firstDate: DateTime(DateTime.now().year - 110),
+      //   lastDate: DateTime(DateTime.now().year - 12),
+      //   borderRadius: 16,
+      // );
+      // if (picked != null && picked.toString() != date) {
+      //   String formatedDay = DateFormat.yMMMd().format(picked);
+      //   await spHelper.saveString(spKey.date, picked.toIso8601String());
+      //   setState(() {
+      //     date = formatedDay;
+      //   });
+      // }
     }
 
 
-
-    List<Color> iconColor = [
-      Colors.red,
-      Colors.green,
-      Colors.amberAccent.shade200,
-      Colors.orange,
-      Colors.red,
-      Colors.orangeAccent,
-    ];
-
     return Scaffold(
-      backgroundColor: isDark?Colors.black:Colors.white,
       appBar:
-
       AppBar(
-        backgroundColor: isDark?Colors.black:Colors.white,
         title: Text(
           "Profile",
-        style: TextStyle(color: isDark?Colors.white:Colors.black)),
-
+        ),
         actions: [
           showSaveButton ?   TextButton(
               style: TextButton.styleFrom(padding: EdgeInsets.only(right: 18)),
@@ -147,7 +159,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
             ),
               onPressed: () {
                 Navigator.of(context).pop();
-                constants.getToast("Profile Saved Successfully",isDark);
+                constants.getToast("Profile Saved Successfully");
               }):Container(),
         ],
       ),
@@ -176,7 +188,6 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 });
               },
               icon: Icons.edit,
-              iconColor: iconColor[0],
             ),
             CustomProfileTile(
                 title: "Date of Birth",
@@ -189,7 +200,6 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                   });
                 },
                 icon: Icons.cake,
-                iconColor: iconColor[1],
               ),
             CustomProfileTile(
               data:gender,
@@ -218,7 +228,6 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 });
               },
               icon: Icons.male,
-              iconColor: iconColor[2],
             ),
             CustomProfileTile(
               title: "Unit",
@@ -247,12 +256,11 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 });
               },
               icon: Icons.linear_scale_sharp,
-              iconColor: iconColor[3],
             ),
             CustomProfileTile(
               title: "Height",
               data: unit,
-              subTitle: (unit == null)
+              subTitle: (heightValue == null)
                   ? "Enter your height"
                   : (unit == 0)
                       ? (heightValue == null)
@@ -274,9 +282,9 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 await spHelper.saveDouble(spKey.height, toSave??0);
                 setState(() {
                   showSaveButton = true;
-                  if(toSave == null){
+                  if(toSave != null){
                   heightValue = toSave;
-                  feetHeight = (toSave! ~/ 30.48).toDouble();
+                  feetHeight = (toSave ~/ 30.48).toDouble();
                   inchHeight = (toSave - (feetHeight! * 30.48)) * 0.393701;
                   if (inchHeight == 12) {
                     inchHeight = 0;
@@ -285,7 +293,6 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 }});
               },
               icon: FontAwesomeIcons.chartBar,
-              iconColor: iconColor[4],
             ),
             CustomProfileTile(
               title: "Weight",
@@ -319,7 +326,6 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 });
               },
               icon: FontAwesomeIcons.weight,
-              iconColor: iconColor[5],
             ),
             SizedBox(
               height: 50,
@@ -342,6 +348,7 @@ class NameSelector extends StatelessWidget {
     TextEditingController _nameInputController =
         TextEditingController(text: name);
     return AlertDialog(
+backgroundColor: Theme.of(context).cardColor,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12))),
       title: Text("Enter your Name"),
@@ -364,13 +371,13 @@ class NameSelector extends StatelessWidget {
    TextButton(
             child: Text(
               "Cancel",
-              style: textTheme.button!.copyWith(color: Colors.grey),
+              style: TextStyle(color: Colors.grey),
             ),
             onPressed: () => Navigator.of(context).pop()),
         TextButton(
             child: Text(
               "Save",
-              style: textTheme.button!.copyWith(color: contentColor),
+              style: TextStyle(color: contentColor),
             ),
             onPressed: () => Navigator.of(context)
                 .pop(_nameInputController.text.toString())),
@@ -445,14 +452,14 @@ class _RadioSelectorState extends State<RadioSelector> {
             Navigator.of(context).pop();
           },
           child: Text("Cancel",
-              style: textTheme.button!.copyWith(color: Colors.grey)),
+              style: TextStyle(color: Colors.grey)),
         ),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop(radioValue);
           },
           child: Text("Save",
-              style: textTheme.button!.copyWith(color: Colors.blue.shade700)),
+              style: TextStyle(color: Colors.blue.shade700)),
         ),
       ],
     );
@@ -464,7 +471,6 @@ class CustomProfileTile extends StatelessWidget {
   final String subTitle;
   final IconData icon;
   final Function onPressed;
-  final Color iconColor;
   final  data;
 
   CustomProfileTile(
@@ -473,11 +479,10 @@ class CustomProfileTile extends StatelessWidget {
       required this.icon,
       required this.onPressed,
       required this.data,
-      required this.iconColor});
+     });
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
 
     return ListTile(
@@ -487,7 +492,6 @@ class CustomProfileTile extends StatelessWidget {
       title: Text(title),
       leading: Icon(
         icon,
-        color: iconColor,
       ),
       onTap:()=> onPressed(),
       trailing: Text(
@@ -496,9 +500,7 @@ class CustomProfileTile extends StatelessWidget {
           style: TextStyle(
             color: data.toString() == "null"
                 ? Colors.grey
-                : isDark
-                    ? Colors.white
-                    : Colors.black,
+                : Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
             fontSize: data.toString() == "null" ? 12 : 14,
           )),
       // trailing: constants.trailingIcon,

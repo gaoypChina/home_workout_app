@@ -7,7 +7,6 @@ import 'package:full_workout/bloc_provider/connectivity_state_bloc.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../../main.dart';
 
 class YoutubeTutorial extends StatefulWidget {
   final Workout workout;
@@ -87,6 +86,7 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
               borderRadius: BorderRadius.all(Radius.circular(12)) ,
               child: YoutubePlayer(
                 bufferIndicator: CircularProgressIndicator(),
+
                 bottomActions: [
                   Container(
                     color: Colors.red,
@@ -94,6 +94,7 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
                 ],
                 controller: _controller,
                 showVideoProgressIndicator: true,
+
                 liveUIColor: Colors.blue,
                 progressColors: ProgressBarColors(backgroundColor: Colors.white,bufferedColor: Colors.white,handleColor: Colors.white,playedColor: Colors.blue),
                 controlsTimeOut: Duration(seconds: 10),
@@ -143,50 +144,51 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
       String rap = workout.showTimer == true
           ? "${widget.rapCount}s"
           : "X ${widget.rapCount}";
-      return Container(
-        height: 60,
-        child:
-            Text(
-              "${workout.title} $rap",
-              style: textTheme.bodyText1!.copyWith(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white),
+      return Padding(
+        padding: const EdgeInsets.only(top: 8.0,left: 18),
+        child: Text(
+          "${workout.title} $rap",
+          style: TextStyle(
+          fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white),
 
-        ),
+          ),
       );
     }
 
     getSteps(Workout workout) {
-      return Expanded(
-          child: ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                  minVerticalPadding: 0,
-                  leading: Text("Step ${index + 1}: ",
-                      style: textTheme.bodyText2!.copyWith(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700)),
-                  title: Text(
-                    "${workout.steps[index]}",
-                    style: textTheme.bodyText2
-                        !.copyWith(color: Colors.white, fontSize: 14),
-                  ));
-            },
-            itemCount: workout.steps.length,
-          ));
+      return ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+              minVerticalPadding: 12,
+              leading: Text("Step ${index + 1}: ",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700)),
+              title: Text(
+                "${workout.steps[index]}",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    letterSpacing: 1.2,
+                    height: 1.5),
+              ));
+        },
+        itemCount: workout.steps.length,
+      );
     }
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
-
+    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
     return Scaffold(
-      backgroundColor:isDark?Colors.black: Colors.blue,
+      backgroundColor:
+          isDark ? Theme.of(context).scaffoldBackgroundColor : Colors.blue,
       body: SafeArea(
-        child: Container(
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: Column(

@@ -17,7 +17,7 @@ class _RateAppInitWidgetState extends State<RateAppInitWidget> {
   Constants constants = Constants();
   String comment = "";
 
-  List<Widget> actionsBuilder(BuildContext context, double stars, bool isDark) {
+  List<Widget> actionsBuilder(BuildContext context, double stars) {
     Widget buildRateButton(double starts) {
       return TextButton(
           onPressed: () async {
@@ -60,7 +60,7 @@ class _RateAppInitWidgetState extends State<RateAppInitWidget> {
                                 await FlutterEmailSender.send(email);
                               } catch (e) {
                                 constants.getToast(
-                                    "Thanks for your Feedback", isDark);
+                                    "Thanks for your Feedback",);
                               }
                             },
                             child: Text("Ok")),
@@ -91,7 +91,6 @@ class _RateAppInitWidgetState extends State<RateAppInitWidget> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return RateMyAppBuilder(
       rateMyApp: RateMyApp(googlePlayIdentifier: constants.packageName,
@@ -106,11 +105,12 @@ class _RateAppInitWidgetState extends State<RateAppInitWidget> {
         });
         if(rateMyApp.shouldOpenDialog){
           rateMyApp.showStarRateDialog(context,
-              title: "Rate this App",
+              title: "Rate Us",
+              dialogStyle: DialogStyle(dialogShape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(18)))),
               message: "Do you like this app? Please leave a rating",
               starRatingOptions: StarRatingOptions(initialRating: 0,),
               actionsBuilder: (context, stars) {
-                return actionsBuilder(context, stars??0, isDark);
+                return actionsBuilder(context, stars??1);
               });
         }
       },

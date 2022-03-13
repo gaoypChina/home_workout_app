@@ -1,68 +1,76 @@
 import 'package:flutter/material.dart';
 
-import '../../../main.dart';
 
 class FAQPage extends StatelessWidget {
   static const routeName = "FAQ-page";
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
-    Widget getFAQTile() {
-      return Column(
-        children: faqList
-            .map((faq) => Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0,right: 8,bottom: 8),
-                      child: Material(
-                        color: isDark?Colors.grey.shade800:Colors.white,
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(16))),
-                          child: Theme(
-                            data: Theme.of(context)
-                                .copyWith(dividerColor: Colors.transparent),
-                            child: ExpansionTile(
-                              initiallyExpanded: true,
-                              title: Text(
-                                faq.question,
-                                style: textTheme.bodyText1!.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 15),
-                              ),
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 18.0, right: 18, bottom: 18),
-                                  child: Text(faq.answer),
-                                )
-                              ],
-                            ),
-                          )),
+    buildFAQCard() {
+      return Theme(
+          data: ThemeData(
+            dividerColor: Colors.transparent,
+          ),
+          child: Column(children: [
+            const SizedBox(
+              height: 4,
+            ),
+            ...faqList
+                .map((faq) => Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                borderRadius:const  BorderRadius.all(Radius.circular(16)),
+
+                border: Border.all(
+                    color: Theme.of(context).primaryColor.withOpacity(.2), width: 1),
+              ),
+              child: ExpansionTile(
+
+              //  iconColor: Theme.of(context).textTheme.headline1!.color,
+                collapsedIconColor: Theme.of(context).textTheme.headline1!.color,
+                tilePadding: EdgeInsets.zero,
+                title: Text(
+                  faq.question,
+                  style:
+                  Theme.of(context).textTheme.headline1!.copyWith(
+                    letterSpacing: 1.2,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                children: [
+                  Text(
+                    faq.answer,
+                    style:
+                    Theme.of(context).textTheme.bodyText2!.copyWith(
+                      letterSpacing: 1.5,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
                     ),
-                    SizedBox(
-                      height: 8,
-                    )
-                  ],
-                ))
-            .toList(),
-      );
+                  ),
+                ],
+              ),
+            ))
+                .toList()
+          ]));
     }
 
+
     return Scaffold(
-      backgroundColor: isDark?Colors.black:Colors.white,
       appBar: AppBar(
-        backgroundColor: isDark?Colors.black:Colors.white,
-        title: Text("FAQ",style: TextStyle(color: isDark?Colors.white:Colors.black),),
+        title: Text("FAQ"),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(8),
         physics: BouncingScrollPhysics(),
         child: Column(
-          children: [getFAQTile()],
+          children: [
+            // Image.network(
+            //     "https://media.onetimepim.com/_internal/athena/what-is-pim/undraw_Faq_re_31cw_(1).png"),
+            buildFAQCard()
+          ],
         ),
       ),
     );

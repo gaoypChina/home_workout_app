@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/models/main_page_item.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/widgets/achivement.dart';
 import 'package:full_workout/widgets/active_goal.dart';
 import 'package:full_workout/widgets/workout_card.dart';
 
-import '../../../main.dart';
 import 'leading_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -25,20 +25,19 @@ class HomePage extends StatelessWidget {
               title: Text("Do you really want to exit the app?",style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),),
               actions: [
                 ElevatedButton(
-
                   child: const Text("Yes"),
-                  style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      primary: Theme.of(context).primaryColor.withOpacity(.5)),
-
-                  onPressed: () => Navigator.pop(context, true),
-                ),
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          primary: Colors.blue.shade800.withOpacity(.7)),
+                      onPressed: () => Navigator.pop(context, true),
+                    ),
 
                 ElevatedButton(
                   child: const Text("No"),
-                  style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
-                  onPressed: () => Navigator.pop(context, false),
-                ),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.blue.shade800),
+                      onPressed: () => Navigator.pop(context, false),
+                    ),
               ],
             );
           }) ??
@@ -54,152 +53,131 @@ class HomePage extends StatelessWidget {
 
     getTitle(String title) {
       return Container(
-        padding: EdgeInsets.only(left: 18, right: 8, top: 12, bottom: 6),
-        child: Text(title,
-            style: textTheme.bodyText1!.copyWith(
-              fontWeight: FontWeight.w600,
-              fontSize: 18,
-            )),
+        padding: EdgeInsets.only(left: 12, top: 22, bottom: 10),
+        child: Row(
+          children: [
+            Container(
+       decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(2)),
+      gradient: LinearGradient(colors:[Colors.blue.shade700.withOpacity(.9), Colors.red.withOpacity(.9)], begin: Alignment.topRight, end: Alignment.bottomLeft)),
+
+              height: 18,width: 6,),
+            SizedBox(width: 8,),
+            Text(title,
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                  letterSpacing: 1.4,
+                )),
+          ],
+        ),
       );
     }
 
-    List<List<Color>> cardColor = [
-      [Colors.green, Colors.blue],
-      [Colors.orange, Colors.blue],
-      [Colors.red, Colors.blue],
-    ];
-
-    double height = MediaQuery.of(context).size.height;
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
 
     return WillPopScope(
         onWillPop: _onBackPressed,
         child: Scaffold(
-          backgroundColor: isDark?Colors.black:Colors.white,
-          body: NestedScrollView(
+          backgroundColor: Theme.of(context).bottomAppBarColor,
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              actions: getLeading(context),
+              elevation: 0,
+              title: RichText(
+                  text: TextSpan(children: [
+                TextSpan(
+                    text: "Home ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.2,
+                        color: Colors.red,
+                        fontSize: 20)),
+                TextSpan(
+                    text: "Workout",
+                    style: TextStyle(
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.blue.shade700,
+                        fontSize: 20))
+              ])),
+            ),
+            body: ListView(
               physics: BouncingScrollPhysics(),
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return [
-                  SliverAppBar(
+              children: [
+                Achievement(
+                  onTap: () => Navigator.pushNamed(
+                      context, WorkoutDetailReport.routeName),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ActiveGoal(),
+                SizedBox(height: 2,),
+                getTitle(exerciseName[0]),
+                for (int i = 0; i < 3; i++)
+                      WorkoutCard(
+                        title: chestExercise[i].title,
+                        workoutList: chestExercise[i].workoutList,
+                        tagValue: i,
+                        imaUrl: chestExercise[i].imageUrl,
+                        tag: chestExercise[i].title,
+                        index: 1,
+                      ),
 
-                    actions: [...getLeading(context,color:isDark? Colors.white70:Colors.black87)],
-                    backgroundColor: isDark?Colors.black:Colors.white,
-                    automaticallyImplyLeading: false,
-                    expandedHeight:height * .16,
-                    elevation: 1,
-                    title:
-                    RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                          text: "Home ",
-                          style: TextStyle(
-                              color:
-                                  isDark ? Colors.white : Colors.black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 22)),
-                      TextSpan(
-                          text: "Workout",
-                          style: TextStyle(
-                              color: isDark ? Colors.white : Colors.black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 22))
-                    ])),
+                getTitle(exerciseName[1]),
+                for (int i = 0; i < 3; i++)
 
-                    pinned: true,
-                    forceElevated: innerBoxIsScrolled,
-                    flexibleSpace: FlexibleSpaceBar(
-                      collapseMode: CollapseMode.parallax,
-                      background: Container(
-                          decoration: BoxDecoration(
-                            color: isDark ? Colors.black : Colors.white,
-                          ),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Spacer(
-                                  flex: 4,
-                                ),
-                                Achievement(
-                                  onTap: () => Navigator.pushNamed(
-                                      context, WorkoutDetailReport.routeName),
-                                ),
-                               Spacer(),
-                                // Divider(height: 8,thickness:isDark? .1 : .1,color:isDark?Colors.grey: Colors.grey.shade300,)
-                              ],
-                            ),
-                          )),
-                    ),
-                  ),
-                ];
-              },
-              body: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 0),
-                children: [
-                  ActiveGoal(),
-                  SizedBox(height: 4,),
-                  getTitle(exerciseName[0]),
-                  for (int i = 0; i < 3; i++)
-                    WorkoutCard(
-                      color: cardColor[i],
-                      title: absExercise[i].title,
-                      workoutList: absExercise[i].workoutList,
-                      tagValue: i,
-                      imaUrl: absExercise[i].imageUrl,
-                      tag: absExercise[i].tag,
-                      index: 0,
-                    ),
-                  getTitle(exerciseName[1]),
-                  for (int i = 0; i < 3; i++)
-                    WorkoutCard(
-                      color: cardColor[i],
-                      title: chestExercise[i].title,
-                      workoutList: chestExercise[i].workoutList,
-                      tagValue: i,
-                      imaUrl: chestExercise[i].imageUrl,
-                      tag: chestExercise[i].tag,
-                      index: 1,
-                    ),
-                  getTitle(exerciseName[2]),
-                  for (int i = 0; i < 3; i++)
-                    WorkoutCard(
-                      color: cardColor[i],
-                      title: shoulderExercise[i].title,
-                      workoutList: shoulderExercise[i].workoutList,
-                      tagValue: i,
-                      imaUrl: shoulderExercise[i].imageUrl,
-                      tag: shoulderExercise[i].tag,
-                      index: 0,
-                    ),
-                  getTitle(exerciseName[3]),
-                  for (int i = 0; i < 3; i++)
-                    WorkoutCard(
-                      color: cardColor[i],
-                      title: legsExercise[i].title,
-                      workoutList: legsExercise[i].workoutList,
-                      tagValue: i,
-                      imaUrl: legsExercise[i].imageUrl,
-                      tag: legsExercise[i].tag,
-                      index: 1,
-                    ),
-                  getTitle(exerciseName[4]),
-                  for (int i = 0; i < 3; i++)
-                    WorkoutCard(
-                      color: cardColor[i],
-                      title: armsExercise[i].title,
-                      workoutList: armsExercise[i].workoutList,
-                      tagValue: i,
-                      imaUrl: armsExercise[i].imageUrl,
-                      tag: armsExercise[i].tag,
-                      index: 0,
-                    ),
-                  SizedBox(
-                    height: 20,
-                  )
-                ],
-              )),
-        ));
+                      WorkoutCard(
+                        title: shoulderExercise[i].title,
+                        workoutList: shoulderExercise[i].workoutList,
+                        tagValue: i,
+                        imaUrl: shoulderExercise[i].imageUrl,
+                        tag: shoulderExercise[i].title,
+                        index: 0,
+                      ),
+
+
+                getTitle(exerciseName[2]),
+                for (int i = 0; i < 3; i++)
+
+                      WorkoutCard(
+                        title: absExercise[i].title,
+                        workoutList: absExercise[i].workoutList,
+                        tagValue: i,
+                        imaUrl: absExercise[i].imageUrl,
+                        tag: absExercise[i].title,
+                        index: 0,
+                      ),
+
+                getTitle(exerciseName[3]),
+                for (int i = 0; i < 3; i++)
+
+                      WorkoutCard(
+                        title: legsExercise[i].title,
+                        workoutList: legsExercise[i].workoutList,
+                        tagValue: i,
+                        imaUrl: legsExercise[i].imageUrl,
+                        tag: legsExercise[i].title,
+                        index: 1,
+                      ),
+
+                getTitle(exerciseName[4]),
+                for (int i = 0; i < 3; i++)
+
+                      WorkoutCard(
+                        title: armsExercise[i].title,
+                        workoutList: armsExercise[i].workoutList,
+                        tagValue: i,
+                        imaUrl: armsExercise[i].imageUrl,
+                        tag: armsExercise[i].title,
+                        index: 0,
+                      ),
+
+                SizedBox(height:20),
+
+
+              ],
+            )));
   }
 }

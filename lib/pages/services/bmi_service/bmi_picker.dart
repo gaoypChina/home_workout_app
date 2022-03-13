@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:full_workout/constants/constant.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-import '../../../main.dart';
 
 class BMIPicker extends StatefulWidget {
   final double? height;
@@ -38,11 +37,11 @@ class _BMIPickerState extends State<BMIPicker> {
 
 
 
-    onSubmit(bool isDark) {
+    onSubmit() {
       if (heightIndex == 0) {
         height = double.tryParse(_cmController.text);
         if (height == null || height! <=50) {
-          constants.getToast("Please enter valid height value",isDark);
+          constants.getToast("Please enter valid height value");
         }
       }
 
@@ -50,7 +49,7 @@ class _BMIPickerState extends State<BMIPicker> {
         double? feet = double.tryParse(_feetController.text);
         double? inch = double.tryParse(_inchController.text);
         if (feet == null || inch == null || feet <=2) {
-          constants.getToast("Please enter valid height value",isDark);
+          constants.getToast("Please enter valid height value");
         } else {
           double inchHeight = (feet * 12) + inch;
           height = inchHeight * 2.54;
@@ -60,7 +59,7 @@ class _BMIPickerState extends State<BMIPicker> {
       if (weightIndex == 0) {
         weight = double.tryParse(_kgController.text)!;
         if (weight == null|| weight! <=20 ) {
-          constants.getToast("Please enter valid weight value",isDark);
+          constants.getToast("Please enter valid weight value");
         }
 
       }
@@ -68,7 +67,7 @@ class _BMIPickerState extends State<BMIPicker> {
       if (weightIndex == 1) {
         double? lbsWeight = double.tryParse(_lbsController.text);
         if (lbsWeight == null || lbsWeight <=50) {
-          constants.getToast("Please enter valid weight value",isDark);
+          constants.getToast("Please enter valid weight value");
         } else {
           weight = lbsWeight / 2.205;
           print(weight);
@@ -80,7 +79,6 @@ class _BMIPickerState extends State<BMIPicker> {
 
     }
 
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -96,8 +94,7 @@ class _BMIPickerState extends State<BMIPicker> {
                 padding: const EdgeInsets.only(left: 4.0),
                 child: Text(
                   "Height",
-                  style: textTheme.bodyText1!
-                      .copyWith(fontWeight: FontWeight.w700, fontSize: 20),
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
                 ),
               ),
               SizedBox(
@@ -200,8 +197,7 @@ class _BMIPickerState extends State<BMIPicker> {
                 padding: const EdgeInsets.only(left: 4.0),
                 child: Text(
                   "Weight",
-                  style: textTheme.bodyText1!
-                      .copyWith(fontWeight: FontWeight.w700, fontSize: 20),
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
                 ),
               ),
               SizedBox(
@@ -278,13 +274,13 @@ class _BMIPickerState extends State<BMIPicker> {
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
                 "Cancel",
-                style: textTheme.button!.copyWith(color: Colors.grey),
+                style: TextStyle(color: Colors.grey),
               )),
           TextButton(
-              onPressed: () => onSubmit(isDark),
+              onPressed: () => onSubmit(),
               child: Text(
                 "Submit",
-                style: textTheme.button!.copyWith(color: Colors.blue.shade700),
+                style: TextStyle(color: Colors.blue.shade700),
               )),
         ],
       ),

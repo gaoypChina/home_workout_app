@@ -72,4 +72,8 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    def billing_version = "4.0.0"
+    implementation "com.android.billingclient:billing:$billing_version"
+    implementation 'com.google.android.gms:play-services-ads:20.6.0'
+
 }

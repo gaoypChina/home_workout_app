@@ -5,14 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_helper.dart';
+import 'package:full_workout/models/challenges_model.dart';
 import 'package:full_workout/pages/main/explore_page/explore_page.dart';
 import 'package:full_workout/pages/workout_page/exercise_list_page.dart';
 import 'package:timelines/timelines.dart';
 import 'package:flutter/rendering.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:dashed_circle/dashed_circle.dart';
-
-import '../../../main.dart';
 
 class WorkoutTimeLine extends StatefulWidget {
   final ChallengesModel challengesModel;
@@ -90,10 +89,11 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
   @override
   Widget build(BuildContext context) {
 
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
+    Color grayColor = Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.4);
     List<String> title = ["Week 1", "Week 2", "Week 3", "Week 4"];
-    getWeekTile(int index, bool isDark) {
+    getWeekTile(int index) {
       getDay(String day, int currIndex) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
@@ -110,12 +110,12 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                           backgroundColor: Colors.transparent))
                   : currIndex > currentDay
                       ? DashedCircle(
-                          color:isDark? Colors.grey.shade500:Colors.grey.shade300,
-                          dashes: 111,
+                          color:Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.4),
+                          dashes: 100,
                           child: CircleAvatar(
                               child: Text(
                                 day,
-                                style: TextStyle(color: Colors.grey.shade400),
+                                style: TextStyle(color:Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.5)),
                               ),
                               radius: 16,
                               backgroundColor: Colors.transparent))
@@ -130,7 +130,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
               borderRadius: BorderRadius.all(Radius.circular(40)),
               onTap: () => currIndex <= currentDay
                   ? onComplete(currIndex)
-                  :    constants.getToast("Complete previous challenges to unlock",isDark)),
+                  :    constants.getToast("Complete previous challenges to unlock")),
         );
       }
 
@@ -151,11 +151,11 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
         return Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            Icon(FontAwesomeIcons.trophy,size: 50,color:(presentDay+7)<=currentDay?Colors.amber:isDark? Colors.grey.shade500:Colors.grey.shade400.withOpacity(.7),
+            Icon(FontAwesomeIcons.trophy,size: 38,color:(presentDay+7)<=currentDay?Colors.amber:grayColor,
             ),
             Center(child: Padding(
-              padding: const EdgeInsets.only(bottom: 3.0),
-              child: Text(index.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 13),),
+              padding: const EdgeInsets.only(bottom: 4.0,left: 4),
+              child: Text(index.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 14),),
             ))
           ],
         );
@@ -163,7 +163,6 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
 
       return Container(
         child: Card(
-          color: isDark ? constants.darkSecondary:Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -251,7 +250,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                   return SolidLineConnector(color: Colors.blue.shade700);
                 } else
                   return DashedLineConnector(
-                    color: Colors.grey,
+                    color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.3),
                     dash: 1,
                   );
               },
@@ -308,7 +307,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                       Container(
                         width: double.infinity,
                         margin: EdgeInsets.symmetric(vertical: 8),
-                        child: getWeekTile(indexIndex,isDark),
+                        child: getWeekTile(indexIndex),
                       ),
                       SizedBox(
                         height: 20,
@@ -333,7 +332,6 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverAppBar(
-                    backgroundColor: isDark ? Colors.black : Colors.white,
                     leading: IconButton(
                       icon: Icon(
                         Icons.arrow_back,
@@ -355,7 +353,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                                 : Colors.white,
                       ),
                     ),
-                    elevation: 0,
+                    elevation: .5,
                     centerTitle: false,
                     expandedHeight: 190.0,
                     collapsedHeight: 60,
@@ -414,8 +412,9 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                                 percent: currentDay / 28,
                                 lineHeight: 10,
                                 animation: true,
+                                barRadius: Radius.circular(18),
                                 progressColor: Colors.blue.shade700,
-                                backgroundColor: Colors.grey,
+                                backgroundColor: Colors.blue.withOpacity(.5),
                               ),
                             ],
                           ),
@@ -426,7 +425,6 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                 ];
               },
               body: Scaffold(
-                backgroundColor: isDark ? Colors.black : Colors.white,
                 floatingActionButtonLocation:
                     FloatingActionButtonLocation.centerFloat,
                 floatingActionButtonAnimator:
@@ -445,8 +443,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                       ),
                       label: Text(
                         "Start Workout" ,
-                        style: textTheme.button
-                            !.copyWith(fontSize: 16, color: Colors.white),
+                        style: TextStyle(fontSize: 16, color: Colors.white),
                         textAlign: TextAlign.end,
                       ),
                     ),

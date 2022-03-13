@@ -32,7 +32,7 @@ class RecentDatabaseHelper {
 
   initDb() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentDirectory.path, "WorkoutData.db");
+    String path = join(documentDirectory.path, "RecentWorkout.db");
     var ourDb = await openDatabase(path, version: 1, onCreate: _onCreate);
     return ourDb;
   }
@@ -52,8 +52,12 @@ class RecentDatabaseHelper {
 
   // Insert
   Future<int> saveWorkOut(RecentWorkout recentWorkout) async {
-    var dbClient = await db;
+    Database dbClient = await db;
+    print("dbclient)");
+    print(dbClient.toString());
+    print(recentWorkout.date);
     int res = await dbClient.insert('$tableName', recentWorkout.toMap());
+    print("save : " + res.toString());
     return res;
   }
 
@@ -62,6 +66,7 @@ class RecentDatabaseHelper {
     var dbClient = await db;
     var result = await dbClient
         .rawQuery("SELECT * FROM $tableName ORDER BY $columnId DESC");
+    print("results : " + result.toString());
     return result.toList();
   }
 

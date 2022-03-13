@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:full_workout/constants/constant.dart';
 
-import '../../main.dart';
 import '../main_page.dart';
+
 
 class QuitPage extends StatefulWidget {
   @override
@@ -41,17 +41,13 @@ class _QuitPageState extends State<QuitPage> {
             },
             child: Text(
               title,
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .button!
-                  .merge(TextStyle(
-                  color:textColor, fontSize: title == "Quit" ? 18 : 14)),
+              style: TextStyle(
+                  color:textColor, fontSize: title == "Quit" ? 18 : 14),
             )),
       );
     }
 
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
     Color defaultTextColor = Colors.blue.shade700;
     Color defaultBackgroundColor = isDark?Colors.black:Colors.white;
 
@@ -79,7 +75,7 @@ class _QuitPageState extends State<QuitPage> {
             ),
             label: Text(
               "Quit Workout",
-              style: textTheme.button!.copyWith(
+              style: TextStyle(
                   fontSize: 16, color: Colors.white),
               textAlign: TextAlign.end,
             ),
@@ -124,7 +120,7 @@ class _QuitPageState extends State<QuitPage> {
 
                   Text(
                     "Quit",
-                    style: textTheme.headline1!.copyWith(
+                    style: TextStyle(
                         color: isDark?Colors.white:Colors.black,
                         fontSize: 40,
                         letterSpacing: 1.5,
@@ -138,7 +134,7 @@ class _QuitPageState extends State<QuitPage> {
                     child: Text(
                       "Please tell us what stopped you, so we can make your next workout perfect",
                       textAlign: TextAlign.center,
-                      style: textTheme.bodyText1!.copyWith(
+                      style: TextStyle(
                           color:Colors.grey,
                           fontSize: 14,
                           fontWeight: FontWeight.w500),

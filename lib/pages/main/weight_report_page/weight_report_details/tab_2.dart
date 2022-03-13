@@ -6,12 +6,8 @@ class WeightDetailTab2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
-    return Scaffold(
-
-        backgroundColor: isDark ? Colors.black : Colors.white,
-        body: SingleChildScrollView(
+    return SingleChildScrollView(
           physics: NeverScrollableScrollPhysics(),
           child:
           Column(
@@ -27,7 +23,7 @@ class WeightDetailTab2 extends StatelessWidget {
 
             ],
           ),
-        ),
+
       );
 
   }

@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:full_workout/components/info_button.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/mediaHelper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/pages/workout_page/exercise_detail_page.dart';
-import 'package:full_workout/pages/workout_page/report_page.dart';
 import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
-import 'package:full_workout/pages/workout_page/pause_page.dart';
-import 'package:full_workout/pages/workout_page/rest_page.dart';
-import 'package:full_workout/components/info_button.dart';
 import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
+import 'package:full_workout/pages/workout_page/exercise_detail_page.dart';
+import 'package:full_workout/pages/workout_page/pause_page.dart';
+import 'package:full_workout/pages/workout_page/report_page.dart';
+import 'package:full_workout/pages/workout_page/rest_page.dart';
+import 'package:full_workout/provider/ads_provider.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import '../../main.dart';
+import 'package:provider/provider.dart';
+
 import 'check_list.dart';
 
 class WorkoutPage extends StatefulWidget {
@@ -49,7 +52,6 @@ class _WorkoutPageState extends State<WorkoutPage>
   int screenTime = 30;
   late AnimationController controller;
  late DateTime currentTime;
-
  late FlutterTts flutterTts;
 
   String get timerString {
@@ -74,7 +76,7 @@ class _WorkoutPageState extends State<WorkoutPage>
     mediaHelper.playSoundOnce(audioPath).then((value) => Future.delayed(
             Duration(seconds: 1))
         .then((value) => mediaHelper.speak(message))
-        .then((value) => Future.delayed(Duration(seconds: 2))
+        .then((value) => Future.delayed(Duration(seconds: 3))
             .then((value) => mediaHelper.speak(workout.steps[0]))
            ));
   }
@@ -97,9 +99,29 @@ class _WorkoutPageState extends State<WorkoutPage>
     print(value);
   }
 
+  _showInterstitialAd(){
+    var provider = Provider.of<AdsProvider>(context,listen: false);
+    if(provider.interstitialAd != null){
+      provider.interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (InterstitialAd ad){
+          ad.dispose();
+          provider.createInterstitialAd();
+        },
+        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error){
+          ad.dispose();
+          provider.createInterstitialAd();
+        }
+      );
+      provider.interstitialAd!.show();
+    }
+  }
+
+
   _onComplete(int currIndex) async {
 
     if (currIndex + 1 == widget.workOutList.length) {
+      _showInterstitialAd();
+
        return Navigator.pushReplacement(
            context,
            MaterialPageRoute(
@@ -126,8 +148,6 @@ class _WorkoutPageState extends State<WorkoutPage>
      }));
      }
 
-
-
   _showTimer() {
     controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
     controller.addStatusListener((status) {
@@ -145,6 +165,8 @@ class _WorkoutPageState extends State<WorkoutPage>
     currentTime = DateTime.now();
     if (currIndex != widget.workOutList.length) {
       introMessage();
+    }if (currIndex + 1 == widget.workOutList.length){
+      Provider.of<AdsProvider>(context,listen: false).createInterstitialAd();
     }
     controller = AnimationController(
       vsync: this,
@@ -161,37 +183,46 @@ class _WorkoutPageState extends State<WorkoutPage>
   @override
   void dispose() {
     controller.dispose();
+    if (currIndex + 1 == widget.workOutList.length){
+      Provider.of<AdsProvider>(context,listen: false).disposeInterstitialAd();
+    }
     super.dispose();
   }
 
   Widget getImage(double height, Workout item, int currIndex) {
     return Stack(
       children: [
-        Container(height: height / 2, child: Padding(
-          padding: const EdgeInsets.only(top: 18.0,left: 18,right: 18),
-          child: Image.asset(item.imageSrc),
-        ),color: Colors.white,),
-
+        Hero(
+          tag: item.title,
+          child: Container(
+            height: height / 2,
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 18.0, left: 18, right: 18),
+              child: Image.asset(item.imageSrc,fit: BoxFit.scaleDown,),
+            ),
+            color: Colors.white,
+          ),
+        ),
         Positioned(
             right: 2,
             top: 20,
             child: Column(
               children: [
                 InfoButton(
-                  icon: Icons.list_alt_outlined,
-                  tooltip: "Exercise Plane",
+                  icon: FontAwesomeIcons.questionCircle,
+                  tooltip: "Steps",
                   onPress: () async {
-                    controller.stop(canceled: true);
-                    await Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => CheckListScreen(
-                              progress:
-                                  (currIndex + 1) / widget.workOutList.length,
-                              workOutList: widget.workOutList,
-                              tag: widget.tag,
-                              title: widget.title)),
-                    );
+                    print(controller.status);
 
+                    if (controller.isAnimating) {
+                      controller.stop(canceled: true);
+                      await Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DetailPage(
+                            workout: item,
+                            rapCount: widget.rapList[currIndex],
+                          )));
+                    }
                     controller.reverse(
                         from: controller.value == 0.0 ? 1.0 : controller.value);
                   },
@@ -231,23 +262,25 @@ class _WorkoutPageState extends State<WorkoutPage>
                   },
                 ),
                 InfoButton(
-                  icon: FontAwesomeIcons.questionCircle,
-                  tooltip: "Steps",
+                  icon: Icons.list_alt_outlined,
+                  tooltip: "Exercise Plane",
                   onPress: () async {
-                    print(controller.status);
+                    controller.stop(canceled: true);
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => CheckListScreen(
+                              progress:
+                              (currIndex + 1) / widget.workOutList.length,
+                              workOutList: widget.workOutList,
+                              tag: widget.tag,
+                              title: widget.title)),
+                    );
 
-                    if (controller.isAnimating) {
-                      controller.stop(canceled: true);
-                      await Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => DetailPage(
-                                workout: item,
-                                rapCount: widget.rapList[currIndex],
-                              )));
-                    }
                     controller.reverse(
                         from: controller.value == 0.0 ? 1.0 : controller.value);
                   },
                 ),
+
               ],
             )),
       ],
@@ -261,17 +294,19 @@ class _WorkoutPageState extends State<WorkoutPage>
       lineHeight: 5.0,
       percent: (currIndex + 1) / widget.workOutList.length,
       width: width,
-      backgroundColor:isDark?Colors.grey.shade800: Colors.blue.shade50,
-      linearStrokeCap: LinearStrokeCap.round,
+      backgroundColor:isDark?Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8):Colors.blue.shade200,
+      barRadius: Radius.circular(18),
       progressColor: Colors.blue.shade700,
     );
   }
 
 
   getTitleCard(Workout item, int currIndex,bool isDark) {
+    Color greyColor = Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.55);
+
     return Expanded(
       child: Container(
-          color:isDark? Colors.black:Colors.white,
+          color:Theme.of(context).cardColor,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -282,8 +317,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                   ),
                   Text(
                     "${currIndex + 1} of ${widget.workOutList.length}",
-                    style:
-                    textTheme.caption!.copyWith(fontSize: 16, color: Colors.grey),
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                   SizedBox(
                     height: 10,
@@ -298,11 +332,11 @@ class _WorkoutPageState extends State<WorkoutPage>
                           item.title,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
-                          style: textTheme.headline1!.copyWith(
-                              fontSize: item.title.length > 15 ? 25 : 30,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.2,
-                              ),
+                          style: TextStyle(
+                            fontSize: item.title.length > 15 ? 25 : 30,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.2,
+                          ),
                         ),
                       ),
                     ],
@@ -362,11 +396,11 @@ class _WorkoutPageState extends State<WorkoutPage>
                 },
                 child: Text(
                   "Done",
-              style: textTheme.button!.copyWith(
-                  fontSize: 20,
-                  letterSpacing: 2,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 20,
+                      letterSpacing: 2,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
             ),
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.blue.shade700,
@@ -390,23 +424,23 @@ class _WorkoutPageState extends State<WorkoutPage>
                           children: [
                             Icon(
                               Icons.pause,
-                              color: Colors.grey,
+                              color: greyColor,
                             ),
                             SizedBox(
                               width: 5,
                             ),
                             Text(
                               "Pause",
-                              style: textTheme.button!.copyWith(
+                              style: TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 18,
-                                  color: Colors.grey),
+                                  color: greyColor),
                             ),
                           ],
                         )),
                     Container(
                       height: 20,
-                      color: Colors.grey,
+                      color:greyColor,
                       width: 2.5,
                     ),
                     TextButton(
@@ -416,16 +450,16 @@ class _WorkoutPageState extends State<WorkoutPage>
                         child: Row(
                           children: [
                             Text("Skip",
-                                style: textTheme.button!.copyWith(
+                                style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 18,
-                                    color: Colors.grey)),
+                                    color: greyColor)),
                             SizedBox(
                               width: 5,
                             ),
                             Icon(
                               Icons.skip_next_rounded,
-                              color: Colors.grey,
+                              color: greyColor,
                             ),
                           ],
                         )),
@@ -441,12 +475,11 @@ class _WorkoutPageState extends State<WorkoutPage>
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    bool isDark =Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
     return WillPopScope(
       onWillPop: ()=>_onPopBack(),
       child: Scaffold(
-        backgroundColor:isDark?Colors.black: Colors.white,
         body: SafeArea(
           child: Column(
             children: [

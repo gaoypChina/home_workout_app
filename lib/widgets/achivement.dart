@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 
-import '../main.dart';
 
 class Achievement extends StatefulWidget {
   final Function onTap;
@@ -44,11 +43,11 @@ class _AchievementState extends State<Achievement> {
   }
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     Widget getAchievementCard(
         int time, int exercise, double calories, bool isLoading) {
       getCard(String title, String subTitle, List<Color> color) {
+
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 18),
           child: InkWell(
@@ -61,18 +60,22 @@ class _AchievementState extends State<Achievement> {
                 children: [
 
                   Text(
-                    isLoading ? "" : subTitle,
-                    style: textTheme.bodyText2!.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: isDark?Colors.blue:Colors.blue.shade700,
-                        fontSize: 28),
+                    isLoading ? "" : subTitle.length == 1?subTitle+"0" : subTitle,
+
+                    style: TextStyle(
+                      letterSpacing: 1.5,
+
+                        fontWeight: FontWeight.w500,
+                        color: color[0].withOpacity(.8),
+                        fontSize: 30),
                   ),
 
                   Text(
                     title,
-                    style: textTheme.bodyText1!.copyWith(
-                      color: Colors.blueGrey,
-                        fontWeight: FontWeight.w400,
+                    style: TextStyle(
+                      letterSpacing: 1.5,
+                        color: Colors.red.withOpacity(.7),
+                        fontWeight: FontWeight.w600,
                         fontSize: 13),
                   ),
                 ],
@@ -84,7 +87,7 @@ class _AchievementState extends State<Achievement> {
 
       return Container(
 
-        padding: EdgeInsets.symmetric(horizontal: 8),
+        padding: EdgeInsets.symmetric(horizontal: 0),
 
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,9 +95,9 @@ class _AchievementState extends State<Achievement> {
             getCard("Exercise", exercise.toString(),
                 [Colors.green.shade700, Colors.green]),
             getCard("Minute", (time~/60).toString(),
-                [Colors.red.shade700, Colors.red.shade300]),
+                [Colors.orange.shade700, Colors.red.shade300]),
             getCard("Calories", calories.toInt().toString(),
-                [Colors.orange.shade700, Colors.orange]),
+                [Colors.red.shade700, Colors.orange]),
           ],
         ),
       );

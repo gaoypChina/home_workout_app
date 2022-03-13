@@ -1,14 +1,16 @@
 //TODO: uncomment all
 
 import 'package:android_intent_plus/android_intent.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmVoiceDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return CupertinoAlertDialog(
       title: Text(
         "Did you hear the test voice?",
+        style: TextStyle(fontSize: 16,letterSpacing: 1.3),
       ),
       actions: [
         TextButton(
@@ -23,8 +25,9 @@ class ConfirmVoiceDialog extends StatelessWidget {
 class OpenDeviceTTSSettingsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text("Open TTS Setting"),
+    return CupertinoAlertDialog(
+      title: Text("Open TTS Setting",
+        style: TextStyle(fontSize: 16,letterSpacing: 1.3),),
       actions: [
         TextButton(
             onPressed: () => Navigator.of(context).pop(), child: Text("No")),

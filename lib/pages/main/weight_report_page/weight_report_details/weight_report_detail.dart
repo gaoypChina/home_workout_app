@@ -1,72 +1,93 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:full_workout/pages/main/weight_report_page/weight_report_details/tab_1.dart';
 import 'package:full_workout/pages/main/weight_report_page/weight_report_details/tab_2.dart';
+import 'package:full_workout/provider/weight_report_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
-class WeightReportDetail extends StatelessWidget {
+class WeightReportDetail extends StatefulWidget {
   final Function onBack;
   final int index;
 
-
-
-  WeightReportDetail({ required this.onBack, required this.index});
+  WeightReportDetail({required this.onBack, required this.index});
 
   static const routeName = "weight-report-detail";
 
   @override
+  State<WeightReportDetail> createState() => _WeightReportDetailState();
+}
+
+class _WeightReportDetailState extends State<WeightReportDetail> {
+  int pageIdx = 0;
+
+  @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    var provider = Provider.of<WeightReportProvider>(context, listen: false);
 
-    return WillPopScope(
-      onWillPop: () => onBack(),
-      child: DefaultTabController(
-        initialIndex: index,
-        length: 2,
-        child: Scaffold(
-          body: NestedScrollView(
-            headerSliverBuilder: (context, _) => [
-              SliverAppBar(
-                pinned: true,
-                floating: true,
-                snap: true,
-                backgroundColor:isDark?Colors.black: Colors.blue.shade700,
-                flexibleSpace: Container(
+    var size = MediaQuery.of(context).size;
+    return Scaffold(
 
-                ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: pageIdx == 0?FloatingActionButton.extended(
 
-                title: Text(
-                  "Weight Tracker",
-                ),
-                automaticallyImplyLeading: false,
-                bottom: TabBar(
-                  tabs: [
-                    Tab(
-                      icon: Icon(
-                        Icons.history,
-
-                      ),
-                      child: Text(
-                        "HISTORY",
-                      ),
-                    ),
-                    Tab(
-                      icon: Icon(
-                        FontAwesomeIcons.chartLine,
-                      ),
-                      child: Text(
-                        "STATICS",
-                      ),
-                    ),
-                  ],
-                ),
+        onPressed: () async {
+          provider.addWeight(context: context);
+        },
+        icon: Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 30,
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+        label: Text(
+          "Add weight",
+          style: TextStyle(fontSize: 16, color: Colors.white),
+          textAlign: TextAlign.end,
+        ),
+      ):null,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        title: Text("Weight Tracker"),
+        bottom: AppBar(
+          automaticallyImplyLeading: false,
+          title: Container(
+            padding: EdgeInsets.only(bottom: 12),
+            width: size.width,
+            child: Center(
+              child: ToggleSwitch(
+                initialLabelIndex: pageIdx,
+                totalSwitches: 2,
+                minWidth: size.width / 2.2,
+                minHeight: 45,
+                dividerColor: Colors.white,
+                fontSize: 18,
+                cornerRadius: 2,
+                iconSize: 20,
+                inactiveBgColor: Theme.of(context).primaryColor.withOpacity(.1),
+                icons: const [Icons.history, Icons.bar_chart],
+                labels: const ['History', 'Statics'],
+                onToggle: (index) {
+                  setState(() {
+                    pageIdx = index ?? 0;
+                  });
+                },
               ),
-            ],
-            body: TabBarView(
-                children: [WeightDetailTab1(), WeightDetailTab2()],
             ),
+
           ),
         ),
+      ),
+      body: PageView(
+          scrollDirection: Axis.horizontal,onPageChanged: (int? index){
+
+            setState(() {
+              if(index != null)
+              pageIdx = index;
+            });
+      },
+        children: [ WeightDetailTab1() ,WeightDetailTab2()],
       ),
     );
   }

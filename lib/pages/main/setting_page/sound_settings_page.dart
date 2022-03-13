@@ -15,10 +15,10 @@ class _SoundSettingState extends State<SoundSetting> {
   SpHelper spHelper =new SpHelper();
   SpKey spKey =new SpKey();
   Constants constants = Constants();
- late bool mute;
-  late bool voice;
- late bool coach;
- late bool effect;
+  bool mute = false;
+   bool voice = true;
+  bool coach = true;
+  bool effect = true;
   bool showSaveButton = false;
 
   @override
@@ -86,7 +86,6 @@ class _SoundSettingState extends State<SoundSetting> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     getSwitch(String title, IconData icon, bool value, Function onToggle,
         String subTile,Color color) {
@@ -95,7 +94,7 @@ class _SoundSettingState extends State<SoundSetting> {
         subtitle: Text(subTile),
         value: value,
         secondary:
-        Icon(icon,color: color,),
+        Icon(icon),
         activeColor: Colors.blue.shade700,
 
         title: Text(
@@ -126,9 +125,7 @@ class _SoundSettingState extends State<SoundSetting> {
     }
 
     return Scaffold(
-      backgroundColor: isDark?Colors.black:Colors.white,
       appBar: AppBar(
-        backgroundColor: isDark?Colors.black:Colors.white,
 
         actions: [
          showSaveButton? Padding(
@@ -140,7 +137,7 @@ class _SoundSettingState extends State<SoundSetting> {
                   spHelper.saveBool(spKey.voice, voice);
                   spHelper.saveBool(spKey.effect, effect);
                   Navigator.of(context).pop();
-                  constants.getToast("Sound Settings Saved",isDark);
+                  constants.getToast("Sound Settings Saved");
                 },
                 child: Text("Save",
                     style: TextStyle(
@@ -150,28 +147,28 @@ class _SoundSettingState extends State<SoundSetting> {
         ],
         title: Text(
           "Sound Setting",
-          style:TextStyle(color: isDark?Colors.white:Colors.black)
+        )
         ),
-      ),
+
       body: ListView(
 
         shrinkWrap: true,
         children: [
           getSwitch(
-              "Mute", Icons.volume_mute, mute, onMuteToggle, "Mute all Sound",colorList[0]),
+              "Mute", Icons.volume_down_outlined, mute, onMuteToggle, "Mute all Sound",colorList[0]),
 
           getDivider(),
-          getSwitch("Coach Assistant", Icons.record_voice_over, coach,
+          getSwitch("Coach Assistant", Icons.record_voice_over_outlined, coach,
               onCoachToggle, "Coach Assistant " + getSwitchValue(coach),colorList[1]),
 
           getDivider(),
 
-          getSwitch("Voice Guid",  FontAwesomeIcons.volumeUp,
+          getSwitch("Voice Guid",  Icons.volume_up_outlined,
               voice, onVoiceToggle, "Voice Guid " + getSwitchValue(voice),colorList[2]),
 
           getDivider(),
 
-          getSwitch("Sound Effect", FontAwesomeIcons.bell, effect,
+          getSwitch("Sound Effect", Icons.notifications_active_outlined, effect,
               onEffectToggle, "Sound Effect " + getSwitchValue(effect),colorList[3]),
 
           getDivider(),

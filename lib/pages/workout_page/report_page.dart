@@ -4,25 +4,21 @@ import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/recent_workout_db_helper.dart';
-import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
-import 'package:full_workout/pages/services/bmi_service/bmi_card.dart';
-import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
-import 'package:full_workout/pages/workout_page/report_share_page.dart';
-import 'package:full_workout/widgets/slide_fade_transition.dart';
-import 'package:path_provider/path_provider.dart' as pp;
-
-import 'package:flutter_svg/svg.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/models/recent_workout.dart';
+import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
+import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
+import 'package:full_workout/pages/services/bmi_service/bmi_card.dart';
+import 'package:full_workout/pages/workout_page/report_share_page.dart';
+import 'package:full_workout/widgets/slide_fade_transition.dart';
+import 'package:path_provider/path_provider.dart' as pp;
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:wakelock/wakelock.dart';
-
-import '../../main.dart';
-import '../main_page.dart';
 
 class ReportScreen extends StatefulWidget {
   final String title;
@@ -56,7 +52,6 @@ class _MyAppState extends State<ReportScreen> {
   saveWorkoutData() async {
     try {
       DateTime startTime = DateTime.parse(widget.dateTime);
-
       activeTime = DateTime.now().difference(startTime).inSeconds;
       RecentWorkout recentWorkout = RecentWorkout(
         widget.dateTime,
@@ -70,14 +65,11 @@ class _MyAppState extends State<ReportScreen> {
           widget.tag == spKey.absChallenge ||
           widget.tag == spKey.armChallenge ||
           widget.tag == spKey.chestChallenge) {
-        print(widget.tag.toString() + " : tag");
-        print(widget.title.toString() + " : tagValue");
         int currVal = await spHelper.loadInt(widget.tag) ?? 0;
       List<String> titleList =  widget.title.split(" ");
       int currWorkoutDay = int.tryParse(titleList[4])!;
       if(currWorkoutDay > currVal){
         spHelper.saveInt(widget.tag, currVal + 1);
-
       }
 
       } else {
@@ -95,6 +87,7 @@ class _MyAppState extends State<ReportScreen> {
 
       await dbHelper.saveWorkOut(recentWorkout);
     } catch (error) {
+      print("error");
       print(error);
     }
   }
@@ -195,7 +188,7 @@ class _MyAppState extends State<ReportScreen> {
                 direction: Direction.horizontal,
                 child: Text(
                   "Congratulations !",
-                  style: textTheme.bodyText1!.copyWith(
+                  style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w700,
                       fontSize: 30),
@@ -212,8 +205,7 @@ class _MyAppState extends State<ReportScreen> {
                   direction: Direction.vertical,
                   child: Text(
                     "You did it!",
-                    style: textTheme.bodyText2!
-                        .copyWith(color: Colors.black, fontSize: 22),
+                    style: TextStyle(color: Colors.black, fontSize: 22),
                   )),
             ],
           ),
@@ -272,7 +264,7 @@ class _MyAppState extends State<ReportScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12),
+          padding: const EdgeInsets.only(top: 24.0, left: 18,bottom: 12),
           child: Text("Past Week", style: constants.titleStyle),
         ),
         IgnorePointer(
@@ -282,7 +274,7 @@ class _MyAppState extends State<ReportScreen> {
           ),
         ),
         SizedBox(
-          height: 10,
+          height: 18,
         )
       ],
     );
@@ -309,7 +301,7 @@ class _MyAppState extends State<ReportScreen> {
                 children: [
                   Text(
                     subTitle,
-                    style: textTheme.bodyText2!.copyWith(
+                    style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                         fontSize: 16),
@@ -320,7 +312,7 @@ class _MyAppState extends State<ReportScreen> {
                   ),
                   Text(
                     title,
-                    style: textTheme.bodyText1!.copyWith(
+                    style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
                         fontSize: 18),
@@ -354,7 +346,7 @@ class _MyAppState extends State<ReportScreen> {
   }
 
   getRatingBar(double height) {
-    TextStyle bodyStyle = textTheme.bodyText2!.copyWith(
+    TextStyle bodyStyle = TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w500,
     );
@@ -430,7 +422,6 @@ class _MyAppState extends State<ReportScreen> {
                 color: Colors.blue.shade700, style: BorderStyle.solid, width: 0),
           ),
           onPressed: () {
-
             _onNext();
               },
           child: Text(
@@ -465,14 +456,12 @@ class _MyAppState extends State<ReportScreen> {
     double safeHeight = AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
-    bool isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return WillPopScope(
       onWillPop:() {
        return _onNext();
       },
       child: Scaffold(
-        backgroundColor: isDark ? Colors.black : Colors.white,
         body: Stack(
           children: [
             ListView(
@@ -481,11 +470,12 @@ class _MyAppState extends State<ReportScreen> {
                 Divider(),
                 getAchievementCard(),
                 getPastWeek(),
-                constants.getDivider(isDark),
+                constants.getDivider(context: context),
                 BmiCard(
                   showBool: false,
                 ),
-                constants.getDivider(isDark),
+                SizedBox(height: 10,),
+                constants.getDivider(context: context),
                 getRatingBar(height),
                 getButton(),
                 SizedBox(

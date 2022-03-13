@@ -4,9 +4,9 @@ import 'package:full_workout/helper/recent_workout_db_helper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/main.dart';
+import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/widgets/active_goal_settings.dart';
-import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
 import 'package:intl/intl.dart';
 
 class ActiveGoal extends StatefulWidget {
@@ -85,7 +85,11 @@ class _ActiveGoalState extends State<ActiveGoal> {
   @override
   Widget build(BuildContext context) {
     Color textColor = Colors.white;
-    double height =MediaQuery.of(context).size.height;
+    double height = MediaQuery.of(context).size.height;
+    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    List<Color> backgroundColor = isDark? [
+    Colors.blue.shade700,Colors.blue.shade700
+    ]:[ Colors.blue.shade700,Colors.blue.shade700];
 
     onTap() async {
       var res = await Navigator.of(context)
@@ -107,14 +111,14 @@ class _ActiveGoalState extends State<ActiveGoal> {
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(16), topLeft: Radius.circular(16)),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 12),
           child: Row(
             children: [
               Text(
                 "Week Goal ",
-                style: textTheme.bodyText1!.copyWith(
+                style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                     color: textColor),
               ),
               isGoalSet
@@ -125,7 +129,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.edit,
+                              Icons.edit_outlined,
                               size: 18,
                               color: textColor,
                             ),
@@ -148,68 +152,70 @@ class _ActiveGoalState extends State<ActiveGoal> {
     }
 
     getWeeklyUpdate() {
-
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: activeDayList
-            .map((activeDay) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        DateFormat('EEEE').format(activeDay.date)[0],
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, color: textColor),
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      CircleAvatar(
-                          backgroundColor:
-                              DateTime.now().day == activeDay.date.day
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: activeDayList
+              .map((activeDay) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          DateFormat('EEEE').format(activeDay.date)[0],
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, color: textColor.withOpacity(.8)),
+                        ),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        CircleAvatar(
+                            backgroundColor:
+                                DateTime.now().day == activeDay.date.day
+                                    ? Colors.white
+                                    : activeDay.isDone
+                                        ? Colors.white
+                                        : Colors.grey.shade200,
+                            child: CircleAvatar(
+                              backgroundColor: activeDay.isDone
                                   ? Colors.white
-                                  : activeDay.isDone
+                                  : DateTime.now().day == activeDay.date.day
                                       ? Colors.white
                                       : Colors.grey.shade200,
-                          child: CircleAvatar(
-                            backgroundColor: activeDay.isDone
-                                ? Colors.white
-                                : DateTime.now().day == activeDay.date.day
-                                    ? Colors.white
-                                    : Colors.grey.shade200,
-                            radius: 12,
-                            child: activeDay.isDone
-                                ? Icon(
-                                    Icons.check,
-                                    color: Colors.blue,
-                                  )
-                                : CircleAvatar(
-                                    radius: 6,
-                                    backgroundColor:
-                                        DateTime.now().day == activeDay.date.day
-                                            ? Colors.blue
-                                            : DateTime.now().day >=
-                                                    activeDay.date.day
-                                                ? Colors.grey
-                                                : Colors.grey.shade400,
-                                  ),
-                          ),
-                          radius: 15),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Text(
-                        activeDay.date.day.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, color: textColor),
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                    ],
-                  ),
-                ))
-            .toList(),
+                              radius: 12,
+                              child: activeDay.isDone
+                                  ? Icon(
+                                      Icons.check,
+                                      color: Colors.blue,
+                                    )
+                                  : CircleAvatar(
+                                      radius: 6,
+                                      backgroundColor: DateTime.now().day ==
+                                              activeDay.date.day
+                                          ? Colors.blue
+                                          : DateTime.now().day >=
+                                                  activeDay.date.day
+                                              ? Colors.grey
+                                              : Colors.grey.shade400,
+                                    ),
+                            ),
+                            radius: 15),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        Text(
+                          activeDay.date.day.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, color: textColor.withOpacity(.8)),
+                        ),
+                        SizedBox(
+                          height: 6,
+                        ),
+                      ],
+                    ),
+                  ))
+              .toList(),
+        ),
       );
     }
 
@@ -249,39 +255,33 @@ class _ActiveGoalState extends State<ActiveGoal> {
     }
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: InkWell(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+        borderRadius: BorderRadius.all(Radius.circular(12)),
         onTap: () => isGoalSet
             ? Navigator.pushNamed(context, WorkoutDetailReport.routeName)
             : onTap(),
-        child: Material(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-          elevation: 0,
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                gradient: LinearGradient(
-                    colors: [Colors.blue, Colors.blue],
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft)),
-            child: isLoading
-                ? Container(
-                    height: height * .15,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(16)),
-                        gradient: LinearGradient(
-                            colors: [Colors.blue, Colors.blue.shade300])))
-                : Column(
-                    children: [
-                      getTitle(),
-                      isGoalSet ? getWeeklyUpdate() : getEmptyGoal(),
-                      SizedBox(
-                        height: 10,
-                      )
-                    ],
-                  ),
-          ),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 4),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+              gradient: LinearGradient(colors:backgroundColor, begin: Alignment.topRight, end: Alignment.bottomLeft)),
+          child: isLoading
+              ? Container(
+                  height: height * .15,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                      gradient: LinearGradient(
+                          colors: backgroundColor)))
+              : Column(
+                  children: [
+                    getTitle(),
+                    isGoalSet ? getWeeklyUpdate() : getEmptyGoal(),
+                    SizedBox(
+                      height: 10,
+                    )
+                  ],
+                ),
         ),
       ),
     );
