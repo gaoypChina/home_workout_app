@@ -192,13 +192,13 @@ class WorkoutCard extends StatelessWidget {
               );
             },
             child: Container(
-              
               height: 150,
+              color: Colors.black54,
               child: Stack(
                 children: [
                   ColorFiltered(
                       colorFilter: ColorFilter.mode(
-                    isDark?      Colors.red.withOpacity(.3):Colors.black.withOpacity(.5),
+                    isDark?      Colors.red.withOpacity(.3):Colors.black.withOpacity(.45),
                           BlendMode.darken),
                       child: Image.asset(
                         imaUrl,

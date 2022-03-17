@@ -31,21 +31,23 @@ class _ExplorePageState extends State<ExplorePage> {
     print("here");
     var provider = Provider.of<AdsProvider>(context, listen: false);
     provider.isLoaded = false;
-    provider.createBottomBannerAd();
+  //  provider.createBottomBannerAd();
   }
+
 
 
 
   @override
   void dispose() {
-    var provider = Provider.of<AdsProvider>(context, listen: false);
-    provider.disposeBannerAd();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    var provider = Provider.of<AdsProvider>(context, listen: false);
+
     SpHelper _spHelper = SpHelper();
     SpKey _spKey = SpKey();
     List<ChallengesModel> challenges = [
@@ -265,18 +267,18 @@ class _ExplorePageState extends State<ExplorePage> {
     }
 
     createAd() {
-      var provider = Provider.of<AdsProvider>(context, listen: false);
 
       return Column(
         children: [
-          Text(provider.bottomBannerAd!.size.width.toDouble().toString()),
-          Text(provider.bottomBannerAd!.toString()),
+          Text(provider.bottomBannerAd.size.width.toDouble().toString()),
+          Text(provider.bottomBannerAd.adUnitId.toString()),
           Container(
+            color: Colors.red,
                   alignment: Alignment.center,
-                  height: provider.bottomBannerAd!.size.height.toDouble(),
-                  width: provider.bottomBannerAd!.size.width.toDouble(),
+                  height: provider.bottomBannerAd.size.height.toDouble(),
+                  width: provider.bottomBannerAd.size.width.toDouble(),
                   child: AdWidget(
-                    ad: provider.bottomBannerAd!,
+                    ad: provider.bottomBannerAd,
                   ),
                 ),
         ],
@@ -288,13 +290,15 @@ class _ExplorePageState extends State<ExplorePage> {
 
     }
 
+
     return WillPopScope(
       onWillPop: () => widget.onBack(),
       child: Scaffold(
         appBar: AppBar(
+
           elevation: 1,
           automaticallyImplyLeading: false,
-          actions: getLeading(context),
+          actions:[ ...getLeading(context)],
           titleSpacing: 14,
           title: Text(
             "Explore",
@@ -325,7 +329,7 @@ class _ExplorePageState extends State<ExplorePage> {
               ),
               //   getPrimeButton(),
               //   SizedBox(height: 18,),
-              createAd()
+            //  createAd()
             ],
           ),
         ),

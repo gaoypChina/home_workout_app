@@ -18,26 +18,24 @@ class HomePage extends StatelessWidget {
           context: context,
           builder: (context) {
             return AlertDialog(
-              elevation: 2,
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(18))
-              ),
-              title: Text("Do you really want to exit the app?",style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),),
-              actions: [
-                ElevatedButton(
-                  child: const Text("Yes"),
-                      style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          primary: Colors.blue.shade800.withOpacity(.7)),
-                      onPressed: () => Navigator.pop(context, true),
-                    ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8))),
 
-                ElevatedButton(
+              title: Text("Do you really want to exit the app?",
+                style: TextStyle(fontSize: 18, letterSpacing: 1.5),),
+              actions: [
+
+                TextButton(
                   child: const Text("No"),
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.blue.shade800),
-                      onPressed: () => Navigator.pop(context, false),
-                    ),
+
+                  onPressed: () => Navigator.pop(context, false),
+                ),
+                TextButton(
+                  child: const Text("Yes"),
+
+                  onPressed: () => Navigator.pop(context, true),
+                ),
+
               ],
             );
           }) ??

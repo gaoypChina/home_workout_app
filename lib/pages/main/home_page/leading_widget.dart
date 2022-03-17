@@ -15,7 +15,6 @@ List<Widget> getLeading(BuildContext context) {
         Icons.calendar_today_outlined,
         size: 24,
         color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
-        //  color: Theme.of(context).textTheme.bodyText1!.color,
       ),
       tooltip: "Report",
     ),

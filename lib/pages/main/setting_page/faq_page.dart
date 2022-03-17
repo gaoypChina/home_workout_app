@@ -24,7 +24,7 @@ class FAQPage extends StatelessWidget {
                 borderRadius:const  BorderRadius.all(Radius.circular(16)),
 
                 border: Border.all(
-                    color: Theme.of(context).primaryColor.withOpacity(.2), width: 1),
+                    color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.5), width: 1),
               ),
               child: ExpansionTile(
 

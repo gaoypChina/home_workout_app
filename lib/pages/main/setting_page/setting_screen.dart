@@ -13,6 +13,7 @@ import 'package:full_workout/helper/mediaHelper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/pages/main/setting_page/faq_page.dart';
+import 'package:full_workout/pages/main/setting_page/feedback_page.dart';
 import 'package:full_workout/pages/main/setting_page/privacy_policy.dart';
 import 'package:full_workout/pages/main/setting_page/profile_settings_screen.dart';
 import 'package:full_workout/pages/main/setting_page/reminder_screen.dart';
@@ -391,7 +392,7 @@ class _SettingPageState extends State<SettingPage> {
               // ),
               getDivider(),
               CustomTile(
-                icon: Icons.share_outlined,
+                icon: CupertinoIcons.share,
                 title: "Share With Friends",
                 trailing: trailingIcon,
                 onPress: () async {
@@ -416,24 +417,8 @@ class _SettingPageState extends State<SettingPage> {
                 title: "Feedback",
                 trailing: trailingIcon,
                 onPress: () async {
-                  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-                  AndroidDeviceInfo info = await deviceInfo.androidInfo;
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>FeedbackPage()));
 
-                  String toSend =
-                      "version: ${info.version.release.toString()}, brand: ${info.brand.toString()}, display : ${size.height.toInt()}x${size.width.toInt()}\n\n";
-
-                  final Email email = Email(
-                    body: toSend,
-                    subject: 'Home Workout Feedback',
-                    recipients: ['workoutfeedback@gmail.com'],
-                    isHTML: false,
-                  );
-
-                  try {
-                    await FlutterEmailSender.send(email);
-                  } catch (e) {
-                    constants.getToast("Not able to send email",);
-                  }
                 },
               ),
               getDivider(),
@@ -480,7 +465,7 @@ class _SettingPageState extends State<SettingPage> {
                       child: Text(
                         "Version - ".toUpperCase() +
                             constants.versionNumber
-                            + " (beta)".toUpperCase()
+                        //    + " (beta)".toUpperCase()
                         ,
                         style: TextStyle(
                             fontSize: 12,

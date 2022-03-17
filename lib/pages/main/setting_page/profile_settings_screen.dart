@@ -97,50 +97,23 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   Widget build(BuildContext context) {
 
     _selectDate() async {
-      showCupertinoModalPopup<void>(
-          context: context,
-          builder: (BuildContext context) => Container(
-
-            height: 316,
-            padding: const EdgeInsets.only(top: 6.0),
-            // The Bottom margin is provided to align the popup above the system navigation bar.
-            margin: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-            ),
-            // Provide a background color for the popup.
-            color: CupertinoColors.systemBackground.resolveFrom(context),
-            // Use a SafeArea widget to avoid system overlaps.
-            child: SafeArea(
-              top: false,
-              child: CupertinoDatePicker(
-                initialDateTime: DateTime(2000, 08, 12),
-                mode: CupertinoDatePickerMode.date,
-                use24hFormat: true,
-                onDateTimeChanged: (DateTime newDate) {
-                 // setState(() => date = newDate);
-                },
-              ),
-            ),
-            ),
-          );
 
 
-      // final DateTime? picked = await showRoundedDatePicker(
-      //  //theme: lightTheme,
-      //   context: context,
-      //   height: MediaQuery.of(context).size.height * .4,
-      //   initialDate: DateTime(2000, 08, 12),
-      //   firstDate: DateTime(DateTime.now().year - 110),
-      //   lastDate: DateTime(DateTime.now().year - 12),
-      //   borderRadius: 16,
-      // );
-      // if (picked != null && picked.toString() != date) {
-      //   String formatedDay = DateFormat.yMMMd().format(picked);
-      //   await spHelper.saveString(spKey.date, picked.toIso8601String());
-      //   setState(() {
-      //     date = formatedDay;
-      //   });
-      // }
+      final DateTime? picked = await showDatePicker(
+
+       //theme: lightTheme,
+        context: context,
+        initialDate: DateTime(2000, 08, 12),
+        firstDate: DateTime(DateTime.now().year - 110),
+        lastDate: DateTime(DateTime.now().year - 12),
+      );
+      if (picked != null && picked.toString() != date) {
+        String formatedDay = DateFormat.yMMMd().format(picked);
+        await spHelper.saveString(spKey.date, picked.toIso8601String());
+        setState(() {
+          date = formatedDay;
+        });
+      }
     }
 
 

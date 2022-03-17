@@ -11,7 +11,7 @@ class Constants{
 
   // ToDo: Update version number
 
-  String versionNumber ="1.6.2";
+  String versionNumber ="1.7.0";
 
   Color bottomNavigationColor =  Color(0xffF2F2F2);
   Color darkSecondary = Colors.blueGrey.shade800;

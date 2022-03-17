@@ -108,7 +108,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
         : (provider.weight.length == 0)
             ? getEmptyList()
             : Padding(
-                padding: const EdgeInsets.all(.0),
+                padding: const EdgeInsets.only(left: 2,right: 2),
                 child: Column(children: [
                   Container(
                     height: 50,
@@ -375,9 +375,9 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
               Text(
                 "No Record Found!",
                 style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 28,
                     fontWeight: FontWeight.w400,
-                    color: Colors.grey.shade600),
+                    color: Theme.of(context).textTheme.bodyText1?.color?.withOpacity(.7)),
               )
             ],
           ),

@@ -120,7 +120,7 @@ class _WorkoutPageState extends State<WorkoutPage>
   _onComplete(int currIndex) async {
 
     if (currIndex + 1 == widget.workOutList.length) {
-      _showInterstitialAd();
+    //  _showInterstitialAd();
 
        return Navigator.pushReplacement(
            context,
@@ -166,7 +166,7 @@ class _WorkoutPageState extends State<WorkoutPage>
     if (currIndex != widget.workOutList.length) {
       introMessage();
     }if (currIndex + 1 == widget.workOutList.length){
-      Provider.of<AdsProvider>(context,listen: false).createInterstitialAd();
+     // Provider.of<AdsProvider>(context,listen: false).createInterstitialAd();
     }
     controller = AnimationController(
       vsync: this,

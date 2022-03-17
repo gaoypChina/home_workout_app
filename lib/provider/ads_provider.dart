@@ -7,7 +7,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 const int maxFailedLoadAttempts = 3;
 
 class AdsProvider with ChangeNotifier {
-  BannerAd? bottomBannerAd;
+  late BannerAd bottomBannerAd;
   InterstitialAd? interstitialAd;
 
   int _interstitialLoadAttempts = 0;
@@ -15,10 +15,6 @@ class AdsProvider with ChangeNotifier {
   bool isLoaded = false;
 
   void createBottomBannerAd() {
-    log("init function");
-    if(bottomBannerAd != null){
-      bottomBannerAd!.dispose();
-    }
 
     bottomBannerAd = BannerAd(
         adUnitId: AdIdHelper.bannerAdUnitId,
@@ -41,7 +37,7 @@ class AdsProvider with ChangeNotifier {
             ad.dispose();
           },
         ));
-    bottomBannerAd!.load();
+    bottomBannerAd.load();
   }
 
   void createInterstitialAd() {
@@ -66,9 +62,9 @@ class AdsProvider with ChangeNotifier {
   void disposeBannerAd() {
     log("bottom");
     log("bottom ad : " + bottomBannerAd.toString());
-    if (bottomBannerAd != null) {
-      bottomBannerAd!.dispose();
-    }
+
+      bottomBannerAd.dispose();
+
   }
 
   void disposeInterstitialAd() {
