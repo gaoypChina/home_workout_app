@@ -49,37 +49,39 @@ class _AchievementState extends State<Achievement> {
       getCard(String title, String subTitle, List<Color> color) {
 
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 18),
+
+          decoration: BoxDecoration(
+              color: color[0].withOpacity(.1),
+            borderRadius: BorderRadius.all(Radius.circular(18))
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 18,vertical: 18),
           child: InkWell(
             borderRadius: BorderRadius.all(Radius.circular(16)),
             onTap: () => widget.onTap(),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
 
-                  Text(
-                    isLoading ? "" : subTitle.length == 1?subTitle+"0" : subTitle,
+                Text(
+                  isLoading ? "" : subTitle.length == 1?"0"+subTitle : subTitle,
 
-                    style: TextStyle(
-                      letterSpacing: 1.5,
+                  style: TextStyle(
+                    letterSpacing: 1.5,
+                      fontWeight: FontWeight.w400,
+                      color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
+                      fontSize: 30),
+                ),
 
-                        fontWeight: FontWeight.w500,
-                        color: color[0].withOpacity(.8),
-                        fontSize: 30),
-                  ),
-
-                  Text(
-                    title,
-                    style: TextStyle(
-                      letterSpacing: 1.5,
-                        color: Colors.red.withOpacity(.7),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13),
-                  ),
-                ],
-              ),
+                SizedBox(height: 2,),
+                Text(
+                  title,
+                  style: TextStyle(
+                    letterSpacing: 1.5,
+                      color: Theme.of(context).textTheme.bodyText1!.color,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 13),
+                ),
+              ],
             ),
           ),
         );
@@ -87,17 +89,18 @@ class _AchievementState extends State<Achievement> {
 
       return Container(
 
-        padding: EdgeInsets.symmetric(horizontal: 0),
+        padding: EdgeInsets.symmetric(horizontal: 12),
 
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+
             getCard("Exercise", exercise.toString(),
                 [Colors.green.shade700, Colors.green]),
-            getCard("Minute", (time~/60).toString(),
+            getCard(" Minute ", (time/60).ceil().toString(),
                 [Colors.orange.shade700, Colors.red.shade300]),
             getCard("Calories", calories.toInt().toString(),
-                [Colors.red.shade700, Colors.orange]),
+                [Colors.amber.shade700, Colors.blue]),
           ],
         ),
       );

@@ -88,7 +88,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
     double height = MediaQuery.of(context).size.height;
     bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
     List<Color> backgroundColor = isDark? [
-    Colors.blue.shade700,Colors.blue.shade700
+    Colors.blue.withOpacity(.1),Colors.blue.shade700.withOpacity(.1)
     ]:[ Colors.blue.shade700,Colors.blue.shade700];
 
     onTap() async {
@@ -232,7 +232,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 13,
-                  fontWeight: FontWeight.w300),
+                  fontWeight: FontWeight.w400,letterSpacing: 1.2),
             ),
             ElevatedButton(
               onPressed: () => onTap(),
@@ -245,7 +245,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
                       EdgeInsets.symmetric(horizontal: 24)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
+                    borderRadius: BorderRadius.circular(12.0),
                   )),
                   backgroundColor: MaterialStateProperty.all(Colors.white)),
             )
