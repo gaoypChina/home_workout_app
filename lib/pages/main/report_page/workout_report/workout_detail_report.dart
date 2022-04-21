@@ -28,12 +28,19 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
   bool isLoading = true;
 
   _readWorkoutData() async {
-    List items = await workoutDb.getAllWorkOut();
-    print("length");
-    print(items.length);
-    items.forEach((element) {
-      recentWorkout.add(RecentWorkout.map(element));
-    });
+    try{
+      List items = await workoutDb.getAllWorkOut();
+      print("length");
+      print(items.length);
+      items.forEach((element) {
+        recentWorkout.add(RecentWorkout.map(element));
+      });
+    }catch(e){
+      showDialog(context: context, builder: (_){
+        return AlertDialog(content: Text(e.toString()),);
+      });
+    }
+
   }
 
   Map<DateTime, List<dynamic>> _getWorkout() {
@@ -62,6 +69,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
               recentWorkout[j].workoutTitle,
               recentWorkout[j].activeTime,
               recentWorkout[j].stars,
+              recentWorkout[j].id,
               recentWorkout[j].calories,
               recentWorkout[j].exercise);
           currDateWorkout.add(model);
@@ -115,7 +123,9 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
     setState(() {
       isLoading = true;
     });
+    log("cp1");
     await _readWorkoutData();
+    log("cp2");
     _getWorkout();
     _getWorkoutData();
     setState(() {

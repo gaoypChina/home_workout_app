@@ -12,21 +12,25 @@ class _UserReviewState extends State<UserReview> {
     UserReviewModel(
         imgSrc: "assets/other/annchit.jpg",
         name: "Anchit Mishra",
+        color: Colors.green.withOpacity(.1),
         review:
             "One of the best home workout apps out there would recommend to anyone no matter what their fitness level is as the training can be adjusted to suit them."),
     UserReviewModel(
         imgSrc: "assets/other/nayan.jpg",
         name: "Nayan Lodhi",
+        color: Colors.red.withOpacity(.1),
         review:
             "This app is awesome. Instructions are simple clear and well animated for easy understanding. Thank you for this fabulous app."),
     UserReviewModel(
         imgSrc: "assets/other/anshman.jpg",
         name: "Anshuman Pandey",
+        color: Colors.blue.withOpacity(.1),
         review:
             "This is the best workout app I have ever seen. It has plans for different types of exercises depending on what you want to achieve at the end."),
     UserReviewModel(
         imgSrc: "assets/other/avinash.jpg",
         name: "Avinash Shukla",
+        color: Colors.orange.withOpacity(.1),
         review:
             "This is an awesome app. Each exercise has been perfectly explained so even a novice can follow it easily. Thanks for putting up efforts in making this app fun-loving.")
   ];
@@ -51,7 +55,7 @@ class _UserReviewState extends State<UserReview> {
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
-                    color: Colors.blue.shade50,
+                    color: reviewer.color,
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   margin: EdgeInsets.only(left: 18),
@@ -97,7 +101,8 @@ class UserReviewModel {
   final String name;
   final String review;
   final String imgSrc;
+  final Color color;
 
   UserReviewModel(
-      {required this.name, required this.imgSrc, required this.review});
+      {required this.name, required this.imgSrc, required this.review,required this.color});
 }

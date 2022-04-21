@@ -11,7 +11,7 @@ class Constants{
 
   // ToDo: Update version number
 
-  String versionNumber ="1.7.0";
+  String versionNumber ="1.7.1";
 
   Color bottomNavigationColor =  Color(0xffF2F2F2);
   Color darkSecondary = Colors.blueGrey.shade800;
@@ -52,6 +52,12 @@ class Constants{
         //    textColor: Colors.white,
         fontSize: 16.0
     );
+  }
+
+  getSnackBar({required BuildContext context, required String msg}){
+    final snackBar = SnackBar(content: Text(msg));
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   String getPrice({required int price}) {

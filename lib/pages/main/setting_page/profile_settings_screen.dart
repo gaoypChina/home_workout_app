@@ -140,6 +140,9 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
+            SizedBox(height: 16,),
+            name == null?Container():  CircleAvatar(child: Text( name![0].toUpperCase() ,style: TextStyle(fontSize: 50,fontWeight: FontWeight.w300),),radius: 40,),
+            SizedBox(height: 16,),
 
             CustomProfileTile(
 
@@ -288,7 +291,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 await spHelper.saveDouble(spKey.weight, toSave);
                 String key = DateFormat.yMd().format(selectedDate).toString();
                 WeightModel weightModel =
-                    WeightModel(selectedDate.toIso8601String(), toSave, key);
+                    WeightModel(selectedDate.toIso8601String(), toSave, key,  DateTime.now().millisecondsSinceEpoch,);
                 if (weightModel.weight == null) return;
                 await weightDatabaseHelper.addWeight(
                     toSave, weightModel, key);
@@ -462,19 +465,20 @@ class CustomProfileTile extends StatelessWidget {
 
       contentPadding: EdgeInsets.only(left: 24, right: 30),
 
-      title: Text(title),
+      subtitle: Text(title),
       leading: Icon(
         icon,
       ),
       onTap:()=> onPressed(),
-      trailing: Text(
+      trailing: Icon(Icons.navigate_next_sharp),
+      title: Text(
           subTitle.length > 20 ? '${subTitle.substring(0, 20)}...' : subTitle,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
             color: data.toString() == "null"
                 ? Colors.grey
                 : Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
-            fontSize: data.toString() == "null" ? 12 : 14,
+            fontSize: data.toString() == "null" ? 12 : 18,
           )),
       // trailing: constants.trailingIcon,
 

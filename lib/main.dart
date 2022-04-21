@@ -12,6 +12,7 @@ import 'package:full_workout/pages/main/setting_page/reminder_screen.dart';
 import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
 import 'package:full_workout/pages/main_page.dart';
 import 'package:full_workout/provider/ads_provider.dart';
+import 'package:full_workout/provider/backup_provider.dart';
 import 'package:full_workout/provider/subscription_provider.dart';
 import 'package:full_workout/provider/theme_provider.dart';
 import 'package:full_workout/provider/weight_report_provider.dart';
@@ -21,9 +22,11 @@ import 'package:timezone/data/latest.dart' as tz;
 
 import 'bloc_provider/connectivity_state_bloc.dart';
 import 'constants/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   MobileAds.instance.initialize();
   tz.initializeTimeZones();
   SystemChrome.setPreferredOrientations(
@@ -61,6 +64,7 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider(create: (context) => WeightReportProvider()),
           ChangeNotifierProvider(create: (context) => AdsProvider()),
           ChangeNotifierProvider(create: (context) => ThemeProvider()),
+          ChangeNotifierProvider(create: (context) => BackupProvider()),
         ],
         builder: (context, _) {
           return FutureBuilder<AdaptiveThemeMode>(

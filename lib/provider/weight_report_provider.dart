@@ -45,7 +45,7 @@ class WeightReportProvider with ChangeNotifier {
     await _spHelper.saveDouble(_spKey.weight, value);
     String key = DateFormat.yMd().format(selectedDate).toString();
     WeightModel weightModel =
-        WeightModel(selectedDate.toIso8601String(), value, key);
+        WeightModel(selectedDate.toIso8601String(), value, key,  DateTime.now().millisecondsSinceEpoch,);
     await _weightDb.addWeight(value, weightModel, key);
     initData();
     _constants.getToast(

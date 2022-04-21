@@ -286,7 +286,7 @@ class _BmiCardState extends State<BmiCard> {
             await spHelper.saveDouble(spKey.weight, toSave);
             String key = DateFormat.yMd().format(selectedDate).toString();
             WeightModel weightModel =
-            WeightModel(selectedDate.toIso8601String(), toSave, key);
+            WeightModel(selectedDate.toIso8601String(), toSave, key,  DateTime.now().millisecondsSinceEpoch,);
             if (weightModel.weight == null) return;
             await weightDb.addWeight(
                 toSave, weightModel, key);

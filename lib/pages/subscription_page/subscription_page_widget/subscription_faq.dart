@@ -34,14 +34,9 @@ class SubscriptionFAQ extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 18.0, right: 12, bottom: 4),
+                           bottom: 0),
                       child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                              border:
-                                  Border.all(color: Colors.blue, width: .4)),
+
                           child: Theme(
                             data: Theme.of(context)
                                 .copyWith(dividerColor: Colors.transparent),
@@ -50,21 +45,20 @@ class SubscriptionFAQ extends StatelessWidget {
                               title: Text(
                                 faq.question,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w300, fontSize: 15),
+                                    fontWeight: FontWeight.w400, fontSize: 15),
                               ),
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 18.0, right: 18, bottom: 18),
-                                  child: Text(faq.answer),
+                                  child: Text(faq.answer,style: TextStyle(letterSpacing: 1.5),),
                                 )
                               ],
                             ),
                           )),
                     ),
-                    SizedBox(
-                      height: 8,
-                    )
+                    Divider(),
+
                   ],
                 ))
             .toList(),

@@ -58,6 +58,7 @@ class _MyAppState extends State<ReportScreen> {
         widget.title,
         activeTime,
         3, //unused value
+        DateTime.now().millisecondsSinceEpoch,
         activeTime * (18 / 60),
         widget.totalExercise,
       );
@@ -286,6 +287,7 @@ class _MyAppState extends State<ReportScreen> {
         height: MediaQuery.of(context).size.height * .14,
         child: Card(
           elevation: 2,
+
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16))),
           child: Container(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 
@@ -49,18 +50,36 @@ class WeightDatabaseHelper {
   Future<int> saveWeight(WeightModel weightModel) async {
     var dbClient = await db;
     print("weight db : " + dbClient.toString());
-
     int res = await dbClient.insert('$tableName', weightModel.toMap());
     return res;
   }
 
   // Get Weight
   Future<List> getAllWeight() async {
-
     Database dbClient = await db;
     var result = await dbClient
         .rawQuery("SELECT * FROM $tableName ORDER BY $columnId");
     return result.toList();
+  }
+
+  Future<void>setAllWeightData({required List weightList})async{
+    var dbClient = await db;
+    for(var weight in weightList){
+      List allLocalWeight = await getAllWeight();
+      if(!isPresent(weight, allLocalWeight)){
+        await dbClient.insert('$tableName', weight);
+      }
+    }
+
+  }
+
+  bool isPresent(Map<String,dynamic> data, List allLocalWeight){
+    for(Map<String,dynamic> localWeight in allLocalWeight){
+      if(localWeight["id"] == data["id"]){
+        return true;
+      }
+    }
+    return false;
   }
 
   Future<List> getRangeData(DateTime selectedFromDate, selectedToDate) async {

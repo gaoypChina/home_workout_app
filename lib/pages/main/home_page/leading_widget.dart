@@ -4,32 +4,39 @@ import 'package:full_workout/pages/main/report_page/workout_report/workout_detai
 import 'package:full_workout/pages/main/setting_page/reminder_screen.dart';
 
 List<Widget> getLeading(BuildContext context) {
+  buildButton({required IconData icon, required Function onTap}) {
+    return InkWell(
+      onTap:()=> onTap(),
+      borderRadius: BorderRadius.all(Radius.circular(100)),
+      radius: 18,
+      child: CircleAvatar(
+
+        child: Icon(icon,color:Theme.of(context).textTheme.bodyText2!.color,size: 22,),
+        backgroundColor: Colors.blue.withOpacity(.1),
+        radius: 18,
+
+
+      ),
+    );
+  }
+
   return [
-    IconButton(
-      splashRadius: 24,
-      onPressed: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => WorkoutDetailReport()));
-      },
-      icon: Icon(
-        Icons.calendar_today_outlined,
-        size: 24,
-        color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
-      ),
-      tooltip: "Report",
-    ),
-    IconButton(
-      onPressed: () => Navigator.of(context).pushNamed(ReminderTab.routeName),
-      icon: Icon(
-        CupertinoIcons.alarm,
-        size: 24,
-        color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
-      ),
-      padding: EdgeInsets.only(right: 8, top: 0),
-      splashRadius: 24,
-    ),
+    buildButton(icon: Icons.calendar_today_outlined, onTap: () {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => WorkoutDetailReport()));
+    },),
     SizedBox(
-      width: 4,
-    )
+      width:12,
+    ),
+
+    buildButton(icon: CupertinoIcons.alarm, onTap: () {
+  Navigator.of(context).pushNamed(ReminderTab.routeName);
+    },),
+    SizedBox(
+      width:8,
+    ),
+
+
+
   ];
 }

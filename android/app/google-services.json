@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "410382274286",
+    "project_id": "home-workout-app-a68bd",
+    "storage_bucket": "home-workout-app-a68bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410382274286:android:f010d52781350a0a87adff",
+        "android_client_info": {
+          "package_name": "com.akashlilhare.homeworkout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410382274286-afe7i4mrk8p382ge19nekbscf27dppct.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akashlilhare.homeworkout",
+            "certificate_hash": "63c85f2ade0dde757e7ac26f0f79e337d49a2435"
+          }
+        },
+        {
+          "client_id": "410382274286-j0r0li9jf3bnlieuphhios3uqqfsjc9i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMgbTqrQOlo9OY7oo2Dz9P1x1zgsHlRXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410382274286-j0r0li9jf3bnlieuphhios3uqqfsjc9i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

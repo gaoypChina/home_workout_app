@@ -56,7 +56,7 @@ class SubscriptionTime extends StatelessWidget {
                     endTime: endTime,
                     widgetBuilder: (_, CurrentRemainingTime? time) {
                       if (time == null) {
-                        return Text('Game over');
+                        return Text('Sale Over',style: TextStyle(color: Colors.white,fontSize: 16),);
                       }
                       return Row(
                         children: [

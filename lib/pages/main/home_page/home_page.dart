@@ -72,6 +72,48 @@ class HomePage extends StatelessWidget {
       );
     }
 
+    buildBanner(){
+      return  Container(
+        margin: EdgeInsets.symmetric(horizontal: 12),
+        padding: EdgeInsets.symmetric(horizontal: 18,vertical: 8),
+        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8)), color: Colors.red.withOpacity(.15),),
+        child: Stack(
+          children: [
+            Positioned(
+              right: 0,
+                top: 0,
+                child: Container(
+
+                  height: 35,
+                  width: 35,
+
+                  decoration: BoxDecoration(shape: BoxShape.circle,  color: Colors.green),
+                  child: Icon(Icons.backup_outlined,color: Colors.white,),
+                )),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 12,),
+                Text("Tack Backup or restore",style: TextStyle(fontSize: 20,letterSpacing: 1.2),),
+                SizedBox(height: 12,),
+                Text("Tacking backup prevent your device data from get erased, also you can refer this data in future.",style: TextStyle(letterSpacing:1.5),),
+                Row(
+                  children: [
+                    Spacer(),
+                    TextButton(onPressed: (){}, child: Text("Later")),
+                    SizedBox(width: 0,),
+                    TextButton(onPressed: (){}, child: Text("Backup")),
+                    SizedBox(width: 4,),
+                    TextButton(onPressed: (){}, child: Text("Restore"))
+                  ],
+
+                )
+              ],
+            ),
+          ],
+        ),
+      );
+    }
 
 
     return WillPopScope(
@@ -81,28 +123,35 @@ class HomePage extends StatelessWidget {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               actions: getLeading(context),
-              elevation: 0,
+              elevation: .4,
               title: RichText(
                   text: TextSpan(children: [
                 TextSpan(
-                    text: "Home ",
+                    text: "Home ".toUpperCase(),
                     style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.2,
-                        color: Colors.red,
-                        fontSize: 20)),
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 1,
+                        color: Theme.of(context).textTheme.bodyText1!.color,
+                        fontSize: 18)),
                 TextSpan(
-                    text: "Workout",
+                    text: "Workout".toUpperCase(),
                     style: TextStyle(
-                        letterSpacing: 1.2,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.blue.shade700,
-                        fontSize: 20))
+                        letterSpacing: 1,
+                        fontWeight: FontWeight.w800,
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 18))
               ])),
             ),
             body: ListView(
               physics: BouncingScrollPhysics(),
               children: [
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // buildBanner(),
+                SizedBox(
+                  height: 16,
+                ),
                 Achievement(
                   onTap: () => Navigator.pushNamed(
                       context, WorkoutDetailReport.routeName),

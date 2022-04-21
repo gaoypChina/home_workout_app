@@ -44,9 +44,6 @@ class MediaHelper {
     return langList;
   }
 
-
-
-
 }
 
 

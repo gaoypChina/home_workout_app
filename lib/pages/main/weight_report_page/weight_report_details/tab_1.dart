@@ -288,6 +288,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                                 ),
                                 getVLine(),
                                 Expanded(
+
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [

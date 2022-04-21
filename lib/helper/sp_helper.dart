@@ -1,29 +1,23 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SpHelper {
-  saveString(String key, String value) async {
+ Future<void> saveString(String key, String value) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    print("suc");
-
     preferences.setString(key, value);
   }
 
-  saveBool(String key, bool value) async {
+ Future<void> saveBool(String key, bool value) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    print("suc");
-
     preferences.setBool(key, value);
   }
 
-  saveInt(String key, int value) async {
+ Future<void> saveInt(String key, int value) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    print("suc");
     preferences.setInt(key, value);
   }
 
-  saveDouble(String key, double value) async {
+ Future<void> saveDouble(String key, double value) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    print("suc");
     preferences.setDouble(key, value);
   }
 

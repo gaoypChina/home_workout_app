@@ -95,7 +95,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     }
 
     buildDivider(){
-      return Container(height: 6,color: Colors.blue.shade50,);
+      return Container(height: 12,color: Colors.blue.withOpacity(.1),);
     }
 
     return Scaffold(
@@ -104,7 +104,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         //leading: IconButton(onPressed: (){Navigator.of(context).pop();},icon: Icon(Icons.arrow_back,color: Colors.white,),),
         title: Text(
           "Get Premium",
-          style: TextStyle(color: Colors.black),
+
         ),
       ),
       body: SafeArea(

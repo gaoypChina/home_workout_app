@@ -7,6 +7,7 @@ class SpKey {
   String height = "height";
   String weight = "weight";
 
+
   /// Time Settings
   String trainingRest = "trainingRest";
   String countdownTime = "countdownTime";
@@ -44,4 +45,9 @@ class SpKey {
 
   /// Push-up Level
   String pushUpLevel = "pushUpLevel";
+
+  /// Backup data
+
+  String newDevice = "newDevice";
+  String backupTime = "backupTime";
 }

@@ -198,7 +198,9 @@ class WorkoutCard extends StatelessWidget {
                 children: [
                   ColorFiltered(
                       colorFilter: ColorFilter.mode(
-                    isDark?      Colors.red.withOpacity(.3):Colors.black.withOpacity(.45),
+                          isDark
+                              ? Colors.black.withOpacity(.4)
+                              : Colors.black.withOpacity(.45),
                           BlendMode.darken),
                       child: Image.asset(
                         imaUrl,

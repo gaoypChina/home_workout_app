@@ -96,7 +96,7 @@ class _WeightChartState extends State<WeightChart> {
     await spHelper.saveDouble(spKey.weight, value);
     String key = DateFormat.yMd().format(selectedDate).toString();
     WeightModel weightModel =
-        WeightModel(selectedDate.toIso8601String(), value, key);
+        WeightModel(selectedDate.toIso8601String(), value, key,  DateTime.now().millisecondsSinceEpoch,);
 
     await weightDb.addWeight(value, weightModel, key);
     widget.onAdd();

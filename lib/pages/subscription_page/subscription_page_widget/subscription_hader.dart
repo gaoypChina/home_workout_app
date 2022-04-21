@@ -71,7 +71,9 @@ class _SubscriptionHeaderState extends State<SubscriptionHeader> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("Get Prime",style: TextStyle(color: Colors.white,fontSize: 22,fontWeight: FontWeight.w600),),
+                        Text("Get Prime",style: TextStyle(
+                           color: Colors.white,
+                            fontSize: 22,fontWeight: FontWeight.w600),),
                         Spacer(),
                         CircleAvatar(
                           child: Icon(
@@ -83,9 +85,13 @@ class _SubscriptionHeaderState extends State<SubscriptionHeader> {
                           backgroundColor: Colors.white,
                         ),
                         Spacer(),
-                        Text(item.title,style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w500),),
+                        Text(item.title,style: TextStyle(
+                           color: Colors.white,
+                            fontSize: 20,fontWeight: FontWeight.w500),),
 SizedBox(height: 8,),
-                        Text(item.subTitle,style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400,letterSpacing: 1.8),textAlign: TextAlign.center,)
+                        Text(item.subTitle,style: TextStyle(
+                            color: Colors.white,
+                          fontSize: 14,fontWeight: FontWeight.w400,letterSpacing: 1.8),textAlign: TextAlign.center,)
                       ,  SizedBox(height: 8,),
 
                       ],

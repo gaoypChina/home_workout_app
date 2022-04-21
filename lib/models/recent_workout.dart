@@ -4,7 +4,7 @@ class RecentWorkout {
  late int _activeTime;
  late double _calories;
  late int _stars;
-  int? _id;
+ late int? _id;
  late  int _exercise;
 
   RecentWorkout(
@@ -12,6 +12,7 @@ class RecentWorkout {
     this._workoutTitle,
     this._activeTime,
     this._stars,
+    this._id,
     this._calories,
     this._exercise,
   );

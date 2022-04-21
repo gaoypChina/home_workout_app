@@ -32,11 +32,11 @@ class _SubscriptionPriceState extends State<SubscriptionPrice> {
             child: Material(
               color: Theme.of(context).appBarTheme.backgroundColor,
               borderRadius: BorderRadius.all(Radius.circular(12)),
-              elevation:isSelected?2: 0,
+              elevation:isSelected? .5: 0,
               child: Container(
                 width: width * .43,
                 decoration: BoxDecoration(
-                  border: Border.all( color:isSelected ? Colors.blue.shade700 : Colors.blue.shade100,),
+                  border: Border.all( color:isSelected ? Colors.blue.shade700 : Colors.blue.withOpacity(.3),),
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
                 child: Column(
@@ -46,18 +46,18 @@ class _SubscriptionPriceState extends State<SubscriptionPrice> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                       decoration: BoxDecoration(
-                        color: isSelected ? Colors.blue.shade700 : Colors.blue.shade100,
+                        color: isSelected ? Colors.blue.shade700 : Colors.blue.withOpacity(.3),
 
                         borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(12),
-                            topLeft: Radius.circular(12)),
+                            topRight: Radius.circular(10),
+                            topLeft: Radius.circular(10)),
                       ),
                       child: Row(
                         children: [
                           Text(
                             model.title,
                             style: TextStyle(
-                                color: isSelected ? Colors.white : Colors.black,
+                                color: isSelected ? Colors.white : Theme.of(context).textTheme.bodyText1!.color,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600),
                           ),

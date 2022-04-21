@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import '../models/recent_workout.dart';
@@ -37,6 +38,7 @@ class RecentDatabaseHelper {
     return ourDb;
   }
 
+
   void _onCreate(Database db, int newVersion) async {
     await db.execute(
       "CREATE TABLE $tableName("
@@ -53,11 +55,7 @@ class RecentDatabaseHelper {
   // Insert
   Future<int> saveWorkOut(RecentWorkout recentWorkout) async {
     Database dbClient = await db;
-    print("dbclient)");
-    print(dbClient.toString());
-    print(recentWorkout.date);
     int res = await dbClient.insert('$tableName', recentWorkout.toMap());
-    print("save : " + res.toString());
     return res;
   }
 
@@ -66,8 +64,28 @@ class RecentDatabaseHelper {
     var dbClient = await db;
     var result = await dbClient
         .rawQuery("SELECT * FROM $tableName ORDER BY $columnId DESC");
-    print("results : " + result.toString());
+    log("results : " + result.toString());
     return result.toList();
+  }
+
+ Future<void> setAllWorkout({required List workoutList})async{
+      Database dbClient = await db;
+      List allLocalWorkout = await getAllWorkOut();
+      for(Map<String,dynamic> workout in workoutList){
+        if(!isPresent(workout, allLocalWorkout)){
+          await dbClient.insert('$tableName', workout);
+        }
+      }
+
+  }
+
+ bool isPresent(Map<String,dynamic> data, List allLocalWorkout){
+    for(Map<String,dynamic> localWorkout in allLocalWorkout){
+      if(localWorkout["id"] == data["id"]){
+        return true;
+      }
+    }
+    return false;
   }
 
   Future<int?> getCount() async {
@@ -116,6 +134,13 @@ class RecentDatabaseHelper {
     var result = await dbClient.rawQuery(
         "SELECT * FROM $tableName WHERE $columnDate >= '$fromDate' AND $columnDate <= '$toDate' ORDER BY $columnDate DESC");
     return result.toList();
+  }
+
+  Future<void> deleteDataBase()async{
+    print("deleted");
+    Directory documentDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentDirectory.path, "RecentWorkout.db");
+   await deleteDatabase(path);
   }
 
   Future close() async {
