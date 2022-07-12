@@ -1,3 +1,5 @@
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart' as picker;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:full_workout/components/height_weightSelector.dart';
@@ -9,6 +11,10 @@ import 'package:full_workout/models/weight_list_model.dart';
 import 'package:full_workout/models/weight_model.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart';
+
+import '../enums/weight_filter.dart';
+import '../pages/detail_input_page/user_detail_widget/weight_picker.dart';
 
 class WeightReportProvider with ChangeNotifier {
   bool isLoading = true;
@@ -36,10 +42,10 @@ class WeightReportProvider with ChangeNotifier {
   }
 
   addWeight({required BuildContext context}) async {
-    double? value = await showDialog(
-        context: context,
-        builder: (context) =>
-            WeightSelector(weight: weightValue, weightIndex: 0));
+    double? value =await showMaterialModalBottomSheet(
+      context: context,
+      builder: (context) => WeightPicker(),
+    );
     DateTime selectedDate = DateTime.now();
     if (value == null) return;
     await _spHelper.saveDouble(_spKey.weight, value);
@@ -92,8 +98,6 @@ class WeightReportProvider with ChangeNotifier {
   }
 
   onRangeChange(WeightFilter filter, BuildContext context) async {
-    // isLoading = true;
-    // notifyListeners();
 
     if (filter == WeightFilter.week) {
       isLoading = true;
@@ -107,8 +111,10 @@ class WeightReportProvider with ChangeNotifier {
       lastDate = DateFormat.yMMMd().format(DateTime.now());
     } else if (filter == WeightFilter.month) {
       isLoading = true;
-      DateTime? selectedMonth =
-          await showMonthPicker(context: context, initialDate: DateTime.now());
+      DateTime? selectedMonth = await showMonthPicker(
+        context: context,
+        initialDate: DateTime.now(),
+      );
       if (selectedMonth == null) {
         isLoading = false;
         notifyListeners();
@@ -130,8 +136,10 @@ class WeightReportProvider with ChangeNotifier {
       isLoading = false;
       notifyListeners();
     } else if (filter == WeightFilter.custom) {
+
       DateTimeRange? dateSelected = await showDateRangePicker(
           context: context,
+
           firstDate: DateTime(2019, 01, 01),
           lastDate: DateTime.now());
       if (dateSelected == null) {
@@ -155,4 +163,3 @@ class WeightReportProvider with ChangeNotifier {
   }
 }
 
-enum WeightFilter { week, month, custom }

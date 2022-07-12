@@ -1,17 +1,23 @@
 import 'dart:ui';
 
+import 'package:dashed_circle/dashed_circle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_helper.dart';
+import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/models/challenges_model.dart';
-import 'package:full_workout/pages/main/explore_page/explore_page.dart';
 import 'package:full_workout/pages/workout_page/exercise_list_page.dart';
-import 'package:timelines/timelines.dart';
-import 'package:flutter/rendering.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:dashed_circle/dashed_circle.dart';
+import 'package:provider/provider.dart';
+import 'package:timelines/timelines.dart';
+
+import '../../../../provider/connectivity_provider.dart';
+import '../../../../widgets/banner_medium_ad.dart';
+import '../../../../widgets/dialogs/connectivity_error_dialog.dart';
+import 'four_week_challenge_reset_dialog.dart';
 
 class WorkoutTimeLine extends StatefulWidget {
   final ChallengesModel challengesModel;
@@ -24,15 +30,13 @@ class WorkoutTimeLine extends StatefulWidget {
 
 class _WorkoutTimeLineState extends State<WorkoutTimeLine>
     with SingleTickerProviderStateMixin {
- late ScrollController _scrollController;
- late TabController tabController;
+  late ScrollController _scrollController;
+  late TabController tabController;
   SpHelper _spHelper = SpHelper();
   Constants constants = Constants();
   bool _isLoading = true;
   int currentDay = 0;
   bool lastStatus = true;
-
-
 
   _scrollListener() {
     if (isShrink != lastStatus) {
@@ -57,25 +61,26 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
     });
   }
 
-
-  onComplete(int currIndex){
-        Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => ExerciseListScreen(
-            workOutList: widget
-                .challengesModel.challengeList[currIndex],
-            tag: widget.challengesModel.tag,
-            title: widget.challengesModel.title +
-                " Day ${currIndex + 1}",
-            tagValue: currentDay + 1,
-          )),
-    );
+  onComplete(int currIndex) {
+    if (28 - currentDay == 0) {
+      constants.getToast(
+          "All workout challenges complete, you can try other workouts");
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ExerciseListScreen(
+                  workOutList: widget.challengesModel.challengeList[currIndex],
+                  tag: widget.challengesModel.tag,
+                  title: widget.challengesModel.title + " Day ${currIndex + 1}",
+                  tagValue: currentDay + 1,
+                )),
+      );
+    }
   }
 
   @override
   void initState() {
-
     getCurrentDate();
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
@@ -109,13 +114,25 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                           radius: 16,
                           backgroundColor: Colors.transparent))
                   : currIndex > currentDay
-                      ? DashedCircle(
-                          color:Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.4),
-                          dashes: 100,
+                      ? Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .color!
+                                      .withOpacity(.35),
+                                  width: 1.2)),
                           child: CircleAvatar(
                               child: Text(
                                 day,
-                                style: TextStyle(color:Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.5)),
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color!
+                                        .withOpacity(.5)),
                               ),
                               radius: 16,
                               backgroundColor: Colors.transparent))
@@ -332,6 +349,33 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverAppBar(
+                    actions: [
+                      IconButton(
+                          onPressed: () async {
+                            var connectivityProvider =
+                                Provider.of<ConnectivityProvider>(context,
+                                    listen: false);
+                            bool isConnected =
+                                await connectivityProvider.isNetworkConnected;
+                          await  showDialog(
+                                context: context,
+                                builder: (builder) {
+                                  return isConnected? FourWeekChallengeResetDialog(
+                                    title: "${widget.challengesModel.title}",
+                                    spKey: widget.challengesModel.tag,
+                                  ):ConnectivityErrorDialog();
+                                });
+                            setState(() {
+                              currentDay = 0;
+                            });
+                          },
+                          icon: Icon(  Icons.restart_alt_outlined,
+                            color: isDark
+                                ? Colors.white
+                                : isShrink
+                                ? Colors.black
+                                : Colors.white,)),
+                    ],
                     leading: IconButton(
                       icon: Icon(
                         Icons.arrow_back,
@@ -394,7 +438,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                                   ),
                                   Spacer(),
                                   Text(
-                                    "${currentDay + 1} / 28",
+                                    "$currentDay / 28",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -461,7 +505,14 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                         ),
                         getChallenges(),
                         SizedBox(
-                          height: 100,
+                          height: 20,
+                        ),
+                        MediumBannerAd(
+                          bgColor: Colors.transparent,
+                          showDivider: false,
+                        ),
+                        SizedBox(
+                          height: 80,
                         ),
                       ],
                     ),

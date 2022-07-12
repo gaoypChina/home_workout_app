@@ -3,19 +3,20 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum ConnectionStatus { online, offline }
+import '../enums/network_connectivity_status.dart';
+
 
 abstract class ConnectivityState {}
 
 class ConnectivityInitial extends ConnectivityState {}
 
 class ConnectivityConnected extends ConnectivityState {
-  final ConnectionStatus connectionStatus;
+  final NetworkConnectionStatus connectionStatus;
   ConnectivityConnected({required this.connectionStatus});
 }
 
 class ConnectivityDisconnected extends ConnectivityState {
-  final ConnectionStatus connectionStatus;
+  final NetworkConnectionStatus connectionStatus;
   ConnectivityDisconnected({required this.connectionStatus});
 }
 
@@ -29,17 +30,17 @@ class ConnectivityCubit extends Cubit<ConnectivityState> {
         connectivity.onConnectivityChanged.listen((connectivityResult) {
       if (connectivityResult == ConnectivityResult.wifi ||
           connectivityResult == ConnectivityResult.mobile) {
-        emitInternetConnected(ConnectionStatus.online);
+        emitInternetConnected(NetworkConnectionStatus.online);
       } else if (connectivityResult == ConnectivityResult.none) {
-        emitInternetDisconnected(ConnectionStatus.offline);
+        emitInternetDisconnected(NetworkConnectionStatus.offline);
       }
     });
   }
 
-  void emitInternetConnected(ConnectionStatus _connectionStatus) =>
+  void emitInternetConnected(NetworkConnectionStatus _connectionStatus) =>
       emit(ConnectivityConnected(connectionStatus: _connectionStatus));
 
-  void emitInternetDisconnected(ConnectionStatus _connectionStatus) =>
+  void emitInternetDisconnected(NetworkConnectionStatus _connectionStatus) =>
       emit(ConnectivityDisconnected(connectionStatus: _connectionStatus));
 
   @override

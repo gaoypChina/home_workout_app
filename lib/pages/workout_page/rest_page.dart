@@ -13,6 +13,7 @@ import 'package:full_workout/components/info_button.dart';
 import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
+import '../../widgets/banner_medium_ad.dart';
 import 'exercise_detail_page.dart';
 
 class RestScreen extends StatefulWidget {
@@ -23,7 +24,6 @@ class RestScreen extends StatefulWidget {
   final String currTime;
   final String title;
   final String tag;
-  final int tagValue;
   final int restTime;
 
   RestScreen(
@@ -34,7 +34,6 @@ class RestScreen extends StatefulWidget {
       required this.currTime,
       required this.title,
       required this.tag,
-      required this.tagValue,
       required this.restTime});
 
   @override
@@ -103,7 +102,6 @@ late  Workout item;
         context,
         MaterialPageRoute(
             builder: (context) => WorkoutPage(
-                tagValue: widget.tagValue,
                 tag: widget.tag,
                 currTime: widget.currTime,
                 rapList: widget.rapList,
@@ -297,6 +295,10 @@ late  Workout item;
                         ),
                       ],
                     ),
+                  ),
+                  MediumBannerAd(
+                    bgColor: isDark? Theme.of(context).scaffoldBackgroundColor:Colors.blue.shade700,
+                    showDivider: false,
                   ),
                   Positioned(
                       right: 10,

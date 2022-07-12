@@ -25,7 +25,6 @@ class WorkoutPage extends StatefulWidget {
   final int index;
   final List<int> rapList;
   final String currTime;
-  final int tagValue;
   final String tag;
   final int restTime;
   WorkoutPage({
@@ -34,7 +33,6 @@ class WorkoutPage extends StatefulWidget {
     required this.index,
     required this.rapList,
     required this.currTime,
-    required this.tagValue,
     required this.tag,
     required this.restTime,
   });
@@ -120,14 +118,14 @@ class _WorkoutPageState extends State<WorkoutPage>
   _onComplete(int currIndex) async {
 
     if (currIndex + 1 == widget.workOutList.length) {
-    //  _showInterstitialAd();
+      _showInterstitialAd();
 
        return Navigator.pushReplacement(
            context,
            MaterialPageRoute(
                builder: (context) => ReportScreen(
                  tag: widget.tag,
-                 tagValue: widget.tagValue,
+
                  title: widget.title,
                  dateTime: widget.currTime,
                  totalExercise: widget.workOutList.length,
@@ -135,7 +133,6 @@ class _WorkoutPageState extends State<WorkoutPage>
      }
      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
        return RestScreen(
-         tagValue:widget.tagValue,
          tag: widget.tag,
          currTime: widget.currTime,
          workOutList: widget.workOutList,
@@ -166,7 +163,7 @@ class _WorkoutPageState extends State<WorkoutPage>
     if (currIndex != widget.workOutList.length) {
       introMessage();
     }if (currIndex + 1 == widget.workOutList.length){
-     // Provider.of<AdsProvider>(context,listen: false).createInterstitialAd();
+      Provider.of<AdsProvider>(context,listen: false).createInterstitialAd();
     }
     controller = AnimationController(
       vsync: this,

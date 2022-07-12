@@ -27,40 +27,77 @@ class _WorkoutTimePickerState extends State<WorkoutTimePicker> {
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, top: 12, bottom: 12),
+          child: Row(
+            children: [
+              Text(
+                "Set Duration(${widget.minimumVal} ~ ${widget.maximumVal} Sec)",
+                style: TextStyle(
+                    fontSize: 17, fontWeight: FontWeight.w500, letterSpacing: 1),
+              ),
+              Spacer(),
 
-    return CupertinoAlertDialog(
-
-      title: Text("Set Duration(${widget.minimumVal} ~ ${widget.maximumVal} Sec)",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w400,letterSpacing: 1),),
-      content: Container(
-        padding: EdgeInsets.only(top: 10),
-        child: NumberPicker(
-          haptics: true,
-          itemHeight: 50,
-          value: selectedValue,
-          step:widget.maximumVal ==15?1: 5,
-          minValue: widget.minimumVal,
-          maxValue: widget.maximumVal,
-
-          selectedTextStyle: TextStyle(color:Theme.of(context).primaryColor, fontSize: 18,fontWeight: FontWeight.w500),
-          textMapper: (title) {
-            return "$title Sec";
-          },
-          onChanged: (value) {
-            setState(() {
-              selectedValue = value;
-            });
-          },
+              InkWell(
+                onTap: ()=>Navigator.of(context).pop(),
+                child: Container(padding: EdgeInsets.all(8),
+                child: Icon(Icons.close),),
+              ),
+              SizedBox(width: 8,)
+            ],
+          ),
         ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text("Cancel"),
+        Container(
+          color: Colors.grey.withOpacity(.2),
+          height: 1,
         ),
-        TextButton(
-            onPressed: () => Navigator.pop(context, selectedValue),
-            child: Text("Save")),
+        SizedBox(height: 12,),
+
+        Center(
+          child: NumberPicker(
+            haptics: true,
+            itemHeight: 50,
+            value: selectedValue,
+            step: widget.maximumVal == 15 ? 1 : 5,
+            minValue: widget.minimumVal,
+            maxValue: widget.maximumVal,
+
+            decoration: BoxDecoration(color: Colors.blue.withOpacity(.2)),
+            selectedTextStyle: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 18,
+                fontWeight: FontWeight.w500),
+            itemCount: 3,
+            textStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w400
+            ),
+            textMapper: (title) {
+              return "$title Sec";
+            },
+            onChanged: (value) {
+              setState(() {
+                selectedValue = value;
+              });
+            },
+          ),
+        ),
+        SizedBox(height: 12,),
+        Container(
+          padding: EdgeInsets.only(right: 12),
+          alignment: Alignment.bottomRight,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(minimumSize: Size(80, 42)),
+            child: Text("Save"),onPressed: () => Navigator.pop(context, selectedValue),),
+        ),
+        SizedBox(height: 18,)
       ],
     );
   }
 }
+
+

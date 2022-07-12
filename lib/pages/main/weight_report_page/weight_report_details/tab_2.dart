@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:full_workout/constants/constant.dart';
+import 'package:full_workout/widgets/banner_medium_ad.dart';
+
 import '../weight_report.dart';
 
-
 class WeightDetailTab2 extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     return SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
+      physics: BouncingScrollPhysics(),
           child:
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,8 +20,14 @@ class WeightDetailTab2 extends StatelessWidget {
                 title: "Weight Statics",
                 isShow: false,
               ),
-
-            ],
+              SizedBox(height: 10,),
+              Constants().getDivider(context: context),
+              SizedBox(height: 18,),
+              MediumBannerAd(
+              showDivider: false,
+              bgColor: Theme.of(context).scaffoldBackgroundColor),
+              SizedBox(height: 20,),
+        ],
           ),
 
       );

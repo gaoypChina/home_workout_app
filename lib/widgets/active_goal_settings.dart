@@ -286,7 +286,6 @@ class _QuitPageState extends State<DaySelector> {
     title: Text(widget.title),
     content: NumberPicker(
       haptics: true,
-
       value: selectedValue,
       step:1,
       minValue: 1,

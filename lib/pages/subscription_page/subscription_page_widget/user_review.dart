@@ -10,7 +10,7 @@ class UserReview extends StatefulWidget {
 class _UserReviewState extends State<UserReview> {
   List<UserReviewModel> reviews = [
     UserReviewModel(
-        imgSrc: "assets/other/annchit.jpg",
+        imgSrc: "assets/other/anchit.jpg",
         name: "Anchit Mishra",
         color: Colors.green.withOpacity(.1),
         review:
@@ -22,7 +22,7 @@ class _UserReviewState extends State<UserReview> {
         review:
             "This app is awesome. Instructions are simple clear and well animated for easy understanding. Thank you for this fabulous app."),
     UserReviewModel(
-        imgSrc: "assets/other/anshman.jpg",
+        imgSrc: "assets/other/anshuman.jpg",
         name: "Anshuman Pandey",
         color: Colors.blue.withOpacity(.1),
         review:

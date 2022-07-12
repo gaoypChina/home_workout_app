@@ -1,70 +1,94 @@
 import 'package:flutter/material.dart';
+import 'package:full_workout/pages/main/explore_page/explore_page_widget/workout_header.dart';
+
+import '../../../../database/explore_page_workout/featured_workout_database.dart';
+import '../../../../widgets/prime_icon.dart';
+import '../workout_setup_page/workout_setup_page.dart';
 
 class SleepWorkoutSection extends StatelessWidget {
   final String title;
+
   const SleepWorkoutSection({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<SleepWorkoutModel> _workoutList = [
-      SleepWorkoutModel(imgSrc: "assets/explore_image/img_1.jpg", title: "Full body stretching"),
-      SleepWorkoutModel(imgSrc: "assets/explore_image/img_2.jpg", title: "Full body "),
-      SleepWorkoutModel(imgSrc: "assets/explore_image/img_3.jpg", title: "Full body stretching"),
-      SleepWorkoutModel(imgSrc: "assets/explore_image/img_4.jpg", title: "Full body stretching"),
-      SleepWorkoutModel(imgSrc: "assets/explore_image/img_5.jpg", title: "Full body stretching"),
-      SleepWorkoutModel(imgSrc: "assets/explore_image/img_6.jpg", title: "Full body stretching"),
-      SleepWorkoutModel(imgSrc: "assets/explore_image/img_7.jpg", title: "Full body stretching"),
-      SleepWorkoutModel(imgSrc: "assets/explore_image/img_8.jpg", title: "Full body stretching"),
-    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,letterSpacing: 1.2),),
-        SizedBox(height: 4,),
-        Container(
-          height: 300,
-
-          color: Colors.white30,
-          child: GridView.count(
-              physics: BouncingScrollPhysics(),
-              crossAxisCount: 2,
-              childAspectRatio: 15/16,
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(4.0),
-              mainAxisSpacing: 0.0,
-              crossAxisSpacing: 0.0,
-              children:_workoutList.map((SleepWorkoutModel item) {
-                return Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                          child: Card(
-                        elevation: 2,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
-
-                          child: ClipRRect(
-
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                              child: Image.asset(item.imgSrc, fit: BoxFit.cover)))),
-
-                      Expanded(child: Text(item.title,style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,letterSpacing: 1.4),))
-                    ],
-                  ),
-                );
-              }).toList()),
+        Padding(
+          padding: const EdgeInsets.only(left: 12.0),
+          child: Text("Featured Workout",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              )),
         ),
+        SizedBox(
+          height: 8,
+        ),
+        Container(
+            height: 300,
+            child: GridView.count(
+                physics: BouncingScrollPhysics(),
+                crossAxisCount: 2,
+                childAspectRatio: 15 / 16,
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(left: 12.0, right: 12),
+                mainAxisSpacing: 0.0,
+                crossAxisSpacing: 0.0,
+                children: [
+                  ...featuredWorkoutList.map((workout) {
+                    return InkWell(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (builder) =>
+                               WorkoutSetupPage(
+                                  workout: workout, header:
+                                WorkoutHeader(imgSrc: workout.imgSrc),)
+                      )),
+                      child: Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                                flex: 2,
+                                child: Card(
+                                    elevation: 2,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12))),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8)),
+                                        child: Image.asset(
+                                          workout.imgSrc,
+                                          fit: BoxFit.fill,
+                                        )))),
+                            Expanded(
+                                child: Padding(
+                              padding: const EdgeInsets.only(right: 4.0),
+                              child: Text(
+                                workout.title,
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 1.4,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color!
+                                        .withOpacity(.7)),
+                              ),
+                            ))
+                          ],
+                        ),
+                      ),
+                    );
+                  }).toList()
+                ]))
       ],
     );
   }
 }
 
-class SleepWorkoutModel {
-  final String title;
-  final String imgSrc;
-
-  SleepWorkoutModel({required this.imgSrc, required this.title});
-}

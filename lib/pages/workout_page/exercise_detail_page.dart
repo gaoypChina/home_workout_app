@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/components/info_button.dart';
-
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
-
+import 'package:full_workout/widgets/banner_regular_ad.dart';
 
 class DetailPage extends StatelessWidget {
   final Workout workout;
@@ -57,27 +55,38 @@ class DetailPage extends StatelessWidget {
         itemBuilder: (BuildContext context, int index){
         return
                ListTile(
-                 minVerticalPadding: 12,
-                  leading: Text("Step ${index + 1}: ",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500)),
-                  title: Text(
-                    "${workout.steps[index]}",
-                    style: TextStyle(color: Colors.white, fontSize: 14,letterSpacing: 1.2,height: 1.5),
-                  ));
+              minVerticalPadding: 0,
+              leading: Text("Step ${index + 1}: ",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500)),
+              title: Text(
+                "${workout.steps[index]}",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    letterSpacing: 1.2,
+                    height: 1.5),
+              ));
         },itemCount: workout.steps.length,);
     }
 
     return Scaffold(
-
+      bottomNavigationBar:
+          Container(
+            height: 60,
+              child: RegularBannerAd(showDivider: false, bgColor: Colors.blue)),
       appBar: AppBar(
         toolbarHeight: 50,
-        title:Text( workout.title,style: TextStyle(color: Colors.white),),
+        title: Text(
+          workout.title,
+          style: TextStyle(color: Colors.white),
+        ),
         elevation: 0,
-        backgroundColor:isDark?Theme.of(context).scaffoldBackgroundColor: Colors.blue ,
-        leading:  TextButton.icon(
+        backgroundColor:
+            isDark ? Theme.of(context).scaffoldBackgroundColor : Colors.blue,
+        leading: TextButton.icon(
           onPressed: () {
             Navigator.pop(context, true);
           },
@@ -92,47 +101,49 @@ class DetailPage extends StatelessWidget {
           Container(
             margin: EdgeInsets.all(8),
 
-          child: TextButton(
-            onPressed: ()  {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        YoutubeTutorial(
-                          rapCount:rapCount ,
-                          workout: workout,
-                        ),
-                  ));
-            },
-            style: ElevatedButton.styleFrom(
-              maximumSize: Size(150,40),
-               primary:isDark?Colors.grey.shade200:Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 4)),
+            child: TextButton(
+              onPressed: ()  {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          YoutubeTutorial(
+                            rapCount:rapCount ,
+                            workout: workout,
+                          ),
+                    ));
+              },
+              style: ElevatedButton.styleFrom(
+                  maximumSize: Size(150,40),
+                  primary:isDark?Colors.grey.shade200:Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 4)),
 
-            child: Text(
-              "Video".toUpperCase(),
-              style: TextStyle(
-                fontSize: 16,
-             fontWeight: FontWeight.w500,
-             letterSpacing: 1.0
-             //   color: Colors.grey.shade800,
+              child: Text(
+                "Video".toUpperCase(),
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 1.0
+                  //   color: Colors.grey.shade800,
+                ),
               ),
             ),
-          ),
-        )],
+          )],
       ),
-    backgroundColor:isDark?Theme.of(context).scaffoldBackgroundColor: Colors.blue,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 10,),
-
-              getImage(workout, height, width),
-              getTitle(workout),
-              getSteps(workout)
-            ],
-          ),
+      backgroundColor:isDark?Theme.of(context).scaffoldBackgroundColor: Colors.blue,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            getImage(workout, height, width),
+            getTitle(workout),
+            getSteps(workout),
+            SizedBox(
+              height: 88,
+            ),
+          ],
         ),
       ),
     );

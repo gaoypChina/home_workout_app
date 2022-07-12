@@ -10,6 +10,7 @@ import 'package:full_workout/helper/recent_workout_db_helper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/models/recent_workout.dart';
+import 'package:full_workout/pages/main/home_page/home_page.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/pages/services/bmi_service/bmi_card.dart';
@@ -20,19 +21,22 @@ import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:wakelock/wakelock.dart';
 
+import '../../widgets/banner_medium_ad.dart';
+import '../main_page.dart';
+
 class ReportScreen extends StatefulWidget {
   final String title;
   final String dateTime;
   final int totalExercise;
   final String tag;
-  final int tagValue;
+
 
   ReportScreen(
       {required this.title,
       required this.dateTime,
     required this.totalExercise,
       required this.tag,
-      required this.tagValue});
+   });
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -131,10 +135,14 @@ class _MyAppState extends State<ReportScreen> {
   }
 
   _onNext(){
-  return  Navigator.pushNamedAndRemoveUntil(
-        context,
-        WorkoutDetailReport.routeName,
-        ModalRoute.withName('/'));
+    Navigator.of(context).pushReplacementNamed(WorkoutDetailReport.routeName,);
+    // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+    //     MainPage(index: 0,)), (Route<dynamic> route) => false);
+
+  // return  Navigator.pushNamedAndRemoveUntil(
+  //       context,
+  //       WorkoutDetailReport.routeName,
+  //         (Route route) => false);
   }
 
   @override
@@ -244,7 +252,7 @@ class _MyAppState extends State<ReportScreen> {
                             style: TextStyle(color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(
-                              primary: constants.primaryColor),
+                              primary: Theme.of(context).primaryColor),
                         ),
                   SizedBox(
                     width: 5,
@@ -286,7 +294,7 @@ class _MyAppState extends State<ReportScreen> {
       return Container(
         height: MediaQuery.of(context).size.height * .14,
         child: Card(
-          elevation: 2,
+          elevation: 0,
 
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16))),
@@ -305,8 +313,8 @@ class _MyAppState extends State<ReportScreen> {
                     subTitle,
                     style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18),
                   ),
 
                   SizedBox(
@@ -316,8 +324,8 @@ class _MyAppState extends State<ReportScreen> {
                     title,
                     style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16),
                   ),
 
                 ],
@@ -420,8 +428,7 @@ class _MyAppState extends State<ReportScreen> {
               borderRadius: BorderRadius.circular(30),
             ),
             backgroundColor: Colors.blue.shade700,
-            side: BorderSide(
-                color: Colors.blue.shade700, style: BorderStyle.solid, width: 0),
+
           ),
           onPressed: () {
             _onNext();
@@ -478,7 +485,12 @@ class _MyAppState extends State<ReportScreen> {
                 ),
                 SizedBox(height: 10,),
                 constants.getDivider(context: context),
-                getRatingBar(height),
+
+                MediumBannerAd(
+                  showDivider: true,
+                  bgColor: Theme.of(context).scaffoldBackgroundColor,
+                ),
+               getRatingBar(height),
                 getButton(),
                 SizedBox(
                   height: 16,

@@ -17,24 +17,35 @@ class _SubscriptionHeaderState extends State<SubscriptionHeader> {
     List<PremiumItem> premiumItemList = [
       PremiumItem(
           color: Colors.blueGrey,
-          title: "Ad-Free",
-          icon: Icons.zoom_out_map,
-          subTitle: "Unlimited Workout Without Ads"),
+          title: "New Workouts",
+          iconImage: "assets/other/dumbel.png",
+          subTitle: "Add new workout constantly"),
       PremiumItem(
           color: Colors.teal,
+          title: "Ad-Free",
+          iconImage: "assets/other/ads.png",
+          subTitle: "Unlimited Workout Without Ads"),
+      PremiumItem(
+          color: Colors.red.shade300,
           title: "Unlimited Workout",
-          icon: Icons.article,
+          icon: Icons.article_outlined,
           subTitle: "Access Unlimited workout plans"),
       PremiumItem(
-          color: Colors.grey,
-          title: "300+ Workouts",
-          icon: Icons.add,
-          subTitle: "300+ workouts for your all fitness goals"),
+          color: Colors.blueGrey,
+          title: "Unlimited Weight Log",
+          iconImage:"assets/other/line-chart.png" ,
+          subTitle: "Log unlimited workout record"),
       PremiumItem(
-          color: Colors.lightBlue,
-          title: "New Workouts",
-          icon: Icons.verified_outlined,
-          subTitle: "Add new workout constantly")
+          color: Colors.teal,
+          title: "100+ Workouts",
+          iconImage: "assets/other/100.png",
+          subTitle: "100+ workouts for your all fitness goals"),
+      PremiumItem(
+          color: Colors.red.shade300,
+          title: "Support developers",
+          icon: Icons.favorite_border_outlined,
+
+          subTitle: "You little contribution supports us to continue good work"),
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +53,11 @@ class _SubscriptionHeaderState extends State<SubscriptionHeader> {
         SizedBox(height: 18,),
         Padding(
           padding: const EdgeInsets.only(left: 18.0),
-          child: Text("Subscribe prime and get",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600,letterSpacing: 1.5),),
+          child: Text(
+            "Subscription Benefit",
+            style: TextStyle(
+                fontSize: 18, fontWeight: FontWeight.w500, letterSpacing: 0.5),
+          ),
         ),
         SizedBox(height: 10,),
         CarouselSlider.builder(
@@ -50,47 +65,55 @@ class _SubscriptionHeaderState extends State<SubscriptionHeader> {
           itemBuilder: (BuildContext context, int itemIndex, _) {
             PremiumItem item = premiumItemList[itemIndex];
             return ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(18)),
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
               child: Stack(
                 children: [
 
                   Container(
 
-                    margin: EdgeInsets.only(left:itemIndex==0?0: 8,right:itemIndex==premiumItemList.length-1?0: 8),
-                    padding: const EdgeInsets.symmetric(vertical: 18,horizontal: 38),
+                    margin: EdgeInsets.only(
+                        left: itemIndex == 0 ? 0 : 8,
+                        right: itemIndex == premiumItemList.length - 1 ? 0 : 8),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 38),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [Colors.blue.shade700,item.color,],
-                      ),
-            borderRadius: const BorderRadius.all(Radius.circular(18)),
+                      color: item.color.withOpacity(.05),
+                      // gradient: LinearGradient(
+                      //   begin: Alignment.topLeft,
+                      //   end: Alignment.bottomRight,
+                      //   colors: [
+                      //     item.color.withOpacity(.7),
+                      //     item.color,
+                      //   ],
+                      // ),
+                      border: Border.all(color:item.color.withOpacity(.2),width: 1,),
+                      borderRadius: const BorderRadius.all(Radius.circular(16)),
                     ),
                     width: double.infinity,
 
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("Get Prime",style: TextStyle(
-                           color: Colors.white,
-                            fontSize: 22,fontWeight: FontWeight.w600),),
-                        Spacer(),
                         CircleAvatar(
-                          child: Icon(
-                            item.icon,
-                            size: 24,
-                            color: item.color,
-                          ),
+
+
+                          child: item.icon == null
+                              ? Image.asset(item.iconImage!,height: 24,color: Colors.white,)
+                              : Icon(
+                                  item.icon,
+                                  size: 24,
+                                  color: Colors.white,
+                                ),
                           radius: 24,
-                          backgroundColor: Colors.white,
+                          backgroundColor: item.color,
                         ),
                         Spacer(),
                         Text(item.title,style: TextStyle(
-                           color: Colors.white,
+                           color: Theme.of(context).textTheme.bodyText1!.color,
                             fontSize: 20,fontWeight: FontWeight.w500),),
 SizedBox(height: 8,),
                         Text(item.subTitle,style: TextStyle(
-                            color: Colors.white,
+                            color: Theme.of(context).textTheme.bodyText1!.color,
                           fontSize: 14,fontWeight: FontWeight.w400,letterSpacing: 1.8),textAlign: TextAlign.center,)
                       ,  SizedBox(height: 8,),
 
@@ -101,12 +124,13 @@ SizedBox(height: 8,),
               ),
             );
           },
-          options: CarouselOptions(scrollPhysics: BouncingScrollPhysics(),
+          options: CarouselOptions(
+              scrollPhysics: BouncingScrollPhysics(),
               initialPage: 0,
               enableInfiniteScroll: false,
               pageSnapping: true,
-             // autoPlay: true,
-              height: 200,
+              // autoPlay: true,
+              height: 150,
               viewportFraction: .90,
               onPageChanged: (index, _) {
                 setState(() {
@@ -141,10 +165,12 @@ class PremiumItem {
   final Color color;
   final String title;
   final String subTitle;
-  final IconData icon;
+  IconData? icon;
+  String? iconImage;
 
   PremiumItem({
-    required this.icon,
+    this.iconImage,
+    this.icon,
     required this.color,
     required this.subTitle,
     required this.title,

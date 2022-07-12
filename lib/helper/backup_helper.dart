@@ -6,9 +6,12 @@ const String UserActivityCollection = "user_activity";
 const String WorkoutCollection = "workouts";
 const String WeightCollection = "weights";
 const String UserCollection = "users";
+const String ProUserCollection = "pro_users";
 
 class BackupHelper {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  /// --------------------------user record ------------------------------
 
   Future<void> saveUser(
       {required String? name,
@@ -43,15 +46,58 @@ class BackupHelper {
     return _db.collection(UserCollection).doc(uid).get();
   }
 
-  Future<void> saveUserActivity({required List workouts,required List weights, required Map<String, dynamic> workoutData, required String uid})async{
+  ///----------------------------pro user record --------------------------
+
+  Future<void> saveProUser(
+      {required String uid,
+      required String firstDate,
+      required String lastDate,
+      required String? userName,
+      required String price}) async {
+    await _db.collection(ProUserCollection).doc(uid).set({
+      "uid": uid,
+      "first_date": firstDate,
+      "last_date": lastDate,
+      "user_name": userName,
+      "price": price
+    });
+  }
+
+  Future<DocumentSnapshot> getProUser({required String uid}) {
+    return _db.collection(ProUserCollection).doc(uid).get();
+  }
+
+  ///-----------------------user Activity record-------------------------
+  Future<void> saveUserActivity(
+      {required List workouts,
+      required List weights,
+      required Map<String, dynamic> workoutData,
+      required String uid}) async {
     await _db.collection(UserActivityCollection).doc(uid).set({
       "workouts": workouts,
-      "weights":weights,
+      "weights": weights,
       "workout_data": workoutData
     });
   }
 
   Future<DocumentSnapshot> getUserActivity({required String uid}) {
     return _db.collection(UserActivityCollection).doc(uid).get();
+  }
+
+  ///--------------------------Delete user account------------------------
+
+  Future deleteFirebaseDataBase({required String uid}) async {
+    await _db.collection(UserActivityCollection).doc(uid).delete();
+    await _db.collection(UserCollection).doc(uid).delete();
+    await _db.collection(ProUserCollection).doc(uid).delete();
+  }
+
+  ///------------------------ Reset user progress ------------------------
+
+  Future resetUserProgress(
+      {required String uid, required Map<String, dynamic> workoutData}) async {
+    await _db.collection(UserActivityCollection).doc(uid).set({
+      "workout_data": workoutData
+    });
   }
 }

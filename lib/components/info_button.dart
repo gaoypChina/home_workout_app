@@ -1,6 +1,5 @@
 
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InfoButton extends StatelessWidget {
@@ -24,5 +23,5 @@ class InfoButton extends StatelessWidget {
       child: Icon(icon,color:Colors.white,size: 22,),
     //  tooltip: tooltip,
     );
-  }
+}
 }

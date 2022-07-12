@@ -1,39 +1,62 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
-import 'package:full_workout/helper/ad_helper.dart';
+import 'package:full_workout/helper/ad_id_helper.dart';
+import 'package:full_workout/helper/sp_helper.dart';
+import 'package:full_workout/provider/subscription_provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:provider/provider.dart';
+
+import '../helper/ad_helper.dart';
 
 const int maxFailedLoadAttempts = 3;
 
 class AdsProvider with ChangeNotifier {
   late BannerAd bottomBannerAd;
   InterstitialAd? interstitialAd;
+  RewardedAd? rewardedAd;
 
   int _interstitialLoadAttempts = 0;
-
-  bool isLoaded = false;
+  int _rewardLoadAttempts = 0;
+  bool isLoading = false;
+  bool showBannerAd = false;
+  bool loadingError = false;
+  bool isRewarded = false;
 
   void createBottomBannerAd() {
-
     bottomBannerAd = BannerAd(
         adUnitId: AdIdHelper.bannerAdUnitId,
-        size: AdSize.banner,
+        size: AdSize.fullBanner,
         request: AdRequest(),
         listener: BannerAdListener(
           onAdLoaded: (_) {
-            log("loading.....");
-            isLoaded = true;
+            showBannerAd = true;
             notifyListeners();
           },
           onAdFailedToLoad: (ad, error) {
-            log("message " +
-                error.message +
-                " response " +
-                error.responseInfo.toString() +
-                " error code " +
-                error.code.toString());
-            log("fail to load .....");
+            showBannerAd = false;
+            notifyListeners();
+            ad.dispose();
+          },
+        ));
+    bottomBannerAd.load();
+  }
+
+  void createMediumBannerAd() {
+    bottomBannerAd = BannerAd(
+        adUnitId: AdIdHelper.bannerAdUnitId,
+        size: AdSize.mediumRectangle,
+        request: AdRequest(),
+        listener: BannerAdListener(
+          onAdLoaded: (_) {
+            showBannerAd = true;
+            log("loading.....");
+            log(showBannerAd.toString());
+            notifyListeners();
+          },
+          onAdFailedToLoad: (ad, error) {
+            showBannerAd = false;
+            notifyListeners();
             ad.dispose();
           },
         ));
@@ -49,7 +72,10 @@ class AdsProvider with ChangeNotifier {
           _interstitialLoadAttempts = 0;
           interstitialAd = ad;
         }, onAdFailedToLoad: (LoadAdError error) {
-              log("message : " + error.message + " error code : " + error.code.toString());
+          log("message : " +
+              error.message +
+              " error code : " +
+              error.code.toString());
           _interstitialLoadAttempts += 1;
           interstitialAd = null;
           if (_interstitialLoadAttempts <= maxFailedLoadAttempts) {
@@ -58,13 +84,43 @@ class AdsProvider with ChangeNotifier {
         }));
   }
 
+  createRewardAd({required BuildContext context, required String key}) async {
+    loadingError = false;
+    isLoading = true;
+    notifyListeners();
+    await RewardedAd.load(
+        adUnitId: AdIdHelper.rewardAdUnitId,
+        request: AdRequest(),
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdFailedToLoad: (LoadAdError error) {
+            _rewardLoadAttempts += 1;
+            log(_rewardLoadAttempts.toString());
+            rewardedAd = null;
+
+            if (_rewardLoadAttempts < maxFailedLoadAttempts) {
+              createRewardAd(context: context,key: key);
+            }
+            if (_rewardLoadAttempts == maxFailedLoadAttempts) {
+              _rewardLoadAttempts = 0;
+              loadingError = true;
+              isLoading = false;
+              notifyListeners();
+            }
+          },
+          onAdLoaded: (RewardedAd ad) {
+            _rewardLoadAttempts = 0;
+            rewardedAd = ad;
+            AdHelper().showRewardAd(context: context, key: key);
+            isLoading = false;
+            notifyListeners();
+          },
+        ));
+  }
 
   void disposeBannerAd() {
     log("bottom");
     log("bottom ad : " + bottomBannerAd.toString());
-
-      bottomBannerAd.dispose();
-
+    bottomBannerAd.dispose();
   }
 
   void disposeInterstitialAd() {
@@ -72,4 +128,30 @@ class AdsProvider with ChangeNotifier {
       interstitialAd!.dispose();
     }
   }
+
+  void disposeRewardAd() {
+    if (rewardedAd != null) {
+      rewardedAd!.dispose();
+    }
+  }
+
+  onRewardLoaded(){
+    isRewarded = true;
+    notifyListeners();
+  }
+
+  Future<bool> isUnlocked({required String key,required BuildContext context}) async {
+    if (Provider.of<SubscriptionProvider>(context,listen: false).isProUser) {
+      return true;
+    } else {
+      String? date = await SpHelper().loadString(key);
+      if (date == null) {
+        return false;
+      } else {
+        DateTime parsedTime = DateTime.parse(date);
+        return DateTime.now().difference(parsedTime).inHours <= 12;
+      }
+    }
+  }
+
 }

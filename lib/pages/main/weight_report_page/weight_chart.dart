@@ -9,7 +9,10 @@ import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/models/weight_list_model.dart';
 import 'package:full_workout/models/weight_model.dart';
 import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
+
+import '../../detail_input_page/user_detail_widget/weight_picker.dart';
 
 
 class WeightChart extends StatefulWidget {
@@ -84,10 +87,10 @@ class _WeightChartState extends State<WeightChart> {
   }
 
   addWeight() async {
-    double? value = await showDialog(
-        context: context,
-        builder: (context) =>
-            WeightSelector(weight: weightValue??0, weightIndex: 0));
+    double? value = await showMaterialModalBottomSheet(
+      context: context,
+      builder: (context) => WeightPicker(),
+    );
     DateTime selectedDate = DateTime.now();
     if(value == null){
       return;
@@ -265,39 +268,35 @@ class _WeightChartState extends State<WeightChart> {
       ),
       titlesData: FlTitlesData(
         show: true,
-        topTitles: SideTitles(
-          showTitles: false,
-        ),
+          bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+            interval: 1,
+            showTitles: true,
+            reservedSize: 20,
+            getTitlesWidget: (value, _) {
+              if (value.toInt() % 2 == 0) {
+                return Text(
+                  (value.toInt()).toString(),
+                  style: TextStyle(
+                      color: color, fontWeight: FontWeight.w600, fontSize: 12),
+                );
+              }
+              return Container();
+            },
+          )),
+          leftTitles: AxisTitles(
+            sideTitles:
+             SideTitles( 
+                 showTitles: true,
+                 reservedSize: 28,getTitlesWidget: (value, _) {
+              return Text(value.toInt().toString(),
+                  style: TextStyle(
+                      color: color, fontWeight: FontWeight.w600, fontSize: 12));
+            }),
 
-        bottomTitles: SideTitles(interval: 1,
-          showTitles: true,
-          reservedSize: 18,
-
-         getTextStyles: (value, _) => TextStyle(
-             color: color, fontWeight: FontWeight.w600, fontSize: 12),
-          getTitles: (value) {
-            if (value.toInt() % 2 == 0) {
-              return (value.toInt()).toString();
-            }
-            return "";
-          },
-
-
-        ),
-
-        leftTitles: SideTitles(
-          reservedSize: 18,
-          getTextStyles: (value, _) => TextStyle(
-
-              color: color, fontWeight: FontWeight.w600, fontSize: 12),
-          showTitles: true,
-        ),
-
-        rightTitles: SideTitles(
-          showTitles: false,
-          reservedSize: 18
-        ),
-      ),
+          ),
+          rightTitles: AxisTitles(),
+          topTitles: AxisTitles()),
       borderData: FlBorderData(
           show: true,
           border: Border.all(color: const Color(0xff37434d), width: 1.5)),
@@ -309,18 +308,20 @@ class _WeightChartState extends State<WeightChart> {
       lineBarsData: [
         LineChartBarData(
           spots: getData(),
+          gradient: LinearGradient(colors: gradientColors),
           isCurved: true,
-          colors: gradientColors,
           barWidth: 1.5,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: false,
           ),
           belowBarData: BarAreaData(
-            show: true,
-            colors:
-            gradientColors.map((color) => color.withOpacity(0.3)).toList(),
-          ),
+              show: true,
+              gradient: LinearGradient(
+                colors: gradientColors
+                    .map((color) => color.withOpacity(0.3))
+                    .toList(),
+              )),
         ),
       ],
     );

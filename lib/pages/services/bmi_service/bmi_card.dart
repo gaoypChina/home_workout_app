@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
@@ -82,19 +80,19 @@ class _BmiCardState extends State<BmiCard> {
             remark: "Very severely Underweight", color: Colors.redAccent);
       } else if (bmi >= 16 && bmi <= 16.9) {
         bmiRemark =
-            BmiRemark(remark: "Severely underweight", color: Colors.grey);
+            BmiRemark(remark: "Severely underweight", color: Colors.red.withOpacity(.8));
       } else if (bmi >= 17 && bmi <= 18.4) {
-        bmiRemark = BmiRemark(remark: "Underweight", color: Colors.blue);
+        bmiRemark = BmiRemark(remark: "Underweight", color: Colors.amber.withOpacity(.8));
       } else if (bmi >= 18.5 && bmi <= 24.9) {
-        bmiRemark = BmiRemark(remark: "Healthy weight", color: Colors.green);
+        bmiRemark = BmiRemark(remark: "Healthy weight", color: Colors.green.withOpacity(.8));
       } else if (bmi >= 25 && bmi <= 29.9) {
-        bmiRemark = BmiRemark(remark: "Overweight", color: Colors.orange);
+        bmiRemark = BmiRemark(remark: "Overweight", color: Colors.orange.withOpacity(.8));
       } else if (bmi >= 30 && bmi <= 34.9) {
-        bmiRemark = BmiRemark(remark: "Obese class I", color: Colors.redAccent);
+        bmiRemark = BmiRemark(remark: "Obese class I", color: Colors.redAccent.withOpacity(.8));
       } else if (bmi >= 35 && bmi <= 39.9) {
-        bmiRemark = BmiRemark(remark: "Obese class II", color: Colors.red);
+        bmiRemark = BmiRemark(remark: "Obese class II", color: Colors.red.withOpacity(.8));
       } else {
-        bmiRemark = BmiRemark(remark: "Obese class III", color: Colors.red);
+        bmiRemark = BmiRemark(remark: "Obese class III", color: Colors.red.withOpacity(.8));
       }
       return bmiRemark;
     }
@@ -125,7 +123,7 @@ class _BmiCardState extends State<BmiCard> {
               Spacer(),
               Text(
                 value,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
               )
             ],
           ),
@@ -160,13 +158,13 @@ class _BmiCardState extends State<BmiCard> {
                         Text(
                           "Weight Categories",
                             style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 18),
+                                fontWeight: FontWeight.w500, fontSize: 18),
                           ),
                         Spacer(),
                         Text(
                           "Index",
                             style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 18),
+                                fontWeight: FontWeight.w500, fontSize: 18),
                           ),
                         SizedBox(
                           width: 18,
@@ -227,7 +225,7 @@ class _BmiCardState extends State<BmiCard> {
                           left: 18.0, right: 18, bottom: 4),
                       child: Text("Healthy BMI Range",
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600)),
+                              fontSize: 16, fontWeight: FontWeight.w500)),
                     ),
                   Padding(
                     padding:
@@ -258,13 +256,13 @@ class _BmiCardState extends State<BmiCard> {
 
     var size = MediaQuery.of(context).size;
     double width = size.width;
-    double borderWidth = 2;
+    double borderWidth = 1.5;
     double bmiWidth = width - 36 - borderWidth * 5;
     double oneUnit = bmiWidth / 25;
     getBorder() {
       return Container(
         height: 50,
-        color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.2),
+        color: Colors.grey.withOpacity(.1),
         width: borderWidth,
       );
     }
@@ -304,7 +302,7 @@ class _BmiCardState extends State<BmiCard> {
     getBottomText(String text) {
       return Text(
         text,
-        style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
       );
     }
 
@@ -315,7 +313,7 @@ class _BmiCardState extends State<BmiCard> {
             borderRadius: BorderRadius.all(
               Radius.circular(30),
             ),
-            color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
+            color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.5),
 
           ),
           height: 12.2,
@@ -329,7 +327,7 @@ class _BmiCardState extends State<BmiCard> {
           Icon(
            Icons.arrow_upward,
             size: 20,
-            color: Theme.of(context).textTheme.bodyText1!.color,
+            color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.6),
           ),
           SizedBox(height: 2,),
           getContainer(),
@@ -338,10 +336,6 @@ class _BmiCardState extends State<BmiCard> {
           SizedBox(height: 4,),
           getContainer(),
           SizedBox(height: 4,),
-
-
-
-
         ],
       );
     }
@@ -359,32 +353,32 @@ class _BmiCardState extends State<BmiCard> {
                 children: [
                   Container(
                     width: oneUnit + 5,
-                    color: Colors.grey,
+                    color: Colors.red.withOpacity(.8),
                   ),
                   getBorder(),
                   Container(
                     width: oneUnit * 2.5,
-                    color: Colors.blue,
+                    color: Colors.amber.withOpacity(.8),
                   ),
                   getBorder(),
                   Container(
                     width: oneUnit * 6.5,
-                    color: Colors.green,
+                    color: Colors.green.withOpacity(.8),
                   ),
                   getBorder(),
                   Container(
                     width: oneUnit * 5,
-                    color: Colors.orange,
+                    color: Colors.orange.withOpacity(.8),
                   ),
                   getBorder(),
                   Container(
                     width: oneUnit * 5,
-                    color: Colors.redAccent,
+                    color: Colors.redAccent.withOpacity(.8),
                   ),
                   getBorder(),
                   Container(
                     width: oneUnit * 5,
-                    color: Colors.red,
+                    color: Colors.red.withOpacity(.8),
                   ),
                 ],
               ),
@@ -397,32 +391,32 @@ class _BmiCardState extends State<BmiCard> {
                 getBottomText("16"),
                 Container(
                   width: oneUnit - 7,
-                  color: Colors.grey,
+                  color: Colors.red.withOpacity(.8),
                 ),
                 getBottomText("17"),
                 Container(
                   width: oneUnit * 2.5 - 15,
-                  color: Colors.blue,
+                  color: Colors.amber.withOpacity(.8),
                 ),
                 getBottomText("18.5"),
                 Container(
                   width: oneUnit * 6.5 - 12,
-                  color: Colors.green,
+                  color: Colors.green.withOpacity(.8),
                 ),
                 getBottomText("25"),
                 Container(
                   width: oneUnit * 5 - 12,
-                  color: Colors.orange,
+                  color: Colors.orange.withOpacity(.8),
                 ),
                 getBottomText("30"),
                 Container(
                   width: oneUnit * 5 - 10,
-                  color: Colors.redAccent,
+                  color: Colors.redAccent.withOpacity(.8),
                 ),
                 getBottomText("35"),
                 Container(
                   width: oneUnit * 5 - 19,
-                  color: Colors.red,
+                  color: Colors.red.withOpacity(.8),
                 ),
                 getBottomText("40"),
               ],
@@ -474,8 +468,8 @@ class _BmiCardState extends State<BmiCard> {
             ),),
             Column(
               children: [
-                getWeightDetail(color: Colors.red,value: height,title: "Height"),
-                getWeightDetail(color: Colors.blue,value: weight,title: "Weight"),
+                getWeightDetail(color: Colors.red.withOpacity(.8),value: height,title: "Height"),
+                getWeightDetail(color: Colors.green.withOpacity(.8),value: weight,title: "Weight"),
               ],)
           ],
         ),
@@ -539,7 +533,7 @@ class _BmiCardState extends State<BmiCard> {
                                   ? bmi.toStringAsFixed(1)
                                   : bmi.toStringAsFixed(1),
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
+                                  fontWeight: FontWeight.w500, fontSize: 14),
                             ),
                           ],
                         )
@@ -570,17 +564,17 @@ class _BmiCardState extends State<BmiCard> {
                     children: [
                       Text("BMI : " + bmi.toStringAsFixed(1),
                           style: TextStyle(
-                              color: remark.color,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18)),
+                              color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16)),
                       SizedBox(
                         width: 5,
                       ),
                       Text("(${remark.remark})",
                           style: TextStyle(
-                              color: remark.color,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18)),
+                              color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16)),
                     ],
                   ),
         if (widget.showBool)   SizedBox(height: 10,),

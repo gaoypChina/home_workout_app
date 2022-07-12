@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/backup_helper.dart';
 import 'package:full_workout/helper/recent_workout_db_helper.dart';
@@ -10,88 +12,52 @@ import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../widgets/dialogs/delete_account_fail_dialog.dart';
+import '../widgets/loading_indicator.dart';
 
 class BackupProvider extends ChangeNotifier {
-  final googleSignIn = GoogleSignIn();
   BackupHelper _dbHelper = BackupHelper();
   SpKey _spKey = SpKey();
   SpHelper _spHelper = SpHelper();
+  bool dataSyncing = false;
   RecentDatabaseHelper _recentDatabaseHelper = RecentDatabaseHelper();
   WeightDatabaseHelper _weightDatabaseHelper = WeightDatabaseHelper();
 
-  GoogleSignInAccount? _user;
 
-  GoogleSignInAccount get user => _user!;
-
-  bool dataSyncing = false;
-  bool authLoading = false;
-
-  Future googleLogin({required BuildContext context}) async {
-    try {
-      authLoading = true;
-      notifyListeners();
-      final googleUser = await googleSignIn.signIn();
-      if (googleUser == null) return;
-      _user = googleUser;
-      final googleAuth = await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-      await FirebaseAuth.instance.signInWithCredential(credential);
-      Constants().getToast( "User Login Successfully");
-      Navigator.of(context).pop();
-    } catch (e) {
-      Constants().getToast(  "Something went wrong");
-    } finally {
-      authLoading = false;
-      notifyListeners();
-    }
-  }
-
-  Future logout({required BuildContext context}) async {
-    try {
-      authLoading = true;
-      notifyListeners();
-      await googleSignIn.disconnect();
-      FirebaseAuth.instance.signOut();
-    } catch (e) {
-      Constants().getToast(  "Something went wrong");
-    } finally {
-      Navigator.of(context).pop();
-      authLoading = false;
-      notifyListeners();
-    }
-  }
 
   syncData({required User? user, required BuildContext context}) async {
     try {
       if (user == null) return;
       dataSyncing = true;
       notifyListeners();
+
+      showDialog(
+          context: context,
+          builder: (builder) {
+            return CustomLoadingIndicator(
+              msg: "Syncing data",
+            );
+          });
+
       await _getUser(user: user);
       await _setUser(user: user);
+      await getProUser(user: user);
+      await setProUser(user: user);
       await _getUserActivity(uid: user.uid);
       await _setUserActivity(uid: user.uid);
-      await _spHelper.saveString(_spKey.backupTime, DateTime.now().toIso8601String());
-      Constants()
-          .getToast("Data Backup Successfully");
+      await _spHelper.saveString(
+          _spKey.backupTime, DateTime.now().toIso8601String());
+
+      Constants().getToast("Data Backup Successfully");
     } catch (e) {
       dev.log("syncing error : " + e.toString());
       Constants()
           .getToast("something went wrong.");
     } finally {
-      dev.log("finally....");
       dataSyncing = false;
       notifyListeners();
-    }
-  }
-
-  Future<bool> _isNewDevice() async {
-    bool? isNew = await _spHelper.loadBool(_spKey.newDevice);
-    if (isNew == null || isNew == true) {
-      await _spHelper.saveBool(_spKey.newDevice, false);
-      return true;
-    } else {
-      return false;
     }
   }
 
@@ -137,6 +103,35 @@ class BackupProvider extends ChangeNotifier {
         weight: weight,
         unit: unit,
         email: email);
+  }
+
+  getProUser({required User user}) async {
+    var _snapshot = await _dbHelper.getProUser(uid: user.uid);
+    Map<String, dynamic>? _proUserData =
+        _snapshot.data() as Map<String, dynamic>?;
+    if (_proUserData == null) return;
+
+    if (_proUserData["fist_date"] != null)
+      await _spHelper.saveString(
+          _spKey.subscriptionFistDate, _proUserData["first_date"]);
+
+    if (_proUserData["last_date"] != null)
+      await _spHelper.saveString(
+          _spKey.subscriptionLastDate, _proUserData["last_date"]);
+  }
+
+  setProUser({required User user}) async {
+    String? firstDate = await _spHelper.loadString(_spKey.subscriptionFistDate);
+    String? lastDate = await _spHelper.loadString(_spKey.subscriptionLastDate);
+    String? price = await _spHelper.loadString(_spKey.subscriptionPrice);
+    if (firstDate == null || lastDate == null || price == null) return;
+
+    _dbHelper.saveProUser(
+        uid: user.uid,
+        firstDate: firstDate,
+        lastDate: lastDate,
+        userName: user.displayName,
+        price: price);
   }
 
   _getUserActivity({required String uid}) async {
@@ -254,5 +249,19 @@ class BackupProvider extends ChangeNotifier {
     workoutData["training_first_day"] = trainingFirstDay;
     workoutData["goal_set"] = goalSet;
     return workoutData;
+  }
+
+  resetUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return;
+    }
+    try {
+      Map<String, dynamic> workoutData = await _getUserWorkoutData();
+      await _dbHelper.resetUserProgress(
+          uid: user.uid, workoutData: workoutData);
+    } catch (e) {
+      dev.log(e.toString());
+    }
   }
 }

@@ -1,23 +1,15 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/workout_plan/abs_challenges.dart';
-import 'package:full_workout/database/workout_plan/arm_challenges.dart';
-import 'package:full_workout/database/workout_plan/chest_challenge.dart';
-import 'package:full_workout/database/workout_plan/full_body_challenge.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/models/challenges_model.dart';
-import 'package:full_workout/pages/main/explore_page/four_week_challenges_page/workout_time_line.dat.dart';
+import 'package:full_workout/pages/main/explore_page/explore_page_widget/fast_workout.dart';
 import 'package:full_workout/pages/main/home_page/leading_widget.dart';
-import 'package:full_workout/provider/ads_provider.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:provider/provider.dart';
 
-import 'explore_page_widget/2by2_card.dart';
+import 'explore_page_widget/1by1_workout_card.dart';
+import 'explore_page_widget/picks_for_you_workout.dart';
+import 'explore_page_widget/body_focus_workout.dart';
+import 'explore_page_widget/beginner_workout_challenges.dart';
 import 'explore_page_widget/four_week_challenge_card.dart';
 import 'explore_page_widget/sleep_workout.dart';
+import 'explore_page_widget/discover_workout.dart';
 
 class ExplorePage extends StatefulWidget {
   final Function onBack;
@@ -32,15 +24,21 @@ class _ExplorePageState extends State<ExplorePage> {
 
   @override
   Widget build(BuildContext context) {
+    buildDivider() {
+      return Container(
+        margin: EdgeInsets.only(top: 16, bottom: 12),
+        color: Colors.grey.withOpacity(.2),
+        height: 14,
+      );
+    }
 
     return WillPopScope(
       onWillPop: () => widget.onBack(),
       child: Scaffold(
         appBar: AppBar(
-
           elevation: .5,
           automaticallyImplyLeading: false,
-          actions:[ ...getLeading(context)],
+          actions: getLeading(context),
           titleSpacing: 14,
           title: Text(
             "Explore",
@@ -48,24 +46,44 @@ class _ExplorePageState extends State<ExplorePage> {
           centerTitle: false,
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(14),
-           physics: BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              FourWeekChallengeCard(),
-              SizedBox(height: 20,),
-              WorkoutCard2by2(title:"Picks for you"),
-              SizedBox(height: 20,),
-              SleepWorkoutSection(title: "Sleep"),
-              SizedBox(height: 10,),
-              FourWeekChallengeCard(),
-              SizedBox(height: 20,),
-              WorkoutCard2by2(title:"Fast workout"),
-              SizedBox(height: 20,),
-              SleepWorkoutSection(title: "Sleep"),
+          //  padding: EdgeInsets.all(14),
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 12,
+                ),
+                FourWeekChallengeCard(),
 
-            ],
-          )
+                buildDivider(),
+                PicksForYouWorkout(),
+
+                buildDivider(),
+
+                HardCoreWorkout(),   buildDivider(),
+                BeginnerWorkoutSection(),
+
+                buildDivider(),
+                SleepWorkoutSection(title: "Sleep"),
+
+                // buildDivider(),
+                // FourWeekChallengeCard(),
+
+                buildDivider(),
+                FastWorkout(),
+
+                buildDivider(),
+                // SleepWorkoutSection(title: "Sleep"),
+                // buildDivider(),
+                BodyFocusWorkout(),
+                buildDivider(),
+                TopPicksSection(),
+                SizedBox(
+                  height: 20,
+                )
+              ],
+            )
         ),
       ),
     );}

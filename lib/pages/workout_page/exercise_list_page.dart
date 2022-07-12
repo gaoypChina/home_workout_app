@@ -184,7 +184,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                   MaterialPageRoute(
                     builder: (context) => InstructionScreen(
                       tag: widget.tag,
-                      tagValue: widget.tagValue,
                       title: widget.title,
                       workOutList: widget.workOutList,
                       rapList: rapList,

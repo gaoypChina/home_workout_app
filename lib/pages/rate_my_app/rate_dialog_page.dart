@@ -119,7 +119,7 @@ class _RateDialogPageState extends State<RateDialogPage> {
   Widget build(BuildContext context) {
 
     return CustomTile(
-      icon: Icons.star_outline,
+      icon: Icons.star_border_outlined,
       title: "Rate This App",
       trailing: Icon(
         Icons.arrow_forward_ios,

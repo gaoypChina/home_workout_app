@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
+import '../../../../enums/weight_filter.dart';
+
 class WeightDetailTab1 extends StatefulWidget {
   @override
   _WeightDetailTab1State createState() => _WeightDetailTab1State();
@@ -361,29 +363,31 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
   }
 
   getEmptyList() {
-    return Column(
-      children: [
-        Padding(padding: EdgeInsets.only(top: 40)),
-        Container(
-            height: MediaQuery.of(context).size.height * .4,
-           ),
-        Container(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 30,
-              ),
-              Text(
-                "No Record Found!",
-                style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w400,
-                    color: Theme.of(context).textTheme.bodyText1?.color?.withOpacity(.7)),
-              )
-            ],
-          ),
-        )
-      ],
+    return Container(
+
+
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height *.25,),
+
+
+
+                Container(
+                  height: 100,
+                  child: Image.asset("assets/other/empty-box (1).png"),
+                ),
+                SizedBox(height: 8,),
+                Text(
+                  "No Record Found!",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: Theme.of(context).textTheme.bodyText1?.color?.withOpacity(.7)),
+                )
+
+
+        ],
+      ),
     );
   }
 

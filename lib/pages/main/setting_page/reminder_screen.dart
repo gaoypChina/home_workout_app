@@ -146,9 +146,8 @@ class _ReminderTabState extends State<ReminderTab> {
 
     getDivider(){
       return  Container(
-        margin: EdgeInsets.only(left: 14, right: 8),
-        height: 0,
-        color: Colors.grey.shade300,
+        height: .8,
+        color: Theme.of(context).scaffoldBackgroundColor,
       );
     }
     return Scaffold(
@@ -179,21 +178,32 @@ class _ReminderTabState extends State<ReminderTab> {
               height: 16,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Text(
                 "Set a workout reminder to help you meet your goals faster. you can change the frequency or turn off in your account settings at any time.",
-                style: TextStyle(fontSize: 14,height: 1.1, fontWeight: FontWeight.w400,letterSpacing: 1.5,color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7)),
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                  fontSize: 14,
+                  height: 1.1,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 1.5,
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .color!
+                      .withOpacity(.8),
+                ),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 12,
             ),
             Container(
+              margin: EdgeInsets.symmetric(horizontal: 0),
               child: Column(
                 children: [
                   SwitchListTile(
-
-                    contentPadding: EdgeInsets.only(left: 20, right: 4),
+                    contentPadding: EdgeInsets.only(left: 12, right: 4),
                     activeColor: Colors.blue,
                     title: Text(
                       "Show Notification",
@@ -214,7 +224,7 @@ class _ReminderTabState extends State<ReminderTab> {
                   ),
                   getDivider(),
                   ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12),
                     title: Text(
                       "Workout Time",
                       style: titleStyle,
@@ -233,7 +243,7 @@ class _ReminderTabState extends State<ReminderTab> {
                   ),
                   getDivider(),
                   ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12),
                     title: Text(
                       "Workout Day",
                       style: titleStyle,

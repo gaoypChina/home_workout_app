@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:full_workout/database/workout_list.dart';
 
 class ExerciseCard {

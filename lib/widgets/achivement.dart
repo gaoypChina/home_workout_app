@@ -44,44 +44,51 @@ class _AchievementState extends State<Achievement> {
   @override
   Widget build(BuildContext context) {
 
+    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
     Widget getAchievementCard(
         int time, int exercise, double calories, bool isLoading) {
-      getCard(String title, String subTitle, List<Color> color) {
+      getCard(String title, String subTitle, Color color) {
 
-        return Container(
+        return Material(
+          elevation: 0,
+          color: Colors.transparent,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+          child: Container(
+            
 
-          decoration: BoxDecoration(
-              color: color[0].withOpacity(.1),
-            borderRadius: BorderRadius.all(Radius.circular(18))
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 18,vertical: 18),
-          child: InkWell(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-            onTap: () => widget.onTap(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+            decoration: BoxDecoration(
+                color:isDark? color.withOpacity(.2):color.withOpacity(.15) ,
+              borderRadius: BorderRadius.all(Radius.circular(16))
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 18,vertical: 18),
+            child: InkWell(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+              onTap: () => widget.onTap(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
 
-                Text(
-                  isLoading ? "" : subTitle.length == 1?"0"+subTitle : subTitle,
+                  Text(
+                    isLoading ? "" : subTitle.length == 1?"0"+subTitle : subTitle,
 
-                  style: TextStyle(
-                    letterSpacing: 1.5,
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
-                      fontSize: 30),
-                ),
+                    style: TextStyle(
+                      letterSpacing: 1.5,
+                        fontWeight: FontWeight.w500,
+                        color: isDark? Colors.white.withOpacity(.8):Colors.black.withOpacity(.6),
+                        fontSize: 28),
+                  ),
 
-                SizedBox(height: 2,),
-                Text(
-                  title,
-                  style: TextStyle(
-                    letterSpacing: 1.5,
-                      color: Theme.of(context).textTheme.bodyText1!.color,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 13),
-                ),
-              ],
+                  SizedBox(height: 4,),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      letterSpacing: 1,
+                        color: isDark? Colors.white.withOpacity(.8):Colors.black.withOpacity(.6),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13),
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -96,11 +103,11 @@ class _AchievementState extends State<Achievement> {
           children: [
 
             getCard("Exercise", exercise.toString(),
-                [Colors.green.shade700, Colors.green]),
+                Colors.green.shade700),
             getCard(" Minute ", (time/60).ceil().toString(),
-                [Colors.orange.shade700, Colors.red.shade300]),
+                Colors.orange.shade700),
             getCard("Calories", calories.toInt().toString(),
-                [Colors.amber.shade700, Colors.blue]),
+                Colors.red.shade500),
           ],
         ),
       );

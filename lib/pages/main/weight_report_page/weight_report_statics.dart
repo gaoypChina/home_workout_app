@@ -78,11 +78,11 @@ class _WeightReportStaticsState extends State<WeightReportStatics> {
     return isLoading == true ? Center(child: CircularProgressIndicator()): Column(
       children: [
         getWeightDetail(
-            title: "Current", value: currWeight, color: Colors.blue),
+            title: "Current", value: currWeight, color: Colors.green.withOpacity(.8)),
         getWeightDetail(
-            title: "Heaviest", value: maxWeight, color: Colors.red),
+            title: "Heaviest", value: maxWeight, color: Colors.amber.withOpacity(.7)),
         getWeightDetail(
-            title: "Lightest", value: minWeight, color: Colors.green),
+            title: "Lightest", value: minWeight, color: Colors.red.withOpacity(.7)),
       ],
     );
   }

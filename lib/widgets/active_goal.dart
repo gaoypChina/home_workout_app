@@ -88,7 +88,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
     double height = MediaQuery.of(context).size.height;
     bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
     List<Color> backgroundColor = isDark? [
-    Colors.blue.withOpacity(.1),Colors.blue.shade700.withOpacity(.1)
+      Theme.of(context).primaryColor.withOpacity(.8),Theme.of(context).primaryColor.withOpacity(.8),
     ]:[ Colors.blue.shade700,Colors.blue.shade700];
 
     onTap() async {

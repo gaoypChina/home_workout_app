@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Home Workout App</string>
+    <string name="facebook_app_id">5097992083611748</string>
+    <string name="facebook_client_token">30e7770f9f42603dedf8fc77cdcd8985</string>
+</resources>

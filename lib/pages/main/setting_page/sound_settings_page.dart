@@ -94,7 +94,7 @@ class _SoundSettingState extends State<SoundSetting> {
         subtitle: Text(subTile),
         value: value,
         secondary:
-        Icon(icon),
+        Icon(icon,color: Theme.of(context).iconTheme.color,),
         activeColor: Colors.blue.shade700,
 
         title: Text(
@@ -119,8 +119,8 @@ class _SoundSettingState extends State<SoundSetting> {
         //Divider(color: Colors.grey,indent: 50,endIndent: 20,);
         Container(
         width: MediaQuery.of(context).size.width,
-        height: .0,
-        color: Colors.grey,padding: EdgeInsets.only(left: 20,right: 20),);
+        height: .8,
+        color: Colors.grey.withOpacity(.15));
 
     }
 
@@ -141,7 +141,7 @@ class _SoundSettingState extends State<SoundSetting> {
                 },
                 child: Text("Save",
                     style: TextStyle(
-                      color: Colors.blue.shade700,
+                      color: Theme.of(context).primaryColor,
                     ))),
           ):Container()
         ],
@@ -150,28 +150,36 @@ class _SoundSettingState extends State<SoundSetting> {
         )
         ),
 
-      body: ListView(
-
-        shrinkWrap: true,
+      body: ListView( shrinkWrap: true,
         children: [
-          getSwitch(
-              "Mute", Icons.volume_down_outlined, mute, onMuteToggle, "Mute all Sound",colorList[0]),
+          Container(
+           // color: Colors.orange.withOpacity(.1),
+            margin: EdgeInsets.symmetric(horizontal: 0,vertical: 0),
+            child: Column(
 
-          getDivider(),
-          getSwitch("Coach Assistant", Icons.record_voice_over_outlined, coach,
-              onCoachToggle, "Coach Assistant " + getSwitchValue(coach),colorList[1]),
 
-          getDivider(),
+              children: [
+                getSwitch(
+                    "Mute", Icons.volume_down_outlined, mute, onMuteToggle, "Mute all Sound",colorList[0]),
 
-          getSwitch("Voice Guid",  Icons.volume_up_outlined,
-              voice, onVoiceToggle, "Voice Guid " + getSwitchValue(voice),colorList[2]),
+                getDivider(),
+                getSwitch("Coach Assistant", Icons.record_voice_over_outlined, coach,
+                    onCoachToggle, "Coach Assistant " + getSwitchValue(coach),colorList[1]),
 
-          getDivider(),
+                getDivider(),
 
-          getSwitch("Sound Effect", Icons.notifications_active_outlined, effect,
-              onEffectToggle, "Sound Effect " + getSwitchValue(effect),colorList[3]),
+                getSwitch("Voice Guid",  Icons.volume_up_outlined,
+                    voice, onVoiceToggle, "Voice Guid " + getSwitchValue(voice),colorList[2]),
 
-          getDivider(),
+                getDivider(),
+
+                getSwitch("Sound Effect", Icons.notifications_active_outlined, effect,
+                    onEffectToggle, "Sound Effect " + getSwitchValue(effect),colorList[3]),
+
+                getDivider(),
+              ],
+            ),
+          ),
         ],
       ),
 

@@ -173,14 +173,14 @@ class ReportShare extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.w500),
                                 ),
                                 Text(
                                   "Workout",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.w500),
                                 )
                               ],
                             )),

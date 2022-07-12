@@ -137,10 +137,12 @@ class RecentDatabaseHelper {
   }
 
   Future<void> deleteDataBase()async{
-    print("deleted");
-    Directory documentDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentDirectory.path, "RecentWorkout.db");
-   await deleteDatabase(path);
+    var dbClient = await db;
+    dbClient.delete(tableName);
+   //  Directory documentDirectory = await getApplicationDocumentsDirectory();
+   //  String path = join(documentDirectory.path, "RecentWorkout.db");
+   // await deleteDatabase(path);
+   //  await close();
   }
 
   Future close() async {

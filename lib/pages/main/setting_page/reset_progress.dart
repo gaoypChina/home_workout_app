@@ -1,40 +1,57 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
+import 'package:full_workout/provider/backup_provider.dart';
+import 'package:full_workout/widgets/loading_indicator.dart';
+import 'package:provider/provider.dart';
 
-class ResetProgress extends StatelessWidget {
+class ResetProgressDialog extends StatefulWidget {
+  final String title;
+  final String subtitle;
+  const ResetProgressDialog({Key? key, required this.title, required this.subtitle}) : super(key: key);
+
+  @override
+  State<ResetProgressDialog> createState() => _ResetProgressDialogState();
+}
+
+class _ResetProgressDialogState extends State<ResetProgressDialog> {
+  bool isHidden = false;
+
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<BackupProvider>(context,listen: false);
 
     SpKey spKey = SpKey();
     SpHelper spHelper = SpHelper();
     Constants constants = Constants();
-    return CupertinoAlertDialog(
+    return Opacity(
+      opacity: isHidden ? 0 : 1,
+      child: AlertDialog(
+        title: Text("Reset Progress"),
+        content: Text(widget.subtitle),
+        actions: [
+          TextButton(onPressed: ()async{
+            setState(() {
+              isHidden = true;
+            });
+            showDialog(context: context, builder: (builder)=>CustomLoadingIndicator(msg: "Processing",));
+            await spHelper.saveInt(spKey.fullBodyChallenge, 0);
+            await spHelper.saveInt(spKey.absChallenge, 0);
+            await spHelper.saveInt(spKey.armChallenge, 0);
+            await spHelper.saveInt(spKey.chestChallenge, 0);
+            await provider.resetUserData();
 
-      title: Text("Do you want to reset your workout progress?",style: TextStyle(fontSize: 15,letterSpacing: 1.20),),
+            constants.getToast("Progress Reset Successfully");
 
-      actions: [
-
-        TextButton(
-            onPressed: () => Navigator.of(context).pop(), child: Text("No")),
-        TextButton(
-            onPressed: () async {
-              await spHelper.saveInt(spKey.fullBodyChallenge, 0);
-              await spHelper.saveInt(spKey.absChallenge, 0);
-              await spHelper.saveInt(spKey.armChallenge, 0);
-              await spHelper.saveInt(spKey.chestChallenge, 0);
-
-              constants.getToast("Progress Reset Successfully");
-
-              Navigator.of(context).pop();
-
-            },
-            child: Text("Yes")),
-
-      ],
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          }, child: Text("Yes")),
+          TextButton(onPressed: (){}, child: Text("No")),
+        ],
+      ),
     );
   }
 }
+
+

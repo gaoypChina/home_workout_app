@@ -7,6 +7,7 @@ import 'package:full_workout/bloc_provider/connectivity_state_bloc.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../../../widgets/banner_regular_ad.dart';
 
 class YoutubeTutorial extends StatefulWidget {
   final Workout workout;
@@ -185,6 +186,9 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
     bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
     return Scaffold(
+      bottomNavigationBar: Container(
+          height: 60,
+          child: RegularBannerAd(showDivider: false, bgColor: Colors.blue)),
       backgroundColor:
           isDark ? Theme.of(context).scaffoldBackgroundColor : Colors.blue,
       body: SafeArea(

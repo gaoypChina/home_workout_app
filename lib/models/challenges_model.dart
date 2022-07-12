@@ -1,7 +1,7 @@
 
 import 'package:full_workout/database/workout_list.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/workout_plan/full_body_challenge.dart';
+import 'package:full_workout/database/workout_plan/four_week_challenges/full_body_challenge.dart';
 class ChallengesModel {
   final String title;
   final String imageUrl;

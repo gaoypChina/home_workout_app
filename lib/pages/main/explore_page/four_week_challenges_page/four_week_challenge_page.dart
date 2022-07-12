@@ -1,24 +1,20 @@
-import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/workout_plan/abs_challenges.dart';
-import 'package:full_workout/database/workout_plan/arm_challenges.dart';
-import 'package:full_workout/database/workout_plan/chest_challenge.dart';
-import 'package:full_workout/database/workout_plan/full_body_challenge.dart';
+import 'package:full_workout/database/workout_plan/four_week_challenges/abs_challenges.dart';
+import 'package:full_workout/database/workout_plan/four_week_challenges/arm_challenges.dart';
+import 'package:full_workout/database/workout_plan/four_week_challenges/chest_challenge.dart';
+import 'package:full_workout/database/workout_plan/four_week_challenges/full_body_challenge.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/models/challenges_model.dart';
 import 'package:full_workout/pages/main/explore_page/four_week_challenges_page/workout_time_line.dat.dart';
-import 'package:full_workout/pages/main/home_page/leading_widget.dart';
 import 'package:full_workout/provider/ads_provider.dart';
+import 'package:full_workout/widgets/prime_icon.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../widgets/banner_medium_ad.dart';
+
 class FourWeekChallengePage extends StatefulWidget {
-
-
-
   @override
   State<FourWeekChallengePage> createState() => _ExplorePageState();
 }
@@ -28,14 +24,13 @@ class _ExplorePageState extends State<FourWeekChallengePage> {
   void initState() {
     super.initState();
     var provider = Provider.of<AdsProvider>(context, listen: false);
-    provider.isLoaded = false;
-    //  provider.createBottomBannerAd();
+    provider.showBannerAd = false;
+    provider.createBottomBannerAd();
   }
 
 
   @override
   void dispose() {
-
     super.dispose();
   }
 
@@ -65,6 +60,7 @@ class _ExplorePageState extends State<FourWeekChallengePage> {
           // color1: Colors.blue,
           color1: Color(0xffff4b1f),
           color2: Color(0xffff9068)),
+
       ChallengesModel(
           tag: _spKey.chestChallenge,
           title: "Chest Workout Challenge",
@@ -135,163 +131,108 @@ class _ExplorePageState extends State<FourWeekChallengePage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => WorkoutTimeLine(
-                        challengesModel: item,
-                      )));
+                            challengesModel: item,
+                          )));
             },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 18),
-              child: Row(
-                children: [
-                  Expanded(
-                      flex: 2,
-                      child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 10),
-                            Text(
-                              item.title,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Stack(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 18),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          flex: 2,
+                          child: Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
+                                SizedBox(height: 10),
+                                Text(
+                                  item.title,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "Duration",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 15),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "Duration",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          "28 Days",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "Progress",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        getProgress(item.tag),
+                                      ],
                                     ),
                                     SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      "28 Days",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500),
+                                      width: 5,
                                     ),
                                   ],
                                 ),
-                                Column(
-                                  children: [
-                                    Text(
-                                      "Progress",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 15),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    getProgress(item.tag),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
+                                SizedBox(height: 10),
                               ],
                             ),
-                            SizedBox(height: 10),
-                          ],
-                        ),
-                      )),
-                  Spacer(
-                    flex: 1,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    getPrimeButton() {
-      return ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-        child: Container(
-          height: 100,
-          child: Stack(
-            children: [
-              ColorFiltered(
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.6), BlendMode.darken),
-                  child: Image.asset(
-                    "assets/home_cover/14.jpg",
-                    height: 100,
-                    width: width,
-                    fit: BoxFit.fill,
-                  )),
-              Container(
-                alignment: Alignment.center,
-                child: ListTile(
-                  title: Text(
-                    "GET PRIME",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16),
-                  ),
-                  subtitle: Text(
-                    "Prime subscription starts\n from ₹99 only",
-                    style: TextStyle(color: Colors.white70, fontSize: 15),
-                  ),
-                  trailing: Container(
-                    height: 50,
-                    child: FloatingActionButton(
-                      onPressed: () {},
-                      backgroundColor: Colors.blue.shade700,
-                      child: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.white,
+                          )),
+                      Spacer(
+                        flex: 1,
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              )
-            ],
+                Positioned(right: 10, top: 10, child: PrimeIcon())
+              ],
+            ),
           ),
         ),
       );
     }
 
-    createAd() {
-
-      return Column(
-        children: [
-          Text(provider.bottomBannerAd.size.width.toDouble().toString()),
-          Text(provider.bottomBannerAd.adUnitId.toString()),
-          Container(
-            color: Colors.red,
-            alignment: Alignment.center,
-            height: provider.bottomBannerAd.size.height.toDouble(),
-            width: provider.bottomBannerAd.size.width.toDouble(),
-            child: AdWidget(
-              ad: provider.bottomBannerAd,
-            ),
-          ),
-        ],
-      );
-
-
-
-
-
-    }
 
 
     return Scaffold(
+      bottomNavigationBar:  provider.showBannerAd
+          ? Container(
+        color: Colors.transparent,
+        alignment: Alignment.center,
+        height: provider.bottomBannerAd.size.height.toDouble(),
+        width: provider.bottomBannerAd.size.width.toDouble(),
+        child: AdWidget(
+          ad: provider.bottomBannerAd,
+        ),
+      )
+          : null,
       appBar: AppBar(
-
         elevation: .5,
-
         titleSpacing: 14,
         title: Text(
           "7 X 4 days challenges",
@@ -320,9 +261,11 @@ class _ExplorePageState extends State<FourWeekChallengePage> {
                     letterSpacing: 1.5),
               ),
             ),
-            //   getPrimeButton(),
-            //   SizedBox(height: 18,),
-            //  createAd()
+
+            SizedBox(
+              height: 18,
+            ),
+            //    createAd()
           ],
         ),
       ),

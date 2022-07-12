@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -6,9 +8,10 @@ class ConnectivityProvider with ChangeNotifier {
   bool isOnline = true;
   final Connectivity _connectivity = Connectivity();
 
-  Future<bool> get getConnectivityStatus async {
+  Future<bool> get isNetworkConnected async {
     Connectivity _connectivity = Connectivity();
     var status = await _connectivity.checkConnectivity();
+
     if (status == ConnectivityResult.none) {
       return false;
     } else {
@@ -29,18 +32,4 @@ class ConnectivityProvider with ChangeNotifier {
     return isOnline;
   }
 
-  Future<void> initConnectivity() async {
-    try {
-      var status = await _connectivity.checkConnectivity();
-      if (status == ConnectivityResult.none) {
-        isOnline = false;
-        notifyListeners();
-      } else {
-        isOnline = true;
-        notifyListeners();
-      }
-    } on Error catch (_) {
-      notifyListeners();
-    }
-  }
 }

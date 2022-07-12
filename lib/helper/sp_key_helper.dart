@@ -7,6 +7,15 @@ class SpKey {
   String height = "height";
   String weight = "weight";
 
+  /// Week goal
+  String trainingDay = "trainingDay";
+  String firstDay = "firstDay";
+  String isGoalSet = "isGoalSet";
+
+  /// Pro User Details
+  String subscriptionFistDate = "primFirstDay";
+  String subscriptionLastDate = "primLastDay";
+  String subscriptionPrice = "primPrice";
 
   /// Time Settings
   String trainingRest = "trainingRest";
@@ -33,11 +42,6 @@ class SpKey {
   String chestChallenge = "chestChallenge";
   String armChallenge = "armChallenge";
 
-  /// Week goal
-  String trainingDay = "trainingDay";
-  String firstDay = "firstDay";
-  String isGoalSet = "isGoalSet";
-
   /// reminder time
   String hourTime = "hourTime";
   String minuteTime = "minuteTime";
@@ -50,4 +54,7 @@ class SpKey {
 
   String newDevice = "newDevice";
   String backupTime = "backupTime";
+
+  /// Auth data
+   String authByGoogle = "authByGoogle";
 }

@@ -39,7 +39,7 @@ class WorkoutCard extends StatelessWidget {
               padding: const EdgeInsets.only(top: 2),
               child: Text("Last Time : $date",
                   style: TextStyle(
-                      color: Colors.white.withOpacity(.9),
+                      color: Colors.white.withOpacity(.8),
                       fontSize: 14,
                       letterSpacing: 1.3,
                       fontWeight: FontWeight.w400)),
@@ -62,7 +62,7 @@ class WorkoutCard extends StatelessWidget {
 
       return Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(1),
+            color: Colors.white.withOpacity(.8),
             borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
           width: 30,
@@ -74,7 +74,7 @@ class WorkoutCard extends StatelessWidget {
                 Icon(
                   Icons.circle,
                   size: 7,
-                  color: getIValue() < i ? Colors.grey : Colors.red,
+                  color: getIValue() < i ? Colors.grey.withOpacity(.8) : Colors.blue.withOpacity(.8),
                 ),
             ],
           ));
@@ -83,7 +83,7 @@ class WorkoutCard extends StatelessWidget {
     getDifficulty() {
       return Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.white.withOpacity(.8),
             borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
           width: 35,
@@ -95,7 +95,7 @@ class WorkoutCard extends StatelessWidget {
                 Icon(
                   Icons.circle,
                   size: 7,
-                  color: tagValue < i ? Colors.grey.shade500 : Colors.red,
+                  color: tagValue < i ? Colors.grey.shade500 : Colors.blue.withOpacity(.8),
                 ),
             ],
           ));
@@ -116,7 +116,7 @@ class WorkoutCard extends StatelessWidget {
               child: Text(
                 title.toUpperCase(),
                 style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.white.withOpacity(.9),
                     fontSize: 18,
                     letterSpacing: 1.5,
                     fontWeight: FontWeight.w600),
@@ -134,7 +134,7 @@ class WorkoutCard extends StatelessWidget {
                     Text(
                       "Difficulty",
                       style: TextStyle(
-                          color: Colors.white.withOpacity(.9),
+                          color: Colors.white.withOpacity(.7),
                           fontSize: 14,
                           letterSpacing: 1.5),
                     ),
@@ -152,7 +152,7 @@ class WorkoutCard extends StatelessWidget {
                     Text(
                       "Duration",
                       style: TextStyle(
-                          color: Colors.white.withOpacity(.9),
+                          color: Colors.white.withOpacity(.7),
                           fontSize: 14,
                           letterSpacing: 1.5),
                     ),
@@ -199,7 +199,7 @@ class WorkoutCard extends StatelessWidget {
                   ColorFiltered(
                       colorFilter: ColorFilter.mode(
                           isDark
-                              ? Colors.black.withOpacity(.4)
+                              ? Colors.black.withOpacity(.65)
                               : Colors.black.withOpacity(.45),
                           BlendMode.darken),
                       child: Image.asset(

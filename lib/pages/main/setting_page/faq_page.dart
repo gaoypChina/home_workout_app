@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:full_workout/constants/constant.dart';
 
 
 class FAQPage extends StatelessWidget {
@@ -6,70 +8,70 @@ class FAQPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+double width = MediaQuery.of(context).size.width;
 
     buildFAQCard() {
-      return Theme(
-          data: ThemeData(
-            dividerColor: Colors.transparent,
-          ),
-          child: Column(children: [
-            const SizedBox(
-              height: 4,
+      return Column(children: [
+        ...faqList.map((faq) {
+          return ExpansionTile(
+            tilePadding: EdgeInsets.zero,
+            title: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(faq.question),
             ),
-            ...faqList
-                .map((faq) => Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                borderRadius:const  BorderRadius.all(Radius.circular(16)),
-
-                border: Border.all(
-                    color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.5), width: 1),
-              ),
-              child: ExpansionTile(
-
-              //  iconColor: Theme.of(context).textTheme.headline1!.color,
-                collapsedIconColor: Theme.of(context).textTheme.headline1!.color,
-                tilePadding: EdgeInsets.zero,
-                title: Text(
-                  faq.question,
-                  style:
-                  Theme.of(context).textTheme.headline1!.copyWith(
-                    letterSpacing: 1.2,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+            children: [
+              Container(
+                color: Colors.blue.withOpacity(.0),
+                child: Column(
+                  children: [
+                    Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+                        child: Text(faq.answer)),
+                  ],
                 ),
-                children: [
-                  Text(
-                    faq.answer,
-                    style:
-                    Theme.of(context).textTheme.bodyText2!.copyWith(
-                      letterSpacing: 1.5,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
               ),
-            ))
-                .toList()
-          ]));
+              SizedBox(
+                height: 12,
+              )
+            ],
+          );
+        })
+      ]);
     }
-
 
     return Scaffold(
       appBar: AppBar(
         title: Text("FAQ"),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(0),
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
-            // Image.network(
-            //     "https://media.onetimepim.com/_internal/athena/what-is-pim/undraw_Faq_re_31cw_(1).png"),
-            buildFAQCard()
+
+
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8,vertical: 22),
+              color: Colors.green.withOpacity(.04),
+              child: SvgPicture.asset(
+                'assets/other/faq.svg',
+
+                alignment: Alignment.center,
+
+                width: width -20,
+              ),
+            ),
+
+            Container(
+              height: 20,
+              color: Colors.blue.withOpacity(.15),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: buildFAQCard(),
+            ),
+            SizedBox(height: 18,)
           ],
         ),
       ),

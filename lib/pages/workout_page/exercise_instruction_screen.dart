@@ -21,7 +21,6 @@ class InstructionScreen extends StatefulWidget {
   final String title;
   final List<int> rapList;
   final String tag;
-  final int tagValue;
   final int countDownTime;
   final int restTime;
 
@@ -29,7 +28,6 @@ class InstructionScreen extends StatefulWidget {
     required this.workOutList,
     required this.title,
     required this.rapList,
-    required this.tagValue,
     required this.tag,
     required this.countDownTime,
     required this.restTime
@@ -61,7 +59,6 @@ class _InstructionScreenState extends State<InstructionScreen>
         context,
         MaterialPageRoute(
             builder: (context) => WorkoutPage(
-              tagValue: widget.tagValue,
               tag: widget.tag,
               rapList: widget.rapList,
                   title: widget.title,

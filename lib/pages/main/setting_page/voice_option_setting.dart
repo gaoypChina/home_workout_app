@@ -1,8 +1,8 @@
-//TODO: uncomment all
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:full_workout/constants/constant.dart';
 
 class ConfirmVoiceDialog extends StatelessWidget {
   @override
@@ -39,7 +39,7 @@ class OpenDeviceTTSSettingsDialog extends StatelessWidget {
                 );
                 await intent.launch();
               }catch(e){
-
+Constants().getToast("Open TTS setting from device setting");
               }
               Navigator.of(context).pop();
             },

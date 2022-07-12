@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:purchases_flutter/models/product_wrapper.dart';
 
 
 class Constants{
@@ -11,12 +12,7 @@ class Constants{
 
   // ToDo: Update version number
 
-  String versionNumber ="1.7.1";
-
-  Color bottomNavigationColor =  Color(0xffF2F2F2);
-  Color darkSecondary = Colors.blueGrey.shade800;
-  Color lightSecondary = Colors.blue.shade50;
-  Color primaryColor = Colors.blue.shade700;
+  String versionNumber ="1.7.4";
 
 
   TextStyle titleStyle =   TextStyle(fontWeight: FontWeight.w500,fontSize: 16,letterSpacing: 1.2);
@@ -27,10 +23,9 @@ class Constants{
 
 
   getDivider({required BuildContext context}) {
-    return  Container(
-        height: 16,
-        width: double.infinity,
-        color:Theme.of(context).dividerColor,
+    return Container(
+      color: Colors.grey.withOpacity(.2),
+      height: 14,
     );
   }
 
@@ -61,10 +56,20 @@ class Constants{
   }
 
   String getPrice({required int price}) {
-    String parsedCurrency = "₹$price";
+    String parsedCurrency = "$price";
     String parsedPrice = parsedCurrency.replaceAllMapped(
         RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
     return parsedPrice;
   }
+
+  String getPerMonthPrice( {required Product product}){
+    String currencySymbol = product.priceString[0];
+    double price = product.price;
+    int duration =int.parse( product.description.split(" ")[0]);
+
+    return "$currencySymbol${(price/duration).ceil()}";
+}
+
+  // jERwiYc5ysTAA+urj7cDD/SjSGE=
 
 }

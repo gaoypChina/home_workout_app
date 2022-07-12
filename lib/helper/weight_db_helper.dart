@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
-
-import '../models/weight_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+
+import '../models/weight_model.dart';
 
 class WeightDatabaseHelper {
   static final WeightDatabaseHelper _instance = new WeightDatabaseHelper.internal();
@@ -65,6 +64,7 @@ class WeightDatabaseHelper {
   Future<void>setAllWeightData({required List weightList})async{
     var dbClient = await db;
     for(var weight in weightList){
+      
       List allLocalWeight = await getAllWeight();
       if(!isPresent(weight, allLocalWeight)){
         await dbClient.insert('$tableName', weight);
@@ -167,8 +167,20 @@ class WeightDatabaseHelper {
         where: "$columnId = ?", whereArgs: [weightModel.weight]);
   }
 
+  Future<void> deleteDataBase()async{
+    var dbClient = await db;
+    dbClient.delete(tableName);
+
+    // await close();
+    // Directory documentDirectory = await getApplicationDocumentsDirectory();
+    // String path = join(documentDirectory.path, "WeightDb.db");
+    // await deleteDatabase(path);
+
+  }
+
   Future close() async {
     var dbClient = await db;
+
     return dbClient.close();
   }
 }
