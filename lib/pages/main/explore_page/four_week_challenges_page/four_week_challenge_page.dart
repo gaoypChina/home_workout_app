@@ -7,38 +7,13 @@ import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/models/challenges_model.dart';
 import 'package:full_workout/pages/main/explore_page/four_week_challenges_page/workout_time_line.dat.dart';
-import 'package:full_workout/provider/ads_provider.dart';
 import 'package:full_workout/widgets/prime_icon.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../widgets/banner_medium_ad.dart';
+import '../../../../widgets/banner_regular_ad.dart';
 
-class FourWeekChallengePage extends StatefulWidget {
-  @override
-  State<FourWeekChallengePage> createState() => _ExplorePageState();
-}
-
-class _ExplorePageState extends State<FourWeekChallengePage> {
-  @override
-  void initState() {
-    super.initState();
-    var provider = Provider.of<AdsProvider>(context, listen: false);
-    provider.showBannerAd = false;
-    provider.createBottomBannerAd();
-  }
-
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
+class FourWeekChallengePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    var provider = Provider.of<AdsProvider>(context, listen: false);
-
     SpHelper _spHelper = SpHelper();
     SpKey _spKey = SpKey();
     List<ChallengesModel> challenges = [
@@ -48,35 +23,27 @@ class _ExplorePageState extends State<FourWeekChallengePage> {
         imageUrl: "assets/home_cover/11.jpg",
         coverImage: "assets/workout_list_cover/legs.jpg",
         challengeList: fullBodyChallenge,
-        color1: Color(0xff2f7336),
-        color2: Colors.orange.shade300,
       ),
       ChallengesModel(
-          title: "Abs Workout Challenge",
-          tag: _spKey.absChallenge,
-          imageUrl: "assets/home_cover/10.jpg",
-          coverImage: "assets/workout_list_cover/abs.jpg",
-          challengeList: absChallenges,
-          // color1: Colors.blue,
-          color1: Color(0xffff4b1f),
-          color2: Color(0xffff9068)),
-
+        title: "Abs Workout Challenge",
+        tag: _spKey.absChallenge,
+        imageUrl: "assets/home_cover/10.jpg",
+        coverImage: "assets/workout_list_cover/abs.jpg",
+        challengeList: absChallenges,
+      ),
       ChallengesModel(
-          tag: _spKey.chestChallenge,
-          title: "Chest Workout Challenge",
-          imageUrl: "assets/home_cover/3.jpg",
-          coverImage: "assets/workout_list_cover/chest.jpg",
-          challengeList: chestChallenge,
-          color1: Color(0xff4da0b0),
-          color2: Color(0xffd39d38)),
+        tag: _spKey.chestChallenge,
+        title: "Chest Workout Challenge",
+        imageUrl: "assets/home_cover/3.jpg",
+        coverImage: "assets/workout_list_cover/chest.jpg",
+        challengeList: chestChallenge,
+      ),
       ChallengesModel(
         title: "Arm Workout Challenge",
         tag: _spKey.armChallenge,
         imageUrl: "assets/home_cover/1.jpg",
         coverImage: "assets/workout_list_cover/arms.jpg",
         challengeList: armChallenges,
-        color1: Color(0xffff5f6d),
-        color2: Color(0xffffc371),
       )
     ];
 
@@ -114,7 +81,7 @@ class _ExplorePageState extends State<FourWeekChallengePage> {
       return Padding(
         padding: const EdgeInsets.only(bottom: 12.0),
         child: Container(
-          height: 165,
+          height: 155,
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(
@@ -126,8 +93,8 @@ class _ExplorePageState extends State<FourWeekChallengePage> {
               borderRadius: BorderRadius.all(Radius.circular(12))),
           child: InkWell(
             borderRadius: BorderRadius.all(Radius.circular(12)),
-            onTap: () {
-              Navigator.push(
+            onTap: () async {
+              await Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => WorkoutTimeLine(
@@ -220,17 +187,7 @@ class _ExplorePageState extends State<FourWeekChallengePage> {
 
 
     return Scaffold(
-      bottomNavigationBar:  provider.showBannerAd
-          ? Container(
-        color: Colors.transparent,
-        alignment: Alignment.center,
-        height: provider.bottomBannerAd.size.height.toDouble(),
-        width: provider.bottomBannerAd.size.width.toDouble(),
-        child: AdWidget(
-          ad: provider.bottomBannerAd,
-        ),
-      )
-          : null,
+      bottomNavigationBar: RegularBannerAd(),
       appBar: AppBar(
         elevation: .5,
         titleSpacing: 14,
@@ -251,6 +208,7 @@ class _ExplorePageState extends State<FourWeekChallengePage> {
                   top: 4.0, bottom: 18, left: 8, right: 8),
               child: Text(
                 "Generally you can expect to notice results after two weeks. Your posture will improve and you'll feel more muscle tone. It takes three to four months for the muscles to grow.",
+                textAlign: TextAlign.justify,
                 style: TextStyle(
                     color: Theme.of(context)
                         .textTheme
@@ -265,7 +223,6 @@ class _ExplorePageState extends State<FourWeekChallengePage> {
             SizedBox(
               height: 18,
             ),
-            //    createAd()
           ],
         ),
       ),

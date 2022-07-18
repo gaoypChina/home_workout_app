@@ -496,7 +496,7 @@ class _BmiCardState extends State<BmiCard> {
                   ),
                   Text(
                     "Add height and weight to calculate BMI",
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(color:Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8)),
                   ),
                   SizedBox(
                     height: 24,

@@ -43,6 +43,8 @@ class _AchievementState extends State<Achievement> {
   }
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
 
     bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
     Widget getAchievementCard(
@@ -54,7 +56,8 @@ class _AchievementState extends State<Achievement> {
           color: Colors.transparent,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
           child: Container(
-            
+            height: 88,
+
 
             decoration: BoxDecoration(
                 color:isDark? color.withOpacity(.2):color.withOpacity(.15) ,
@@ -94,20 +97,67 @@ class _AchievementState extends State<Achievement> {
         );
       }
 
-      return Container(
+      _buildExercise({required String title, required String subtitle}) {
+        return Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  subtitle,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w500, fontSize: 18),
+                ),
+                Text(
+                  title,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w500, fontSize: 16),
+                ),
+              ],
+            ));
+      }
 
-        padding: EdgeInsets.symmetric(horizontal: 12),
-
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      return  Container(
+        color: Colors.blue.withOpacity(.5),
+        width: size.width,
+        child: Stack(
           children: [
+            Opacity(
+              opacity: .8,
+              child: Image.asset(
+                "assets/explore_image/img_20.jpg",
+                fit: BoxFit.fill,
+                width: size.width,
+              ),
+            ),
+            Container(
+              color: Colors.black.withOpacity(.6),
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 80,
+                ),
+                Spacer(),
+                Container(
 
-            getCard("Exercise", exercise.toString(),
-                Colors.green.shade700),
-            getCard(" Minute ", (time/60).ceil().toString(),
-                Colors.orange.shade700),
-            getCard("Calories", calories.toInt().toString(),
-                Colors.red.shade500),
+                  //padding: EdgeInsets.only(bottom: 18),
+
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+
+                        _buildExercise(
+                            title: "Exercise", subtitle: exercise.toString()),
+
+                        _buildExercise(
+                            title: "Minute", subtitle: (time/60).ceil().toInt().toString()),
+                        _buildExercise(
+                            title: "Calories", subtitle: calories.ceil().toInt().toString())
+                      ],
+                    )),
+                Spacer(),
+              ],
+            ),
           ],
         ),
       );

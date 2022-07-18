@@ -6,7 +6,6 @@ import 'package:full_workout/pages/detail_input_page/step_pages/workout_prefrenc
 import 'package:full_workout/pages/detail_input_page/user_detail_widget/custom_loading_indicator.dart';
 import 'package:full_workout/provider/user_detail_provider.dart';
 import 'package:provider/provider.dart';
-
 import '../../widgets/dialogs/exit_app_dialog.dart';
 
 class DetailInputPage extends StatefulWidget {

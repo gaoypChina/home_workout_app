@@ -24,8 +24,13 @@ class _RateAppInitWidgetState extends State<RateAppInitWidget> {
             final launchAppStore = stars >= 4;
             final event = RateMyAppEventType.rateButtonPressed;
             await rateMyApp.callEvent(event);
+            Navigator.of(context).pop();
             if (launchAppStore) {
+              constants.getToast(
+                "↓↓ Scroll down to rate us ↓↓",
+              );
               rateMyApp.launchStore();
+              Navigator.of(context).pop();
             } else {
               Navigator.of(context).pop();
               showDialog(
@@ -47,6 +52,12 @@ class _RateAppInitWidgetState extends State<RateAppInitWidget> {
                               setState(() => this.comment = comment)),
                       actions: [
                         TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("Cancel"),
+                        ),
+                        TextButton(
                             onPressed: () async {
                               String toSend = "$comment\n\n";
                               final Email email = Email(
@@ -56,20 +67,16 @@ class _RateAppInitWidgetState extends State<RateAppInitWidget> {
                                 isHTML: false,
                               );
 
+                              Navigator.of(context).pop();
                               try {
                                 await FlutterEmailSender.send(email);
                               } catch (e) {
                                 constants.getToast(
-                                    "Thanks for your Feedback",);
+                                  "Thanks for your Feedback",
+                                );
                               }
                             },
                             child: Text("Ok")),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text("Cancel"),
-                        )
                       ],
                     );
                   });

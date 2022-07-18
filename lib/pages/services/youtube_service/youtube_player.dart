@@ -188,7 +188,7 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
     return Scaffold(
       bottomNavigationBar: Container(
           height: 60,
-          child: RegularBannerAd(showDivider: false, bgColor: Colors.blue)),
+          child: RegularBannerAd()),
       backgroundColor:
           isDark ? Theme.of(context).scaffoldBackgroundColor : Colors.blue,
       body: SafeArea(

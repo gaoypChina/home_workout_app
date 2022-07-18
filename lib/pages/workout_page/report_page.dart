@@ -15,8 +15,10 @@ import 'package:full_workout/pages/main/report_page/workout_report/weekly_workou
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/pages/services/bmi_service/bmi_card.dart';
 import 'package:full_workout/pages/workout_page/report_share_page.dart';
+import 'package:full_workout/provider/ads_provider.dart';
 import 'package:full_workout/widgets/slide_fade_transition.dart';
 import 'package:path_provider/path_provider.dart' as pp;
+import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:wakelock/wakelock.dart';
@@ -51,6 +53,7 @@ int activeTime = 0;
 final _screenshotController = ScreenshotController();
 
 class _MyAppState extends State<ReportScreen> {
+
  late ConfettiController _controllerTopCenter;
 
   saveWorkoutData() async {
@@ -136,13 +139,6 @@ class _MyAppState extends State<ReportScreen> {
 
   _onNext(){
     Navigator.of(context).pushReplacementNamed(WorkoutDetailReport.routeName,);
-    // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-    //     MainPage(index: 0,)), (Route<dynamic> route) => false);
-
-  // return  Navigator.pushNamedAndRemoveUntil(
-  //       context,
-  //       WorkoutDetailReport.routeName,
-  //         (Route route) => false);
   }
 
   @override
@@ -301,7 +297,7 @@ class _MyAppState extends State<ReportScreen> {
           child: Container(
             width: MediaQuery.of(context).size.width / 3.5,
             decoration: BoxDecoration(
-              color: color,
+              color: color.withOpacity(.9),
               borderRadius: BorderRadius.all(Radius.circular(16)),
             ),
             child: Padding(
@@ -460,6 +456,8 @@ class _MyAppState extends State<ReportScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var adsProvider = Provider.of<AdsProvider>(context,listen: false);
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     double safeHeight = AppBar().preferredSize.height -
@@ -483,14 +481,20 @@ class _MyAppState extends State<ReportScreen> {
                 BmiCard(
                   showBool: false,
                 ),
-                SizedBox(height: 10,),
-                constants.getDivider(context: context),
-
-                MediumBannerAd(
-                  showDivider: true,
-                  bgColor: Theme.of(context).scaffoldBackgroundColor,
-                ),
-               getRatingBar(height),
+                if (adsProvider.showBannerAd)
+                  constants.getDivider(context: context),
+                if (adsProvider.showBannerAd)
+                  SizedBox(
+                    height: 10,
+                  ),
+                MediumBannerAd(),
+                if (adsProvider.showBannerAd)
+                  SizedBox(
+                    height: 10,
+                  ),
+                if (adsProvider.showBannerAd)
+                  constants.getDivider(context: context),
+                getRatingBar(height),
                 getButton(),
                 SizedBox(
                   height: 16,

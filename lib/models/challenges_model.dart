@@ -6,9 +6,7 @@ class ChallengesModel {
   final String title;
   final String imageUrl;
   final String coverImage;
-  final Color color1;
   final String tag;
-  final Color color2;
   final List<List<Workout>> challengeList;
 
   ChallengesModel({
@@ -16,8 +14,7 @@ class ChallengesModel {
     required this.tag,
     required this.imageUrl,
     required this.coverImage,
-    required this.color1,
-    required this.color2,
+
     required this.challengeList,
   });
 }

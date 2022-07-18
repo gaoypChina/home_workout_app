@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:full_workout/components/info_button.dart';
 import 'package:full_workout/database/workout_list.dart';
 import 'package:full_workout/helper/mediaHelper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
+import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
 import 'package:full_workout/pages/workout_page/check_list.dart';
 import 'package:full_workout/pages/workout_page/pause_page.dart';
 import 'package:full_workout/pages/workout_page/workout_page.dart';
-import 'package:full_workout/components/info_button.dart';
-import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
+import 'package:full_workout/widgets/banner_regular_ad.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../widgets/banner_medium_ad.dart';
@@ -296,9 +297,7 @@ late  Workout item;
                       ],
                     ),
                   ),
-                  MediumBannerAd(
-                    bgColor: isDark? Theme.of(context).scaffoldBackgroundColor:Colors.blue.shade700,
-                    showDivider: false,
+                  RegularBannerAd(
                   ),
                   Positioned(
                       right: 10,

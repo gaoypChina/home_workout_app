@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/pages/main/home_page/leading_widget.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
 import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
 import 'package:full_workout/pages/main/weight_report_page/weight_report.dart';
 import 'package:full_workout/pages/services/bmi_service/bmi_card.dart';
+import 'package:full_workout/widgets/achivement.dart';
+import 'package:provider/provider.dart';
 
-import '../../../widgets/active_goal.dart';
+import '../../../provider/ads_provider.dart';
 import '../../../widgets/banner_medium_ad.dart';
 import '../../rate_my_app/rate_my_app.dart';
 
@@ -56,24 +57,7 @@ class _ReportPageState extends State<ReportPage>
     Constants constants = Constants();
     var size = MediaQuery.of(context).size;
 
-    _buildExercise({required String title, required String subtitle}) {
-      return Expanded(
-          child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            subtitle,
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w500, fontSize: 18),
-          ),
-          Text(
-            title,
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w500, fontSize: 16),
-          ),
-        ],
-      ));
-    }
+    var adsProvider = Provider.of<AdsProvider>(context, listen: true);
 
     return RateAppInitWidget(
         builder: (rateMyApp) => WillPopScope(
@@ -82,7 +66,6 @@ class _ReportPageState extends State<ReportPage>
               },
               child: Scaffold(
                 body: NestedScrollView(
-
                   controller: _scrollController,
                   headerSliverBuilder:
                       (BuildContext context, bool innerBoxIsScrolled) {
@@ -106,56 +89,14 @@ class _ReportPageState extends State<ReportPage>
                         ),
                         elevation: .5,
                         centerTitle: false,
-                        expandedHeight: size.height * .22,
+                        expandedHeight: size.height * .20,
                         collapsedHeight: 60,
                         pinned: true,
                         floating: false,
                         forceElevated: innerBoxIsScrolled,
                         flexibleSpace: FlexibleSpaceBar(
-                          background: Container(
-                            color: Colors.blue.withOpacity(.5),
-                            width: size.width,
-                            child: Stack(
-                              children: [
-                                Opacity(
-                                  opacity: .8,
-                                  child: Image.asset(
-                                    "assets/explore_image/img_20.jpg",
-                                    fit: BoxFit.fill,
-                                    width: size.width,
-                                  ),
-                                ),
-                                Container(
-                                  color: Colors.black.withOpacity(.6),
-                                ),
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 80,
-                                    ),
-                                    Spacer(),
-                                    Container(
-
-                                        //padding: EdgeInsets.only(bottom: 18),
-
-                                        child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-
-                                        _buildExercise(
-                                            title: "Exercise", subtitle: "25"),
-
-                                        _buildExercise(
-                                            title: "Minute", subtitle: "06"),
-                                        _buildExercise(
-                                            title: "Calories", subtitle: "95")
-                                      ],
-                                    )),
-                                    Spacer(),
-                                  ],
-                                ),
-                              ],
-                            ),
+                          background: Achievement(
+                            onTap: () {},
                           ),
                         ),
                       ),
@@ -168,20 +109,6 @@ class _ReportPageState extends State<ReportPage>
                       children: [
                         constants.getDivider(context: context),
 
-
-                        // AbsorbPointer(
-                        //   child: Achievement(
-                        //     onTap: () {},
-                        //   ),
-                        // ),
-                        // SizedBox(
-                        //   height: 16,
-                        // ),
-                        // Container(
-                        //   color: Theme.of(context).dividerColor,
-                        //   height: .8,
-                        // ),
-                        //    constants.getDivider(context: context),
 
 
 
@@ -196,6 +123,8 @@ class _ReportPageState extends State<ReportPage>
                               ),
                               Spacer(),
                               TextButton(
+                                  style: TextButton.styleFrom(
+                                      primary: Theme.of(context).primaryColor),
                                   onPressed: () => Navigator.pushNamed(
                                       context, WorkoutDetailReport.routeName),
                                   child: Text(
@@ -212,7 +141,7 @@ class _ReportPageState extends State<ReportPage>
                         SizedBox(
                           height: 10,
                         ),
-                         constants.getDivider(context: context),
+                        constants.getDivider(context: context),
                         WeightReport(
                           title: "Weight",
                           isShow: true,
@@ -221,10 +150,16 @@ class _ReportPageState extends State<ReportPage>
                           height: 10,
                         ),
                         constants.getDivider(context: context),
-
-                        MediumBannerAd(
-                            bgColor: Theme.of(context).scaffoldBackgroundColor,
-                            showDivider: true),
+                        if (adsProvider.showBannerAd)    SizedBox(
+                          height: 10,
+                        ),
+                        MediumBannerAd(),
+                        if (adsProvider.showBannerAd)
+                          SizedBox(
+                            height: 10,
+                          ),
+                        if (adsProvider.showBannerAd)
+                          constants.getDivider(context: context),
                         BmiCard(
                           showBool: true,
                         ),

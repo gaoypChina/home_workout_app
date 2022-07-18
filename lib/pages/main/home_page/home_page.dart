@@ -41,6 +41,26 @@ class HomePage extends StatelessWidget {
     }
 
     bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    var size = MediaQuery.of(context).size;
+
+    _buildExercise({required String title, required String subtitle}) {
+      return Expanded(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                subtitle,
+                style: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.w500, fontSize: 18),
+              ),
+              Text(
+                title,
+                style: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.w500, fontSize: 16),
+              ),
+            ],
+          ));
+    }
 
 
     return WillPopScope(
@@ -72,18 +92,18 @@ class HomePage extends StatelessWidget {
             body: ListView(
               physics: BouncingScrollPhysics(),
               children: [
+
+
+                // Achievement(
+                //   onTap: () => Navigator.pushNamed(
+                //       context, WorkoutDetailReport.routeName),
+                // ),
+
                 SizedBox(
-                  height: 20,
-                ),
-                Achievement(
-                  onTap: () => Navigator.pushNamed(
-                      context, WorkoutDetailReport.routeName),
-                ),
-                SizedBox(
-                  height: 20,
+                  height: 18,
                 ),
                 ActiveGoal(),
-                SizedBox(height: 2,),
+            
                 getTitle(exerciseName[0]),
                 for (int i = 0; i < 3; i++)
                   WorkoutCard(

@@ -302,8 +302,8 @@ class _WeightChartState extends State<WeightChart> {
           border: Border.all(color: const Color(0xff37434d), width: 1.5)),
       minX: 1,
       maxX: 30,
-      minY: weightDataList.length == 0 ? 0:minWeight -20,
-      maxY: weightDataList.length == 0 ? 50 :maxWeight ==0 ? 90 :maxWeight +20,
+      minY: weightDataList.length == 0 ? 0:minWeight -18,
+      maxY: weightDataList.length == 0 ? 50 :maxWeight ==0 ? 90 :maxWeight +18,
 
       lineBarsData: [
         LineChartBarData(

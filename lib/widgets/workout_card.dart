@@ -62,7 +62,7 @@ class WorkoutCard extends StatelessWidget {
 
       return Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(.8),
+            color: Colors.white.withOpacity(1),
             borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
           width: 30,
@@ -74,7 +74,7 @@ class WorkoutCard extends StatelessWidget {
                 Icon(
                   Icons.circle,
                   size: 7,
-                  color: getIValue() < i ? Colors.grey.withOpacity(.8) : Colors.blue.withOpacity(.8),
+                  color: getIValue() < i ? Colors.grey.withOpacity(.8) : Colors.blue.withOpacity(1),
                 ),
             ],
           ));
@@ -83,7 +83,7 @@ class WorkoutCard extends StatelessWidget {
     getDifficulty() {
       return Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(.8),
+            color: Colors.white.withOpacity(1),
             borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
           width: 35,
@@ -95,7 +95,7 @@ class WorkoutCard extends StatelessWidget {
                 Icon(
                   Icons.circle,
                   size: 7,
-                  color: tagValue < i ? Colors.grey.shade500 : Colors.blue.withOpacity(.8),
+                  color: tagValue < i ? Colors.grey.shade500 : Colors.blue.withOpacity(1),
                 ),
             ],
           ));
@@ -134,9 +134,9 @@ class WorkoutCard extends StatelessWidget {
                     Text(
                       "Difficulty",
                       style: TextStyle(
-                          color: Colors.white.withOpacity(.7),
+                          color: Colors.white.withOpacity(.8),
                           fontSize: 14,
-                          letterSpacing: 1.5),
+                          letterSpacing: 1.1),
                     ),
                     SizedBox(
                       height: 5,
@@ -152,12 +152,12 @@ class WorkoutCard extends StatelessWidget {
                     Text(
                       "Duration",
                       style: TextStyle(
-                          color: Colors.white.withOpacity(.7),
-                          fontSize: 14,
-                          letterSpacing: 1.5),
+                color: Colors.white.withOpacity(.8),
+          fontSize: 14,
+          letterSpacing: 1.1),
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 6,
                     ),
                     getDuration(workoutList.length)
                   ],

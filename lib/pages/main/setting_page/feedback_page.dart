@@ -38,8 +38,19 @@ class FeedbackPage extends StatelessWidget {
         constants.getToast("Not able to send email",);
       }
     }
-    buildSendBtn(){
-        return Container(height: 60,padding: EdgeInsets.only(left: 18,right: 18,bottom: 12),width: size.width,child: ElevatedButton(onPressed: (){onSend();},child: Text("Submit".toUpperCase()),),);
+    buildSendBtn() {
+      return Container(
+        color: Theme.of(context).cardColor,
+        height: 70,
+        padding: EdgeInsets.only(left: 18, right: 18, bottom: 12, top: 12),
+        width: size.width,
+        child: ElevatedButton(
+          onPressed: () {
+            onSend();
+          },
+          child: Text("Send Feedback".toUpperCase()),
+        ),
+      );
     }
 
     buildTerms() {
@@ -123,11 +134,32 @@ class FeedbackPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Do let us know how we are doing",style: TextStyle(fontSize: 28,fontWeight: FontWeight.w500,letterSpacing: 1.5),),
-                SizedBox(height: 28,),
-                TextField(controller: _controller,
-                    maxLines: 6,decoration: InputDecoration(labelText: "Feedback",contentPadding: EdgeInsets.all(12))),
-                SizedBox(height: 12,),
+                Text(
+                  "Do let us know how we are doing",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 1.0),
+                ),
+                SizedBox(
+                  height: 18,
+                ),
+                TextField(
+                    controller: _controller,
+                    maxLines: 6,
+                    decoration: InputDecoration(
+                      fillColor: Colors.transparent,
+                        border: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8.0),
+                          ),
+                        ),
+                        filled: true,
+                        labelText: "Feedback",
+                        contentPadding: EdgeInsets.all(12))),
+                SizedBox(
+                  height: 12,
+                ),
                 buildTerms(),
               ],
             ),

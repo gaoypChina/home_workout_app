@@ -14,6 +14,7 @@ import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../enums/app_conection_status.dart';
 import '../widgets/dialogs/delete_account_fail_dialog.dart';
 import '../widgets/loading_indicator.dart';
 
@@ -21,25 +22,19 @@ class BackupProvider extends ChangeNotifier {
   BackupHelper _dbHelper = BackupHelper();
   SpKey _spKey = SpKey();
   SpHelper _spHelper = SpHelper();
-  bool dataSyncing = false;
   RecentDatabaseHelper _recentDatabaseHelper = RecentDatabaseHelper();
   WeightDatabaseHelper _weightDatabaseHelper = WeightDatabaseHelper();
+  AppConnectionStatus connectionStatus = AppConnectionStatus.none;
 
 
 
-  syncData({required User? user, required BuildContext context}) async {
+  syncData({required User? user, required BuildContext context, required bool isLoginPage}) async {
     try {
       if (user == null) return;
-      dataSyncing = true;
+      connectionStatus = AppConnectionStatus.loading;
       notifyListeners();
 
-      showDialog(
-          context: context,
-          builder: (builder) {
-            return CustomLoadingIndicator(
-              msg: "Syncing data",
-            );
-          });
+     // await Future.delayed(Duration(seconds: 10));
 
       await _getUser(user: user);
       await _setUser(user: user);
@@ -56,7 +51,7 @@ class BackupProvider extends ChangeNotifier {
       Constants()
           .getToast("something went wrong.");
     } finally {
-      dataSyncing = false;
+      connectionStatus = AppConnectionStatus.success;
       notifyListeners();
     }
   }

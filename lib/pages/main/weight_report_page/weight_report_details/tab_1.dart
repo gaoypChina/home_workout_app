@@ -87,7 +87,6 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
 
   getVLine() {
     return Container(
-      height: double.infinity,
       width: .4,
       color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.5),
     );
@@ -397,6 +396,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
     return Container(
         child: Row(
       children: [
+
         Text(
           provider.firstDate,
           style: TextStyle(
@@ -429,7 +429,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
         children: [
           Container(
             padding: EdgeInsets.only(left: 16.0, right: 16, top: 8, bottom: 8),
-            color: Theme.of(context).cardColor,
+            color: Theme.of(context).primaryColor.withOpacity(.0),
             child: Row(
               children: [
                 getDateRange(),
@@ -480,7 +480,8 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                             provider.setFilter(value.toLowerCase());
                         provider.onRangeChange(filter, context);
                       }),
-                )
+                ),
+
               ],
             ),
           ),

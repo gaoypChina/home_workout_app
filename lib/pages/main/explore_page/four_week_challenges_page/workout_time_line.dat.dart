@@ -7,7 +7,6 @@ import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/models/challenges_model.dart';
 import 'package:full_workout/pages/workout_page/exercise_list_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -412,10 +411,6 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                               image: new ExactAssetImage(item.coverImage),
                               fit: BoxFit.cover,
                             ),
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [item.color1, item.color2]),
                           ),
                         ),
                         Positioned(
@@ -508,8 +503,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                           height: 20,
                         ),
                         MediumBannerAd(
-                          bgColor: Colors.transparent,
-                          showDivider: false,
+
                         ),
                         SizedBox(
                           height: 80,

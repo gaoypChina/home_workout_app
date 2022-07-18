@@ -12,7 +12,7 @@ class Constants{
 
   // ToDo: Update version number
 
-  String versionNumber ="1.7.4";
+  String versionNumber ="1.7.6";
 
 
   TextStyle titleStyle =   TextStyle(fontWeight: FontWeight.w500,fontSize: 16,letterSpacing: 1.2);
@@ -55,12 +55,7 @@ class Constants{
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  String getPrice({required int price}) {
-    String parsedCurrency = "$price";
-    String parsedPrice = parsedCurrency.replaceAllMapped(
-        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
-    return parsedPrice;
-  }
+
 
   String getPerMonthPrice( {required Product product}){
     String currencySymbol = product.priceString[0];
@@ -70,6 +65,6 @@ class Constants{
     return "$currencySymbol${(price/duration).ceil()}";
 }
 
-  // jERwiYc5ysTAA+urj7cDD/SjSGE=
+
 
 }

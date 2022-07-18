@@ -24,8 +24,7 @@ class WeightDetailTab2 extends StatelessWidget {
               Constants().getDivider(context: context),
               SizedBox(height: 18,),
               MediumBannerAd(
-              showDivider: false,
-              bgColor: Theme.of(context).scaffoldBackgroundColor),
+          ),
               SizedBox(height: 20,),
         ],
           ),

@@ -164,7 +164,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
                         Text(
                           DateFormat('EEEE').format(activeDay.date)[0],
                           style: TextStyle(
-                              fontWeight: FontWeight.w500, color: textColor.withOpacity(.8)),
+                              fontWeight: FontWeight.w500, color: textColor.withOpacity(.9)),
                         ),
                         SizedBox(
                           height: 6,
@@ -206,7 +206,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
                         Text(
                           activeDay.date.day.toString(),
                           style: TextStyle(
-                              fontWeight: FontWeight.w500, color: textColor.withOpacity(.8)),
+                              fontWeight: FontWeight.w500, color: textColor.withOpacity(.9)),
                         ),
                         SizedBox(
                           height: 6,

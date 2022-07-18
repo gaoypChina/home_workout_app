@@ -76,7 +76,7 @@ class DetailPage extends StatelessWidget {
       bottomNavigationBar:
           Container(
             height: 60,
-              child: RegularBannerAd(showDivider: false, bgColor: Colors.blue)),
+              child: RegularBannerAd()),
       appBar: AppBar(
         toolbarHeight: 50,
         title: Text(

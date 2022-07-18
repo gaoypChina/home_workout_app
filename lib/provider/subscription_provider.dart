@@ -151,7 +151,7 @@ class SubscriptionProvider with ChangeNotifier {
     try {
 
       PurchaserInfo info = await Purchases.getPurchaserInfo();
-      log(info.activeSubscriptions.first);
+      log(info.toString());
 
       String getPrice(String? identifier) {
         Package? pack;
@@ -174,12 +174,7 @@ class SubscriptionProvider with ChangeNotifier {
 
       log("Last date : $lastDate, first date : $firstDate, price : $price");
 
-      // SubscriptionHelper.savePurchaseDates(
-      //     lastDate: lastDate, firstDate: firstDate, price: price);
-      //
-      // await Provider.of<BackupProvider>(context, listen: false)
-      //     .setProUser(user: user);
-      // setSubscriptionDate();
+
     } catch (e) {
       log(e.toString());
     } finally {}

@@ -12,9 +12,10 @@ import '../helper/ad_helper.dart';
 const int maxFailedLoadAttempts = 3;
 
 class AdsProvider with ChangeNotifier {
-  late BannerAd bottomBannerAd;
+  BannerAd? bottomBannerAd;
   InterstitialAd? interstitialAd;
   RewardedAd? rewardedAd;
+  BannerAd? bannerMediumAd;
 
   int _interstitialLoadAttempts = 0;
   int _rewardLoadAttempts = 0;
@@ -30,6 +31,7 @@ class AdsProvider with ChangeNotifier {
         request: AdRequest(),
         listener: BannerAdListener(
           onAdLoaded: (_) {
+            log("ad loaded");
             showBannerAd = true;
             notifyListeners();
           },
@@ -39,19 +41,17 @@ class AdsProvider with ChangeNotifier {
             ad.dispose();
           },
         ));
-    bottomBannerAd.load();
+    bottomBannerAd!.load();
   }
 
   void createMediumBannerAd() {
-    bottomBannerAd = BannerAd(
-        adUnitId: AdIdHelper.bannerAdUnitId,
+    bannerMediumAd = BannerAd(
+        adUnitId: AdIdHelper.bannerMediumAdUnitId,
         size: AdSize.mediumRectangle,
         request: AdRequest(),
         listener: BannerAdListener(
           onAdLoaded: (_) {
             showBannerAd = true;
-            log("loading.....");
-            log(showBannerAd.toString());
             notifyListeners();
           },
           onAdFailedToLoad: (ad, error) {
@@ -60,7 +60,7 @@ class AdsProvider with ChangeNotifier {
             ad.dispose();
           },
         ));
-    bottomBannerAd.load();
+    bannerMediumAd!.load();
   }
 
   void createInterstitialAd() {
@@ -118,9 +118,15 @@ class AdsProvider with ChangeNotifier {
   }
 
   void disposeBannerAd() {
-    log("bottom");
-    log("bottom ad : " + bottomBannerAd.toString());
-    bottomBannerAd.dispose();
+    if(bottomBannerAd != null){
+      bottomBannerAd!.dispose();
+    }
+  }
+
+  void disposeBannerMediumAd() {
+    if(bannerMediumAd != null){
+      bannerMediumAd!.dispose();
+    }
   }
 
   void disposeInterstitialAd() {

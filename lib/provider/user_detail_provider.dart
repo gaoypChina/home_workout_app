@@ -220,7 +220,7 @@ class UserDetailProvider with ChangeNotifier {
       if (user != null) {
         
         await Provider.of<BackupProvider>(context, listen: false)
-            .syncData(user: user, context: context);
+            .syncData(user: user, context: context,isLoginPage: false);
       }
     } catch (e) {
       showDialog(

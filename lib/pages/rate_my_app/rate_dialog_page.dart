@@ -27,7 +27,11 @@ class _RateDialogPageState extends State<RateDialogPage> {
             final event = RateMyAppEventType.rateButtonPressed;
             await widget.rateMyApp.callEvent(event);
             if (launchAppStore) {
+              constants.getToast(
+                "↓↓ Scroll down to rate us ↓↓",
+              );
               widget.rateMyApp.launchStore();
+              Navigator.of(context).pop();
             } else {
               Navigator.of(context).pop();
               showDialog(
@@ -72,6 +76,12 @@ class _RateDialogPageState extends State<RateDialogPage> {
                       ),
                       actions: [
                         TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("Cancel"),
+                        ),
+                        TextButton(
                             onPressed: () async {
                               String toSend = "$comment\n\n";
 
@@ -82,6 +92,7 @@ class _RateDialogPageState extends State<RateDialogPage> {
                                 isHTML: false,
                               );
 
+                              Navigator.of(context).pop();
                               try {
                                 await FlutterEmailSender.send(email);
                               } catch (e) {
@@ -91,12 +102,6 @@ class _RateDialogPageState extends State<RateDialogPage> {
                               }
                             },
                             child: Text("Ok")),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text("Cancel"),
-                        )
                       ],
                     );
                   });

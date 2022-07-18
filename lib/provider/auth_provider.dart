@@ -168,7 +168,7 @@ class AuthProvider with ChangeNotifier {
       } else {
         var backupProvider =
             Provider.of<BackupProvider>(context, listen: false);
-        await backupProvider.syncData(user: user, context: context);
+        await backupProvider.syncData(user: user, context: context,isLoginPage: true);
         return true;
       }
     } catch (e) {
