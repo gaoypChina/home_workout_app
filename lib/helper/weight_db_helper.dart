@@ -63,9 +63,8 @@ class WeightDatabaseHelper {
 
   Future<void>setAllWeightData({required List weightList})async{
     var dbClient = await db;
+    List allLocalWeight = await getAllWeight();
     for(var weight in weightList){
-      
-      List allLocalWeight = await getAllWeight();
       if(!isPresent(weight, allLocalWeight)){
         await dbClient.insert('$tableName', weight);
       }

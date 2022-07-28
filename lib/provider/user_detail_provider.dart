@@ -1,17 +1,17 @@
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/weight_db_helper.dart';
 import 'package:full_workout/provider/backup_provider.dart';
+import 'package:full_workout/widgets/loading_indicator.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
-import '../pages/main_page.dart';
 
 import '../helper/sp_helper.dart';
 import '../helper/sp_key_helper.dart';
 import '../models/weight_model.dart';
+import '../pages/main_page.dart';
 
 class UserDetailProvider with ChangeNotifier {
   TextEditingController nameController = TextEditingController();
@@ -28,7 +28,6 @@ class UserDetailProvider with ChangeNotifier {
 
   bool isStep1Completed = false;
   bool isStep2Completed = false;
-  bool isStep3Completed = false;
 
   switchGender({required int index}) {
     gender = index;
@@ -58,7 +57,7 @@ class UserDetailProvider with ChangeNotifier {
 
   checkStep1() {
     // log(gender.toString() + " " + name.toString() + " " + dob.toString());
-    if (gender < 3 && name != null && dob != null) {
+    if (gender < 3 && nameController.text != "" && dob != null) {
       isStep1Completed = true;
       notifyListeners();
     }
@@ -133,7 +132,7 @@ class UserDetailProvider with ChangeNotifier {
 
   setWeeklyTrainingDays(int? val) {
     weeklyTrainingDay = val;
-    checkStep3();
+
     notifyListeners();
   }
 
@@ -147,7 +146,6 @@ class UserDetailProvider with ChangeNotifier {
 
   setFirstDayOfWeek(int? val) {
     firstDayOfWeek = val;
-    checkStep3();
     notifyListeners();
   }
 
@@ -165,19 +163,10 @@ class UserDetailProvider with ChangeNotifier {
     }
   }
 
-  checkStep3() {
-    if (firstDayOfWeek != null && weeklyTrainingDay != null) {
-      isStep3Completed = true;
-    } else {
-      isStep3Completed = false;
-    }
-    notifyListeners();
-  }
-
   saveLocalData() async {
     SpHelper _spHelper = SpHelper();
     SpKey _spKey = SpKey();
-    await _spHelper.saveString(_spKey.name, name!);
+    await _spHelper.saveString(_spKey.name, nameController.text);
     await _spHelper.saveString(_spKey.date, dob!.toIso8601String());
     await _spHelper.saveInt(_spKey.gender, gender);
     await _spHelper.saveDouble(_spKey.height, height!);
@@ -213,15 +202,13 @@ class UserDetailProvider with ChangeNotifier {
     isLoading = true;
     notifyListeners();
     try {
-    //  await Future.delayed(Duration(seconds: 5));
+      showDialog(context: context, builder: (builder)
+      {
+        return CustomLoadingIndicator(msg: "Creating profile",);
+      });
       await saveLocalData();
-      User? user = FirebaseAuth.instance.currentUser;
-
-      if (user != null) {
-        
-        await Provider.of<BackupProvider>(context, listen: false)
-            .syncData(user: user, context: context,isLoginPage: false);
-      }
+      await Provider.of<BackupProvider>(context, listen: false)
+          .syncData(context: context, isLoginPage: false,showMsg: false);
     } catch (e) {
       showDialog(
           context: context,
@@ -231,8 +218,10 @@ class UserDetailProvider with ChangeNotifier {
     } finally {
       isLoading = false;
 
+      Constants().getToast("Profile Created Successfully");
+
       notifyListeners();
-       Navigator.of(context).pushNamed(MainPage.routeName);
+        Navigator.of(context).pushNamed(MainPage.routeName);
     }
   }
 }

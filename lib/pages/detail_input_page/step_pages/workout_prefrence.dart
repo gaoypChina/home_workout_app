@@ -41,7 +41,7 @@ class _WorkoutPreferenceState extends State<WorkoutPreference> {
   Widget build(BuildContext context) {
     var provider  = Provider.of<UserDetailProvider>(context);
    return Scaffold(
-      bottomNavigationBar:UserDetailSubmitButton(onTap:widget.onNext ,isActive: provider.isStep3Completed),
+      bottomNavigationBar:UserDetailSubmitButton(onTap:widget.onNext,isActive: true, ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 18),
         child: Column(

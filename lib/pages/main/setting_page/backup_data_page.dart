@@ -1,47 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/enums/app_conection_status.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/provider/auth_provider.dart';
 import 'package:full_workout/provider/backup_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class BackupDataCard extends StatefulWidget {
-  const BackupDataCard({Key? key}) : super(key: key);
+import '../../../enums/app_conection_status.dart';
 
-  @override
-  State<BackupDataCard> createState() => _BackupDataCardState();
-}
+class BackupDataCard extends StatelessWidget {
+  final String lastSync;
+  final String name;
+  final Function onSync;
 
-class _BackupDataCardState extends State<BackupDataCard> {
-  String lastSync = DateTime.now().toString();
-  String userName = "User";
-
-  @override
-  void initState() {
-    initData();
-    super.initState();
-  }
-
-  String getParsedTime({required String dateTime}){
-    String date = DateFormat.yMMMd().format(DateTime.parse(dateTime));
-    String time = DateFormat.jm().format(DateTime.parse(dateTime));
-    return "$date $time";
-  }
-
-  initData() async {
-    SpKey _spKey = SpKey();
-    SpHelper _spHelper = SpHelper();
-
-    userName = await _spHelper.loadString(_spKey.name) ?? "User";
-    lastSync = await _spHelper.loadString(_spKey.backupTime) ??
-        DateTime.now().toIso8601String();
-
-    setState(() {});
-  }
+  const BackupDataCard({
+    Key? key,
+    required this.lastSync,
+    required this.name,
+    required this.onSync,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,28 +26,34 @@ class _BackupDataCardState extends State<BackupDataCard> {
     var backupProvider = Provider.of<BackupProvider>(context);
     var authProvider = Provider.of<AuthProvider>(context);
 
+    String getParsedTime({required String dateTime}) {
+      String date = DateFormat.yMMMd().format(DateTime.parse(dateTime));
+      String time = DateFormat.jm().format(DateTime.parse(dateTime));
+      return "$date $time";
+    }
+
     return Container(
       color: Colors.black,
-      height: size.height * .16,
       width: size.width,
       child: Stack(
         children: [
           Opacity(
-            opacity: .7,
+            opacity: .3,
             child: Image.asset(
-              "assets/home_cover/1.jpg",
+              // 1 6 7
+              "assets/home_cover/11.jpg",
               fit: BoxFit.fill,
               width: size.width,
-              height: size.height * .16,
+              height: size.height * .16 + 70,
             ),
-          ),
-          Container(
-            color: Colors.black.withOpacity(.2),
           ),
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Spacer(
+                  flex: 4,
+                ),
                 InkWell(
                     onTap: () async {
                       bool isDisabled = backupProvider.connectionStatus ==
@@ -88,7 +71,8 @@ class _BackupDataCardState extends State<BackupDataCard> {
                           context: context,
                           builder: (context) {
                             return _DataSyncModal(
-                              userName: userName,
+                              userName: name,
+                              onSync: onSync,
                             );
                           });
                     },
@@ -101,7 +85,7 @@ class _BackupDataCardState extends State<BackupDataCard> {
                           CircleAvatar(
                             backgroundColor: Colors.white,
                             child: Text(
-                              userName[0].toUpperCase(),
+                              name[0].toUpperCase(),
                               style:
                                   TextStyle(fontSize: 32, color: Colors.black),
                             ),
@@ -115,7 +99,7 @@ class _BackupDataCardState extends State<BackupDataCard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  userName,
+                                  name,
                                   style: TextStyle(
                                       fontSize: 18,
                                       letterSpacing: 1.2,
@@ -139,14 +123,21 @@ class _BackupDataCardState extends State<BackupDataCard> {
                           SizedBox(
                             width: 8,
                           ),
-                          Icon(
-                            Icons.sync,
-                            color: Colors.white.withOpacity(.7),
-                            size: 30,
-                          )
+                          IconButton(
+                              icon: Icon(
+                                Icons.sync,
+                                color: Colors.white.withOpacity(.9),
+                                size: 30,
+                              ),
+                              onPressed: () {
+                                onSync();
+                              }),
                         ],
                       ),
                     )),
+                Spacer(
+                  flex: 2,
+                ),
               ],
             ),
           ),
@@ -158,8 +149,10 @@ class _BackupDataCardState extends State<BackupDataCard> {
 
 class _DataSyncModal extends StatelessWidget {
   final String userName;
+  final Function onSync;
 
-  const _DataSyncModal({Key? key, required this.userName}) : super(key: key);
+  const _DataSyncModal({Key? key, required this.userName, required this.onSync})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -233,58 +226,27 @@ class _DataSyncModal extends StatelessWidget {
             SizedBox(
               height: 22,
             ),
-            Consumer<BackupProvider>(builder: (context, backupProvider, _) {
-              return Center(
-                child: Container(
-                    width: size.width - 36,
-                    height: 45,
-                    child: OutlinedButton(
-                      child: backupProvider.connectionStatus ==
-                              AppConnectionStatus.loading
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    color: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(.8),
-                                    strokeWidth: 2,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 18,
-                                ),
-                                Text("Syncing data",style: TextStyle(
-                                    color: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(.8),
-                                    fontWeight: FontWeight.w500)),
-                              ],
-                            )
-                          : Text(
-                              "Sync Data",
-                              style: TextStyle(
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(.8),
-                                  fontWeight: FontWeight.w500),
-                            ),
-                      style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                        color: Theme.of(context).primaryColor.withOpacity(.6),
-                        width: 1.5,
-                      )),
-                      onPressed: () async {
-                        await backupProvider.syncData(
-                            user: user, context: context, isLoginPage: false);
-                        Navigator.of(context).pop();
-                      },
+            Center(
+              child: Container(
+                  width: size.width - 36,
+                  height: 45,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(
+                      color: Theme.of(context).primaryColor.withOpacity(.6),
+                      width: 1.5,
                     )),
-              );
-            }),
+                    child: Text("Sync Data",
+                        style: TextStyle(
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(.8),
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      onSync();
+                    },
+                  )),
+            ),
             SizedBox(
               height: 12,
             ),

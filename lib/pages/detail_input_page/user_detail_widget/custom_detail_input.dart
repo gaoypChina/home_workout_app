@@ -21,7 +21,7 @@ class CustomDetailInput extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DetailPageCustomWidget.buildTitle(title: title),
+        DetailPageCustomWidget.buildTitle(title: title,context: context),
         InkWell(
           onTap: onTap,
           child: Container(
@@ -50,9 +50,9 @@ class CustomDetailInput extends StatelessWidget {
             ),
             decoration: BoxDecoration(
                 border: Border.all(
-                    color: Colors.black.withOpacity(hasData ? .1 : .1),),
+                    color: DetailPageCustomWidget.borderColor),
                 borderRadius: BorderRadius.all(Radius.circular(16)),
-                color:Theme.of(context).cardColor),
+                color: DetailPageCustomWidget.tileColor),
           ),
         )
       ],

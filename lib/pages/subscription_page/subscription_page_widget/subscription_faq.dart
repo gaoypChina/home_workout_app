@@ -72,8 +72,8 @@ class SubscriptionFAQ extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 18.0, bottom: 12),
           child: Text(
-            "Some Frequently Asked Questions",
-           style: TextStyle(fontSize: 17,fontWeight: FontWeight.w600,letterSpacing: 1.2),
+            "Frequently Asked Questions",
+           style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),
           ),
         ),
         getFAQTile(),

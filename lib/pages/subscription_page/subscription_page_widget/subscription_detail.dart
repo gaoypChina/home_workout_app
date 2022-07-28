@@ -20,20 +20,20 @@ class _SubscriptionDetailState extends State<SubscriptionDetail> {
     return formatter.format(time);
   }
 
-  getBarPercent({required DateTime firstDate, required DateTime lastDate}) {
-    int totalDay =  lastDate.difference(firstDate).inSeconds;
+  double? getBarPercent(
+      {required DateTime firstDate, required DateTime lastDate}) {
+    int totalDay = lastDate.difference(firstDate).inSeconds;
     int remainingDay = lastDate.difference(DateTime.now()).inSeconds;
-
-    log("total : $totalDay");
-    log("remaining : $remainingDay");
-
     try {
       if (totalDay == 0) {
         throw "error : divided by zero";
       }
-      return (totalDay - remainingDay) / totalDay;
+
+      double per = (totalDay - remainingDay) / totalDay;
+      return per > 1.0 ? 0.2 : per;
     } catch (e) {
-      return 0.0;
+      log("error : subscription percent loading error : $e ");
+      return null;
     }
   }
 
@@ -46,7 +46,7 @@ class _SubscriptionDetailState extends State<SubscriptionDetail> {
       ),
       Spacer(),
       Text(
-        subtitle,
+        subtitle.toString(),
         style: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 14,
@@ -75,17 +75,18 @@ class _SubscriptionDetailState extends State<SubscriptionDetail> {
           SizedBox(
             height: 12,
           ),
-          LinearPercentIndicator(
-            padding: EdgeInsets.zero,
-            width: MediaQuery.of(context).size.width * .86,
-            barRadius: Radius.circular(18),
-            lineHeight: 6.0,
-            percent: getBarPercent(
-                firstDate: provider.subscriptionDetail!.firstDate,
-                lastDate: provider.subscriptionDetail!.lastDate),
-            backgroundColor: Colors.white.withOpacity(.4),
-            progressColor: Colors.white.withOpacity(.80),
-          ),
+          if (provider.subscriptionDetail != null)
+            LinearPercentIndicator(
+              padding: EdgeInsets.zero,
+              width: MediaQuery.of(context).size.width * .86,
+              barRadius: Radius.circular(18),
+              lineHeight: 6.0,
+              percent: getBarPercent(
+                  firstDate: provider.subscriptionDetail!.firstDate,
+                  lastDate: provider.subscriptionDetail!.lastDate) ?? 0.2,
+              backgroundColor: Colors.white.withOpacity(.4),
+              progressColor: Colors.white.withOpacity(.80),
+            ),
           SizedBox(
             height: 12,
           ),
@@ -128,7 +129,8 @@ class _SubscriptionDetailState extends State<SubscriptionDetail> {
           height: 4,
         ),
         buildDetail(
-            title: "Amount Paid", subtitle: provider.subscriptionDetail!.price),
+            title: "Amount Paid",
+            subtitle: provider.subscriptionDetail?.price ?? 0),
         SizedBox(
           height: 4,
         ),

@@ -35,22 +35,21 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
     var provider = Provider.of<UserDetailProvider>(
       context,
     );
-    var size = MediaQuery.of(context).size;
     _buildName() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DetailPageCustomWidget.buildTitle(
-              title: isEditOn ? "Enter your name" : "Name"),
+              title: isEditOn ? "Enter your name" : "Name", context: context),
           ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(18)),
+            borderRadius: BorderRadius.all(Radius.circular(16)),
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 0),
+              padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: BorderRadius.all(Radius.circular(18)),
-                border:
-                    Border.all(color: Colors.black.withOpacity(.1), width: 1.5),
+                color: DetailPageCustomWidget.tileColor,
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                border: Border.all(
+                    color: DetailPageCustomWidget.borderColor, width: 1),
               ),
               child: TextField(
                 controller: provider.nameController,
@@ -58,31 +57,18 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
                   provider.onNameSubmitted(input: name);
                 },
                 style: TextStyle(
-                    fontWeight: provider.name == null
-                        ? FontWeight.w400
-                        : FontWeight.w500,
                     color: Theme.of(context)
                         .textTheme
                         .bodyText1!
                         .color!
                         .withOpacity(.8)),
                 decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        190.0,
-                      ),
-                      borderSide: BorderSide(color: Colors.transparent)),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        190.0,
-                      ),
-                      borderSide: BorderSide(color: Colors.transparent)),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        190.0,
-                      ),
-                      borderSide: BorderSide(color: Colors.transparent)),
-                  fillColor: Theme.of(context).cardColor,
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  fillColor: Colors.transparent,
                   hintText: "Enter your name",
                 ),
               ),
@@ -104,20 +90,16 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
               Container(
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black.withOpacity(.1)),
+                    border: Border.all(color: DetailPageCustomWidget.borderColor),
                     color: provider.gender == index
-                        ? Colors.blueGrey
-                        : Theme.of(context).cardColor,
+                        ? Theme.of(context).primaryColor
+                        : DetailPageCustomWidget.tileColor,
                     shape: BoxShape.circle),
                 child: Icon(
                   icon,
                   color: provider.gender == index
                       ? Colors.white
-                      : Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .color!
-                          .withOpacity(.5),
+                      :Theme.of(context).primaryColor.withOpacity(.6) ,
                   size: 28,
                 ),
               ),
@@ -138,7 +120,8 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DetailPageCustomWidget.buildTitle(title: "Select Gender"),
+          DetailPageCustomWidget.buildTitle(
+              title: "Select Gender", context: context),
           Row(
             children: [
               _buildGenderIcon(
@@ -331,7 +314,7 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
                         height: 28,
                       ),
                       DetailPageCustomWidget.buildTitle(
-                          title: "Measurement Unit"),
+                          title: "Measurement Unit", context: context),
                       UnitSelector(),
                       SizedBox(
                         height: 28,

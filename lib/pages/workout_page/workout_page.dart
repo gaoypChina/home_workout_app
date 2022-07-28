@@ -13,6 +13,7 @@ import 'package:full_workout/pages/workout_page/pause_page.dart';
 import 'package:full_workout/pages/workout_page/report_page.dart';
 import 'package:full_workout/pages/workout_page/rest_page.dart';
 import 'package:full_workout/provider/ads_provider.dart';
+import 'package:full_workout/provider/subscription_provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -98,20 +99,27 @@ class _WorkoutPageState extends State<WorkoutPage>
   }
 
   _showInterstitialAd(){
-    var provider = Provider.of<AdsProvider>(context,listen: false);
-    if(provider.interstitialAd != null){
-      provider.interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-        onAdDismissedFullScreenContent: (InterstitialAd ad){
-          ad.dispose();
-          provider.createInterstitialAd();
-        },
-        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error){
-          ad.dispose();
-          provider.createInterstitialAd();
-        }
-      );
-      provider.interstitialAd!.show();
+    var subscriptionProvider = Provider.of<SubscriptionProvider>(context,listen: false);
+    if(!subscriptionProvider.isProUser){
+      var provider = Provider.of<AdsProvider>(context,listen: false);
+      if(provider.interstitialAd != null){
+        provider.interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (InterstitialAd ad){
+              ad.dispose();
+              provider.createInterstitialAd();
+            },
+            onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error){
+              ad.dispose();
+              provider.createInterstitialAd();
+            }
+        );
+        provider.interstitialAd!.show();
+      }
     }
+
+
+
+
   }
 
 
@@ -162,12 +170,19 @@ class _WorkoutPageState extends State<WorkoutPage>
     currentTime = DateTime.now();
     if (currIndex != widget.workOutList.length) {
       introMessage();
-    }if (currIndex + 1 == widget.workOutList.length){
-      Provider.of<AdsProvider>(context,listen: false).createInterstitialAd();
+    }
+    if (currIndex + 1 == widget.workOutList.length) {
+      var subscriptionProvider =
+          Provider.of<SubscriptionProvider>(context, listen: false);
+      var adsProvider = Provider.of<AdsProvider>(context, listen: false);
+      if (!subscriptionProvider.isProUser) {
+        adsProvider.disposeInterstitialAd();
+        Provider.of<AdsProvider>(context, listen: false).createInterstitialAd();
+      }
     }
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: item.showTimer?item.duration!+1:30+1),
+      duration: Duration(seconds: item.showTimer ? item.duration! + 1 : 30 + 1),
     );
 
     if (item.showTimer == true) {
@@ -180,9 +195,6 @@ class _WorkoutPageState extends State<WorkoutPage>
   @override
   void dispose() {
     controller.dispose();
-    if (currIndex + 1 == widget.workOutList.length){
-      Provider.of<AdsProvider>(context,listen: false).disposeInterstitialAd();
-    }
     super.dispose();
   }
 

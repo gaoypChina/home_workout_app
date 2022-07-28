@@ -37,9 +37,9 @@ height: 40,
         children: [
           buildCard(title: "100 + ", subtitle: "5 Star Rating"),
           buildDivider(),
-          buildCard(title: "5000 + ", subtitle: "Active User"),
+          buildCard(title: "10000 + ", subtitle: "Active User"),
           buildDivider(),
-          buildCard(title: "100 + ", subtitle: "User Seen result"),
+          buildCard(title: "500 + ", subtitle: "User Seen result"),
 
 
         ],

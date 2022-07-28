@@ -68,6 +68,8 @@ class RecentDatabaseHelper {
     return result.toList();
   }
 
+
+
  Future<void> setAllWorkout({required List workoutList})async{
       Database dbClient = await db;
       List allLocalWorkout = await getAllWorkOut();
@@ -76,7 +78,6 @@ class RecentDatabaseHelper {
           await dbClient.insert('$tableName', workout);
         }
       }
-
   }
 
  bool isPresent(Map<String,dynamic> data, List allLocalWorkout){

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,15 @@ class BasicDetails extends StatefulWidget {
 
 class _BasicDetailsState extends State<BasicDetails> {
   @override
+  void initState() {
+    var data = Provider.of<UserDetailProvider>(context, listen: false);
+
+    data.nameController = TextEditingController(
+        text: FirebaseAuth.instance.currentUser?.displayName ?? "");
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var provider = Provider.of<UserDetailProvider>(
       context,
@@ -28,14 +38,17 @@ class _BasicDetailsState extends State<BasicDetails> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DetailPageCustomWidget.buildTitle(title: "What's your Name?"),
+          DetailPageCustomWidget.buildTitle(
+              title: "What's your Name?", context: context),
           ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(16)),
             child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                  border: Border.all(
-                    color: Colors.blue.withOpacity(provider.name != null? 1 : .5),width: 1.5),
+                color: DetailPageCustomWidget.tileColor,
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                border: Border.all(
+                    color: DetailPageCustomWidget.borderColor, width: 1),
               ),
               child: TextField(
                 controller: provider.nameController,
@@ -43,18 +56,19 @@ class _BasicDetailsState extends State<BasicDetails> {
                   provider.onNameSubmitted(input: name);
                 },
                 style: TextStyle(
-                  fontWeight:provider.name == null? FontWeight.w400: FontWeight.w500,
-                  color: Theme.of(context).primaryColor
-                ),
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .color!
+                        .withOpacity(.8)),
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,
                   errorBorder: InputBorder.none,
                   disabledBorder: InputBorder.none,
-                  fillColor: DetailPageCustomWidget.tileColor,
+                  fillColor: Colors.transparent,
                   hintText: "Enter your name",
-
                 ),
               ),
             ),
@@ -75,7 +89,8 @@ class _BasicDetailsState extends State<BasicDetails> {
               Container(
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black.withOpacity(.1)),
+                    border:
+                        Border.all(color: DetailPageCustomWidget.borderColor),
                     color: provider.gender == index
                         ? Theme.of(context).primaryColor
                         : DetailPageCustomWidget.tileColor,
@@ -84,11 +99,7 @@ class _BasicDetailsState extends State<BasicDetails> {
                   icon,
                   color: provider.gender == index
                       ? Colors.white
-                      : Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .color!
-                          .withOpacity(.5),
+                      : Theme.of(context).primaryColor.withOpacity(.5),
                   size: 28,
                 ),
               ),
@@ -97,7 +108,14 @@ class _BasicDetailsState extends State<BasicDetails> {
               ),
               Text(
                 title,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .color!
+                        .withOpacity(.8)),
               )
             ],
           ),
@@ -109,13 +127,16 @@ class _BasicDetailsState extends State<BasicDetails> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DetailPageCustomWidget.buildTitle(title: "Select Gender"),
+          DetailPageCustomWidget.buildTitle(
+              title: "Select Gender", context: context),
           Row(
             children: [
               _buildGenderIcon(
                   icon: Icons.male_outlined, title: "Male", index: 0),
+              Spacer(),
               _buildGenderIcon(
                   icon: Icons.female_outlined, title: "Female", index: 1),
+              Spacer(),
               _buildGenderIcon(
                   icon: Icons.adjust_outlined, title: "Other", index: 2),
             ],
@@ -139,7 +160,7 @@ class _BasicDetailsState extends State<BasicDetails> {
               ),
               _buildGender(),
               SizedBox(
-                height: 38,
+                height: 28,
               ),
               _buildName(),
               SizedBox(

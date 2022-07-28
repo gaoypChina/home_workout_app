@@ -43,7 +43,7 @@ class _UserReviewState extends State<UserReview> {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 18.0,bottom: 12),
-          child: Text("What People Say About Us",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w600,letterSpacing: 1.2),),
+          child: Text("What People Say About Us",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
         ),
 
         Container(

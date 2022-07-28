@@ -7,7 +7,6 @@ import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/widgets/connection_error_page.dart';
-import 'package:full_workout/provider/backup_provider.dart';
 import 'package:full_workout/widgets/dialogs/subscription_successful_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -21,37 +20,16 @@ import 'connectivity_provider.dart';
 class SubscriptionProvider with ChangeNotifier {
   bool isBuyBtnLoading = false;
   bool isLoading = true;
-  PurchaserInfo? pInfo;
+  bool isProUser = false;
 
   List<Package> packageList = [];
   int offerIndex = 0;
   SubscriptionDetail? subscriptionDetail;
-
-  init({required BuildContext context}) async {
-    isLoading = true;
-    try {
-      await checkConnection(context: context);
-      fetchOffers();
-    } catch (e) {
-      log(e.toString());
-    }
-  }
-
-  bool get isProUser {
- //   return false;
-    if (subscriptionDetail == null) {
-      return false;
-    } else {
-      DateTime lastDate = subscriptionDetail!.lastDate;
-      if (lastDate.difference(DateTime.now().toUtc()).isNegative) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  }
+  Constants _constants = Constants();
 
   fetchOffers() async {
+    isLoading = true;
+    notifyListeners();
     try {
       await SubscriptionHelper.init();
       final offerings = await SubscriptionHelper.fetchOffers();
@@ -67,6 +45,7 @@ class SubscriptionProvider with ChangeNotifier {
         );
       });
     } catch (e) {
+      log("subscriptions fetching error : ${e.toString()}");
       packageList = [];
     } finally {
       isLoading = false;
@@ -88,39 +67,17 @@ class SubscriptionProvider with ChangeNotifier {
     try {
       isBuyBtnLoading = true;
       notifyListeners();
-
-      // PurchaserInfo? info = await Purchases.getPurchaserInfo();
-
-      PurchaserInfo? info=  await SubscriptionHelper.purchasePackage(packageList[offerIndex]);
+      PurchaserInfo? info =
+          await SubscriptionHelper.purchasePackage(packageList[offerIndex]);
       if (info == null) {
-        return;
+        throw "subscription info is calling on null";
       }
-
       String price = packageList[offerIndex].product.priceString;
-      List<String> durationDiscount =
-          packageList[offerIndex].product.description.split(" ");
-      DateTime today = DateTime.now();
-      String firstDate = today.toUtc().toIso8601String();
-
-      String lastDate = DateTime(today.year,
-              today.month + int.parse(durationDiscount[0]), today.day)
-          .toIso8601String();
-      if (info.entitlements.all["all_workout"]?.expirationDate != null) {
-        lastDate =
-            info.entitlements.all["all_workout"]!.expirationDate.toString();
-      }
-
-      SubscriptionHelper.savePurchaseDates(
-          lastDate: lastDate, firstDate: firstDate, price: price);
-
-      await Provider.of<BackupProvider>(context, listen: false)
-          .setProUser(user: user);
-      setSubscriptionDetails();
-
+      await SubscriptionHelper.savePurchaseDates(info: info, price: price);
+      await setSubscriptionDetails();
       showDialog(
           context: context,
           builder: (builder) => SubscriptionSuccessfulDialog());
-      pInfo = info;
     } catch (e) {
       showDialog(
           context: context, builder: (context) => SubscriptionErrorDialog());
@@ -143,57 +100,77 @@ class SubscriptionProvider with ChangeNotifier {
   restoreSubscription({required BuildContext context}) async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      Constants().getToast(
-          "Something went wrong...");
+      _constants.getToast("Something went wrong");
       return;
     }
-
     try {
-
       PurchaserInfo info = await Purchases.getPurchaserInfo();
-      log(info.toString());
-
-      String getPrice(String? identifier) {
-        Package? pack;
-      for(var package in packageList) {
-        log(package.product.identifier + " and " + identifier.toString() );
-
-        if (package.identifier == identifier) {
-
-          return package.product.priceString;
+      if (info.activeSubscriptions.isEmpty) {
+        _constants.getToast("No subscription found!");
+        return;
+      }
+      await fetchOffers();
+      String key = info.activeSubscriptions.first;
+      int start = 0;
+      for (start = 0; start < packageList.length; start++) {
+        if (packageList[start].product.identifier == key) {
+          break;
         }
       }
-        return"";
-      }
 
+      String price = packageList[start].product.priceString;
 
-
-      String lastDate = info.requestDate.toString();
-      String firstDate = info.latestExpirationDate.toString();
-      String price = getPrice(info.activeSubscriptions.first);
-
-      log("Last date : $lastDate, first date : $firstDate, price : $price");
-
-
+      SubscriptionHelper.savePurchaseDates(info: info, price: price);
+      await setSubscriptionDetails();
     } catch (e) {
-      log(e.toString());
-    } finally {}
+      _constants.getToast("Something went wrong");
+    } finally {
+      notifyListeners();
+    }
   }
 
-  setSubscriptionDetails() async {
-    SpHelper _spHelper = SpHelper();
-    SpKey _spKey = SpKey();
-    String? lastDate = await _spHelper.loadString(_spKey.subscriptionLastDate);
-    String? firstDate = await _spHelper.loadString(_spKey.subscriptionFistDate);
-    String? price = await _spHelper.loadString(_spKey.subscriptionPrice);
-    if (lastDate == null || firstDate == null || price == null) {
+  Future<void> setSubscriptionDetails() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      log("user is not logged in");
       return;
     }
-    subscriptionDetail = SubscriptionDetail(
-        price: price,
-        lastDate: DateTime.parse(lastDate),
-        firstDate: DateTime.parse(firstDate));
-    notifyListeners();
+    try {
+      await SubscriptionHelper.init();
+
+      PurchaserInfo info = await Purchases.getPurchaserInfo();
+      if (info.activeSubscriptions.isNotEmpty) {
+        isProUser = true;
+      }
+      log("premium user : $isProUser");
+      SpHelper _spHelper = SpHelper();
+      SpKey _spKey = SpKey();
+      String? lastDate =
+          await _spHelper.loadString(_spKey.subscriptionLastDate);
+      String? firstDate =
+          await _spHelper.loadString(_spKey.subscriptionFistDate);
+      String? price = await _spHelper.loadString(_spKey.subscriptionPrice);
+      String? identifier =
+          await _spHelper.loadString(_spKey.subscriptionIdentifier);
+
+      if (lastDate == null ||
+          firstDate == null ||
+          price == null ||
+          identifier == null) {
+        log("no subscription found");
+        return;
+      }
+      log("identifier: $identifier, price: $price, last date: $lastDate, first date: $firstDate");
+      subscriptionDetail = SubscriptionDetail(
+          identifier: identifier,
+          price: price,
+          lastDate: DateTime.parse(lastDate),
+          firstDate: DateTime.parse(firstDate));
+    } catch (e) {
+      log("error : ${e.toString()}");
+    } finally {
+      notifyListeners();
+    }
   }
 
   checkConnection({required BuildContext context}) async {

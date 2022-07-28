@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'login_page/login_page.dart';
-import 'login_page/login_page_new.dart';
 import 'main_page.dart';
 
 class SplashPage extends StatefulWidget {

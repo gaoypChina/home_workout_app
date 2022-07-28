@@ -16,7 +16,7 @@ class HeightPicker extends StatefulWidget {
 class _HeightPickerState extends State<HeightPicker> {
   int unit = 0;
   int cmValue = 160;
-  int inchValue = 0;
+  int inchValue = 5;
   int feetValue = 5;
 
   @override
@@ -100,7 +100,7 @@ class _HeightPickerState extends State<HeightPicker> {
                     itemHeight: 50,
                     value: unit == 0 ? cmValue : feetValue,
                     step: 1,
-                    minValue: 1,
+                    minValue:unit ==0 ? 30 : 1,
                     maxValue: unit == 0 ? 250 : 10,
                     decoration: BoxDecoration(color: Colors.blue.withOpacity(.2)),
                     selectedTextStyle: TextStyle(

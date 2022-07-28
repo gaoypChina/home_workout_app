@@ -12,8 +12,8 @@ class WeightPicker extends StatefulWidget {
 
 class _WeightPickerState extends State<WeightPicker> {
   int unit = 0;
-  int unitKgValue = 75;
-  int unitLbsValue = 180;
+  int unitKgValue = 60;
+  int unitLbsValue = 140;
   int decimalValue = 5;
 
   @override
@@ -96,7 +96,7 @@ class _WeightPickerState extends State<WeightPicker> {
                     itemHeight: 50,
                     value: unit == 0 ? unitKgValue : unitLbsValue,
                     step: 1,
-                    minValue: 1,
+                    minValue: 25,
                     maxValue: unit == 0 ? 300 : 650,
                     decoration: BoxDecoration(color: Colors.blue.withOpacity(.2)),
                     selectedTextStyle: TextStyle(
@@ -125,12 +125,13 @@ class _WeightPickerState extends State<WeightPicker> {
                     ),
                   ),
                   NumberPicker(
+                    infiniteLoop: true,
                     itemHeight: 50,
                     value: decimalValue,
                     decoration: BoxDecoration(color: Colors.blue.withOpacity(.2)),
                     step: 1,
                     minValue: 0,
-                    maxValue: 10,
+                    maxValue: 9,
                     selectedTextStyle: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 18,

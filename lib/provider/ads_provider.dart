@@ -12,9 +12,10 @@ import '../helper/ad_helper.dart';
 const int maxFailedLoadAttempts = 3;
 
 class AdsProvider with ChangeNotifier {
-  BannerAd? bottomBannerAd;
+
   InterstitialAd? interstitialAd;
   RewardedAd? rewardedAd;
+  BannerAd? bottomBannerAd;
   BannerAd? bannerMediumAd;
 
   int _interstitialLoadAttempts = 0;
@@ -27,7 +28,7 @@ class AdsProvider with ChangeNotifier {
   void createBottomBannerAd() {
     bottomBannerAd = BannerAd(
         adUnitId: AdIdHelper.bannerAdUnitId,
-        size: AdSize.fullBanner,
+        size: AdSize.banner,
         request: AdRequest(),
         listener: BannerAdListener(
           onAdLoaded: (_) {

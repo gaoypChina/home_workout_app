@@ -76,16 +76,17 @@ var darkTheme = ThemeData(
     dialogBackgroundColor: darkSecondaryColor,
 
     dividerTheme: DividerThemeData(color: darkSecondaryColor),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color:darkPrimaryColor)),
-      contentPadding: EdgeInsets.symmetric(horizontal: 16),
-      focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: darkPrimaryColor)),
-    ));
+    // inputDecorationTheme: InputDecorationTheme(
+    //   filled: true,
+    //   enabledBorder: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(8),
+    //       borderSide: BorderSide(color:darkPrimaryColor)),
+    //   contentPadding: EdgeInsets.symmetric(horizontal: 16),
+    //   focusedBorder: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(8),
+    //       borderSide: BorderSide(color: darkPrimaryColor)),
+    // )
+);
 
 var lightTextTheme = TextTheme(
   headline1: GoogleFonts.openSans(

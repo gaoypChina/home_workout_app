@@ -37,7 +37,7 @@ class _HeightWeightDetailsState extends State<HeightWeightDetails> {
             SizedBox(
               height: 18,
             ),
-            DetailPageCustomWidget.buildTitle(title: "Select measurement unit"),
+            DetailPageCustomWidget.buildTitle(title: "Select measurement unit",context: context),
             UnitSelector(),
             SizedBox(
               height: 16,
@@ -101,8 +101,8 @@ class UnitSelector extends StatelessWidget {
           height: 45,
          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
           decoration: BoxDecoration(
-            border: Border.all(color:Colors.black.withOpacity(.1),width: 1.5),
-              color: isSelected ? Colors.blueGrey: Theme.of(context).cardColor,
+            border: Border.all(color:DetailPageCustomWidget.borderColor,width: 1),
+              color: isSelected ? Theme.of(context).primaryColor: DetailPageCustomWidget.tileColor,
               borderRadius: radius,
             ),
           child: Center(
@@ -110,7 +110,7 @@ class UnitSelector extends StatelessWidget {
               title,
               style: TextStyle(
                   color:
-                      isSelected ? Colors.white :Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
+                      isSelected ? Colors.white :Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7),
                   fontSize: 15,
                   fontWeight: FontWeight.w500),
             ),

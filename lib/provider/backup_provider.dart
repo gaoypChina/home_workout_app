@@ -3,20 +3,14 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:full_workout/constants/constant.dart';
 import 'package:full_workout/helper/backup_helper.dart';
 import 'package:full_workout/helper/recent_workout_db_helper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/helper/weight_db_helper.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../enums/app_conection_status.dart';
-import '../widgets/dialogs/delete_account_fail_dialog.dart';
-import '../widgets/loading_indicator.dart';
 
 class BackupProvider extends ChangeNotifier {
   BackupHelper _dbHelper = BackupHelper();
@@ -25,35 +19,41 @@ class BackupProvider extends ChangeNotifier {
   RecentDatabaseHelper _recentDatabaseHelper = RecentDatabaseHelper();
   WeightDatabaseHelper _weightDatabaseHelper = WeightDatabaseHelper();
   AppConnectionStatus connectionStatus = AppConnectionStatus.none;
+  Constants _constants = Constants();
 
-
-
-  syncData({required User? user, required BuildContext context, required bool isLoginPage}) async {
+  syncData(
+      {required BuildContext context,
+      required bool isLoginPage,required bool showMsg}) async {
     try {
-      if (user == null) return;
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user == null) {
+        throw "user not found";
+      }
       connectionStatus = AppConnectionStatus.loading;
       notifyListeners();
-
-     // await Future.delayed(Duration(seconds: 10));
-
       await _getUser(user: user);
       await _setUser(user: user);
-      await getProUser(user: user);
-      await setProUser(user: user);
+      await _getProUser(user: user);
+      await _setProUser(user: user);
       await _getUserActivity(uid: user.uid);
       await _setUserActivity(uid: user.uid);
       await _spHelper.saveString(
           _spKey.backupTime, DateTime.now().toIso8601String());
-
-      Constants().getToast("Data Backup Successfully");
+      if (showMsg) _constants.getToast("Data Backup Successfully");
     } catch (e) {
       dev.log("syncing error : " + e.toString());
-      Constants()
-          .getToast("something went wrong.");
+      if (showMsg) _constants.getToast("something went wrong");
     } finally {
       connectionStatus = AppConnectionStatus.success;
       notifyListeners();
     }
+  }
+
+  saveData({required User user}) async {
+    await _setUser(user: user);
+    await _setProUser(user: user);
+    await _setUserActivity(uid: user.uid);
   }
 
   _getUser({required User user}) async {
@@ -61,22 +61,29 @@ class BackupProvider extends ChangeNotifier {
     Map<String, dynamic>? _userData = _snapshot.data() as Map<String, dynamic>?;
     if (_userData == null) return;
 
-    if (_userData["name"] != null)
+    String? name = await _spHelper.loadString(_spKey.name);
+    String? dob = await _spHelper.loadString(_spKey.date);
+    int? gender = await _spHelper.loadInt(_spKey.gender);
+    double? height = await _spHelper.loadDouble(_spKey.height);
+    double? weight = await _spHelper.loadDouble(_spKey.weight);
+    int? unit = await _spHelper.loadInt(_spKey.unit);
+
+    if (_userData["name"] != null && name == null)
       await _spHelper.saveString(_spKey.name, _userData["name"]);
 
-    if (_userData["dob"] != null)
+    if (_userData["dob"] != null && dob == null)
       await _spHelper.saveString(_spKey.date, _userData["dob"]);
 
-    if (_userData["gender"] != null)
+    if (_userData["gender"] != null && gender == null)
       await _spHelper.saveInt(_spKey.gender, _userData["gender"]);
 
-    if (_userData["height"] != null)
+    if (_userData["height"] != null && height == null)
       await _spHelper.saveDouble(_spKey.height, _userData["height"]);
 
-    if (_userData["weight"] != null)
+    if (_userData["weight"] != null && weight == null)
       await _spHelper.saveDouble(_spKey.weight, _userData["weight"]);
 
-    if (_userData["unit"] != null)
+    if (_userData["unit"] != null && unit == null)
       await _spHelper.saveInt(_spKey.unit, _userData["unit"]);
   }
 
@@ -100,7 +107,7 @@ class BackupProvider extends ChangeNotifier {
         email: email);
   }
 
-  getProUser({required User user}) async {
+  _getProUser({required User user}) async {
     var _snapshot = await _dbHelper.getProUser(uid: user.uid);
     Map<String, dynamic>? _proUserData =
         _snapshot.data() as Map<String, dynamic>?;
@@ -115,7 +122,7 @@ class BackupProvider extends ChangeNotifier {
           _spKey.subscriptionLastDate, _proUserData["last_date"]);
   }
 
-  setProUser({required User user}) async {
+  _setProUser({required User user}) async {
     String? firstDate = await _spHelper.loadString(_spKey.subscriptionFistDate);
     String? lastDate = await _spHelper.loadString(_spKey.subscriptionLastDate);
     String? price = await _spHelper.loadString(_spKey.subscriptionPrice);
@@ -223,8 +230,6 @@ class BackupProvider extends ChangeNotifier {
 
   Future<Map<String, dynamic>> _getUserWorkoutData() async {
     int? fullBody = await _spHelper.loadInt(_spKey.fullBodyChallenge);
-    dev.log(fullBody.toString());
-
     int? abs = await _spHelper.loadInt(_spKey.absChallenge);
     int? chest = await _spHelper.loadInt(_spKey.chestChallenge);
     int? arms = await _spHelper.loadInt(_spKey.armChallenge);

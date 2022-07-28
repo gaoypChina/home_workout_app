@@ -36,10 +36,14 @@ class SubscriptionHelper {
   }
 
   static Future savePurchaseDates(
-      {required String firstDate, required String lastDate, required String price}) async {
+      {required PurchaserInfo info, String? price}) async {
+    String identifier = info.activeSubscriptions.first;
+    String firstDate = info.allPurchaseDates[identifier]!;
+    String lastDate = info.allExpirationDates[identifier]!;
+
+    await _spHelper.saveString(_spKey.subscriptionIdentifier, identifier);
     await _spHelper.saveString(_spKey.subscriptionFistDate, firstDate);
     await _spHelper.saveString(_spKey.subscriptionLastDate, lastDate);
-    await _spHelper.saveString(_spKey.subscriptionPrice, price);
-
+    await _spHelper.saveString(_spKey.subscriptionPrice, price ?? "0");
   }
 }

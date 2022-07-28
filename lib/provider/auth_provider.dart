@@ -7,6 +7,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
 import 'package:full_workout/provider/backup_provider.dart';
+import 'package:full_workout/provider/subscription_provider.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,15 +31,19 @@ class AuthProvider with ChangeNotifier {
   bool dataSyncing = false;
   bool authLoading = false;
 
-  gotoMainPage({required BuildContext context}) async {
+  navigateToNextPage({required BuildContext context}) async {
     try {
-      var authProvider = Provider.of<AuthProvider>(context, listen: false);
-
+      var subscriptionProvider =
+          Provider.of<SubscriptionProvider>(context, listen: false);
+      await subscriptionProvider.setSubscriptionDetails();
       var user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        bool userExist =
-            await authProvider.isUserExist(context: context, user: user);
+        bool userExist = await isUserExist(context: context, user: user);
         if (userExist) {
+          // sync data
+          var backupProvider =
+              Provider.of<BackupProvider>(context, listen: false);
+          await backupProvider.syncData(context: context, isLoginPage: true,showMsg: false);
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
             return MainPage(index: 0);
           }));
@@ -62,13 +67,15 @@ class AuthProvider with ChangeNotifier {
         throw ("google login error : google user is null");
       }
       final googleAuth = await googleUser.authentication;
+
       final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
       await FirebaseAuth.instance.signInWithCredential(credential);
-      await gotoMainPage(context: context);
+      await navigateToNextPage(context: context);
       await SpHelper().saveBool(SpKey().authByGoogle, true);
       _constants.getToast("User Login Successfully");
     } catch (e) {
+      log("error while login with google: $e");
       _constants.getToast("Something went wrong");
     } finally {
       connectionStatus = AppConnectionStatus.success;
@@ -83,12 +90,11 @@ class AuthProvider with ChangeNotifier {
     connectionStatus = AppConnectionStatus.loading;
     notifyListeners();
     try {
-      await FirebaseAuth.instance
+      FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      await gotoMainPage(context: context);
+      await navigateToNextPage(context: context);
       await SpHelper().saveBool(SpKey().authByGoogle, false);
       _constants.getToast("User Login Successfully");
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         _constants.getToast('No user found for that email.');
@@ -115,7 +121,7 @@ class AuthProvider with ChangeNotifier {
         email: email,
         password: password,
       );
-      await gotoMainPage(context: context);
+      await navigateToNextPage(context: context);
       await SpHelper().saveBool(SpKey().authByGoogle, false);
       _constants.getToast("User Login Successfully");
     } on FirebaseAuthException catch (e) {
@@ -154,21 +160,19 @@ class AuthProvider with ChangeNotifier {
       {required BuildContext context, required User user}) async {
     try {
       var _snapshot = await _dbHelper.getUser(uid: user.uid);
-
       Map<String, dynamic>? _userData =
           _snapshot.data() as Map<String, dynamic>?;
-      if (_userData == null) return false;
-
+      if (_userData == null) {
+        return false;
+      }
       if (_userData["name"] == null ||
           _userData["dob"] == null ||
           _userData["gender"] == null ||
           _userData["height"] == null ||
           _userData["weight"] == null) {
+        log(_userData.toString());
         return false;
       } else {
-        var backupProvider =
-            Provider.of<BackupProvider>(context, listen: false);
-        await backupProvider.syncData(user: user, context: context,isLoginPage: true);
         return true;
       }
     } catch (e) {
@@ -202,57 +206,83 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future logout({required BuildContext context}) async {
+    authLoading = true;
+    notifyListeners();
     try {
-      authLoading = true;
-      notifyListeners();
-      bool isAuthByGoogle = await SpHelper().loadBool(SpKey().authByGoogle)??false;
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        throw "user not found";
+      }
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      RecentDatabaseHelper recentDatabaseHelper = RecentDatabaseHelper();
+      WeightDatabaseHelper weightDatabaseHelper = WeightDatabaseHelper();
 
+      // sync user data
+      var backupProvider = Provider.of<BackupProvider>(context, listen: false);
+      await backupProvider.saveData(user: user);
+
+      // logout user
+      bool isAuthByGoogle =
+          await SpHelper().loadBool(SpKey().authByGoogle) ?? false;
       FirebaseAuth.instance.signOut();
-      if(isAuthByGoogle){
+
+      if (isAuthByGoogle) {
         await googleSignIn.disconnect();
       }
-      Phoenix.rebirth(context);
-      Constants().getToast("User Logout Successfully");
 
+      // delete user local data
+      await recentDatabaseHelper.deleteDataBase();
+      await weightDatabaseHelper.deleteDataBase();
+      await preferences.clear();
+
+      _constants.getToast("User Logout Successfully");
+      Phoenix.rebirth(context);
     } catch (e) {
-      Constants().getToast("Something went wrong");
+      _constants.getToast("Something went wrong");
+      log("error : ${e.toString()}");
     } finally {
       authLoading = false;
-      Navigator.of(context).pop();
-
       notifyListeners();
     }
   }
 
   Future deleteAccount({required BuildContext context}) async {
+    authLoading = true;
+    notifyListeners();
     try {
-      connectionStatus = AppConnectionStatus.loading;
-      notifyListeners();
-
       User? user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        throw "user not found";
+      }
       SharedPreferences preferences = await SharedPreferences.getInstance();
       RecentDatabaseHelper recentDatabaseHelper = RecentDatabaseHelper();
       WeightDatabaseHelper weightDatabaseHelper = WeightDatabaseHelper();
 
-      if (user != null) {
-        await _dbHelper.deleteFirebaseDataBase(uid: user.uid);
-        bool isAuthByGoogle = await SpHelper().loadBool(SpKey().authByGoogle)??false;
-        if(isAuthByGoogle){
-          await googleSignIn.disconnect();
-        }
-        FirebaseAuth.instance.signOut();
+      // sync user data
+      var backupProvider = Provider.of<BackupProvider>(context, listen: false);
+      await backupProvider.saveData(user: user);
+
+      // logout user
+      await _dbHelper.deleteFirebaseDataBase(uid: user.uid);
+      bool isAuthByGoogle =
+          await SpHelper().loadBool(SpKey().authByGoogle) ?? false;
+      FirebaseAuth.instance.signOut();
+      if (isAuthByGoogle) {
+        await googleSignIn.disconnect();
       }
+
+      // delete user local data
       await recentDatabaseHelper.deleteDataBase();
       await weightDatabaseHelper.deleteDataBase();
       await preferences.clear();
+      _constants.getToast("User Data Deleted Successfully");
       Phoenix.rebirth(context);
     } catch (e) {
-      Navigator.of(context).pop();
       showDialog(
           context: context, builder: (builder) => DeleteAccountFailDialog());
-      dev.log(e.toString() + "error");
+      log("error : ${e.toString()}");
     } finally {
-      connectionStatus = AppConnectionStatus.success;
+      authLoading = false;
       notifyListeners();
     }
   }

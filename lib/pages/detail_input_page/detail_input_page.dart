@@ -84,7 +84,7 @@ class _DetailInputPageState extends State<DetailInputPage> {
           children: [
             Scaffold(
               appBar: AppBar(
-                elevation: 2,
+                elevation: 0,
                 backgroundColor: Theme.of(context).primaryColor,
                 automaticallyImplyLeading: currentStep != 0,
                 leading: currentStep == 0
@@ -128,7 +128,6 @@ class _DetailInputPageState extends State<DetailInputPage> {
                 ),
               ),
             ),
-            if (provider.isLoading) CustomLoadingIndicator()
           ],
         );
       }),

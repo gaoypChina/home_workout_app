@@ -1,12 +1,14 @@
+import 'dart:developer';
+
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/enums/app_conection_status.dart';
 import 'package:full_workout/helper/mediaHelper.dart';
 import 'package:full_workout/helper/sp_helper.dart';
 import 'package:full_workout/helper/sp_key_helper.dart';
+import 'package:full_workout/pages/main/setting_page/contact_us_page/contact_us_page.dart';
 import 'package:full_workout/pages/main/setting_page/faq_page.dart';
 import 'package:full_workout/pages/main/setting_page/feedback_page.dart';
 import 'package:full_workout/pages/main/setting_page/privacy_policy.dart';
@@ -18,14 +20,15 @@ import 'package:full_workout/pages/main/setting_page/theme_setting_page.dart';
 import 'package:full_workout/pages/main/setting_page/training_settings_screen.dart';
 import 'package:full_workout/pages/main/setting_page/voice_option_setting.dart';
 import 'package:full_workout/pages/subscription_page/subscription_page.dart';
+import 'package:full_workout/provider/auth_provider.dart';
 import 'package:full_workout/provider/backup_provider.dart';
 import 'package:full_workout/provider/connectivity_provider.dart';
-import 'package:full_workout/provider/subscription_provider.dart';
 import 'package:full_workout/widgets/loading_indicator.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../provider/subscription_provider.dart';
 import '../../../widgets/dialogs/connectivity_error_dialog.dart';
 import '../../rate_my_app/rate_dialog_page.dart';
 import '../../rate_my_app/rate_my_app.dart';
@@ -44,7 +47,29 @@ class SettingPage extends StatefulWidget {
   _SettingPageState createState() => _SettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _SettingPageState extends State<SettingPage>
+    with SingleTickerProviderStateMixin {
+  late ScrollController _scrollController;
+  bool lastStatus = true;
+
+  _scrollListener() {
+    if (isShrink != lastStatus) {
+      setState(() {
+        lastStatus = isShrink;
+      });
+    }
+  }
+
+  bool get isShrink {
+    return _scrollController.hasClients &&
+        _scrollController.offset > (200 - kToolbarHeight);
+  }
+
+  bool get isbouncing {
+    return _scrollController.hasClients &&
+        _scrollController.offset > (250 - kToolbarHeight);
+  }
+
   SpHelper spHelper = SpHelper();
   SpKey spKey = SpKey();
   Constants constants = Constants();
@@ -52,31 +77,28 @@ class _SettingPageState extends State<SettingPage> {
   double countdownTime = 10;
   bool enable = true;
   bool isLoading = true;
-
-  getScreenEnable() async {
-    enable = await spHelper.loadBool(spKey.awakeScreen) ?? true;
-    setState(() {});
-  }
-
-  loadRestTime() async {
-    await spHelper.loadDouble(spKey.trainingRest).then((value) {
-      setState(() {
-        trainingRest = (value == null) ? 30.0 : value;
-      });
-    });
-    await spHelper.loadDouble(spKey.countdownTime).then((value) {
-      setState(() {
-        countdownTime = (value == null) ? 10.0 : value;
-      });
-    });
-  }
+  String name = "User";
+  late String lastSync = DateTime.now().toIso8601String();
 
   loadData() async {
+    enable = await spHelper.loadBool(spKey.awakeScreen) ?? true;
+    trainingRest = await spHelper.loadDouble(spKey.trainingRest) ?? 30;
+    countdownTime = await spHelper.loadDouble(spKey.countdownTime) ?? 10;
+    name = await spHelper.loadString(spKey.name) ?? "User";
+    lastSync = await spHelper.loadString(spKey.backupTime) ??
+        DateTime.now().toIso8601String();
+    log(lastSync.toString() + " last sync");
+  }
+
+  initData() async {
     setState(() {
       isLoading = true;
     });
-    loadRestTime();
-    getScreenEnable();
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+    spHelper.saveInt(spKey.initPage, 0);
+
+    await loadData();
     setState(() {
       isLoading = false;
     });
@@ -84,9 +106,8 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   void initState() {
-    spHelper.saveInt(spKey.initPage, 0);
-    loadData();
     super.initState();
+    initData();
   }
 
   @override
@@ -96,10 +117,12 @@ class _SettingPageState extends State<SettingPage> {
     var connectivityProvider =
         Provider.of<ConnectivityProvider>(context, listen: false);
     bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    double height = MediaQuery.of(context).size.height;
 
     Icon trailingIcon = Icon(
       Icons.arrow_forward_ios,
-      size: 15,
+      size: 16,
+      color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
     );
 
     buildPrimeButton() {
@@ -131,142 +154,195 @@ class _SettingPageState extends State<SettingPage> {
     getTitle(String text) {
       return Container(
           width: double.infinity,
-          padding: const EdgeInsets.only(left: 10.0, top: 20, bottom: 10),
+          padding: const EdgeInsets.only(left: 16.0, top: 20, bottom: 16),
           child: Text(
             text.toUpperCase(),
             style: TextStyle(
                 wordSpacing: 4,
                 fontWeight: FontWeight.w600,
-                fontSize: 13,
-                color: isDark?Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8):null),
+                fontSize: 13.5,
+                color: isDark ? null : Colors.black.withOpacity(.7)),
           ));
     }
 
     getDivider() {
       return Container(
-        color: Colors.blueGrey.shade500.withOpacity(.1),
+        color: Colors.grey.shade500.withOpacity(.15),
         height: .5,
       );
     }
 
     Color cardColor = Theme.of(context).scaffoldBackgroundColor;
 
-    return Consumer<BackupProvider>(builder: (context, backupProvider, _) {
-      return Stack(
-        children: [
-          WillPopScope(
-            onWillPop: () => widget.onBack(),
-            child: Scaffold(
-              backgroundColor: isDark
-                  ? Theme.of(context).appBarTheme.backgroundColor
-                  : Colors.blueGrey.shade300.withOpacity(.1),
-              appBar: AppBar(
-                //  backgroundColor:Theme.of(context).cardColor,
-                elevation: .5,
-                automaticallyImplyLeading: false,
-                centerTitle: true,
-                title: Text("Profile"),
-              ),
-              body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BackupDataCard(),
-                    getTitle("Workout"),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 0),
-                      child: Container(
-                        color: cardColor,
-                        child: Column(
-                          children: [
-                            CustomTile(
-                              icon: Icons.person_outline_sharp,
-                              title: "Edit Profile",
-                              trailing: trailingIcon,
-                              onPress: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (builder) =>
-                                          ProfileSettingPage())),
+    return isLoading
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Consumer<BackupProvider>(builder: (context, backupProvider, _) {
+            return WillPopScope(
+                onWillPop: () => widget.onBack(),
+                child: Scaffold(
+                  backgroundColor: isDark
+                      ? Theme.of(context).cardColor.withOpacity(.6)
+                      : Colors.blueGrey.shade300.withOpacity(.1),
+                  body: NestedScrollView(
+                    controller: _scrollController,
+                    headerSliverBuilder:
+                        (BuildContext context, bool innerBoxIsScrolled) {
+                      return <Widget>[
+                        SliverAppBar(
+                          automaticallyImplyLeading: false,
+                          title: Text(
+                            isShrink ? name : "",
+                            style: TextStyle(
+                              color: isDark
+                                  ? Colors.white
+                                  : isShrink
+                                      ? Colors.black
+                                      : Colors.white,
                             ),
-                            getDivider(),
-                            CustomTile(
-                              title: "Training Rest",
-                              icon: CupertinoIcons.time,
-                              onPress: () async {
-                                int? num = await showMaterialModalBottomSheet(
+                          ),
+                          elevation: .5,
+                          centerTitle: false,
+                          expandedHeight: height * .16,
+                          collapsedHeight: 60,
+                          pinned: true,
+                          floating: false,
+                          forceElevated: innerBoxIsScrolled,
+                          flexibleSpace: FlexibleSpaceBar(
+                              background: BackupDataCard(
+                            lastSync: lastSync,
+                            name: name,
+                            onSync: () async {
+                              bool isConnected =
+                                  await connectivityProvider.isNetworkConnected;
 
+                              if (!isConnected) {
+                                showDialog(
+                                    context: context,
+                                    builder: (builder) =>
+                                        ConnectivityErrorDialog());
+                                return;
+                              }
+
+                              showDialog(
+                                  context: context,
+                                  builder: (builder) {
+                                    return CustomLoadingIndicator(
+                                      msg: "Syncing",
+                                    );
+                                  });
+
+                              await backupProvider.syncData(
+                                  context: context, isLoginPage: false,showMsg: true);
+                              initData();
+
+                              Navigator.of(context).pop();
+                            },
+                          )),
+                        ),
+                      ];
+                    },
+                    body: SingleChildScrollView(
+                      physics: isShrink ? BouncingScrollPhysics() : null,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          getTitle("Workout"),
+                          Container(
+                            color: cardColor,
+                            child: Column(
+                              children: [
+                                getDivider(),
+                                CustomTile(
+                                  icon: Icons.person_outline_sharp,
+                                  title: "Edit Profile",
+                                  trailing: trailingIcon,
+                                  onPress: () => Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (builder) =>
+                                              ProfileSettingPage())),
+                                ),
+                                getDivider(),
+                                CustomTile(
+                                  title: "Training Rest",
+                                  icon: CupertinoIcons.time,
+                                  onPress: () async {
+                                    int? num =
+                                        await showMaterialModalBottomSheet(
+                                      context: context,
+                                      builder: (context) {
+                                        return WorkoutTimePicker(
+                                          value: trainingRest.toInt(),
+                                          maximumVal: 180,
+                                          minimumVal: 5,
+                                        );
+                                      },
+                                    );
+
+                                    if (num != null) {
+                                      await spHelper.saveDouble(
+                                          spKey.trainingRest, num.toDouble());
+                                      setState(() {
+                                        trainingRest = num.toDouble();
+                                      });
+                                    }
+                                  },
+                            trailing: isLoading
+                                ? CircularProgressIndicator()
+                                : Text(
+                              trainingRest.toStringAsFixed(0) + " Sec",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          getDivider(),
+                          CustomTile(
+                            icon: Icons.timer_outlined,
+                            title: "Countdown time",
+                            onPress: () async {
+                              int? num = await showMaterialModalBottomSheet(
                                   context: context,
                                   builder: (context) {
                                     return WorkoutTimePicker(
-                                      value: trainingRest.toInt(),
-                                      maximumVal: 180,
-                                      minimumVal: 5,
-                                    );
+                                                value: countdownTime.toInt(),
+                                                minimumVal: 10,
+                                                maximumVal: 15,
+                                              );
+                                            });
+                                    if (num != null) {
+                                      await spHelper.saveDouble(
+                                          spKey.countdownTime, num.toDouble());
+                                      setState(() {
+                                        countdownTime = num.toDouble();
+                                      });
+                                    }
                                   },
-                                );
-
-                                if (num != null) {
-                                  await spHelper.saveDouble(
-                                      spKey.trainingRest, num.toDouble());
-                                  setState(() {
-                                    trainingRest = num.toDouble();
-                                  });
-                                }
-                              },
-                              trailing: isLoading
-                                  ? CircularProgressIndicator()
-                                  : Text(
-                                      trainingRest.toStringAsFixed(0) + " Sec",
-                                      style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontWeight: FontWeight.w600),
-                                    ),
+                                  trailing: isLoading
+                                      ? CircularProgressIndicator()
+                                      : Text(
+                                          countdownTime.toStringAsFixed(0) +
+                                              " Sec",
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                ),
+                                getDivider(),
+                                CustomTile(
+                                  title: "Sound",
+                                  trailing: trailingIcon,
+                                  icon: Icons.volume_up_outlined,
+                                  onPress: () => Navigator.of(context)
+                                      .pushNamed(SoundSetting.routeName),
+                                ),
+                                getDivider(),
+                              ],
                             ),
-                            getDivider(),
-                            CustomTile(
-                              icon: Icons.timer_outlined,
-                              title: "Countdown time",
-                              onPress: () async {
-                                int? num = await showMaterialModalBottomSheet(
-                                    context: context,
-                                    builder: (context) {
-                                      return WorkoutTimePicker(
-                                        value: countdownTime.toInt(),
-                                        minimumVal: 10,
-                                        maximumVal: 15,
-                                      );
-                                    });
-                                if (num != null) {
-                                  await spHelper.saveDouble(
-                                      spKey.countdownTime, num.toDouble());
-                                  setState(() {
-                                    countdownTime = num.toDouble();
-                                  });
-                                }
-                              },
-                              trailing: isLoading
-                                  ? CircularProgressIndicator()
-                                  : Text(
-                                      countdownTime.toStringAsFixed(0) + " Sec",
-                                      style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                            ),
-                            getDivider(),
-                            CustomTile(
-                              title: "Sound",
-                              trailing: trailingIcon,
-                              icon: Icons.volume_up_outlined,
-                              onPress: () => Navigator.of(context)
-                                  .pushNamed(SoundSetting.routeName),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                          ),
                     if (!subscriptionProvider.isProUser) buildPrimeButton(),
                     getTitle("General Settings"),
                     Container(
@@ -275,36 +351,48 @@ class _SettingPageState extends State<SettingPage> {
                         color: cardColor,
                         child: Column(
                           children: [
-                            isLoading
-                                ? CustomTile(
-                                    title: "Keep screen",
-                                    icon: Icons.toggle_off_outlined,
-                                    trailing: CircularProgressIndicator(),
-                                    onPress: () {},
-                                  )
-                                : SwitchListTile(
-                                    contentPadding:
-                                        EdgeInsets.only(left: 12, right: 2),
-                                    value: enable,
-                                    activeColor: Theme.of(context).primaryColor,
-                                    onChanged: (value) {
-                                      spHelper.saveBool(
-                                          spKey.awakeScreen, value);
-                                      spHelper.saveInt(spKey.initPage, 4);
-                                      setState(() {
-                                        enable = value;
-                                      });
-                                    },
-                                    secondary: Icon(
-                                      Icons.toggle_off_outlined,
-                                      color: Theme.of(context).iconTheme.color,
-                                    ),
-                                    title: Text(
-                                      "Keep screen ${enable ? "On" : "Off"}",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                  ),
+                                  getDivider(),
+                                  isLoading
+                                      ? CustomTile(
+                                          title: "Keep screen",
+                                          icon: Icons.toggle_off_outlined,
+                                          trailing: CircularProgressIndicator(),
+                                          onPress: () {},
+                                        )
+                                      : SwitchListTile(
+                                          contentPadding: EdgeInsets.only(
+                                              left: 18, right: 2),
+                                          value: enable,
+                                          activeColor:
+                                              Theme.of(context).primaryColor,
+                                          onChanged: (value) {
+                                            spHelper.saveBool(
+                                                spKey.awakeScreen, value);
+                                            spHelper.saveInt(spKey.initPage, 4);
+                                            setState(() {
+                                              enable = value;
+                                            });
+                                          },
+                                          secondary: Icon(
+                                            Icons.toggle_on_outlined,
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1!
+                                                .color!
+                                                .withOpacity(isDark ? .8 : .6),
+                                          ),
+                                          title: Text(
+                                            "Keep screen ${enable ? "On" : "Off"}",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1!
+                                                  .color!
+                                                  .withOpacity(.8),
+                                            ),
+                                          ),
+                                        ),
                             getDivider(),
                             CustomTile(
                                 icon: Icons.lightbulb_outline,
@@ -349,29 +437,14 @@ class _SettingPageState extends State<SettingPage> {
                                       builder: (builder) {
                                         return isConnected
                                             ? ResetProgressDialog(
-                                                title: "Rest Progress",
-                                                subtitle:
-                                                    "After resetting process, all workout plan will restart from day 1 ",
-                                              )
+                                          title: "Rest Progress",
+                                          subtitle:
+                                          "After resetting process, all workout plan will restart from day 1 ",
+                                        )
                                             : ConnectivityErrorDialog();
                                       });
                                 }),
                             getDivider(),
-                            CustomTile(
-                                icon: Icons.delete_outlined,
-                                title: "Delete Account",
-                                trailing: trailingIcon,
-                                onPress: () async {
-                                  bool isConnected = await connectivityProvider
-                                      .isNetworkConnected;
-
-                                  return isConnected
-                                      ? showDialog(
-                                          context: context,
-                                          builder: (builder) =>
-                                              DeleteAccountDialog())
-                                      : ConnectivityErrorDialog();
-                                })
                           ],
                         ),
                       ),
@@ -383,46 +456,49 @@ class _SettingPageState extends State<SettingPage> {
                         color: cardColor,
                         child: Column(
                           children: [
-                            CustomTile(
-                              title: "Test Voice",
-                              icon: Icons.volume_up_outlined,
-                              trailing: trailingIcon,
-                              onPress: () async {
-                                MediaHelper()
-                                    .speak("Did you Hear the test voice");
-                                bool? value = await showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return ConfirmVoiceDialog();
-                                    });
-                                if (value == false) {
-                                  await showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return OpenDeviceTTSSettingsDialog();
-                                      });
-                                }
-                              },
-                            ),
-                            getDivider(),
-                            CustomTile(
-                              title: "Device TTS Setting",
-                              icon: Icons.settings_outlined,
-                              trailing: trailingIcon,
-                              onPress: () async {
-                                try {
-                                  AndroidIntent intent = AndroidIntent(
-                                    action: 'com.android.settings.TTS_SETTINGS',
-                                  );
-                                  await intent.launch();
-                                } catch (e) {
-                                  Constants().getToast(
-                                      "Open TTS setting from device setting");
-                                }
-                              },
-                            ),
-                          ],
-                        ),
+                                  getDivider(),
+                                  CustomTile(
+                                    title: "Test Voice",
+                                    icon: Icons.volume_up_outlined,
+                                    trailing: trailingIcon,
+                                    onPress: () async {
+                                      MediaHelper()
+                                          .speak("Did you Hear the test voice");
+                                      bool? value = await showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return ConfirmVoiceDialog();
+                                          });
+                                      if (value == false) {
+                                        await showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return OpenDeviceTTSSettingsDialog();
+                                            });
+                                      }
+                                    },
+                                  ),
+                                  getDivider(),
+                                  CustomTile(
+                                    title: "Device TTS Setting",
+                                    icon: Icons.settings_outlined,
+                                    trailing: trailingIcon,
+                                    onPress: () async {
+                                      try {
+                                        AndroidIntent intent = AndroidIntent(
+                                          action:
+                                              'com.android.settings.TTS_SETTINGS',
+                                        );
+                                        await intent.launch();
+                                      } catch (e) {
+                                        Constants().getToast(
+                                            "Open TTS setting from device setting");
+                                      }
+                                    },
+                                  ),
+                                  getDivider(),
+                                ],
+                              ),
                       ),
                     ),
                     getTitle("Support Us"),
@@ -433,142 +509,252 @@ class _SettingPageState extends State<SettingPage> {
                         color: cardColor,
                         child: Column(
                           children: [
-                            if (!subscriptionProvider.isProUser)
-                              CustomTile(
-                                icon: FontAwesomeIcons.ad,
-                                title: "Remove Ads",
-                                trailing: trailingIcon,
-                                onPress: () async {
-                                  bool isConnected = await connectivityProvider
-                                      .isNetworkConnected;
-                                  if (isConnected) {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (builder) =>
-                                                SubscriptionPage()));
-                                  } else {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            ConnectivityErrorDialog());
-                                  }
-                                },
-                              ),
-                            if (!subscriptionProvider.isProUser) getDivider(),
-                            CustomTile(
-                              icon: Icons.share_outlined,
-                              title: "Share With Friends",
-                              trailing: trailingIcon,
-                              onPress: () async {
-                                final RenderObject? box =
-                                    context.findRenderObject();
-                                final String text =
-                                    "I\'m training with Home Workout and am getting great results. \n\nHere are workouts for every muscle group to achieve your fitness goal. no equipment is needed. \n\nDownload the app : ${constants.playStoreLink}";
+                                  getDivider(),
+                                  if (!subscriptionProvider.isProUser)
+                                    CustomTile(
+                                      icon: Icons.highlight_remove_outlined,
+                                      title: "Remove Ads",
+                                      trailing: trailingIcon,
+                                      onPress: () async {
+                                        bool isConnected =
+                                            await connectivityProvider
+                                                .isNetworkConnected;
+                                        if (isConnected) {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (builder) =>
+                                                      SubscriptionPage()));
+                                        } else {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  ConnectivityErrorDialog());
+                                        }
+                                      },
+                                    ),
+                                  if (!subscriptionProvider.isProUser)
+                                    getDivider(),
+                                  CustomTile(
+                                    icon: Icons.share_outlined,
+                                    title: "Share With Friends",
+                                    trailing: trailingIcon,
+                                    onPress: () async {
+                                      final RenderObject? box =
+                                          context.findRenderObject();
+                                      final String text =
+                                          "I\'m training with Home Workout and am getting great results. \n\nHere are workouts for every muscle group to achieve your fitness goal. no equipment is needed. \n\nDownload the app : ${constants.playStoreLink}";
 
-                                await Share.share(
-                                  text,
-                                );
-                              },
-                            ),
-                            getDivider(),
-                            RateAppInitWidget(
-                              builder: (rateMyApp) => RateDialogPage(
-                                rateMyApp: rateMyApp,
+                                      await Share.share(
+                                        text,
+                                      );
+                                    },
+                                  ),
+                                  getDivider(),
+                                  RateAppInitWidget(
+                                    builder: (rateMyApp) => RateDialogPage(
+                                      rateMyApp: rateMyApp,
+                                    ),
+                                  ),
+                                  getDivider(),
+                                  CustomTile(
+                                    icon: Icons.chat_outlined,
+                                    title: "Feedback",
+                                    trailing: trailingIcon,
+                                    onPress: () async {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FeedbackPage()));
+                                    },
+                                  ),
+                                  getDivider(),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    getTitle("About us"),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 0),
-                      child: Container(
-                        color: cardColor,
-                        child: Column(
-                          children: [
-                            CustomTile(
-                              icon: Icons.email_outlined,
-                              title: "Feedback",
-                              trailing: trailingIcon,
-                              onPress: () async {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => FeedbackPage()));
-                              },
+                          ),
+
+                          getTitle("About us"),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 0),
+                            child: Container(
+                              color: cardColor,
+                              child: Column(
+                                children: [
+                                  getDivider(),
+                                  CustomTile(
+                                    icon: Icons.email_outlined,
+                                    title: "Contact us",
+                                    trailing: trailingIcon,
+                                    onPress: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ContactUsPage()));
+                                    },
+                                  ),
+                                  getDivider(),
+                                  CustomTile(
+                                    icon: FontAwesomeIcons.questionCircle,
+                                    title: "FAQ",
+                                    onPress: () => Navigator.of(context)
+                                        .pushNamed(FAQPage.routeName),
+                                    trailing: trailingIcon,
+                                  ),
+                                  getDivider(),
+                                  CustomTile(
+                                    icon: Icons.privacy_tip_outlined,
+                                    title: "Privacy Policy",
+                                    trailing: trailingIcon,
+                                    onPress: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PrivacyPolicy())),
+                                  ),
+                                  getDivider(),
+                                ],
+                              ),
                             ),
-                            getDivider(),
-                            CustomTile(
-                              icon: FontAwesomeIcons.questionCircle,
-                              title: "FAQ",
-                              onPress: () => Navigator.of(context)
-                                  .pushNamed(FAQPage.routeName),
-                              trailing: trailingIcon,
+                          ),
+                          getTitle("Account"),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 0),
+                            child: Container(
+                              color: cardColor,
+                              child: Column(
+                                children: [
+                                  getDivider(),
+                                  CustomTile(
+                                    icon: Icons.logout_outlined,
+                                    title: "Logout",
+                                    trailing: trailingIcon,
+                                    onPress: () async {
+                                      bool isConnected =
+                                          await connectivityProvider
+                                              .isNetworkConnected;
+
+                                      if (!isConnected) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (builder) =>
+                                                ConnectivityErrorDialog());
+                                        return;
+                                      }
+
+                                      showDialog(
+                                          context: context,
+                                          builder: (builder) {
+                                            return CustomLoadingIndicator(
+                                              msg: "Loading",
+                                            );
+                                          });
+                                      var authProvider =
+                                          Provider.of<AuthProvider>(context,
+                                              listen: false);
+                                      await authProvider.logout(
+                                          context: context);
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  getDivider(),
+                                  CustomTile(
+                                      icon: Icons.delete_outlined,
+                                      title: "Delete Account",
+                                      trailing: trailingIcon,
+                                      onPress: () async {
+                                        bool isConnected =
+                                            await connectivityProvider
+                                                .isNetworkConnected;
+
+                                        if (!isConnected) {
+                                          showDialog(
+                                              context: context,
+                                              builder: (builder) =>
+                                                  ConnectivityErrorDialog());
+                                          return;
+                                        }
+                                        bool? res = await showDialog(
+                                            context: context,
+                                            builder: (builder) {
+                                              return DeleteAccountDialog();
+                                            });
+
+                                        if (res == null || res == false) {
+                                          return;
+                                        }
+
+                                        showDialog(
+                                            context: context,
+                                            builder: (builder) {
+                                              return CustomLoadingIndicator(
+                                                msg: "Loading",
+                                              );
+                                            });
+                                        var authProvider =
+                                            Provider.of<AuthProvider>(context,
+                                                listen: false);
+                                        await authProvider.deleteAccount(
+                                            context: context);
+                                        Navigator.of(context).pop();
+                                      }),
+                                  getDivider(),
+                                ],
+                              ),
                             ),
-                            getDivider(),
-                            CustomTile(
-                              icon: Icons.privacy_tip_outlined,
-                              title: "Privacy Policy",
-                              trailing: trailingIcon,
-                              onPress: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PrivacyPolicy())),
+                          ),
+                          // SizedBox(
+                          //   height: 40,
+                          // ),
+                          // SocialIcons(),
+                          SizedBox(
+                            height: 30,
+                          ),
+
+                          SizedBox(
+                            height: 40,
+                          ),
+
+                          // Center(
+                          //     child: Text(
+                          //   "Made With ❤ in India".toUpperCase(),
+                          //   style: TextStyle(
+                          //       fontSize: 14,
+                          //       fontWeight: FontWeight.w500,
+                          //       letterSpacing: 1.5),
+                          // )),
+                          Container(
+                            padding: const EdgeInsets.only(
+                                top: 8.0, bottom: 8, left: 8, right: 8),
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    "Version - ".toUpperCase() +
+                                        constants.versionNumber +
+                                        " (beta)".toUpperCase(),
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        letterSpacing: 1.2,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1!
+                                            .color!
+                                            .withOpacity(.7),
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    // SizedBox(
-                    //   height: 40,
-                    // ),
-                    // SocialIcons(),
-                    SizedBox(
-                      height: 70,
-                    ),
-                    Center(
-                        child: Text(
-                      "Made With ❤ in India".toUpperCase(),
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 1.5),
-                    )),
-                    Container(
-                      padding: const EdgeInsets.only(
-                          top: 8.0, bottom: 8, left: 8, right: 8),
-                      child: Column(
-                        children: [
-                          Center(
-                            child: Text(
-                              "Version - ".toUpperCase() +
-                                  constants.versionNumber +
-                                  " (beta)".toUpperCase(),
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  letterSpacing: 1.2,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .color!
-                                      .withOpacity(.7),
-                                  fontWeight: FontWeight.w600),
-                            ),
+                          ),
+                          SizedBox(
+                            height: 6,
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-        ],
-      );
-    });
+                  ),
+                ));
+          });
   }
 }
 
@@ -625,20 +811,27 @@ class CustomTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+
     return ListTile(
-      contentPadding: EdgeInsets.only(left: 12, right: 14),
+      contentPadding: EdgeInsets.only(left: 18, right: 14, top: 2, bottom: 2),
       leading: Icon(
         icon,
-       color:Theme.of(context).iconTheme.color,
+        color: Theme.of(context)
+            .textTheme
+            .bodyText1!
+            .color!
+            .withOpacity(isDark ? .8 : .6),
       ),
       onTap: () => onPress(),
       title: Text(
         title,
         style: TextStyle(
-          fontWeight: FontWeight.w400
+          fontWeight: FontWeight.w400,
+          color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
         ),
       ),
-      trailing: trailing,
+      trailing: Padding(padding: EdgeInsets.only(right: 4), child: trailing),
     );
   }
 }

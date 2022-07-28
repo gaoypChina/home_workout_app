@@ -1,13 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:purchases_flutter/models/product_wrapper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-
-class Constants{
-
+class Constants {
   String packageName = "com.akashlilhare.homeworkout";
 
   String playStoreLink ="https://bit.ly/playstore-homeworkout";
+
   //"https://play.google.com/store/apps/details?id=com.akashlilhare.homeworkout";
 
   // ToDo: Update version number
@@ -31,9 +33,9 @@ class Constants{
 
   getThinDivider(){
     return  Container(
-        height: .5,
-        width: double.infinity,
-        color:Colors.grey.shade300.withOpacity(.5),
+      height: .5,
+      width: double.infinity,
+      color:Colors.grey.shade300.withOpacity(.5),
     );
   }
 
@@ -55,16 +57,20 @@ class Constants{
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-
-
-  String getPerMonthPrice( {required Product product}){
+  String getPerMonthPrice({required Product product}) {
     String currencySymbol = product.priceString[0];
     double price = product.price;
-    int duration =int.parse( product.description.split(" ")[0]);
+    int duration = int.parse(product.description.split(" ")[0]);
 
-    return "$currencySymbol${(price/duration).ceil()}";
-}
+    return "$currencySymbol${(price / duration).ceil()}";
+  }
 
-
-
+  Future<void> openUrl({required String url}) async {
+    log(url);
+    try {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    } catch (e) {
+      log("error launching url : $e");
+    }
+  }
 }

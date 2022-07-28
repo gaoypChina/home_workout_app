@@ -16,6 +16,7 @@ class SpKey {
   String subscriptionFistDate = "primFirstDay";
   String subscriptionLastDate = "primLastDay";
   String subscriptionPrice = "primPrice";
+  String subscriptionIdentifier = "subscriptionIdentifier";
 
   /// Time Settings
   String trainingRest = "trainingRest";

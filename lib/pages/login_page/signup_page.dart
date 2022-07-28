@@ -80,6 +80,7 @@ class _HomePageState extends State<SignUpPage> with TickerProviderStateMixin {
             children: [
               Scaffold(
                 appBar: AppBar(
+                  elevation: 0,
                   backgroundColor: Colors.blueGrey.shade900.withOpacity(.5),
                   leading: IconButton(
                     color: Colors.white,

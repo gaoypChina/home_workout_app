@@ -1,55 +1,91 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_detail.dart';
 import 'package:full_workout/provider/subscription_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../main/setting_page/faq_page.dart';
 
-class SubscribedPage extends StatelessWidget {
+class SubscribedPage extends StatefulWidget {
   const SubscribedPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    buildCancelBtn() {
-      return
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(height: 1,color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.1),),
-            Container(
-              color: Theme.of(context).cardColor.withOpacity(.5),
+  State<SubscribedPage> createState() => _SubscribedPageState();
+}
 
-              padding: EdgeInsets.only(left: 16,right: 16,bottom: 12,top: 12),
-              child: OutlinedButton(
-                onPressed: () {
-                  Provider.of<SubscriptionProvider>(context,listen: false).cancelSubscription();
-                },
-                child: Text("Manage Subscription",style: TextStyle(color: Theme.of(context).primaryColor.withOpacity(.9),fontWeight: FontWeight.w500),),
-                style:
-                    OutlinedButton.styleFrom(minimumSize: Size(double.infinity, 50),
-                      side: BorderSide(width: 1.0, color: Theme.of(context).primaryColor.withOpacity(.9)),
-                    ),
+class _SubscribedPageState extends State<SubscribedPage> {
+  bool isLoading = true;
+  @override
+  void initState() {
+    SchedulerBinding.instance.addPostFrameCallback((_) => initData());
+    super.initState();
+  }
+
+  initData() async {
+    var subscriptionProvider =
+        Provider.of<SubscriptionProvider>(context, listen: false);
+    if (subscriptionProvider.isProUser && subscriptionProvider.subscriptionDetail == null) {
+      await subscriptionProvider.restoreSubscription(context: context);
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var subscriptionProvider =
+    Provider.of<SubscriptionProvider>(context, listen: false);
+    buildCancelBtn() {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 1,
+            color:
+                Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.1),
+          ),
+          Container(
+            color: Theme.of(context).cardColor.withOpacity(.5),
+            padding: EdgeInsets.only(left: 16, right: 16, bottom: 12, top: 12),
+            child: OutlinedButton(
+              onPressed: () {
+                Provider.of<SubscriptionProvider>(context, listen: false)
+                    .cancelSubscription();
+              },
+              child: Text(
+                "Manage Subscription",
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor.withOpacity(.9),
+                    fontWeight: FontWeight.w500),
+              ),
+              style: OutlinedButton.styleFrom(
+                minimumSize: Size(double.infinity, 50),
+                side: BorderSide(
+                    width: 1.0,
+                    color: Theme.of(context).primaryColor.withOpacity(.9)),
               ),
             ),
-          ],
-        );
+          ),
+        ],
+      );
     }
 
     return Scaffold(
-
-      bottomNavigationBar: buildCancelBtn(),
+      bottomNavigationBar: isLoading?null:buildCancelBtn(),
       appBar: AppBar(
         title: Text("Subscription Settings"),
         elevation: .5,
       ),
-      body: SingleChildScrollView(
+      body: isLoading ? Center(child: CircularProgressIndicator(),):SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
-            SizedBox(
+            if(subscriptionProvider.subscriptionDetail != null )   SizedBox(
               height: 20,
             ),
-            SubscriptionDetail(),
+
+        if(subscriptionProvider.subscriptionDetail != null )   SubscriptionDetail(),
             SizedBox(
               height: 24,
             ),
@@ -57,7 +93,7 @@ class SubscribedPage extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-       //     buildCancelBtn(),
+            //     buildCancelBtn(),
           ],
         ),
       ),

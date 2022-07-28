@@ -349,7 +349,6 @@ class _HomePageState extends State<LoginPage> with TickerProviderStateMixin {
           splashColor: Colors.transparent,
           onTap: () {
             authProvider.googleLogin(context: context);
-
           },
           child: Container(
             height: size.width / 8,

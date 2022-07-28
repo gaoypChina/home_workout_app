@@ -32,6 +32,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
           children: [
             Scaffold(
               appBar: AppBar(
+                elevation: 0,
                 backgroundColor: Colors.blueGrey.shade900.withOpacity(.5),
                 leading: IconButton(
                   color: Colors.white,
