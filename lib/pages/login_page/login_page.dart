@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -254,7 +255,7 @@ class _HomePageState extends State<LoginPage> with TickerProviderStateMixin {
                                     title: "LOGIN",
                                     width: 2.58,
                                     onTap: () {
-                                      if (_formKey.currentState!.validate()) {
+                                      if ( _formKey.currentState!.validate()) {
                                         var authProvider =
                                             Provider.of<AuthProvider>(context,
                                                 listen: false);

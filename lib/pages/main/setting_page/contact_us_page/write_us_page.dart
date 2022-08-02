@@ -1,22 +1,49 @@
 import 'dart:convert';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:http/http.dart';
 
 import '../../../../constants/constant.dart';
 
-class WriteUsPage extends StatefulWidget {
-  const WriteUsPage({Key? key}) : super(key: key);
 
-  @override
-  State<WriteUsPage> createState() => _WriteUsPageState();
-}
 
-class _WriteUsPageState extends State<WriteUsPage> {
-  bool isLoading = false;
+class WriteUsPage extends StatelessWidget {
+   WriteUsPage({Key? key}) : super(key: key);
+
   TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    onSend() async{
+
+      if(_controller.text.length < 3){
+        Constants().getToast("Enter valid message");
+        return ;
+      }
+
+
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      AndroidDeviceInfo info = await deviceInfo.androidInfo;
+
+      String toSend =
+          "version: ${info.version.release.toString()}, brand: ${info.brand.toString()}, display : ${size.height.toInt()}x${size.width.toInt()}\n\n";
+
+      final Email email = Email(
+        body:"\n"+ _controller.text + "\n\n\n--------------------------------------------------------------\n" + toSend,
+        subject: 'Home Workout Feedback',
+        recipients: ['workoutfeedback@gmail.com'],
+        isHTML: false,
+      );
+
+      try {
+        await FlutterEmailSender.send(email);
+      } catch (e) {
+        Constants().getToast("Not able to send email",);
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -37,49 +64,19 @@ class _WriteUsPageState extends State<WriteUsPage> {
             const SizedBox(
               height: 8,
             ),
-             TextField(
+            TextField(
               controller: _controller,
               maxLines: 5,
               decoration: InputDecoration(
                   hintText: "Message",
                   border: OutlineInputBorder(),
-                  label: Text("query")),
+                  label: Text("Query")),
             ),
             const Spacer(),
             ElevatedButton(
-              child: isLoading ?CircularProgressIndicator(color: Colors.white,): Text("SUBMIT"),
-              onPressed: () async {
-                setState(() {
-                  isLoading = true;
-                });
-
-                print(_controller.text);
-                Map<String,dynamic> map = {"message":_controller.text};
-                String jsonString = json.encode(map);
-                Response response = await post(
-                  Uri.parse("https://www.decoralley.in/contact/qmobile"),
-                  body: jsonString,
-                );
-                if(response.statusCode == 200){
-                  showDialog(context: context, builder: (context){
-                    return  AlertDialog(
-                      backgroundColor: Theme.of(context).cardColor,
-                      title: Text("Query Submitted"),
-                      content: Text("We will get back to you within 24 hours."),
-                      actions: [TextButton(child: Text("Close",style: TextStyle(color: Theme.of(context).primaryColor),),onPressed: (){
-                        Navigator.of(context).pop();
-                      },)],
-                    );
-                  });
-                }else{
-                  Constants().getToast( "Something went wrong, Please retry");
-                }
-                print(response.statusCode);
-                setState(() {
-                  isLoading = false;
-                });
-
-
+              child: Text("SUBMIT"),
+              onPressed: ()  {
+                onSend();
               },
               style: ElevatedButton.styleFrom(
                   minimumSize: Size(MediaQuery.of(context).size.width, 50)),
@@ -90,3 +87,4 @@ class _WriteUsPageState extends State<WriteUsPage> {
     );
   }
 }
+

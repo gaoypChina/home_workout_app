@@ -1,6 +1,6 @@
 import 'dart:io';
 
-bool isProduction = false;
+bool isProduction = true;
 class AdIdHelper {
   static String get bannerAdUnitId {
     if (Platform.isAndroid) {

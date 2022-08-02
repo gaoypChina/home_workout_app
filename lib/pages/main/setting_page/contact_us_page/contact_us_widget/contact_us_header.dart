@@ -34,8 +34,9 @@ class ContactUsHeader extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(top: 18.0, bottom: 18),
-              child: Image.network(
-                "https://img.icons8.com/clouds/2x/email.png",
+              child: Image.asset(
+
+                "assets/other/contact_us.png",
                 height: 120,
                 width: 120,
                 fit: BoxFit.fill,

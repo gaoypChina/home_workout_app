@@ -128,7 +128,7 @@ class _RateDialogPageState extends State<RateDialogPage> {
       title: "Rate This App",
       trailing: Icon(
         Icons.arrow_forward_ios,
-        color: Colors.grey,
+        color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
         size: 16,
       ),
       onPress: () {

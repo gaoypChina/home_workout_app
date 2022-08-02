@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../database/explore_page_workout/export_workout.dart';
 import '../../../../enums/workout_type.dart';
-import '../../../../models/begginer_workout_model.dart';
+import '../../../../models/explore_workout_card_model.dart';
 import '../../../../models/explore_workout_model.dart';
 import '../body_focus_workout_page/body_focus_workout_page.dart';
 
@@ -11,29 +11,29 @@ class BodyFocusWorkout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<BeginnerWorkoutModel> _challenges = [
-      BeginnerWorkoutModel(
+    List<ExploreWorkoutCardModel> _challenges = [
+      ExploreWorkoutCardModel(
           workoutType: WorkoutType.Beginner,
           workoutList: [],
           description: [],
           title: "4 Day Challenge",
           imgSrc: "assets/icons/push-up.png",
           color: Colors.blueGrey),
-      BeginnerWorkoutModel(
+      ExploreWorkoutCardModel(
           workoutType: WorkoutType.Beginner,
           workoutList: [],
           description: [],
           title: "Plack Challenge",
           imgSrc: "assets/icons/exercises.png",
           color: Colors.redAccent),
-      BeginnerWorkoutModel(
+      ExploreWorkoutCardModel(
           workoutType: WorkoutType.Beginner,
           workoutList: [],
           description: [],
           title: "Push-up Challenge",
           imgSrc: "assets/icons/lunges.png",
           color: Colors.teal),
-      BeginnerWorkoutModel(
+      ExploreWorkoutCardModel(
           workoutType: WorkoutType.Beginner,
           workoutList: [],
           description: [],

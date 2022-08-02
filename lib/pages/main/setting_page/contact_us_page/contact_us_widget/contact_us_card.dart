@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/constants/constant.dart';
+import 'package:full_workout/pages/main/setting_page/faq_page.dart';
 
 import '../write_us_page.dart';
 
@@ -10,14 +11,19 @@ class ContactUsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Constants _constants = Constants();
 
+    buildDivider(){
+      return Container(height: 1,color: Colors.blue.withOpacity(.1),);
+    }
+
     buildCard(
         {required String title,
         required String subTitle,
         required IconData icon,
         required Function onTap}) {
       return ListTile(
+
         onTap: () => onTap(),
-        leading: Icon(icon),
+        leading: Icon(icon),contentPadding: EdgeInsets.symmetric(vertical: 0,horizontal: 16),
         title: Text(
           title,
           style: Theme.of(context)
@@ -31,17 +37,17 @@ class ContactUsCard extends StatelessWidget {
 
     return Column(
       children: [
-        _constants.getThinDivider(),
+        buildDivider(),
         buildCard(
             title: "Quick help",
             subTitle: "View some frequently asked questions",
             icon: Icons.question_mark,
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
-                return const WriteUsPage();
+                return  FAQPage();
               }));
             }),
-        _constants.getThinDivider(),
+        buildDivider(),
 
         buildCard(
             title: "Write to Us",
@@ -49,10 +55,10 @@ class ContactUsCard extends StatelessWidget {
             icon: Icons.edit_outlined,
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
-                return const WriteUsPage();
+                return  WriteUsPage();
               }));
             }),
-        _constants.getThinDivider(),
+        buildDivider(),
         buildCard(
             title: "Call Now",
             subTitle: "Call us to discuss your problem",
@@ -60,7 +66,7 @@ class ContactUsCard extends StatelessWidget {
             onTap: () => _constants.openUrl(url: "tel: +91 ${9669395879}")),
 
 
-        _constants.getThinDivider(),
+        buildDivider(),
       ],
     );
   }

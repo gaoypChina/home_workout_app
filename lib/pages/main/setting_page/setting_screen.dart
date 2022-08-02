@@ -714,14 +714,14 @@ class _SettingPageState extends State<SettingPage>
                             height: 40,
                           ),
 
-                          // Center(
-                          //     child: Text(
-                          //   "Made With ❤ in India".toUpperCase(),
-                          //   style: TextStyle(
-                          //       fontSize: 14,
-                          //       fontWeight: FontWeight.w500,
-                          //       letterSpacing: 1.5),
-                          // )),
+                          Center(
+                              child: Text(
+                            "Made With ❤ in India".toUpperCase(),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1.5),
+                          )),
                           Container(
                             padding: const EdgeInsets.only(
                                 top: 8.0, bottom: 8, left: 8, right: 8),
@@ -730,8 +730,8 @@ class _SettingPageState extends State<SettingPage>
                                 Center(
                                   child: Text(
                                     "Version - ".toUpperCase() +
-                                        constants.versionNumber +
-                                        " (beta)".toUpperCase(),
+                                        constants.versionNumber,
+                                      //  + " (beta)".toUpperCase(),
                                     style: TextStyle(
                                         fontSize: 12,
                                         letterSpacing: 1.2,
@@ -747,7 +747,7 @@ class _SettingPageState extends State<SettingPage>
                             ),
                           ),
                           SizedBox(
-                            height: 6,
+                            height: 12,
                           ),
                         ],
                       ),

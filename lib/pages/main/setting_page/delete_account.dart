@@ -79,8 +79,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
       ]));
     }
 
-    return Stack(
-      children: [
+    return
         AlertDialog(
           title: Text("Delete Account"),
           actions: [
@@ -144,12 +143,6 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
               ],
             ),
           ),
-        ),
-        if (Provider.of<AuthProvider>(
-          context,
-        ).connectionStatus == AppConnectionStatus.loading)
-          CustomLoadingIndicator(msg: "Loading",)
-      ],
-    );
+        );
   }
 }

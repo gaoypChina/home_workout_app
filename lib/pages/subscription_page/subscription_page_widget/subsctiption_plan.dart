@@ -19,7 +19,6 @@ class SubscriptionPlan extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
         ),
-        // Text(provider.packageList.toString()),
         ...provider.packageList.map((package) {
           var product = package.product;
           List<String> durationDiscount = product.description.split(" ");

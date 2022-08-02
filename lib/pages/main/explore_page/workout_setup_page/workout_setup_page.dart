@@ -86,16 +86,16 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage> {
           Theme.of(context).textTheme.bodyText1!.color == Colors.white;
       return Container(
           margin: EdgeInsets.only(right: 8, bottom: 10),
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          padding: EdgeInsets.symmetric(horizontal: 9, vertical: 7),
           decoration: BoxDecoration(
-              color: color.withOpacity(.1),
-              borderRadius: BorderRadius.all(Radius.circular(16))),
+              color: Colors.blue.withOpacity(.1),
+              borderRadius: BorderRadius.all(Radius.circular(12))),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 icon,
-                color: isDark ? Colors.white70 : color.withOpacity(.9),
+                color: isDark ? Colors.white70 :Colors.black.withOpacity(.6),
               ),
               SizedBox(
                 width: 8,
@@ -105,7 +105,7 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage> {
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 15,
-                    color: isDark ? Colors.white70 : color),
+                    color: isDark ? Colors.white70 : Colors.black.withOpacity(.7)),
               ),
               SizedBox(
                 width: 2,
@@ -228,7 +228,7 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage> {
                     ),
                     buildChip(
                       color: Colors.blueGrey,
-                      icon: Icons.apps_rounded,
+                      icon: Icons.library_books_outlined,
                       title: "Total : ${widget.workout.getExerciseCount}",
                     ),
                     buildChip(

@@ -4,7 +4,7 @@ import '../database/workout_list.dart';
 import '../enums/workout_type.dart';
 import 'explore_workout_model.dart';
 
-class BeginnerWorkoutModel extends ExploreWorkout {
+class ExploreWorkoutCardModel extends ExploreWorkout {
   final title;
   final imgSrc;
   final List<String> description;
@@ -13,7 +13,7 @@ class BeginnerWorkoutModel extends ExploreWorkout {
 
   final Color color;
 
-  BeginnerWorkoutModel(
+  ExploreWorkoutCardModel(
       {required this.title,
       required this.imgSrc,
       required this.color,

@@ -131,37 +131,34 @@ class SubscribedFAQ extends StatelessWidget {
         children: faqList
             .map((faq) => Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 0),
-                      child: Container(
-                          child: Theme(
-                        data: Theme.of(context)
-                            .copyWith(dividerColor: Colors.transparent),
-                        child: ExpansionTile(
-                          initiallyExpanded: false,
-                          title: Text(
-                            faq.question,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 15,     color: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .color!.withOpacity(.9)),
-                          ),
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 18.0, right: 18, bottom: 18),
-                              child: Text(
-                                faq.answer,
-                                style: TextStyle(
-                                    letterSpacing: 1.5,
-                               ),
-                              ),
-                            )
-                          ],
+                    Container(
+                        child: Theme(
+                      data: Theme.of(context)
+                          .copyWith(dividerColor: Colors.transparent),
+                      child: ExpansionTile(
+                        initiallyExpanded: false,
+                        title: Text(
+                          faq.question,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 15,     color: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .color!.withOpacity(.9)),
                         ),
-                      )),
-                    ),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 18.0, right: 18, bottom: 18),
+                            child: Text(
+                              faq.answer,
+                              style: TextStyle(
+                                  letterSpacing: 1.5,
+                             ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
                     Container(
                       color: Theme.of(context).scaffoldBackgroundColor,
                       margin: EdgeInsets.only(top: 16),

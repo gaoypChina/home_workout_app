@@ -19,6 +19,12 @@ class FeedbackPage extends StatelessWidget {
     TextEditingController _controller = TextEditingController();
     onSend() async{
 
+      if(_controller.text.length < 3){
+        Constants().getToast("Enter valid message");
+        return ;
+      }
+
+
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       AndroidDeviceInfo info = await deviceInfo.androidInfo;
 

@@ -60,7 +60,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
               child: TextFormField(
                 controller: widget.controller,
                 validator: (value) {
-                  widget.validator(value);
+                 return widget.validator(value);
                 },
                 cursorColor: Colors.white,
                 obscureText: widget.isPassword?_isHidden:false,
@@ -71,8 +71,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                 style: TextStyle(
                     color: Colors.white.withOpacity(.8), fontSize: 15),
                 decoration: InputDecoration(
-
-                  errorStyle: TextStyle(color: Colors.white),
+                  errorStyle: TextStyle(fontSize: .0, height: -1),
                   fillColor: Colors.transparent,
                   hintText: widget.hintText,
                   hintStyle: TextStyle(
@@ -85,23 +84,23 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide:
-                        BorderSide(color: Colors.transparent, width: 0.0),
+                    BorderSide(color: Colors.transparent, width: 0.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide:
-                        BorderSide(color: Colors.transparent, width: 0.0),
+                    BorderSide(color: Colors.transparent, width: 0.0),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderSide:
-                        BorderSide(color: Colors.transparent, width: 0.0),
+                    BorderSide(color: Colors.transparent, width: 0.0),
                   ),
                   disabledBorder: OutlineInputBorder(
                     borderSide:
-                        BorderSide(color: Colors.transparent, width: 0.0),
+                    BorderSide(color: Colors.transparent, width: 0.0),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderSide:
-                        BorderSide(color: Colors.transparent, width: 0.0),
+                    BorderSide(color: Colors.transparent, width: 0.0),
                   ),
                   prefixIcon: Icon(
                     widget.icon,

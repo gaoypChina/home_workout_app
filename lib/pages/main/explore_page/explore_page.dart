@@ -4,12 +4,13 @@ import 'package:full_workout/pages/main/explore_page/explore_page_widget/fast_wo
 import 'package:full_workout/pages/main/home_page/leading_widget.dart';
 
 import 'explore_page_widget/1by1_workout_card.dart';
-import 'explore_page_widget/picks_for_you_workout.dart';
-import 'explore_page_widget/body_focus_workout.dart';
 import 'explore_page_widget/beginner_workout_challenges.dart';
-import 'explore_page_widget/four_week_challenge_card.dart';
-import 'explore_page_widget/sleep_workout.dart';
+import 'explore_page_widget/body_focus_workout.dart';
 import 'explore_page_widget/discover_workout.dart';
+import 'explore_page_widget/four_week_challenge_card.dart';
+import 'explore_page_widget/picks_for_you_workout.dart';
+import 'explore_page_widget/featured_workout.dart';
+import 'explore_page_widget/strach_workout.dart';
 
 class ExplorePage extends StatefulWidget {
   final Function onBack;
@@ -55,32 +56,24 @@ class _ExplorePageState extends State<ExplorePage> {
                   height: 12,
                 ),
                 FourWeekChallengeCard(),
-
                 buildDivider(),
                 PicksForYouWorkout(),
-
                 buildDivider(),
-
-                HardCoreWorkout(),   buildDivider(),
                 BeginnerWorkoutSection(),
-
                 buildDivider(),
-                SleepWorkoutSection(title: "Sleep"),
-
-                // buildDivider(),
-                // FourWeekChallengeCard(),
-
+                FeaturedWorkout(title: "Sleep"),
+                buildDivider(),
+                HardCoreWorkout(),
+                buildDivider(),
+                StretchWorkout(),
                 buildDivider(),
                 FastWorkout(),
-
                 buildDivider(),
-                // SleepWorkoutSection(title: "Sleep"),
-                // buildDivider(),
                 BodyFocusWorkout(),
                 buildDivider(),
                 TopPicksSection(),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 )
               ],
             )

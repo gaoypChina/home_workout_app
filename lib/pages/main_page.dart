@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:full_workout/pages/main/home_page/home_page.dart';
 
 import 'main/explore_page/explore_page.dart';
+import 'main/explore_page/four_week_challenges_page/four_week_challenge_page.dart';
 import 'main/report_page/report_page.dart';
 import 'main/setting_page/setting_screen.dart';
 import 'main/weight_report_page/weight_report_details/weight_report_detail.dart';
@@ -101,6 +102,7 @@ class _MainPageState extends State<MainPage> {
     if (currentIndex == 0) {
       return HomePage();
     } else if (currentIndex == 1) {
+      return FourWeekChallengePage();
       return ExplorePage(
         onBack: onBack,
       );

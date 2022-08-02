@@ -5,10 +5,10 @@ import '../../../../database/explore_page_workout/featured_workout_database.dart
 import '../../../../widgets/prime_icon.dart';
 import '../workout_setup_page/workout_setup_page.dart';
 
-class SleepWorkoutSection extends StatelessWidget {
+class FeaturedWorkout extends StatelessWidget {
   final String title;
 
-  const SleepWorkoutSection({Key? key, required this.title}) : super(key: key);
+  const FeaturedWorkout({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

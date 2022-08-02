@@ -8,36 +8,54 @@ class FAQPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-double width = MediaQuery.of(context).size.width;
 
-    buildFAQCard() {
-      return Column(children: [
-        ...faqList.map((faq) {
-          return ExpansionTile(
-            tilePadding: EdgeInsets.zero,
-            title: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(faq.question),
-            ),
-            children: [
-              Container(
-                color: Colors.blue.withOpacity(.0),
-                child: Column(
-                  children: [
-                    Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-                        child: Text(faq.answer)),
-                  ],
+    buildFAQCard({required List  faqItems}) {
+      return Container(
+        color: Colors.blue.withOpacity(.08),
+        padding: const EdgeInsets.symmetric(horizontal: 0.0),
+        child: Column(children: [
+          ...faqItems.map((faq) {
+            return Column(
+              children: [
+                Container(
+                    child: Theme(
+                      data: Theme.of(context)
+                          .copyWith(dividerColor: Colors.transparent),
+                      child: ExpansionTile(
+                        initiallyExpanded: false,
+                        title: Text(
+                          faq.question,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 15.5,     color: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .color!.withOpacity(.7)),
+                        ),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 16.0, right: 16, bottom: 12),
+                            child: Text(
+                              faq.answer,
+                              style: TextStyle(
+                                letterSpacing: 1.5,
+                                color: Theme.of(context).textTheme.bodyText1?.color?.withOpacity(.7)
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
+                Container(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  margin: EdgeInsets.only(top: 8),
+                  height: 1,
                 ),
-              ),
-              SizedBox(
-                height: 12,
-              )
-            ],
-          );
-        })
-      ]);
+              ],
+            );
+          })
+        ]),
+      );
     }
 
     return Scaffold(
@@ -45,33 +63,24 @@ double width = MediaQuery.of(context).size.width;
         title: Text("FAQ"),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(0),
+        padding: EdgeInsets.symmetric(horizontal: 12),
         physics: BouncingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 20,),
+            Text("Subscription FAQs",style: TextStyle(fontSize: 16.5,fontWeight: FontWeight.w500),),
+            SizedBox(height: 10,),
+            buildFAQCard(faqItems: subscriptionFaq),
+
+            SizedBox(height: 22,),
 
 
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 8,vertical: 22),
-              color: Colors.green.withOpacity(.04),
-              child: SvgPicture.asset(
-                'assets/other/faq.svg',
+            Text("General FAQs",style: TextStyle(fontSize: 16.5,fontWeight: FontWeight.w500),),
+            SizedBox(height: 10,),
+            buildFAQCard(faqItems: generalFaq),
 
-                alignment: Alignment.center,
-
-                width: width -20,
-              ),
-            ),
-
-            Container(
-              height: 20,
-              color: Colors.blue.withOpacity(.15),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: buildFAQCard(),
-            ),
-            SizedBox(height: 18,)
+            SizedBox(height: 20,)
           ],
         ),
       ),
@@ -86,7 +95,28 @@ class FAQ {
   FAQ({required this.question, required this.answer});
 }
 
-List<FAQ> faqList = [
+List<FAQ> subscriptionFaq = [
+  FAQ(
+      question: "What does Home workout Pro include?",
+      answer:
+      "Home Workout Pro includes full access to all Pro features. unlimited access to all workout without any Ads"),
+  FAQ(
+      question:
+      "Is Home Workout Pro is a one-time payment or will it renew automatically?",
+      answer:
+      "The Home Workout Pro plans are subscriptions that renew automatically at the end of your subscription term to avoid any interruption to your service. If you cancel your subscription, you will continue to have access to Home Workout Pro until your subscription expires."),
+  FAQ(
+      question: "Can I Cancel my subscription anytime?",
+      answer:
+      "Yes, you can cancel your Home Workout Pro subscription whenever you want! You will continue to have access to Home Workout Pro until your subscription expires."),
+  FAQ(
+      question: "How do I Cancel subscription?",
+      answer:
+      "Google Play -> Find Home Workout -> Manage Subscriptions -> Cancel Subscription")
+];
+
+
+List<FAQ> generalFaq = [
   FAQ(
       question: "What is the home workout app?",
       answer:

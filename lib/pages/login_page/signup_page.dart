@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -11,9 +12,6 @@ import 'package:provider/provider.dart';
 import '../../enums/app_conection_status.dart';
 import '../../widgets/loading_indicator.dart';
 
-
-
-
 class SignUpPage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -21,7 +19,6 @@ class SignUpPage extends StatefulWidget {
 
 class _HomePageState extends State<SignUpPage> with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
-
   late AnimationController controller1;
   late Animation<double> animation1;
   TextEditingController _emailController = TextEditingController();
@@ -178,123 +175,133 @@ class _HomePageState extends State<SignUpPage> with TickerProviderStateMixin {
                                     ),
                                     LoginTextField(
                                       controller: _passwordController,
-                                      errorMessage: passwordError,
-                                      icon: Icons.lock_outline,
-                                      hintText: 'Password...',
-                                      isEmail: true,
-                                      isPassword: false,
-                                      validator: (value) {
-                                        bool isPassValid = RegExp(
+                                  errorMessage: passwordError,
+                                  icon: Icons.lock_outline,
+                                  hintText: 'Password...',
+                                  isEmail: true,
+                                  isPassword: false,
+                                  validator: (value) {
+                                    bool isPassValid = RegExp(
                                             "^(?=.{8,32}\$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%^&*(),.?:{}|<>]).*")
-                                            .hasMatch(value);
+                                        .hasMatch(value);
+                                    if (!isPassValid) {
+                                      if (value == null || value.length < 8) {
+                                        passwordError =
+                                            "Password length must be great then 8";
+                                        return "";
+                                      } else {
+                                        bool containsUppercase =
+                                            value.contains(RegExp(r'[A-Z]'));
+                                        if (!containsUppercase) {
+                                          passwordError =
+                                              "Contains at least one Uppercase(A-Z) character";
+                                          return "";
+                                        }
+                                        bool containsLowercase =
+                                            value.contains(RegExp(r'[a-z]'));
+                                        if (!containsLowercase) {
+                                          passwordError =
+                                              "Contains at least one Lowercase(a-z) character";
+                                          return "";
+                                        }
+                                        bool containsNumber =
+                                            value.contains(RegExp(r'[0-9]'));
+                                        if (!containsNumber) {
+                                          passwordError =
+                                              "Contains at least one Numeric(0-9) character";
+                                          return "";
+                                        }
+                                        passwordError =
+                                            "Contains at least one special character";
+                                        return "invalid password";
+                                      }
 
-                                        if (value == null || value.isEmpty ||
-                                            !isPassValid) {
-                                          setState(() {
-                                            passwordError = "Invalid password";
-                                          });
-                                          return "invalid password";
-                                        } else {
-                                          passwordError = null;
-                                          return null;
+                                    } else {
+                                      passwordError = null;
+                                      return null;
+                                    }
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                LoginTextField(
+                                  controller: _confirmPasswordController,
+                                  errorMessage: confirmPasswordError,
+                                  icon: Icons.lock_outline,
+                                  hintText: 'Confirm Password...',
+                                  isEmail: false,
+                                  isPassword: true,
+                                  validator: (value) {
+                                    if (_passwordController.text !=
+                                        _confirmPasswordController.text) {
+                                      confirmPasswordError =
+                                          "Password must be equal";
+                                      return "Password must equal";
+                                    } else {
+                                      confirmPasswordError = null;
+                                      return null;
+                                    }
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    LoginButton(
+                                      color: Colors.blue.withOpacity(.2),
+                                      title: 'SIGNUP',
+                                      width: 2.58,
+                                      onTap: () {
+                                        HapticFeedback.lightImpact();
+                                        bool isValid =
+                                            _formKey.currentState!.validate();
+
+                                        log("isValid : " + isValid.toString());
+                                        if (isValid) {
+                                          log("go to next page");
+                                          authProvider.emailSignup(email: _emailController.text, password: _passwordController.text,context: context);
+
                                         }
                                       },
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    LoginTextField(
-                                      controller: _confirmPasswordController,
-                                      errorMessage: confirmPasswordError,
-                                      icon: Icons.lock_outline,
-                                      hintText: 'Confirm Password...',
-                                      isEmail: false,
-                                      isPassword: true,
-                                      validator: (value) {
-                                        bool isPassValid = RegExp(
-                                            "^(?=.{8,32}\$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%^&*(),.?:{}|<>]).*")
-                                            .hasMatch(value);
-
-                                        if (value == null ||
-                                            value.isEmpty ||
-                                            !isPassValid) {
-                                          setState(() {
-                                            confirmPasswordError =
-                                            "Invalid password";
-                                          });
-                                          return "invalid password";
-                                        } else {
-                                          if (_passwordController.text !=
-                                              _confirmPasswordController.text) {
-                                            confirmPasswordError =
-                                            "Password must equal";
-                                            return "Password must equal";
-                                          } else {
-                                            confirmPasswordError = null;
-                                            return null;
-                                          }
-                                        }
-                                      },
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .center,
-                                      children: [
-
-                                        LoginButton(
-                                          color: Colors.blue.withOpacity(.2),
-                                          title: 'SIGNUP',
-                                          width: 2.58,
-                                          onTap: () {
-                                            HapticFeedback.lightImpact();
-                                            if (_formKey.currentState!
-                                                .validate()) {
-                                              authProvider.emailSignup(email: _emailController.text, password: _passwordController.text,context: context);
-
-                                            }
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: size.width * .1),
-                                      child: RichText(
-                                          textAlign: TextAlign.center,
-                                          text: TextSpan(
-                                              text: "Already have an Account?  ",
-                                              style: TextStyle(
-                                                  height: 1.3,
-                                                  fontSize: 13,
-                                                  color: Colors.white60),
-                                              children: [
-                                                WidgetSpan(
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      child: Text(
-                                                        "Login".toUpperCase(),
-                                                        style: TextStyle(
-                                                            height: 1.1,
-                                                            color:
-                                                            Colors.blue
-                                                                .withOpacity(
-                                                                .8),
-                                                            fontSize: 13),
-                                                      ),
-                                                    ))
-                                              ])),
                                     ),
                                   ],
                                 ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: size.width * .1),
+                                  child: RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                          text: "Already have an Account?  ",
+                                          style: TextStyle(
+                                              height: 1.3,
+                                              fontSize: 13,
+                                              color: Colors.white60),
+                                          children: [
+                                            WidgetSpan(
+                                                child: InkWell(
+                                              onTap: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text(
+                                                "Login".toUpperCase(),
+                                                style: TextStyle(
+                                                    height: 1.1,
+                                                    color: Colors.blue
+                                                        .withOpacity(.8),
+                                                    fontSize: 13),
+                                              ),
+                                            ))
+                                          ])),
+                                ),
+                              ],
+                            ),
                               ),
                             ],
                           ),

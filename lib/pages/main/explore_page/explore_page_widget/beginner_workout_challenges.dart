@@ -60,8 +60,8 @@ class BeginnerWorkoutSection extends StatelessWidget {
                                     color: Colors.blue,
                                     gradient: LinearGradient(
                                         colors: [
-                                          workout.color.withOpacity(.6),
-                                          workout.color.withOpacity(.8),
+                                          workout.color.withOpacity(.66),
+                                          workout.color.withOpacity(.88),
                                         ],
                                         begin: Alignment.topRight,
                                         end: Alignment.bottomLeft)),

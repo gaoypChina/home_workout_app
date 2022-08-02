@@ -226,58 +226,48 @@ class _DataSyncModal extends StatelessWidget {
             SizedBox(
               height: 22,
             ),
+
+            Container(
+                width: size.width - 36,
+                height: 45,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    onSync();
+                  },
+                  child: Text("Sync Data"),
+                )),
+
+
+            SizedBox(
+              height: 12,
+            ),
             Center(
               child: Container(
                   width: size.width - 36,
                   height: 45,
                   child: OutlinedButton(
+                    child: Text(
+                      "Close",
+                      style: TextStyle(
+                          color: Colors.red.shade400.withOpacity(.7),
+                          fontWeight: FontWeight.w500),
+                    ),
                     style: OutlinedButton.styleFrom(
                         side: BorderSide(
-                      color: Theme.of(context).primaryColor.withOpacity(.6),
+                      color: Colors.red.shade400.withOpacity(.5),
                       width: 1.5,
                     )),
-                    child: Text("Sync Data",
-                        style: TextStyle(
-                            color:
-                                Theme.of(context).primaryColor.withOpacity(.8),
-                            fontWeight: FontWeight.w500)),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      onSync();
                     },
                   )),
             ),
             SizedBox(
               height: 12,
             ),
-            Consumer<AuthProvider>(builder: (context, authProvider, _) {
-              return Center(
-                child: Container(
-                    width: size.width - 36,
-                    height: 45,
-                    child: OutlinedButton(
-                      child: Text(
-                        "Logout",
-                        style: TextStyle(
-                            color: Colors.red.shade400.withOpacity(.7),
-                            fontWeight: FontWeight.w500),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                        color: Colors.red.shade400.withOpacity(.5),
-                        width: 1.5,
-                      )),
-                      onPressed: () {
-                        authProvider.logout(context: context);
-                      },
-                    )),
-              );
-            }),
-            SizedBox(
-              height: 12,
-            ),
             Text(
-              "Tack Backup of your workout data to analyse your progress and not loos your data on the new device.",
+              "Make a backup of your workout data so that you won't lose it if you switch devices. ",
               style: TextStyle(
                   fontSize: 13.5,
                   letterSpacing: 1.2,
@@ -289,7 +279,7 @@ class _DataSyncModal extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             SizedBox(
-              height: 12,
+              height: 18,
             ),
           ],
         ),

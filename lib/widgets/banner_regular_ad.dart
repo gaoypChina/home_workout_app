@@ -35,7 +35,7 @@ class _MediumBannerAdState extends State<RegularBannerAd> {
   Widget build(BuildContext context) {
     var provider = Provider.of<AdsProvider>(context, listen: true);
     return isProUser
-        ? Container()
+        ? Container(height: 0,)
         : Column(
             mainAxisSize: MainAxisSize.min,
             children: [

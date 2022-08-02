@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class DetailPageCustomWidget{
 
-  static Color tileColor = Colors.blue.withOpacity(.1);
-  static Color borderColor = Colors.blue.withOpacity(.5);
+  static Color tileColor = Colors.blue.withOpacity(.08);
+  static Color borderColor = Colors.grey.withOpacity(.1);
  static buildTitle({required String title, required BuildContext context}){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

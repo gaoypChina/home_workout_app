@@ -89,9 +89,13 @@ class AuthProvider with ChangeNotifier {
       required BuildContext context}) async {
     connectionStatus = AppConnectionStatus.loading;
     notifyListeners();
+    log("message");
     try {
-      FirebaseAuth.instance
+      UserCredential credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      if(credential.user == null){
+        throw "user not login properly";
+      }
       await navigateToNextPage(context: context);
       await SpHelper().saveBool(SpKey().authByGoogle, false);
       _constants.getToast("User Login Successfully");
@@ -230,7 +234,6 @@ class AuthProvider with ChangeNotifier {
         await googleSignIn.disconnect();
       }
 
-      // delete user local data
       await recentDatabaseHelper.deleteDataBase();
       await weightDatabaseHelper.deleteDataBase();
       await preferences.clear();
