@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/components/info_button.dart';
-import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
 
+import '../../components/info_button.dart';
+import '../../database/workout_list.dart';
+import '../../pages/services/youtube_service/youtube_player.dart';
 
 class WorkoutDetailDialog extends StatefulWidget {
   final List<Workout> workoutList;
@@ -50,7 +49,6 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
       }
     }
 
-
     return WillPopScope(
       onWillPop: () {
         Navigator.pop(context, true);
@@ -58,7 +56,7 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
       },
       child: Dialog(
         backgroundColor: Colors.transparent,
-       insetPadding: EdgeInsets.symmetric(
+        insetPadding: EdgeInsets.symmetric(
             horizontal: width * .07, vertical: height * .13),
         child: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
@@ -92,7 +90,6 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                                     ),
                                     height: height * .2,
                                   ),
-
                                   Positioned(
                                       right: 10,
                                       top: 10,
@@ -106,15 +103,17 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                                                   builder: (context) =>
                                                       YoutubeTutorial(
                                                     rapCount: widget.rapCount,
-                                                    workout:
-                                                        widget.workoutList[
-                                                            widget.index],
+                                                    workout: widget.workoutList[
+                                                        widget.index],
                                                   ),
                                                 ));
                                           })),
                                 ],
                               ),
-                              Container(height: 1.5,color: Theme.of(context).dividerColor,),
+                              Container(
+                                height: 1.5,
+                                color: Theme.of(context).dividerColor,
+                              ),
                               Padding(
                                 padding: EdgeInsets.only(
                                     top: 10, left: 16, bottom: 4),
@@ -129,10 +128,12 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                                 padding: EdgeInsets.only(
                                     left: 16, right: 16, top: 8),
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color:Theme.of(context).cardColor,),
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Theme.of(context).cardColor,
+                                ),
                                 height: height * .32,
-                                child: ListView.separated(physics: BouncingScrollPhysics(),
+                                child: ListView.separated(
+                                  physics: BouncingScrollPhysics(),
                                   padding: EdgeInsets.only(bottom: 8),
                                   itemCount: item[index].steps.length,
                                   itemBuilder: (ctx, i) {
@@ -140,22 +141,24 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                                         child: Text.rich(TextSpan(
                                             text: "Step ${i + 1}: ",
                                             style: TextStyle(
-                                                fontSize: 14,
-
-                                                letterSpacing: 1.2,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                              fontSize: 14,
+                                              letterSpacing: 1.2,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                             children: <InlineSpan>[
                                           TextSpan(
                                               text: item[index].steps[i],
-                                              style:
-                                                  TextStyle(
-                                                fontSize: 14,  fontWeight: FontWeight.w400,
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
                                               )),
                                         ])));
                                   },
                                   separatorBuilder: (context, index) {
-                                    return Divider(height: 16,thickness: .0,);
+                                    return Divider(
+                                      height: 16,
+                                      thickness: .0,
+                                    );
                                   },
                                 ),
                               ),
@@ -209,8 +212,8 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                             ),
                             Text(
                               "${item.length}",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 16),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
                             )
                           ],
                         ),

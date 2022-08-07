@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../enums/network_connectivity_status.dart';
 
-
 abstract class ConnectivityState {}
 
 class ConnectivityInitial extends ConnectivityState {}
@@ -22,7 +21,7 @@ class ConnectivityDisconnected extends ConnectivityState {
 
 class ConnectivityCubit extends Cubit<ConnectivityState> {
   late final Connectivity connectivity;
- late StreamSubscription connectivityStreamSubscription;
+  late StreamSubscription connectivityStreamSubscription;
 
   ConnectivityCubit({required this.connectivity})
       : super(ConnectivityInitial()) {

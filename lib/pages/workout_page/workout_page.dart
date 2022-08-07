@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:full_workout/components/info_button.dart';
-import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/helper/mediaHelper.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
-import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
-import 'package:full_workout/pages/workout_page/exercise_detail_page.dart';
-import 'package:full_workout/pages/workout_page/pause_page.dart';
-import 'package:full_workout/pages/workout_page/report_page.dart';
-import 'package:full_workout/pages/workout_page/rest_page.dart';
-import 'package:full_workout/provider/ads_provider.dart';
-import 'package:full_workout/provider/subscription_provider.dart';
+import '../../../provider/subscription_provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
+import '../../components/info_button.dart';
+import '../../database/workout_list.dart';
+import '../../helper/mediaHelper.dart';
+import '../../helper/sp_helper.dart';
+import '../../helper/sp_key_helper.dart';
+import '../../pages/main/setting_page/sound_settings_page.dart';
+import '../../pages/services/youtube_service/youtube_player.dart';
+import '../../pages/workout_page/exercise_detail_page.dart';
+import '../../pages/workout_page/pause_page.dart';
+import '../../pages/workout_page/report_page.dart';
+import '../../pages/workout_page/rest_page.dart';
+import '../../provider/ads_provider.dart';
 import 'check_list.dart';
 
 class WorkoutPage extends StatefulWidget {
@@ -50,8 +50,8 @@ class _WorkoutPageState extends State<WorkoutPage>
   MediaHelper mediaHelper = MediaHelper();
   int screenTime = 30;
   late AnimationController controller;
- late DateTime currentTime;
- late FlutterTts flutterTts;
+  late DateTime currentTime;
+  late FlutterTts flutterTts;
 
   String get timerString {
     Duration duration = controller.duration! * controller.value;
@@ -72,12 +72,11 @@ class _WorkoutPageState extends State<WorkoutPage>
     String exerciseName = workout.title;
     String totalRap = widget.rapList[currIndex].toString();
     String message = "Start $totalRap $rapType $exerciseName";
-    mediaHelper.playSoundOnce(audioPath).then((value) => Future.delayed(
-            Duration(seconds: 1))
-        .then((value) => mediaHelper.speak(message))
-        .then((value) => Future.delayed(Duration(seconds: 3))
-            .then((value) => mediaHelper.speak(workout.steps[0]))
-           ));
+    mediaHelper.playSoundOnce(audioPath).then((value) =>
+        Future.delayed(Duration(seconds: 1))
+            .then((value) => mediaHelper.speak(message))
+            .then((value) => Future.delayed(Duration(seconds: 3))
+                .then((value) => mediaHelper.speak(workout.steps[0]))));
   }
 
   _onPopBack() async {
@@ -98,60 +97,54 @@ class _WorkoutPageState extends State<WorkoutPage>
     print(value);
   }
 
-  _showInterstitialAd(){
-    var subscriptionProvider = Provider.of<SubscriptionProvider>(context,listen: false);
-    if(!subscriptionProvider.isProUser){
-      var provider = Provider.of<AdsProvider>(context,listen: false);
-      if(provider.interstitialAd != null){
-        provider.interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (InterstitialAd ad){
-              ad.dispose();
-              provider.createInterstitialAd();
-            },
-            onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error){
-              ad.dispose();
-              provider.createInterstitialAd();
-            }
-        );
+  _showInterstitialAd() {
+    var subscriptionProvider =
+        Provider.of<SubscriptionProvider>(context, listen: false);
+    if (!subscriptionProvider.isProUser) {
+      var provider = Provider.of<AdsProvider>(context, listen: false);
+      if (provider.interstitialAd != null) {
+        provider.interstitialAd!.fullScreenContentCallback =
+            FullScreenContentCallback(
+                onAdDismissedFullScreenContent: (InterstitialAd ad) {
+          ad.dispose();
+          provider.createInterstitialAd();
+        }, onAdFailedToShowFullScreenContent:
+                    (InterstitialAd ad, AdError error) {
+          ad.dispose();
+          provider.createInterstitialAd();
+        });
         provider.interstitialAd!.show();
       }
     }
-
-
-
-
   }
 
-
   _onComplete(int currIndex) async {
-
     if (currIndex + 1 == widget.workOutList.length) {
       _showInterstitialAd();
 
-       return Navigator.pushReplacement(
-           context,
-           MaterialPageRoute(
-               builder: (context) => ReportScreen(
-                 tag: widget.tag,
-
-                 title: widget.title,
-                 dateTime: widget.currTime,
-                 totalExercise: widget.workOutList.length,
-               )));
-     }
-     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-       return RestScreen(
-         tag: widget.tag,
-         currTime: widget.currTime,
-         workOutList: widget.workOutList,
-         exerciseNumber: currIndex,
-         totalNumberOfExercise: widget.workOutList.length,
-         rapList: widget.rapList,
-         title: widget.title,
-         restTime:  widget.restTime,
-       );
-     }));
-     }
+      return Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ReportScreen(
+                    tag: widget.tag,
+                    title: widget.title,
+                    dateTime: widget.currTime,
+                    totalExercise: widget.workOutList.length,
+                  )));
+    }
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      return RestScreen(
+        tag: widget.tag,
+        currTime: widget.currTime,
+        workOutList: widget.workOutList,
+        exerciseNumber: currIndex,
+        totalNumberOfExercise: widget.workOutList.length,
+        rapList: widget.rapList,
+        title: widget.title,
+        restTime: widget.restTime,
+      );
+    }));
+  }
 
   _showTimer() {
     controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
@@ -208,7 +201,10 @@ class _WorkoutPageState extends State<WorkoutPage>
             width: double.infinity,
             child: Padding(
               padding: const EdgeInsets.only(top: 18.0, left: 18, right: 18),
-              child: Image.asset(item.imageSrc,fit: BoxFit.scaleDown,),
+              child: Image.asset(
+                item.imageSrc,
+                fit: BoxFit.scaleDown,
+              ),
             ),
             color: Colors.white,
           ),
@@ -228,9 +224,9 @@ class _WorkoutPageState extends State<WorkoutPage>
                       controller.stop(canceled: true);
                       await Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => DetailPage(
-                            workout: item,
-                            rapCount: widget.rapList[currIndex],
-                          )));
+                                workout: item,
+                                rapCount: widget.rapList[currIndex],
+                              )));
                     }
                     controller.reverse(
                         from: controller.value == 0.0 ? 1.0 : controller.value);
@@ -278,8 +274,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                     await Navigator.of(context).push(
                       MaterialPageRoute(
                           builder: (BuildContext context) => CheckListScreen(
-                              progress:
-                              (currIndex + 1) / widget.workOutList.length,
+                              currentWorkout: currIndex + 1,
                               workOutList: widget.workOutList,
                               tag: widget.tag,
                               title: widget.title)),
@@ -289,33 +284,34 @@ class _WorkoutPageState extends State<WorkoutPage>
                         from: controller.value == 0.0 ? 1.0 : controller.value);
                   },
                 ),
-
               ],
             )),
       ],
     );
   }
 
-  getProgressBar(double width, int currIndex,bool isDark) {
+  getProgressBar(double width, int currIndex, bool isDark) {
     return LinearPercentIndicator(
       padding: EdgeInsets.all(0),
       animation: true,
       lineHeight: 5.0,
       percent: (currIndex + 1) / widget.workOutList.length,
       width: width,
-      backgroundColor:isDark?Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8):Colors.blue.shade200,
+      backgroundColor: isDark
+          ? Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8)
+          : Colors.blue.shade200,
       barRadius: Radius.circular(18),
       progressColor: Colors.blue.shade700,
     );
   }
 
-
-  getTitleCard(Workout item, int currIndex,bool isDark) {
-    Color greyColor = Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.55);
+  getTitleCard(Workout item, int currIndex, bool isDark) {
+    Color greyColor =
+        Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.55);
 
     return Expanded(
       child: Container(
-          color:Theme.of(context).cardColor,
+          color: Theme.of(context).cardColor,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -335,7 +331,6 @@ class _WorkoutPageState extends State<WorkoutPage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-
                       Flexible(
                         child: Text(
                           item.title,
@@ -358,43 +353,36 @@ class _WorkoutPageState extends State<WorkoutPage>
               Container(
                 child: item.showTimer == true
                     ? Container(
-                  height: 50,
-                  //  width: double.infinity,
-                  child: AnimatedBuilder(
-                      animation: controller,
-                      builder: (BuildContext context, Widget? child) {
+                        height: 50,
+                        //  width: double.infinity,
+                        child: AnimatedBuilder(
+                            animation: controller,
+                            builder: (BuildContext context, Widget? child) {
+                              if (timerValue <= 3000 && timerValue > 2950) {
+                                mediaHelper.speak('Three');
+                              }
+                              if (timerValue <= 1600 && timerValue > 1550) {
+                                mediaHelper.speak('Two');
+                              }
+                              if (timerValue <= 200 && timerValue > 150) {
+                                mediaHelper.speak('One');
+                              }
 
-
-                        if (timerValue <= 3000 &&
-                            timerValue > 2950) {
-                          mediaHelper.speak('Three');
-                        }
-                        if (timerValue <= 1600 &&
-                            timerValue > 1550) {
-                          mediaHelper.speak('Two');
-                        }
-                        if (timerValue <= 200 &&
-                            timerValue > 150) {
-                          mediaHelper.speak('One');
-                        }
-
-
-
-
-                        String parsedTime = timerString.length == 1
-                              ? "0" + timerString
-                              : timerString;
-                          return Text(
-                            "00:" + parsedTime,
-                            style: TextStyle(fontSize: 40),
-                            //    style: themeData.textTheme.display4,
-                          );
-                        }),
-                )
+                              String parsedTime = timerString.length == 1
+                                  ? "0" + timerString
+                                  : timerString;
+                              return Text(
+                                "00:" + parsedTime,
+                                style: TextStyle(fontSize: 40),
+                                //    style: themeData.textTheme.display4,
+                              );
+                            }),
+                      )
                     : Text(
-                  "X ${widget.rapList[currIndex]}",
-                  style: TextStyle(fontSize: 44, fontWeight: FontWeight.w500),
-                ),
+                        "X ${widget.rapList[currIndex]}",
+                        style: TextStyle(
+                            fontSize: 44, fontWeight: FontWeight.w500),
+                      ),
               ),
               SizedBox(
                 height: 20,
@@ -410,14 +398,15 @@ class _WorkoutPageState extends State<WorkoutPage>
                       letterSpacing: 2,
                       fontWeight: FontWeight.w500,
                       color: Colors.white),
-            ),
+                ),
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.blue.shade700,
-              padding: EdgeInsets.only(left: 40, right: 40, top: 15, bottom: 15),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-            ),
+                  padding:
+                      EdgeInsets.only(left: 40, right: 40, top: 15, bottom: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 10,
@@ -428,7 +417,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     TextButton(
-                        onPressed:()=> _onPopBack(),
+                        onPressed: () => _onPopBack(),
                         child: Row(
                           children: [
                             Icon(
@@ -449,7 +438,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                         )),
                     Container(
                       height: 20,
-                      color:greyColor,
+                      color: greyColor,
                       width: 2.5,
                     ),
                     TextButton(
@@ -484,17 +473,17 @@ class _WorkoutPageState extends State<WorkoutPage>
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    bool isDark =Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
     return WillPopScope(
-      onWillPop: ()=>_onPopBack(),
+      onWillPop: () => _onPopBack(),
       child: Scaffold(
         body: SafeArea(
           child: Column(
             children: [
               getImage(height, item, currIndex),
-              getProgressBar(width, currIndex,isDark),
-              getTitleCard(item, currIndex,isDark)
+              getProgressBar(width, currIndex, isDark),
+              getTitleCard(item, currIndex, isDark)
             ],
           ),
         ),

@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/widgets/custom_exercise_card.dart';
 
+import '../../database/workout_list.dart';
+import '../../helper/sp_helper.dart';
+import '../../helper/sp_key_helper.dart';
+import '../../widgets/custom_exercise_card.dart';
 import 'exercise_instruction_screen.dart';
 
 class ExerciseListScreen extends StatefulWidget {
@@ -31,14 +30,14 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   double countDownTime = 30;
   double restTime = 30;
   final TextEditingController searchQuery = new TextEditingController();
- late ScrollController _scrollController;
+  late ScrollController _scrollController;
   late List<String> items;
- late TabController tabContoller;
+  late TabController tabContoller;
   double padValue = 0;
   int pushUpIndex = 1;
   bool isLoading = true;
   bool lastStatus = true;
-  String coverImgPath ="assets/workout_list_cover/arms.jpg";
+  String coverImgPath = "assets/workout_list_cover/arms.jpg";
   String title = "";
   int time = 20;
 
@@ -55,8 +54,8 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
         _scrollController.offset > (200 - kToolbarHeight);
   }
 
-  getWorkoutList(){
-    for( int index = 0; index <widget.workOutList.length; index++){
+  getWorkoutList() {
+    for (int index = 0; index < widget.workOutList.length; index++) {
       if (widget.workOutList[index].showTimer == false) {
         List<String> splitTitle = widget.title.split(" ");
         if (splitTitle.length == 5) {
@@ -77,8 +76,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
           } else
             time = widget.workOutList[index].advanceRap ?? 14;
         }
-      } else if (widget.workOutList[index].showTimer ==
-          true) {
+      } else if (widget.workOutList[index].showTimer == true) {
         time = widget.workOutList[index].duration ?? 30;
       } else {
         time = 30;
@@ -111,30 +109,30 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
     pushUpIndex = await spHelper.loadInt(spKey.pushUpLevel) ?? 1;
   }
 
-  getCoverImage(){
+  getCoverImage() {
     String tag = widget.title.toLowerCase();
-   if(tag.contains("abs")){
-     coverImgPath = "assets/workout_list_cover/abs.jpg";
-   }else if(tag.contains("shoulder")){
-     coverImgPath="assets/workout_list_cover/shoulder.jpg";
-   }else if(tag.contains("legs")){
-     coverImgPath = "assets/workout_list_cover/legs.jpg";
-   }else if(tag.contains("chest")){
-     coverImgPath = "assets/workout_list_cover/chest.jpg";
-   }else if(tag.contains("arms")){
-     coverImgPath = "assets/workout_list_cover/arms.jpg";
-   }else{
-     coverImgPath = "assets/workout_list_cover/legs.jpg";
-   }
+    if (tag.contains("abs")) {
+      coverImgPath = "assets/workout_list_cover/abs.jpg";
+    } else if (tag.contains("shoulder")) {
+      coverImgPath = "assets/workout_list_cover/shoulder.jpg";
+    } else if (tag.contains("legs")) {
+      coverImgPath = "assets/workout_list_cover/legs.jpg";
+    } else if (tag.contains("chest")) {
+      coverImgPath = "assets/workout_list_cover/chest.jpg";
+    } else if (tag.contains("arms")) {
+      coverImgPath = "assets/workout_list_cover/arms.jpg";
+    } else {
+      coverImgPath = "assets/workout_list_cover/legs.jpg";
+    }
   }
 
-  getTitle(){
-   List<String> curr =widget.title.split(" ");
-   if(curr.length == 5 && curr[0].toLowerCase() != "full"){
+  getTitle() {
+    List<String> curr = widget.title.split(" ");
+    if (curr.length == 5 && curr[0].toLowerCase() != "full") {
       title = "${curr[0]} ${curr[1]} ${curr[3]} ${curr[4]}";
-   }else{
-     title = widget.title;
-   }
+    } else {
+      title = widget.title;
+    }
   }
 
   loadData() async {
@@ -167,7 +165,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
 
   @override
   Widget build(BuildContext context) {
-    bool isDark =Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -176,7 +174,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
           padding: EdgeInsets.only(bottom: 0.0),
           child: Align(
             alignment: Alignment.bottomCenter,
-            child:FloatingActionButton.extended(
+            child: FloatingActionButton.extended(
               backgroundColor: Colors.blue.shade700,
               onPressed: () {
                 Navigator.push(
@@ -194,7 +192,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                 );
               },
               icon: Icon(
-                 Icons.local_fire_department_sharp,
+                Icons.local_fire_department_sharp,
                 color: Colors.white,
                 size: 30,
               ),
@@ -228,7 +226,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                           Navigator.of(context).pop(true);
                         },
                       ),
-
                       expandedHeight: 150.0,
                       pinned: true,
                       floating: false,
@@ -243,73 +240,83 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                                       ? Colors.black
                                       : Colors.white),
                         ),
-                        background: Image.asset(
-                          coverImgPath,
-                          fit: BoxFit.cover,
+                        background: Stack(
+                          children: [
+                            Image.asset(
+                              coverImgPath,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
+                            Container(
+                              color: Colors.black.withOpacity(.5),
+                            )
+                          ],
                         ),
                       ),
                     ),
-            ];
-          },
-          body: Scaffold(
+                  ];
+                },
+                body: Scaffold(
                   body: TabBarView(
-              controller: tabContoller,
-              children: [
-                ListView.builder(
-                  itemBuilder: (context, index) {
-
-                    return
-                      Column(
-                      children: [
-                        SizedBox(height: 4,),
-                        if (index == 0)
-                          AnimatedPadding(
-                            duration: Duration(milliseconds: 400),
+                    controller: tabContoller,
+                    children: [
+                      ListView.builder(
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              if (index == 0)
+                                Container(
+                                  color: Colors.blue.withOpacity(.1),
                                   padding: EdgeInsets.only(
                                       left: padValue * 20,
                                       right: padValue,
-                                      top: padValue * 8,
-                                      bottom: padValue * 8),
+                                      top: padValue * 12,
+                                      bottom: padValue * 12),
                                   child: Row(
                                     children: [
                                       CircleAvatar(
-                                        radius: 6,
-                                        backgroundColor: Colors.red,
+                                        radius: 5,
+                                        backgroundColor:
+                                            Colors.red.withOpacity(.9),
                                       ),
                                       SizedBox(
                                         width: 10,
                                       ),
                                       Text(
                                         widget.workOutList.length.toString() +
-                                      " Workouts",
+                                            " Workouts",
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 16),
-                                ),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                CircleAvatar(
-                                  radius: 6,
-                                  backgroundColor: Colors.orange,
-                                ),
-                                SizedBox(
-                                  width: 10,
+                                            fontSize: 15),
+                                      ),
+                                      SizedBox(
+                                        width: 30,
+                                      ),
+                                      CircleAvatar(
+                                        radius: 5,
+                                        backgroundColor:
+                                            Colors.orange.withOpacity(.9),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
                                       ),
                                       Text(
                                         getTime().toString() + " Minutes",
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 16),
+                                            fontSize: 15),
                                       ),
                                     ],
                                   ),
                                 ),
                               if (index == 0)
-                                Divider(
-                                  height: 8,
-                                  thickness: 1,
+                                Container(
+                                  color: Colors.grey.withOpacity(.2),
+                                  height: 1,
                                 ),
+                              SizedBox(
+                                height: 8,
+                              ),
                               AnimatedPadding(
                                 duration: Duration(milliseconds: 1000),
                                 curve: Curves.easeOutCubic,
@@ -324,18 +331,18 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                                 ),
                               ),
                               Divider(
-                               thickness: 1,
+                                thickness: 1,
                               ),
                             ],
-                    );
-                  },
-                  padding: EdgeInsets.only(bottom: 100),
-                  physics: BouncingScrollPhysics(),
-                  itemCount: widget.workOutList.length,
-                )
-              ],
-            ),
-          ),
-        ));
+                          );
+                        },
+                        padding: EdgeInsets.only(bottom: 100),
+                        physics: BouncingScrollPhysics(),
+                        itemCount: widget.workOutList.length,
+                      )
+                    ],
+                  ),
+                ),
+              ));
   }
 }

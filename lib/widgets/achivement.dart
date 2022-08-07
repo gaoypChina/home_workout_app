@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-
+import '../../helper/sp_helper.dart';
+import '../../helper/sp_key_helper.dart';
 
 class Achievement extends StatefulWidget {
   final Function onTap;
@@ -26,8 +24,8 @@ class _AchievementState extends State<Achievement> {
       isLoading = true;
     });
 
-    int loadedTime = await _spHelper.loadInt(_spKey.time) ??0;
-    int loadedExercise = await _spHelper.loadInt(_spKey.exercise) ??0;
+    int loadedTime = await _spHelper.loadInt(_spKey.time) ?? 0;
+    int loadedExercise = await _spHelper.loadInt(_spKey.exercise) ?? 0;
     calories = loadedTime * (18 / 60);
     time = loadedTime;
     exercise = loadedExercise;
@@ -41,82 +39,37 @@ class _AchievementState extends State<Achievement> {
     getData();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
     Widget getAchievementCard(
         int time, int exercise, double calories, bool isLoading) {
-      getCard(String title, String subTitle, Color color) {
-
-        return Material(
-          elevation: 0,
-          color: Colors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
-          child: Container(
-            height: 88,
-
-
-            decoration: BoxDecoration(
-                color:isDark? color.withOpacity(.2):color.withOpacity(.15) ,
-              borderRadius: BorderRadius.all(Radius.circular(16))
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 18,vertical: 18),
-            child: InkWell(
-              borderRadius: BorderRadius.all(Radius.circular(16)),
-              onTap: () => widget.onTap(),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-
-                  Text(
-                    isLoading ? "" : subTitle.length == 1?"0"+subTitle : subTitle,
-
-                    style: TextStyle(
-                      letterSpacing: 1.5,
-                        fontWeight: FontWeight.w500,
-                        color: isDark? Colors.white.withOpacity(.8):Colors.black.withOpacity(.6),
-                        fontSize: 28),
-                  ),
-
-                  SizedBox(height: 4,),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      letterSpacing: 1,
-                        color: isDark? Colors.white.withOpacity(.8):Colors.black.withOpacity(.6),
-                        fontWeight: FontWeight.w700,
-                        fontSize: 13),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      }
-
       _buildExercise({required String title, required String subtitle}) {
         return Expanded(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w500, fontSize: 18),
-                ),
-                Text(
-                  title,
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w500, fontSize: 16),
-                ),
-              ],
-            ));
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              subtitle,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18),
+            ),
+            Text(
+              title,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16),
+            ),
+          ],
+        ));
       }
 
-      return  Container(
+      return Container(
         color: Colors.blue.withOpacity(.5),
         width: size.width,
         child: Stack(
@@ -140,21 +93,21 @@ class _AchievementState extends State<Achievement> {
                 Spacer(),
                 Container(
 
-                  //padding: EdgeInsets.only(bottom: 18),
+                    //padding: EdgeInsets.only(bottom: 18),
 
                     child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-
-                        _buildExercise(
-                            title: "Exercise", subtitle: exercise.toString()),
-
-                        _buildExercise(
-                            title: "Minute", subtitle: (time/60).ceil().toInt().toString()),
-                        _buildExercise(
-                            title: "Calories", subtitle: calories.ceil().toInt().toString())
-                      ],
-                    )),
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildExercise(
+                        title: "Exercise", subtitle: exercise.toString()),
+                    _buildExercise(
+                        title: "Minute",
+                        subtitle: (time / 60).ceil().toInt().toString()),
+                    _buildExercise(
+                        title: "Calories",
+                        subtitle: calories.ceil().toInt().toString())
+                  ],
+                )),
                 Spacer(),
               ],
             ),
@@ -162,6 +115,7 @@ class _AchievementState extends State<Achievement> {
         ),
       );
     }
+
     return getAchievementCard(time, exercise, calories, isLoading);
   }
 }

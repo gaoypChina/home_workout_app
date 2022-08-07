@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -36,7 +34,7 @@ class _WeightPickerState extends State<WeightPicker> {
             title,
             style: TextStyle(
                 color:
-                isSelected ? Colors.white : Theme.of(context).primaryColor,
+                    isSelected ? Colors.white : Theme.of(context).primaryColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w500),
           ),
@@ -70,7 +68,9 @@ class _WeightPickerState extends State<WeightPicker> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(width: 8,),
+            SizedBox(
+              width: 8,
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -79,18 +79,15 @@ class _WeightPickerState extends State<WeightPicker> {
                   height: 4,
                 ),
                 _buildUnit(title: "Lbs", index: 1),
-
               ],
             ),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-
                 children: [
                   SizedBox(
                     width: 12,
                   ),
-
                   Spacer(),
                   NumberPicker(
                     itemHeight: 50,
@@ -98,7 +95,8 @@ class _WeightPickerState extends State<WeightPicker> {
                     step: 1,
                     minValue: 25,
                     maxValue: unit == 0 ? 300 : 650,
-                    decoration: BoxDecoration(color: Colors.blue.withOpacity(.2)),
+                    decoration:
+                        BoxDecoration(color: Colors.blue.withOpacity(.2)),
                     selectedTextStyle: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 18,
@@ -112,7 +110,6 @@ class _WeightPickerState extends State<WeightPicker> {
                       });
                     },
                   ),
-
                   Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.symmetric(horizontal: 12),
@@ -128,7 +125,8 @@ class _WeightPickerState extends State<WeightPicker> {
                     infiniteLoop: true,
                     itemHeight: 50,
                     value: decimalValue,
-                    decoration: BoxDecoration(color: Colors.blue.withOpacity(.2)),
+                    decoration:
+                        BoxDecoration(color: Colors.blue.withOpacity(.2)),
                     step: 1,
                     minValue: 0,
                     maxValue: 9,
@@ -160,29 +158,31 @@ class _WeightPickerState extends State<WeightPicker> {
             ),
           ],
         ),
-
         SizedBox(
           height: 18,
         ),
         Row(
           children: [
             Spacer(),
-            TextButton(onPressed: () {
-              Navigator.of(context).pop();
-
-            }, child: Text("CANCEL")),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("CANCEL")),
             SizedBox(
               width: 8,
             ),
-            ElevatedButton(onPressed: () {
-              double res = 0.0;
-              if(unit == 0){
-                res = unitKgValue + decimalValue/10;
-              }else{
-                res = unitLbsValue + decimalValue/10;
-              }
-              Navigator.pop(context, res);
-            }, child: Text("DONE")),
+            ElevatedButton(
+                onPressed: () {
+                  double res = 0.0;
+                  if (unit == 0) {
+                    res = unitKgValue + decimalValue / 10;
+                  } else {
+                    res = unitLbsValue + decimalValue / 10;
+                  }
+                  Navigator.pop(context, res);
+                },
+                child: Text("DONE")),
             SizedBox(
               width: 18,
             )

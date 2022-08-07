@@ -1,22 +1,22 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SpHelper {
- Future<void> saveString(String key, String value) async {
+  Future<void> saveString(String key, String value) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString(key, value);
   }
 
- Future<void> saveBool(String key, bool value) async {
+  Future<void> saveBool(String key, bool value) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setBool(key, value);
   }
 
- Future<void> saveInt(String key, int value) async {
+  Future<void> saveInt(String key, int value) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setInt(key, value);
   }
 
- Future<void> saveDouble(String key, double value) async {
+  Future<void> saveDouble(String key, double value) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setDouble(key, value);
   }
@@ -43,9 +43,9 @@ class SpHelper {
   Future<double?> loadDouble(String key) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     print(preferences.getDouble("weight"));
-      return preferences.getDouble(key);
+    return preferences.getDouble(key);
 
-   // return null;
+    // return null;
   }
 
   Future<bool?> loadBool(String key) async {
@@ -56,8 +56,6 @@ class SpHelper {
     }
     return null;
   }
-
-
 
   Future<bool?> loadIsActive(String key) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();

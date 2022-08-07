@@ -1,11 +1,11 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:full_workout/pages/main/home_page/home_page.dart';
+import '../../../pages/main/home_page/home_page.dart';
 
 import 'main/explore_page/explore_page.dart';
-import 'main/explore_page/four_week_challenges_page/four_week_challenge_page.dart';
 import 'main/report_page/report_page.dart';
 import 'main/setting_page/setting_screen.dart';
 import 'main/weight_report_page/weight_report_details/weight_report_detail.dart';
@@ -29,10 +29,9 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-
   @override
   void initState() {
-    currentIndex =widget.index??0;
+    currentIndex = widget.index ?? 0;
     super.initState();
   }
 
@@ -43,29 +42,45 @@ class _MainPageState extends State<MainPage> {
           decoration: BoxDecoration(
             boxShadow: <BoxShadow>[
               BoxShadow(
-                color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.4),
-                blurRadius: 2,spreadRadius: .5,offset: Offset(2,2)
-              ),
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .color!
+                      .withOpacity(.4),
+                  blurRadius: 2,
+                  spreadRadius: .5,
+                  offset: Offset(2, 2)),
             ],
           ),
           child: BottomNavigationBarTheme(
             data: BottomNavigationBarThemeData(
-              elevation: 1,
-                  backgroundColor:Theme.of(context).bottomAppBarColor
-                ),
+                elevation: .5,
+                backgroundColor: Theme.of(context).bottomAppBarColor),
             child: BottomNavigationBar(
-              selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+              selectedLabelStyle:
+                  TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
               showSelectedLabels: true,
-              unselectedItemColor: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.85),
-              unselectedLabelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+              unselectedItemColor: Theme.of(context)
+                  .textTheme
+                  .bodyText1!
+                  .color!
+                  .withOpacity(.85),
+              unselectedLabelStyle:
+                  TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
               selectedItemColor: Theme.of(context).primaryColor,
               iconSize: 20,
               showUnselectedLabels: true,
-              currentIndex: currentIndex??0,
+              currentIndex: currentIndex ?? 0,
               items: [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined,size: 26,),
-                  activeIcon: Icon(Icons.home,size: 26,),
+                  icon: Icon(
+                    Icons.home_outlined,
+                    size: 26,
+                  ),
+                  activeIcon: Icon(
+                    Icons.home,
+                    size: 26,
+                  ),
                   label: "Home",
                 ),
                 BottomNavigationBarItem(
@@ -77,24 +92,30 @@ class _MainPageState extends State<MainPage> {
                     activeIcon: Icon(FontAwesomeIcons.chartBar),
                     label: "Report"),
                 BottomNavigationBarItem(
-                    icon: Icon(EvaIcons.pieChartOutline,),
-                    activeIcon: Icon(EvaIcons.pieChart,),
+                    icon: Icon(
+                      EvaIcons.pieChartOutline,
+                    ),
+                    activeIcon: Icon(
+                      EvaIcons.pieChart,
+                    ),
                     label: "Weight"),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.person_outline_sharp,size: 23,),
+                    icon: Icon(
+                      Icons.person_outline_sharp,
+                      size: 23,
+                    ),
                     activeIcon: Icon(CupertinoIcons.person_solid),
                     label: "Profile"),
               ],
               type: BottomNavigationBarType.fixed,
               onTap: (index) async {
                 setState(() {
-                    currentIndex = index;
-                  });
+                  currentIndex = index;
+                });
               },
             ),
           ),
         ),
-
         body: getIndex());
   }
 
@@ -102,7 +123,7 @@ class _MainPageState extends State<MainPage> {
     if (currentIndex == 0) {
       return HomePage();
     } else if (currentIndex == 1) {
-      return FourWeekChallengePage();
+      //return FourWeekChallengePage();
       return ExplorePage(
         onBack: onBack,
       );

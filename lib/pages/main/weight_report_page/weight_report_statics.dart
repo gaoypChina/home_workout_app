@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/helper/weight_db_helper.dart';
+import '../../../helper/weight_db_helper.dart';
 
 class WeightReportStatics extends StatefulWidget {
   @override
@@ -31,9 +31,8 @@ class _WeightReportStaticsState extends State<WeightReportStatics> {
 
     List<dynamic> currWeightDB = await _databaseHelper.getCurrWeight();
     print(currWeightDB.toString() + "error");
-    currWeight = currWeightDB.length ==0
-        ? "NaN"
-        : currWeightDB[0]["weight"].toString();
+    currWeight =
+        currWeightDB.length == 0 ? "NaN" : currWeightDB[0]["weight"].toString();
 
     print(minWeight);
     print(maxWeight);
@@ -52,9 +51,9 @@ class _WeightReportStaticsState extends State<WeightReportStatics> {
 
   @override
   Widget build(BuildContext context) {
-    getWeightDetail({required String title, required String value, required Color color}) {
+    getWeightDetail(
+        {required String title, required String value, required Color color}) {
       return Padding(
-
         padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4),
         child: Row(
           children: [
@@ -68,22 +67,33 @@ class _WeightReportStaticsState extends State<WeightReportStatics> {
             ),
             Text(title),
             Spacer(),
-            isLoading?CircularProgressIndicator():
-           value == "NaN" ? Text(value):Text(value +" Kg")
+            isLoading
+                ? CircularProgressIndicator()
+                : value == "NaN"
+                    ? Text(value)
+                    : Text(value + " Kg")
           ],
         ),
       );
     }
 
-    return isLoading == true ? Center(child: CircularProgressIndicator()): Column(
-      children: [
-        getWeightDetail(
-            title: "Current", value: currWeight, color: Colors.green.withOpacity(.8)),
-        getWeightDetail(
-            title: "Heaviest", value: maxWeight, color: Colors.amber.withOpacity(.7)),
-        getWeightDetail(
-            title: "Lightest", value: minWeight, color: Colors.red.withOpacity(.7)),
-      ],
-    );
+    return isLoading == true
+        ? Center(child: CircularProgressIndicator())
+        : Column(
+            children: [
+              getWeightDetail(
+                  title: "Current",
+                  value: currWeight,
+                  color: Colors.green.withOpacity(.8)),
+              getWeightDetail(
+                  title: "Heaviest",
+                  value: maxWeight,
+                  color: Colors.amber.withOpacity(.7)),
+              getWeightDetail(
+                  title: "Lightest",
+                  value: minWeight,
+                  color: Colors.red.withOpacity(.7)),
+            ],
+          );
   }
 }

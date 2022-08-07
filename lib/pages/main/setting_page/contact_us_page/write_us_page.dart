@@ -1,29 +1,21 @@
-import 'dart:convert';
-
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:http/http.dart';
-
 import '../../../../constants/constant.dart';
 
-
-
 class WriteUsPage extends StatelessWidget {
-   WriteUsPage({Key? key}) : super(key: key);
+  WriteUsPage({Key? key}) : super(key: key);
 
   TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    onSend() async{
-
-      if(_controller.text.length < 3){
+    onSend() async {
+      if (_controller.text.length < 3) {
         Constants().getToast("Enter valid message");
-        return ;
+        return;
       }
-
 
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       AndroidDeviceInfo info = await deviceInfo.androidInfo;
@@ -32,7 +24,10 @@ class WriteUsPage extends StatelessWidget {
           "version: ${info.version.release.toString()}, brand: ${info.brand.toString()}, display : ${size.height.toInt()}x${size.width.toInt()}\n\n";
 
       final Email email = Email(
-        body:"\n"+ _controller.text + "\n\n\n--------------------------------------------------------------\n" + toSend,
+        body: "\n" +
+            _controller.text +
+            "\n\n\n--------------------------------------------------------------\n" +
+            toSend,
         subject: 'Home Workout Feedback',
         recipients: ['workoutfeedback@gmail.com'],
         isHTML: false,
@@ -41,7 +36,9 @@ class WriteUsPage extends StatelessWidget {
       try {
         await FlutterEmailSender.send(email);
       } catch (e) {
-        Constants().getToast("Not able to send email",);
+        Constants().getToast(
+          "Not able to send email",
+        );
       }
     }
 
@@ -75,7 +72,7 @@ class WriteUsPage extends StatelessWidget {
             const Spacer(),
             ElevatedButton(
               child: Text("SUBMIT"),
-              onPressed: ()  {
+              onPressed: () {
                 onSend();
               },
               style: ElevatedButton.styleFrom(
@@ -87,4 +84,3 @@ class WriteUsPage extends StatelessWidget {
     );
   }
 }
-

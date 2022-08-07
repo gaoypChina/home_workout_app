@@ -12,7 +12,7 @@ class LoginButton extends StatelessWidget {
       {Key? key,
       required this.title,
       required this.width,
-        required this.color,
+      required this.color,
       required this.onTap})
       : super(key: key);
 

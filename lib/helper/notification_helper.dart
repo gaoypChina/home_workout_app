@@ -20,43 +20,52 @@ class NotificationHelper {
   }
 
   static Future init({bool initScheduled = false}) async {
-
     final android = AndroidInitializationSettings("@mipmap/ic_launcher");
     final ios = IOSInitializationSettings();
     final settings = InitializationSettings(android: android, iOS: ios);
     await _notification.initialize(settings,
         onSelectNotification: (payload) async {
-      onNotifications.add(payload??"");
-        });
+      onNotifications.add(payload ?? "");
+    });
 
-    if(initScheduled){
+    if (initScheduled) {
       tz.initializeTimeZones();
       final locationName = await FlutterNativeTimezone.getLocalTimezone();
       tz.setLocalLocation(tz.getLocation(locationName));
     }
   }
 
-  static void showNotification({int id =0, required String title, required String body, required String payload })async{
-    _notification.show(id, title, body,await _notificationDetails(),payload: payload);
+  static void showNotification(
+      {int id = 0,
+      required String title,
+      required String body,
+      required String payload}) async {
+    _notification.show(id, title, body, await _notificationDetails(),
+        payload: payload);
   }
 
   static void showScheduledNotification(
-      {int id = 0, required String title, required String body, required String payload, required Time time, required List<int> days}) async {
+      {int id = 0,
+      required String title,
+      required String body,
+      required String payload,
+      required Time time,
+      required List<int> days}) async {
     print(time.hour.toString() + " : hour time");
     print(days.toString() + " : minute time");
 
     _notification.zonedSchedule(
-        id,
-        title,
-        body,
-        _scheduleWeekly(time, days: days),
-        await _notificationDetails(),
-        payload: payload,
+      id,
+      title,
+      body,
+      _scheduleWeekly(time, days: days),
+      await _notificationDetails(),
+      payload: payload,
       androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
-        );
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+    );
   }
 
   static tz.TZDateTime _scheduleDaily(Time time) {

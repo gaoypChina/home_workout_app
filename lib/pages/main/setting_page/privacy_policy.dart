@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/gestures.dart';
 
+import '../../../constants/constant.dart';
 
 class PrivacyPolicy extends StatefulWidget {
   @override
@@ -13,7 +11,6 @@ class PrivacyPolicy extends StatefulWidget {
 class _PrivacyPolicyState extends State<PrivacyPolicy> {
   @override
   Widget build(BuildContext context) {
-
     String src = '''
 
 **Last updated August 12, 2021**
@@ -820,30 +817,27 @@ Based on the applicable laws of your country, you may have the right to request 
     return Scaffold(
       appBar: AppBar(
         title: Text("Privacy Policy"),
-
       ),
-     body: SingleChildScrollView(
-       padding: EdgeInsets.symmetric(horizontal: 16,vertical: 18),
-       physics: BouncingScrollPhysics(),
-       child: Markdown
-         (
-         styleSheet: MarkdownStyleSheet(
-           h2Padding: const EdgeInsets.only(top: 18),
-           h3: Theme.of(context).textTheme.bodyText1,textAlign:WrapAlignment.spaceBetween ),
-         padding: EdgeInsets.zero,
-         onTapLink: (_, url, __) async {
-           if (url != null) {
-             await canLaunch(url)
-                 ? await launch(url)
-                 : throw 'Could not launch $url';
-           }
-         },
-         softLineBreak: true,
-         shrinkWrap: true,
-         physics: const NeverScrollableScrollPhysics(),
-         data: src,),
-     ),
-
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+        physics: BouncingScrollPhysics(),
+        child: Markdown(
+          styleSheet: MarkdownStyleSheet(
+              h2Padding: const EdgeInsets.only(top: 18),
+              h3: Theme.of(context).textTheme.bodyText1,
+              textAlign: WrapAlignment.spaceBetween),
+          padding: EdgeInsets.zero,
+          onTapLink: (_, url, __) async {
+            if (url != null) {
+              await Constants().openUrl(url: url);
+            }
+          },
+          softLineBreak: true,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          data: src,
+        ),
+      ),
     );
   }
 }

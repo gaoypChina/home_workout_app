@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:full_workout/pages/workout_page/report_page.dart';
+import '../../../pages/workout_page/report_page.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 
 import '../main/setting_page/setting_screen.dart';
@@ -46,23 +45,25 @@ class _RateDialogPageState extends State<RateDialogPage> {
                       content: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                        RatingBar.builder(
-                        initialRating: stars,
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                        itemBuilder: (context, _) => Icon(
-                          Icons.star,
-                          size: 14,
-                          color: Colors.amber,
-                        ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
-                      ),
-                          SizedBox(height: 12,),
+                          RatingBar.builder(
+                            initialRating: stars,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              size: 14,
+                              color: Colors.amber,
+                            ),
+                            onRatingUpdate: (rating) {
+                              print(rating);
+                            },
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
                           TextFormField(
                               maxLines: 5,
                               autofocus: true,
@@ -122,7 +123,6 @@ class _RateDialogPageState extends State<RateDialogPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return CustomTile(
       icon: Icons.star_border_outlined,
       title: "Rate This App",
@@ -134,13 +134,18 @@ class _RateDialogPageState extends State<RateDialogPage> {
       onPress: () {
         widget.rateMyApp.showStarRateDialog(context,
             title: "Rate this App",
-            dialogStyle: DialogStyle(contentPadding: EdgeInsets.all(24),
-
+            dialogStyle: DialogStyle(
+                contentPadding: EdgeInsets.all(24),
                 dialogShape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)))),
             message: "Do you like this app? Please leave a rating",
-            starRatingOptions: StarRatingOptions(initialRating: 3,minRating: 1,itemPadding: EdgeInsets.symmetric(vertical: 6,horizontal: 2,)),
-            actionsBuilder: (context, stars) {
+            starRatingOptions: StarRatingOptions(
+                initialRating: 3,
+                minRating: 1,
+                itemPadding: EdgeInsets.symmetric(
+                  vertical: 6,
+                  horizontal: 2,
+                )), actionsBuilder: (context, stars) {
           return actionsBuilder(context, stars ?? 1);
         });
         // showDialog(context: context, builder: (context)=>

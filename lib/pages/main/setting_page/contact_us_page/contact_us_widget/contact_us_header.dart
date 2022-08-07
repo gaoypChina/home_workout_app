@@ -24,7 +24,15 @@ class ContactUsHeader extends StatelessWidget {
                 const SizedBox(
                   height: 12,
                 ),
-                 Text("Please get in touch and we will be happy to help you",style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7)),)
+                Text(
+                  "Please get in touch and we will be happy to help you",
+                  style: TextStyle(
+                      color: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .color!
+                          .withOpacity(.7)),
+                )
               ],
             ),
           ),
@@ -35,7 +43,6 @@ class ContactUsHeader extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 18.0, bottom: 18),
               child: Image.asset(
-
                 "assets/other/contact_us.png",
                 height: 120,
                 width: 120,

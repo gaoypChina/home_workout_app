@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -38,16 +37,21 @@ class _WorkoutTimePickerState extends State<WorkoutTimePicker> {
               Text(
                 "Set Duration(${widget.minimumVal} ~ ${widget.maximumVal} Sec)",
                 style: TextStyle(
-                    fontSize: 17, fontWeight: FontWeight.w500, letterSpacing: 1),
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 1),
               ),
               Spacer(),
-
               InkWell(
-                onTap: ()=>Navigator.of(context).pop(),
-                child: Container(padding: EdgeInsets.all(8),
-                child: Icon(Icons.close),),
+                onTap: () => Navigator.of(context).pop(),
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  child: Icon(Icons.close),
+                ),
               ),
-              SizedBox(width: 8,)
+              SizedBox(
+                width: 8,
+              )
             ],
           ),
         ),
@@ -55,8 +59,9 @@ class _WorkoutTimePickerState extends State<WorkoutTimePicker> {
           color: Colors.grey.withOpacity(.2),
           height: 1,
         ),
-        SizedBox(height: 12,),
-
+        SizedBox(
+          height: 12,
+        ),
         Center(
           child: NumberPicker(
             haptics: true,
@@ -65,17 +70,13 @@ class _WorkoutTimePickerState extends State<WorkoutTimePicker> {
             step: widget.maximumVal == 15 ? 1 : 5,
             minValue: widget.minimumVal,
             maxValue: widget.maximumVal,
-
             decoration: BoxDecoration(color: Colors.blue.withOpacity(.2)),
             selectedTextStyle: TextStyle(
                 color: Theme.of(context).primaryColor,
                 fontSize: 18,
                 fontWeight: FontWeight.w500),
             itemCount: 3,
-            textStyle: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400
-            ),
+            textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
             textMapper: (title) {
               return "$title Sec";
             },
@@ -86,18 +87,22 @@ class _WorkoutTimePickerState extends State<WorkoutTimePicker> {
             },
           ),
         ),
-        SizedBox(height: 12,),
+        SizedBox(
+          height: 12,
+        ),
         Container(
           padding: EdgeInsets.only(right: 12),
           alignment: Alignment.bottomRight,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(minimumSize: Size(80, 42)),
-            child: Text("Save"),onPressed: () => Navigator.pop(context, selectedValue),),
+            child: Text("Save"),
+            onPressed: () => Navigator.pop(context, selectedValue),
+          ),
         ),
-        SizedBox(height: 18,)
+        SizedBox(
+          height: 18,
+        )
       ],
     );
   }
 }
-
-

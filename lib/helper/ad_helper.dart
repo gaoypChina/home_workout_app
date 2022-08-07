@@ -1,6 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/helper/sp_helper.dart';
+import '../../helper/sp_helper.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
@@ -21,8 +21,8 @@ class AdHelper {
               // ad.dispose();
               // },
 
-              onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-
+              onAdFailedToShowFullScreenContent:
+                  (RewardedAd ad, AdError error) {
         _showFailMessage(
             context: context,
             content: "Something went wrong please retry after sometime");
@@ -47,10 +47,11 @@ class AdHelper {
     )..show();
   }
 
-  _showSuccessMessage({required BuildContext context, required String key}) async{
+  _showSuccessMessage(
+      {required BuildContext context, required String key}) async {
     SpHelper().saveString(key, DateTime.now().toIso8601String());
 
-    Provider.of<AdsProvider>(context,listen: false).onRewardLoaded();
+    Provider.of<AdsProvider>(context, listen: false).onRewardLoaded();
     AwesomeDialog(
       context: context,
       dialogType: DialogType.SUCCES,

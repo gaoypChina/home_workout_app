@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -19,12 +18,12 @@ class ReportShare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getCard(int value, String title,Color color) {
+    getCard(int value, String title, Color color) {
       return Material(
         elevation: 2,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         child: Container(
-        //  margin: EdgeInsets.symmetric(vertical: 18),
+          //  margin: EdgeInsets.symmetric(vertical: 18),
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -33,12 +32,20 @@ class ReportShare extends StatelessWidget {
             children: [
               Text(
                 value.toString(),
-                style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.w600),
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600),
               ),
-              SizedBox(height: 4,),
+              SizedBox(
+                height: 4,
+              ),
               Text(
                 title,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700,color: Colors.white),
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white),
               )
             ],
           ),
@@ -51,13 +58,16 @@ class ReportShare extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
           color: Colors.blue.shade700,
-          gradient: LinearGradient(
-              colors: [ Colors.red, Colors.blue.shade900,])
-    ),
+          gradient: LinearGradient(colors: [
+            Colors.red,
+            Colors.blue.shade900,
+          ])),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Container(
             width: double.infinity,
             child: Column(
@@ -77,18 +87,22 @@ class ReportShare extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 38,),
+          SizedBox(
+            height: 38,
+          ),
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                getCard(time, "Minute",Colors.green),
-                getCard(exercise, "Exercise",Colors.red),
-                getCard(calories, "Calories",Colors.orange)
+                getCard(time, "Minute", Colors.green),
+                getCard(exercise, "Exercise", Colors.red),
+                getCard(calories, "Calories", Colors.orange)
               ],
             ),
           ),
-          SizedBox(height: 34,),
+          SizedBox(
+            height: 34,
+          ),
           Container(
             width: double.infinity,
             color: Colors.transparent,
@@ -98,7 +112,6 @@ class ReportShare extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(16)),
-
                   ),
                   height: 60,
                   width: 160,
@@ -150,14 +163,17 @@ class ReportShare extends StatelessWidget {
                           width: 10,
                         ),
                         Expanded(
-                          flex: 2,
+                            flex: 2,
                             child: Container(
                               padding: EdgeInsets.all(6),
-                              decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(12)),color: Colors.black12,),
-
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                                color: Colors.black12,
+                              ),
                               child: Image.asset(
-                          "assets/app_icon.png",
-                        ),
+                                "assets/app_icon.png",
+                              ),
                             )),
                         SizedBox(
                           width: 10,
@@ -189,7 +205,9 @@ class ReportShare extends StatelessWidget {
               ],
             ),
           ),
-SizedBox(height: 10,)
+          SizedBox(
+            height: 10,
+          )
         ],
       ),
     );

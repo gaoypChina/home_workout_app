@@ -1,18 +1,16 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:full_workout/pages/login_page/forget_password_page.dart';
-import 'package:full_workout/pages/login_page/signup_page.dart';
-import 'package:full_workout/pages/login_page/widget/login_button.dart';
-import 'package:full_workout/pages/login_page/widget/login_textField.dart';
-import 'package:full_workout/pages/main_page.dart';
-import 'package:full_workout/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../enums/app_conection_status.dart';
+import '../../pages/login_page/forget_password_page.dart';
+import '../../pages/login_page/signup_page.dart';
+import '../../pages/login_page/widget/login_button.dart';
+import '../../pages/login_page/widget/login_textField.dart';
+import '../../provider/auth_provider.dart';
 import '../../widgets/loading_indicator.dart';
 
 class LoginPage extends StatefulWidget {
@@ -255,7 +253,7 @@ class _HomePageState extends State<LoginPage> with TickerProviderStateMixin {
                                     title: "LOGIN",
                                     width: 2.58,
                                     onTap: () {
-                                      if ( _formKey.currentState!.validate()) {
+                                      if (_formKey.currentState!.validate()) {
                                         var authProvider =
                                             Provider.of<AuthProvider>(context,
                                                 listen: false);
@@ -337,10 +335,7 @@ class _HomePageState extends State<LoginPage> with TickerProviderStateMixin {
     });
   }
 
-  Widget getLoginButton(
-    size,
-  AuthProvider    authProvider
-  ) {
+  Widget getLoginButton(size, AuthProvider authProvider) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: BackdropFilter(

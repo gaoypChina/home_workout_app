@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/provider/subscription_provider.dart';
+import '../../../constants/constant.dart';
+import '../../../provider/subscription_provider.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionPlan extends StatelessWidget {
@@ -69,7 +68,6 @@ class SubscriptionPlan extends StatelessWidget {
                                 SizedBox(
                                   height: 12,
                                 ),
-
                                 Text(
                                   packName.toUpperCase(),
                                   style: TextStyle(
@@ -84,16 +82,16 @@ class SubscriptionPlan extends StatelessWidget {
                                 ),
                                 Text(
                                   Constants()
-                                      .getPerMonthPrice(product: product) +
+                                          .getPerMonthPrice(product: product) +
                                       " Per Month",
                                   style: TextStyle(
                                       color: isSelected
                                           ? Colors.white
                                           : Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .color!
-                                          .withOpacity(.8),
+                                              .textTheme
+                                              .bodyText1!
+                                              .color!
+                                              .withOpacity(.8),
                                       fontSize: 22,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -109,12 +107,11 @@ class SubscriptionPlan extends StatelessWidget {
                                         color: isSelected
                                             ? Colors.white
                                             : Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .color!,
+                                                .textTheme
+                                                .bodyText1!
+                                                .color!,
                                       ),
                                     ),
-
                                   ],
                                 ),
                                 SizedBox(
@@ -126,13 +123,13 @@ class SubscriptionPlan extends StatelessWidget {
                           Expanded(
                               child: isSelected
                                   ? Icon(
-                                Icons.check_circle,
-                                color: Colors.white,
-                              )
+                                      Icons.check_circle,
+                                      color: Colors.white,
+                                    )
                                   : Icon(
-                                Icons.circle,
-                                color: Colors.blue.withOpacity(.2),
-                              )),
+                                      Icons.circle,
+                                      color: Colors.blue.withOpacity(.2),
+                                    )),
                         ],
                       ),
                     ),
@@ -142,11 +139,12 @@ class SubscriptionPlan extends StatelessWidget {
                         top: 0,
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(topRight: Radius.circular(12)),
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(12)),
                             color: isSelected ? Colors.amber : Colors.amber,
                           ),
                           padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                           child: Text(
                             discount.toString() + "% OFF",
                             style: TextStyle(fontWeight: FontWeight.w600),

@@ -4,7 +4,7 @@ class WeightModel {
   late int? _id;
   late String _key;
 
-  WeightModel(this._date, this._weight, this._key,this._id);
+  WeightModel(this._date, this._weight, this._key, this._id);
 
   WeightModel.map(dynamic obj) {
     this._date = obj['date'];

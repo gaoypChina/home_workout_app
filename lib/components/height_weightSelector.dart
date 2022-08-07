@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constant.dart';
+import '../../constants/constant.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-
 
 class HeightSelector extends StatefulWidget {
   final double height;
@@ -22,8 +20,6 @@ class _HeightSelectorState extends State<HeightSelector> {
   TextEditingController _feetController = TextEditingController();
   TextEditingController _inchController = TextEditingController();
 
-
-
   @override
   void initState() {
     setController();
@@ -37,7 +33,6 @@ class _HeightSelectorState extends State<HeightSelector> {
     String inchHeight = "0";
 
     if (widget.height == null) {
-
     } else {
       cmHeight = widget.height.toStringAsFixed(0);
 
@@ -79,10 +74,9 @@ class _HeightSelectorState extends State<HeightSelector> {
         }
       }
 
-
-      if(height >50)
-        Navigator.pop(context, height);
+      if (height > 50) Navigator.pop(context, height);
     }
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: AlertDialog(
@@ -223,13 +217,11 @@ class WeightSelector extends StatefulWidget {
 }
 
 class _WeightSelectorState extends State<WeightSelector> {
-  int weightIndex =0;
-  double weight =0;
+  int weightIndex = 0;
+  double weight = 0;
   Constants constants = Constants();
   TextEditingController _kgController = TextEditingController();
   TextEditingController _lbsController = TextEditingController();
-
-
 
   @override
   void initState() {
@@ -239,30 +231,30 @@ class _WeightSelectorState extends State<WeightSelector> {
     weightIndex = widget.weightIndex;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    onSubmit(){
+    onSubmit() {
       if (weightIndex == 0) {
         weight = double.tryParse(_kgController.text)!;
-        if ( weight <=20 ) {
+        if (weight <= 20) {
           constants.getToast("Please enter valid weight value");
         }
       }
 
       if (weightIndex == 1) {
         double? lbsWeight = double.tryParse(_lbsController.text);
-        if (lbsWeight == null || lbsWeight <=50) {
+        if (lbsWeight == null || lbsWeight <= 50) {
           constants.getToast("Please enter valid weight value");
         } else {
           weight = lbsWeight / 2.205;
           print(weight);
         }
       }
-      if ( weight != null && weight >20){
+      if (weight > 20) {
         Navigator.pop(context, weight);
       }
     }
-
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -270,8 +262,7 @@ class _WeightSelectorState extends State<WeightSelector> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16))),
         contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 16),
-
-        title:  Text(
+        title: Text(
           "Weight",
           style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
         ),
@@ -304,50 +295,44 @@ class _WeightSelectorState extends State<WeightSelector> {
                 ),
               ),
             ),
-
-
             SizedBox(
               height: 10,
             ),
             weightIndex == 0
                 ? Container(
-              width: 200,
-              child: TextField(
-                autofocus: true,
-
-                decoration: InputDecoration(
-                  suffix: Text("KG"),
-                  labelText: "Kg",
-                  border: new OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: new BorderSide(color: Colors.blueGrey)),
-                ),
-                controller: _kgController,
-                keyboardType:
-                TextInputType.numberWithOptions(decimal: true),
-              ),
-            )
+                    width: 200,
+                    child: TextField(
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        suffix: Text("KG"),
+                        labelText: "Kg",
+                        border: new OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: new BorderSide(color: Colors.blueGrey)),
+                      ),
+                      controller: _kgController,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                    ),
+                  )
                 : Container(
-              width: 200,
-              child: TextField(
-                autofocus: true,
-
-                decoration: InputDecoration(
-                  suffix: Text("Lbs"),
-                  labelText: "Lbs",
-                  border: new OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: new BorderSide(color: Colors.blueGrey)),
-                ),
-                controller: _lbsController,
-                keyboardType:
-                TextInputType.numberWithOptions(decimal: true),
-              ),
-            ),
-
+                    width: 200,
+                    child: TextField(
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        suffix: Text("Lbs"),
+                        labelText: "Lbs",
+                        border: new OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: new BorderSide(color: Colors.blueGrey)),
+                      ),
+                      controller: _lbsController,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                    ),
+                  ),
           ],
         ),
-
         actions: [
           TextButton(
               onPressed: () => Navigator.of(context).pop(),
@@ -362,7 +347,6 @@ class _WeightSelectorState extends State<WeightSelector> {
                 style: TextStyle(color: Colors.blue.shade700),
               )),
         ],
-
       ),
     );
   }

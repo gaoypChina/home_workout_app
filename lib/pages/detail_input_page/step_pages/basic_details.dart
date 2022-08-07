@@ -146,7 +146,6 @@ class _BasicDetailsState extends State<BasicDetails> {
     }
 
     return Scaffold(
-
       bottomNavigationBar: UserDetailSubmitButton(
           onTap: widget.onNext, isActive: provider.isStep1Completed),
       body: SingleChildScrollView(

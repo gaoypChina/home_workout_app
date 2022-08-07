@@ -182,9 +182,7 @@ List<Workout> fullBodyDay19 = [
   calfStretchRight
 ];
 List<Workout> fullBodyDay20 = [...legsIntermediate];
-List<Workout> fullBodyDay21 = [
-  ...chestIntermediate
-];
+List<Workout> fullBodyDay21 = [...chestIntermediate];
 List<Workout> fullBodyDay22 = [...armsAdvance];
 List<Workout> fullBodyDay23 = [...absAdvance];
 List<Workout> fullBodyDay24 = [...shoulderAdvance];

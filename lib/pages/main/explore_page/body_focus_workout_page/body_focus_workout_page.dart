@@ -16,13 +16,12 @@ class BodyFocusWorkoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     buildCard({required ExploreWorkout workout}) {
-      return   ListTile(
-          title: Text(
+      return ListTile(
+        title: Text(
           workout.title,
-      ),
-      contentPadding:
-      EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-      onTap: () {
+        ),
+        contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+        onTap: () {
           // Navigator.of(context)
           //     .push(MaterialPageRoute(builder: (builder) {
           // return WorkoutSetupPage(
@@ -34,47 +33,43 @@ class BodyFocusWorkoutPage extends StatelessWidget {
           // );
           // }));
         },
-      subtitle: Row(
-      children: [
-      Text("${workout.getTime} Min"),
-      SizedBox(
-      width: 6,
-      ),
-      Icon(
-      Icons.circle,
-      size: 6,
-      color: Theme.of(context)
-          .textTheme
-          .bodyText1!
-          .color!
-          .withOpacity(.4),
-      ),
-      SizedBox(
-      width: 6,
-      ),
-      Text(workout.getExerciseCount)
-      ],
-      ),
-      trailing: Container(
-      padding:
-      EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      decoration: BoxDecoration(
-      color: Colors.blueGrey.withOpacity(.8),
-      borderRadius:
-      BorderRadius.all(Radius.circular(18))),
-      child: Text(
-      workout.getWorkoutType,
-      style: TextStyle(color: Colors.white),
-      )),
-      leading: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-        child: Container(
-          child: Image.asset(
-            workout.imgSrc,
-            width: 70,
+        subtitle: Row(
+          children: [
+            Text("${workout.getTime} Min"),
+            SizedBox(
+              width: 6,
+            ),
+            Icon(
+              Icons.circle,
+              size: 6,
+              color:
+                  Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.4),
+            ),
+            SizedBox(
+              width: 6,
+            ),
+            Text(workout.getExerciseCount)
+          ],
+        ),
+        trailing: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            decoration: BoxDecoration(
+                color: Colors.blueGrey.withOpacity(.8),
+                borderRadius: BorderRadius.all(Radius.circular(18))),
+            child: Text(
+              workout.getWorkoutType,
+              style: TextStyle(color: Colors.white),
+            )),
+        leading: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          child: Container(
+            child: Image.asset(
+              workout.imgSrc,
+              width: 70,
+            ),
           ),
         ),
-      ),);
+      );
     }
 
     return Scaffold(

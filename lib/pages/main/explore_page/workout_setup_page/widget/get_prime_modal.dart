@@ -1,8 +1,4 @@
-import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/pages/workout_page/report_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../provider/ads_provider.dart';
@@ -10,7 +6,7 @@ import '../../../../subscription_page/subscription_page.dart';
 
 class GetPrimeBottomSheet extends StatefulWidget {
   final String spKey;
-  const GetPrimeBottomSheet({Key? key,required this.spKey}) : super(key: key);
+  const GetPrimeBottomSheet({Key? key, required this.spKey}) : super(key: key);
 
   @override
   State<GetPrimeBottomSheet> createState() => _GetPrimeBottomSheetState();
@@ -19,7 +15,7 @@ class GetPrimeBottomSheet extends StatefulWidget {
 class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
   @override
   void initState() {
-    Provider.of<AdsProvider>(context,listen: false).isLoading = false;
+    Provider.of<AdsProvider>(context, listen: false).isLoading = false;
     super.initState();
   }
 
@@ -99,16 +95,18 @@ class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
               SizedBox(
                 height: 22,
               ),
-        if(  provider.loadingError)    Center(
-                child: Text(
-                  "Fail to load reward  🙃",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
+              if (provider.loadingError)
+                Center(
+                  child: Text(
+                    "Fail to load reward  🙃",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
                       color: Colors.red,
                       fontWeight: FontWeight.w500,
-                      fontSize: 18,),
+                      fontSize: 18,
+                    ),
+                  ),
                 ),
-              ),
               SizedBox(
                 height: 28,
               ),
@@ -117,7 +115,8 @@ class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
                   height: 48,
                   child: ElevatedButton.icon(
                     onPressed: () async {
-                      await provider.createRewardAd(context: context, key: widget.spKey);
+                      await provider.createRewardAd(
+                          context: context, key: widget.spKey);
                     },
                     style: ElevatedButton.styleFrom(
                         primary: Theme.of(context).primaryColor),

@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:full_workout/provider/theme_provider.dart';
+import '../../../provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class ThemeSettingsPage extends StatelessWidget {
@@ -76,9 +75,14 @@ class ThemeSettingsPage extends StatelessWidget {
                       ),
                       Spacer(),
                       isSelected
-                          ? Icon(Icons.radio_button_checked_outlined,color: Theme.of(context).primaryColor,)
+                          ? Icon(
+                              Icons.radio_button_checked_outlined,
+                              color: Theme.of(context).primaryColor,
+                            )
                           : Icon(Icons.radio_button_off_outlined),
-                      SizedBox(width: 18,)
+                      SizedBox(
+                        width: 18,
+                      )
                     ],
                   ),
                 ),

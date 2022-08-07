@@ -1,6 +1,7 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
 
 class ThemeProvider with ChangeNotifier {
   int switchIndex = 0;
@@ -28,11 +29,9 @@ class ThemeProvider with ChangeNotifier {
     int index = prefs.getInt(_key) ?? 2;
     switchIndex = index;
     if (switchIndex == 0) {
-
       notifyListeners();
       return AdaptiveThemeMode.light;
     } else if (switchIndex == 1) {
-
       notifyListeners();
       return AdaptiveThemeMode.dark;
     } else {

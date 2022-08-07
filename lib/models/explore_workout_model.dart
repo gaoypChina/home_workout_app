@@ -1,4 +1,4 @@
-import 'package:full_workout/database/workout_list.dart';
+import '../../database/workout_list.dart';
 
 import '../enums/workout_type.dart';
 
@@ -10,14 +10,13 @@ class ExploreWorkout {
   final List<String> description;
   int? customTime;
 
-  ExploreWorkout({
-    required this.workoutType,
-    required this.workoutList,
-    required this.description,
-    required this.imgSrc,
-    required this.title,
-    this.customTime
-  });
+  ExploreWorkout(
+      {required this.workoutType,
+      required this.workoutList,
+      required this.description,
+      required this.imgSrc,
+      required this.title,
+      this.customTime});
 
   List<int> get getRapList {
     List<int> rapList = [];
@@ -42,7 +41,7 @@ class ExploreWorkout {
   }
 
   int get getTime {
-    if(customTime != null){
+    if (customTime != null) {
       return customTime!;
     }
 
@@ -65,4 +64,3 @@ class ExploreWorkout {
 
   String get getWorkoutType => workoutType.name;
 }
-

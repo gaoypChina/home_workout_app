@@ -18,7 +18,7 @@ class LoginTextField extends StatefulWidget {
       required this.isEmail,
       required this.errorMessage,
       required this.validator,
-        required this.controller,
+      required this.controller,
       required this.isPassword})
       : super(key: key);
 
@@ -34,9 +34,9 @@ class _LoginTextFieldState extends State<LoginTextField> {
       _isHidden = !_isHidden;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,14 +60,13 @@ class _LoginTextFieldState extends State<LoginTextField> {
               child: TextFormField(
                 controller: widget.controller,
                 validator: (value) {
-                 return widget.validator(value);
+                  return widget.validator(value);
                 },
                 cursorColor: Colors.white,
-                obscureText: widget.isPassword?_isHidden:false,
-                keyboardType:
-                    widget.isEmail ? TextInputType.emailAddress : TextInputType.text,
-
-
+                obscureText: widget.isPassword ? _isHidden : false,
+                keyboardType: widget.isEmail
+                    ? TextInputType.emailAddress
+                    : TextInputType.text,
                 style: TextStyle(
                     color: Colors.white.withOpacity(.8), fontSize: 15),
                 decoration: InputDecoration(
@@ -84,42 +83,43 @@ class _LoginTextFieldState extends State<LoginTextField> {
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: Colors.transparent, width: 0.0),
+                        BorderSide(color: Colors.transparent, width: 0.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: Colors.transparent, width: 0.0),
+                        BorderSide(color: Colors.transparent, width: 0.0),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: Colors.transparent, width: 0.0),
+                        BorderSide(color: Colors.transparent, width: 0.0),
                   ),
                   disabledBorder: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: Colors.transparent, width: 0.0),
+                        BorderSide(color: Colors.transparent, width: 0.0),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: Colors.transparent, width: 0.0),
+                        BorderSide(color: Colors.transparent, width: 0.0),
                   ),
                   prefixIcon: Icon(
                     widget.icon,
                     color: Colors.white.withOpacity(.7),
                   ),
-                  suffix:widget.isPassword?  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                    child: GestureDetector(
-                      onTap: _togglePasswordView,
-                      child: Icon(
-
-                        !_isHidden
-                            ? Icons.visibility_rounded
-                            : Icons.visibility_off_rounded,
-                        size: 24,
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ):null,
+                  suffix: widget.isPassword
+                      ? Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                          child: GestureDetector(
+                            onTap: _togglePasswordView,
+                            child: Icon(
+                              !_isHidden
+                                  ? Icons.visibility_rounded
+                                  : Icons.visibility_off_rounded,
+                              size: 24,
+                              color: Colors.white70,
+                            ),
+                          ),
+                        )
+                      : null,
                 ),
               ),
             ),
@@ -138,4 +138,3 @@ class _LoginTextFieldState extends State<LoginTextField> {
     );
   }
 }
-

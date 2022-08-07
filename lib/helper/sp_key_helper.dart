@@ -57,5 +57,5 @@ class SpKey {
   String backupTime = "backupTime";
 
   /// Auth data
-   String authByGoogle = "authByGoogle";
+  String authByGoogle = "authByGoogle";
 }

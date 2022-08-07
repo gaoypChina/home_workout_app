@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../database/explore_page_workout/export_workout.dart';
 import '../../../../enums/workout_type.dart';
 import '../../../../models/explore_workout_card_model.dart';
-import '../../../../models/explore_workout_model.dart';
 import '../body_focus_workout_page/body_focus_workout_page.dart';
 
 class BodyFocusWorkout extends StatelessWidget {

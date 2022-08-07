@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_detail.dart';
-import 'package:full_workout/provider/subscription_provider.dart';
+import '../../pages/subscription_page/subscription_page_widget/subscription_detail.dart';
+import '../../provider/subscription_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../main/setting_page/faq_page.dart';
@@ -24,7 +24,8 @@ class _SubscribedPageState extends State<SubscribedPage> {
   initData() async {
     var subscriptionProvider =
         Provider.of<SubscriptionProvider>(context, listen: false);
-    if (subscriptionProvider.isProUser && subscriptionProvider.subscriptionDetail == null) {
+    if (subscriptionProvider.isProUser &&
+        subscriptionProvider.subscriptionDetail == null) {
       await subscriptionProvider.restoreSubscription(context: context);
     }
     setState(() {
@@ -35,7 +36,7 @@ class _SubscribedPageState extends State<SubscribedPage> {
   @override
   Widget build(BuildContext context) {
     var subscriptionProvider =
-    Provider.of<SubscriptionProvider>(context, listen: false);
+        Provider.of<SubscriptionProvider>(context, listen: false);
     buildCancelBtn() {
       return Column(
         mainAxisSize: MainAxisSize.min,
@@ -72,31 +73,37 @@ class _SubscribedPageState extends State<SubscribedPage> {
     }
 
     return Scaffold(
-      bottomNavigationBar: isLoading?null:buildCancelBtn(),
+      bottomNavigationBar: isLoading ? null : buildCancelBtn(),
       appBar: AppBar(
         title: Text("Subscription Settings"),
         elevation: .5,
       ),
-      body: isLoading ? Center(child: CircularProgressIndicator(),):SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            if(subscriptionProvider.subscriptionDetail != null )   SizedBox(
-              height: 20,
-            ),
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  if (subscriptionProvider.subscriptionDetail != null)
+                    SizedBox(
+                      height: 20,
+                    ),
 
-        if(subscriptionProvider.subscriptionDetail != null )   SubscriptionDetail(),
-            SizedBox(
-              height: 24,
+                  if (subscriptionProvider.subscriptionDetail != null)
+                    SubscriptionDetail(),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  SubscribedFAQ(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  //     buildCancelBtn(),
+                ],
+              ),
             ),
-            SubscribedFAQ(),
-            SizedBox(
-              height: 20,
-            ),
-            //     buildCancelBtn(),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -140,10 +147,13 @@ class SubscribedFAQ extends StatelessWidget {
                         title: Text(
                           faq.question,
                           style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 15,     color: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .color!.withOpacity(.9)),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .color!
+                                  .withOpacity(.9)),
                         ),
                         children: [
                           Padding(
@@ -152,8 +162,8 @@ class SubscribedFAQ extends StatelessWidget {
                             child: Text(
                               faq.answer,
                               style: TextStyle(
-                                  letterSpacing: 1.5,
-                             ),
+                                letterSpacing: 1.5,
+                              ),
                             ),
                           )
                         ],

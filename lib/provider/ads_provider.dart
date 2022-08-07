@@ -1,9 +1,9 @@
 import 'dart:developer';
+import 'package:flutter/material.dart';
 
-import 'package:flutter/cupertino.dart';
-import 'package:full_workout/helper/ad_id_helper.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/provider/subscription_provider.dart';
+import '../../helper/ad_id_helper.dart';
+import '../../helper/sp_helper.dart';
+import '../../provider/subscription_provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +12,6 @@ import '../helper/ad_helper.dart';
 const int maxFailedLoadAttempts = 3;
 
 class AdsProvider with ChangeNotifier {
-
   InterstitialAd? interstitialAd;
   RewardedAd? rewardedAd;
   BannerAd? bottomBannerAd;
@@ -99,7 +98,7 @@ class AdsProvider with ChangeNotifier {
             rewardedAd = null;
 
             if (_rewardLoadAttempts < maxFailedLoadAttempts) {
-              createRewardAd(context: context,key: key);
+              createRewardAd(context: context, key: key);
             }
             if (_rewardLoadAttempts == maxFailedLoadAttempts) {
               _rewardLoadAttempts = 0;
@@ -119,13 +118,13 @@ class AdsProvider with ChangeNotifier {
   }
 
   void disposeBannerAd() {
-    if(bottomBannerAd != null){
+    if (bottomBannerAd != null) {
       bottomBannerAd!.dispose();
     }
   }
 
   void disposeBannerMediumAd() {
-    if(bannerMediumAd != null){
+    if (bannerMediumAd != null) {
       bannerMediumAd!.dispose();
     }
   }
@@ -142,13 +141,14 @@ class AdsProvider with ChangeNotifier {
     }
   }
 
-  onRewardLoaded(){
+  onRewardLoaded() {
     isRewarded = true;
     notifyListeners();
   }
 
-  Future<bool> isUnlocked({required String key,required BuildContext context}) async {
-    if (Provider.of<SubscriptionProvider>(context,listen: false).isProUser) {
+  Future<bool> isUnlocked(
+      {required String key, required BuildContext context}) async {
+    if (Provider.of<SubscriptionProvider>(context, listen: false).isProUser) {
       return true;
     } else {
       String? date = await SpHelper().loadString(key);
@@ -160,5 +160,4 @@ class AdsProvider with ChangeNotifier {
       }
     }
   }
-
 }

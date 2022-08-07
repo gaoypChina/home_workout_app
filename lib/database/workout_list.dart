@@ -1,5 +1,3 @@
-
-
 class Workout {
   String title;
   String imageSrc;
@@ -17,12 +15,13 @@ class Workout {
     required this.steps,
     required this.videoLink,
     required this.showTimer,
-     this.beginnerRap,
-     this.advanceRap,
-     this.intermediateRap,
-     this.duration,
+    this.beginnerRap,
+    this.advanceRap,
+    this.intermediateRap,
+    this.duration,
   });
 }
+
 //Arm
 Workout armCurlsCrunchLeft = Workout(
   title: 'Arm Curls Crunch Left',
@@ -177,7 +176,7 @@ Workout diagonalPlank2 = Workout(
       'Return to the start position and repeat with the other side',
     ],
     videoLink:
-    'https://www.youtube.com/watch?v=lsoQDZkmQ0c&ab_channel=BrianAganad',
+        'https://www.youtube.com/watch?v=lsoQDZkmQ0c&ab_channel=BrianAganad',
     showTimer: false,
     beginnerRap: 10,
     intermediateRap: 12,
@@ -337,7 +336,7 @@ Workout buttBridge2 = Workout(
     'Hold for 20 to 30 seconds, and then return to your starting position.',
   ],
   videoLink:
-  'https://www.youtube.com/watch?v=wPM8icPu6H8&ab_channel=Well%2BGood',
+      'https://www.youtube.com/watch?v=wPM8icPu6H8&ab_channel=Well%2BGood',
   showTimer: false,
   beginnerRap: 10,
   intermediateRap: 12,
@@ -709,7 +708,6 @@ Workout floorTricepsDips = Workout(
   videoLink:
       'https://www.youtube.com/watch?v=s3Mppxwx1o8&ab_channel=MoveItMonday',
   showTimer: false,
-
   beginnerRap: 10,
   intermediateRap: 16,
   advanceRap: 18,
@@ -943,8 +941,7 @@ Workout abdominalCrunches = Workout(
     imageSrc: 'assets/all-workouts/abdominalCrunches.gif');
 Workout russianTwist = Workout(
   title: 'Russian Twist',
-  videoLink:
-      'https://www.youtube.com/watch?v=xcLqUjo8IeE',
+  videoLink: 'https://www.youtube.com/watch?v=xcLqUjo8IeE',
   steps: [
     'Lie down on your back, facing up.',
     'Place both your hands underneath your buttocks.',
@@ -1007,8 +1004,7 @@ Workout mountainClimbing = Workout(
 );
 Workout russianTwist2 = Workout(
   title: 'Russian Twist',
-  videoLink:
-      'https://www.youtube.com/watch?v=xcLqUjo8IeE',
+  videoLink: 'https://www.youtube.com/watch?v=xcLqUjo8IeE',
   steps: [
     'Lie down on your back, facing up.',
     'Place both your hands underneath your buttocks.',
@@ -1305,13 +1301,12 @@ Workout jumpingJacks = Workout(
   ],
   showTimer: true,
   duration: 30,
-
   imageSrc: 'assets/all-workouts/jumpingJacks.gif',
 );
 
 Workout beginnerJumpingJacks = Workout(
   videoLink:
-  'https://www.youtube.com/watch?v=iSSAk4XCsRA&ab_channel=RedefiningStrength',
+      'https://www.youtube.com/watch?v=iSSAk4XCsRA&ab_channel=RedefiningStrength',
   title: 'Jumping Jacks',
   steps: [
     'Stand upright with your legs together, arms at your sides.',
@@ -1322,7 +1317,6 @@ Workout beginnerJumpingJacks = Workout(
   ],
   showTimer: true,
   duration: 20,
-
   imageSrc: 'assets/all-workouts/jumpingJacks.gif',
 );
 Workout kneePushUps = Workout(
@@ -1543,7 +1537,7 @@ Workout staggeredPushUps = Workout(
     'Begin exercise by lowering your chest until it almost touches the ground. Pause, then push back up as quickly as possible. This completes one rep. Alternate hands every set.'
   ],
   videoLink:
-  'https://www.youtube.com/watch?v=odAdPR3ypSs&ab_channel=Exercises.com.au',
+      'https://www.youtube.com/watch?v=odAdPR3ypSs&ab_channel=Exercises.com.au',
   showTimer: false,
   intermediateRap: 12,
   beginnerRap: 10,
@@ -1559,7 +1553,7 @@ Workout ployMetricPushUps = Workout(
     'Land lightly on the ground, moving into your next rep immediately.'
   ],
   videoLink:
-  'https://www.youtube.com/watch?v=Z1hBVYb3Gi0&ab_channel=ThePostGame',
+      'https://www.youtube.com/watch?v=Z1hBVYb3Gi0&ab_channel=ThePostGame',
   showTimer: false,
   intermediateRap: 12,
   advanceRap: 16,
@@ -1588,7 +1582,7 @@ Workout staggeredPushUps2 = Workout(
       'Begin exercise by lowering your chest until it almost touches the ground. Pause, then push back up as quickly as possible. This completes one rep. Alternate hands every set.'
     ],
     videoLink:
-    'https://www.youtube.com/watch?v=odAdPR3ypSs&ab_channel=Exercises.com.au',
+        'https://www.youtube.com/watch?v=odAdPR3ypSs&ab_channel=Exercises.com.au',
     showTimer: false,
     intermediateRap: 10,
     beginnerRap: 8,
@@ -1603,7 +1597,7 @@ Workout ployMetricPushUps2 = Workout(
     'Land lightly on the ground, moving into your next rep immediately.'
   ],
   videoLink:
-  'https://www.youtube.com/watch?v=Z1hBVYb3Gi0&ab_channel=ThePostGame',
+      'https://www.youtube.com/watch?v=Z1hBVYb3Gi0&ab_channel=ThePostGame',
   showTimer: false,
   intermediateRap: 10,
   advanceRap: 12,
@@ -1619,7 +1613,7 @@ Workout declinePushUps = Workout(
       'Push into the floor to return to starting position, extending your elbows.',
     ],
     videoLink:
-    'https://www.youtube.com/watch?v=b_CC4kAF1HQ&ab_channel=LIVESTRONG.COM',
+        'https://www.youtube.com/watch?v=b_CC4kAF1HQ&ab_channel=LIVESTRONG.COM',
     showTimer: false,
     intermediateRap: 12,
     beginnerRap: 8,
@@ -1634,24 +1628,22 @@ Workout walkingPlank = Workout(
       'Step left hand back to start, then right hand.',
     ],
     videoLink:
-    'https://www.youtube.com/watch?v=1mPOD3IZxlI&ab_channel=NationalAcademyofSportsMedicine%28NASM%29',
+        'https://www.youtube.com/watch?v=1mPOD3IZxlI&ab_channel=NationalAcademyofSportsMedicine%28NASM%29',
     showTimer: false,
     advanceRap: 16,
     intermediateRap: 12,
     beginnerRap: 8,
     imageSrc: 'assets/all-workouts/walkingPlank.gif');
 Workout shoulderStretch = Workout(
-
   title: 'Shoulder Stretch',
   imageSrc: "assets/all-workouts/shoulder_stretch.gif",
-
   steps: [
     'Bring one arm across your upper body and hold it straight.',
     'Grasp the elbow with the other arm and gently pull toward your chest.',
     'Hold for 5to 10 seconds and repeat on the other side.',
   ],
   videoLink:
-  'https://www.youtube.com/watch?v=KNfqxl7jkiU&ab_channel=NHSAyrshire%26Arran',
+      'https://www.youtube.com/watch?v=KNfqxl7jkiU&ab_channel=NHSAyrshire%26Arran',
   showTimer: true,
   duration: 30,
 );
@@ -1684,7 +1676,6 @@ Workout legBurpee = Workout(
   ],
   videoLink: 'https://www.youtube.com/watch?v=G2hv_NYhM-A&ab_channel=BuiltLean',
   showTimer: false,
-
   beginnerRap: 6,
   advanceRap: 14,
   intermediateRap: 10,
@@ -1731,12 +1722,13 @@ Workout spiderManPushUps = Workout(
     'Repeat to the opposite side, this time bringing your left knee to your left elbow.'
   ],
   videoLink:
-  'https://www.youtube.com/watch?v=ND72B0DcYsQ&ab_channel=PrecisionMovementbyEricWong',
+      'https://www.youtube.com/watch?v=ND72B0DcYsQ&ab_channel=PrecisionMovementbyEricWong',
   showTimer: false,
   advanceRap: 16,
 );
 
 // -----------------------------------CHEST------------------------------------------
+/// todo : uncomment while in production
 List<Workout> chestBeginner = [
   jumpingJacks,
   kneePushUps,

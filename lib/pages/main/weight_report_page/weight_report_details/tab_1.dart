@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/provider/weight_report_provider.dart';
+import '../../../../provider/weight_report_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
@@ -12,7 +12,6 @@ class WeightDetailTab1 extends StatefulWidget {
 }
 
 class _WeightDetailTab1State extends State<WeightDetailTab1> {
-
   var columnStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w500);
 
   @override
@@ -109,7 +108,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
         : (provider.weight.length == 0)
             ? getEmptyList()
             : Padding(
-                padding: const EdgeInsets.only(left: 2,right: 2),
+                padding: const EdgeInsets.only(left: 2, right: 2),
                 child: Column(children: [
                   Container(
                     height: 50,
@@ -119,24 +118,24 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                         getVLineTitle(),
                         Expanded(
                             child: Container(
-                              color: Theme.of(context).primaryColor.withOpacity(.1),
-                              child: Center(
-                                  child: Text("Date", style: columnStyle)),
-                            )),
+                          color: Theme.of(context).primaryColor.withOpacity(.1),
+                          child:
+                              Center(child: Text("Date", style: columnStyle)),
+                        )),
                         getVLineTitle(),
                         Expanded(
                             child: Container(
-                              color: Theme.of(context).primaryColor.withOpacity(.1),
-                              child: Center(
-                                  child: Text("Weight", style: columnStyle)),
-                            )),
+                          color: Theme.of(context).primaryColor.withOpacity(.1),
+                          child:
+                              Center(child: Text("Weight", style: columnStyle)),
+                        )),
                         getVLineTitle(),
                         Expanded(
                             child: Container(
-                              color: Theme.of(context).primaryColor.withOpacity(.1),
-                              child: Center(
-                                  child: Text("Gain/Loss", style: columnStyle)),
-                            )),
+                          color: Theme.of(context).primaryColor.withOpacity(.1),
+                          child: Center(
+                              child: Text("Gain/Loss", style: columnStyle)),
+                        )),
                         getVLineTitle(),
                       ],
                     ),
@@ -289,7 +288,6 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                                 ),
                                 getVLine(),
                                 Expanded(
-
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -363,28 +361,29 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
 
   getEmptyList() {
     return Container(
-
-
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height *.25,),
-
-
-
-                Container(
-                  height: 100,
-                  child: Image.asset("assets/other/empty-box (1).png"),
-                ),
-                SizedBox(height: 8,),
-                Text(
-                  "No Record Found!",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(context).textTheme.bodyText1?.color?.withOpacity(.7)),
-                )
-
-
+          SizedBox(
+            height: MediaQuery.of(context).size.height * .25,
+          ),
+          Container(
+            height: 100,
+            child: Image.asset("assets/other/empty-box (1).png"),
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Text(
+            "No Record Found!",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+                color: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.color
+                    ?.withOpacity(.7)),
+          )
         ],
       ),
     );
@@ -396,7 +395,6 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
     return Container(
         child: Row(
       children: [
-
         Text(
           provider.firstDate,
           style: TextStyle(
@@ -454,8 +452,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                              color: Colors.white
-                                ),
+                                color: Colors.white),
                           ),
                         );
                       }).toList(),
@@ -481,11 +478,9 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                         provider.onRangeChange(filter, context);
                       }),
                 ),
-
               ],
             ),
           ),
-
           Container(
               height: .5,
               color: Theme.of(context)

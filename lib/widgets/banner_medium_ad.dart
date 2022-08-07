@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/provider/subscription_provider.dart';
+import '../../provider/subscription_provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/ads_provider.dart';
 
 class MediumBannerAd extends StatefulWidget {
-
   const MediumBannerAd({
     Key? key,
   }) : super(key: key);
@@ -16,34 +15,30 @@ class MediumBannerAd extends StatefulWidget {
 }
 
 class _MediumBannerAdState extends State<MediumBannerAd> {
-
   bool isProUser = false;
 
   @override
   void initState() {
     super.initState();
-    isProUser = Provider.of<SubscriptionProvider>(context,listen: false).isProUser;
+    isProUser =
+        Provider.of<SubscriptionProvider>(context, listen: false).isProUser;
     var provider = Provider.of<AdsProvider>(context, listen: false);
 
     provider.showBannerAd = false;
-    if(isProUser){
-
-    }else{
+    if (isProUser) {
+    } else {
       provider.disposeBannerMediumAd();
       provider.createMediumBannerAd();
     }
-
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AdsProvider>(context, listen: true);
-    return isProUser? Container(): Column(
-      children: [
+    return isProUser
+        ? Container()
+        : Column(
+            children: [
               (provider.showBannerAd && provider.bannerMediumAd != null)
                   ? Container(
                       child: Center(
@@ -60,6 +55,6 @@ class _MediumBannerAdState extends State<MediumBannerAd> {
                     )
                   : Container(height: 0)
             ],
-    );
+          );
   }
 }

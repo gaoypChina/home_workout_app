@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/pages/main/setting_page/faq_page.dart';
+import '../../../../../constants/constant.dart';
+import '../../../../../pages/main/setting_page/faq_page.dart';
 
 import '../write_us_page.dart';
 
@@ -11,8 +11,11 @@ class ContactUsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Constants _constants = Constants();
 
-    buildDivider(){
-      return Container(height: 1,color: Colors.blue.withOpacity(.1),);
+    buildDivider() {
+      return Container(
+        height: 1,
+        color: Colors.blue.withOpacity(.1),
+      );
     }
 
     buildCard(
@@ -21,9 +24,9 @@ class ContactUsCard extends StatelessWidget {
         required IconData icon,
         required Function onTap}) {
       return ListTile(
-
         onTap: () => onTap(),
-        leading: Icon(icon),contentPadding: EdgeInsets.symmetric(vertical: 0,horizontal: 16),
+        leading: Icon(icon),
+        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
         title: Text(
           title,
           style: Theme.of(context)
@@ -44,18 +47,17 @@ class ContactUsCard extends StatelessWidget {
             icon: Icons.question_mark,
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
-                return  FAQPage();
+                return FAQPage();
               }));
             }),
         buildDivider(),
-
         buildCard(
             title: "Write to Us",
             subTitle: "Average Response Time 24-48 Hrs",
             icon: Icons.edit_outlined,
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
-                return  WriteUsPage();
+                return WriteUsPage();
               }));
             }),
         buildDivider(),
@@ -64,8 +66,6 @@ class ContactUsCard extends StatelessWidget {
             subTitle: "Call us to discuss your problem",
             icon: Icons.phone_outlined,
             onTap: () => _constants.openUrl(url: "tel: +91 ${9669395879}")),
-
-
         buildDivider(),
       ],
     );

@@ -1,27 +1,25 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:full_workout/components/height_weightSelector.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/helper/weight_db_helper.dart';
-import 'package:full_workout/models/weight_list_model.dart';
-import 'package:full_workout/models/weight_model.dart';
+import '../../../../constants/constant.dart';
+import '../../../helper/sp_helper.dart';
+import '../../../helper/sp_key_helper.dart';
+import '../../../helper/weight_db_helper.dart';
+import '../../../models/weight_list_model.dart';
+import '../../../models/weight_model.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 import '../../detail_input_page/user_detail_widget/weight_picker.dart';
 
-
 class WeightChart extends StatefulWidget {
   final Function onAdd;
   final bool showButton;
- final String title;
+  final String title;
 
- WeightChart({required this.onAdd, required this.title,required this.showButton});
-
+  WeightChart(
+      {required this.onAdd, required this.title, required this.showButton});
 
   @override
   _WeightChartState createState() => _WeightChartState();
@@ -46,7 +44,7 @@ class _WeightChartState extends State<WeightChart> {
   loadWeightData() async {
     double value = await spHelper.loadDouble(spKey.weight) ?? 0;
     weightValue = value;
-    lbsWeight =  value * 2.20462;
+    lbsWeight = value * 2.20462;
   }
 
   _loadRangeData(DateTime startDate, DateTime endDate) async {
@@ -57,10 +55,16 @@ class _WeightChartState extends State<WeightChart> {
     dataList = [];
     List<dynamic> minWeightDB = await weightDb.getMinWeight();
 
-    minWeight =(minWeightDB[0]["MIN(weight)"] == null|| minWeightDB.length == 0 )? 0 : minWeightDB[0]["MIN(weight)"];
+    minWeight =
+        (minWeightDB[0]["MIN(weight)"] == null || minWeightDB.length == 0)
+            ? 0
+            : minWeightDB[0]["MIN(weight)"];
 
     List<dynamic> maxWeightDB = await weightDb.getMaxWeight();
-    maxWeight = (maxWeightDB[0]["MAX(weight)"] == null|| maxWeightDB.length == 0 )? 0 : maxWeightDB[0]["MAX(weight)"];
+    maxWeight =
+        (maxWeightDB[0]["MAX(weight)"] == null || maxWeightDB.length == 0)
+            ? 0
+            : maxWeightDB[0]["MAX(weight)"];
     DateTime parsedStartDate =
         DateTime(startDate.year, startDate.month, startDate.day + 1);
     DateTime parsedEndDate =
@@ -74,7 +78,6 @@ class _WeightChartState extends State<WeightChart> {
       isLoading = false;
     });
   }
-
 
   loadCurrentMonth(DateTime currMonth) async {
     DateTime now = DateTime.now();
@@ -92,14 +95,18 @@ class _WeightChartState extends State<WeightChart> {
       builder: (context) => WeightPicker(),
     );
     DateTime selectedDate = DateTime.now();
-    if(value == null){
+    if (value == null) {
       return;
     }
 
     await spHelper.saveDouble(spKey.weight, value);
     String key = DateFormat.yMd().format(selectedDate).toString();
-    WeightModel weightModel =
-        WeightModel(selectedDate.toIso8601String(), value, key,  DateTime.now().millisecondsSinceEpoch,);
+    WeightModel weightModel = WeightModel(
+      selectedDate.toIso8601String(),
+      value,
+      key,
+      DateTime.now().millisecondsSinceEpoch,
+    );
 
     await weightDb.addWeight(value, weightModel, key);
     widget.onAdd();
@@ -114,7 +121,7 @@ class _WeightChartState extends State<WeightChart> {
     setState(() {
       isLoading = true;
     });
-   await  loadWeightData();
+    await loadWeightData();
     await _loadRangeData(
         DateTime(DateTime.now().year, DateTime.now().month, 01),
         DateTime(DateTime.now().year, DateTime.now().month + 1, 01));
@@ -129,7 +136,6 @@ class _WeightChartState extends State<WeightChart> {
     loadData();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -148,18 +154,20 @@ class _WeightChartState extends State<WeightChart> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                     Padding(
-                       padding:  EdgeInsets.only(left:18.0,bottom:widget.showButton?0: 18),
-                       child: Text(
-                         widget.title,
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 18.0, bottom: widget.showButton ? 0 : 18),
+                    child: Text(
+                      widget.title,
                       style: Constants().titleStyle,
                     ),
-                     ),
-
+                  ),
                   Spacer(),
-            widget.showButton?      TextButton(
-                      onPressed: () async => addWeight(),
-                      child: Icon(Icons.add)):Container()
+                  widget.showButton
+                      ? TextButton(
+                          onPressed: () async => addWeight(),
+                          child: Icon(Icons.add))
+                      : Container()
                 ],
               ),
               Container(
@@ -216,13 +224,12 @@ class _WeightChartState extends State<WeightChart> {
 
   LineChartData mainData() {
     List<Color> gradientColors = [
-     Colors.blue.shade500,
+      Colors.blue.shade500,
       Colors.blue,
-
     ];
 
     double presentValue = 0;
-     Color color = Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7);
+    Color color = Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7);
 
     if (weightDataList.length > 0) {
       presentValue =
@@ -241,13 +248,9 @@ class _WeightChartState extends State<WeightChart> {
       return dataList;
     }
 
-
     return LineChartData(
-
-      lineTouchData:LineTouchData(
-          enabled: true,
-          touchTooltipData: LineTouchTooltipData() ) ,
-
+      lineTouchData: LineTouchData(
+          enabled: true, touchTooltipData: LineTouchTooltipData()),
       gridData: FlGridData(
         show: true,
         drawVerticalLine: true,
@@ -267,7 +270,7 @@ class _WeightChartState extends State<WeightChart> {
         },
       ),
       titlesData: FlTitlesData(
-        show: true,
+          show: true,
           bottomTitles: AxisTitles(
               sideTitles: SideTitles(
             interval: 1,
@@ -285,15 +288,16 @@ class _WeightChartState extends State<WeightChart> {
             },
           )),
           leftTitles: AxisTitles(
-            sideTitles:
-             SideTitles( 
-                 showTitles: true,
-                 reservedSize: 28,getTitlesWidget: (value, _) {
-              return Text(value.toInt().toString(),
-                  style: TextStyle(
-                      color: color, fontWeight: FontWeight.w600, fontSize: 12));
-            }),
-
+            sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 28,
+                getTitlesWidget: (value, _) {
+                  return Text(value.toInt().toString(),
+                      style: TextStyle(
+                          color: color,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12));
+                }),
           ),
           rightTitles: AxisTitles(),
           topTitles: AxisTitles()),
@@ -302,9 +306,12 @@ class _WeightChartState extends State<WeightChart> {
           border: Border.all(color: const Color(0xff37434d), width: 1.5)),
       minX: 1,
       maxX: 30,
-      minY: weightDataList.length == 0 ? 0:minWeight -18,
-      maxY: weightDataList.length == 0 ? 50 :maxWeight ==0 ? 90 :maxWeight +18,
-
+      minY: weightDataList.length == 0 ? 0 : minWeight - 18,
+      maxY: weightDataList.length == 0
+          ? 50
+          : maxWeight == 0
+              ? 90
+              : maxWeight + 18,
       lineBarsData: [
         LineChartBarData(
           spots: getData(),
@@ -327,4 +334,3 @@ class _WeightChartState extends State<WeightChart> {
     );
   }
 }
-

@@ -28,7 +28,7 @@ class SubscriptionTime extends StatelessWidget {
 
     var timeStyle = TextStyle(color: Colors.white);
     return Container(
-      padding: EdgeInsets.only(left: 8,right: 8,bottom: 12),
+      padding: EdgeInsets.only(left: 8, right: 8, bottom: 12),
       color: Colors.grey.shade800,
       child: Row(
         children: [
@@ -56,20 +56,26 @@ class SubscriptionTime extends StatelessWidget {
                     endTime: endTime,
                     widgetBuilder: (_, CurrentRemainingTime? time) {
                       if (time == null) {
-                        return Text('Sale Over',style: TextStyle(color: Colors.white,fontSize: 16),);
+                        return Text(
+                          'Sale Over',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        );
                       }
                       return Row(
                         children: [
                           DottedBorder(
                             borderType: BorderType.RRect,
                             radius: Radius.circular(4),
-                            color:  Colors.white70,
+                            color: Colors.white70,
                             padding: EdgeInsets.all(4),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12)),
                               child: Container(
-                                child: Text("UPTO : 50% OFF",style: TextStyle(color: Colors.white70),),
-
+                                child: Text(
+                                  "UPTO : 50% OFF",
+                                  style: TextStyle(color: Colors.white70),
+                                ),
                               ),
                             ),
                           ),

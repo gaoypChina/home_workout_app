@@ -1,4 +1,4 @@
-import 'package:full_workout/database/workout_list.dart';
+import '../../database/workout_list.dart';
 
 class ExerciseCard {
   final List<Workout> workoutList;
@@ -15,7 +15,7 @@ class ExerciseCard {
 
 List<String> exerciseName = [
   "Chest Workout",
-  "Shoulder Workout",
+  "Shoulder & Back Workout",
   "Abs Workout",
   "Legs Workout",
   "Arms Workout"

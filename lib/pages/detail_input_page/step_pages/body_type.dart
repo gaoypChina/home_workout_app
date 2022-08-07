@@ -1,7 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-
 import '../user_detail_widget/user_detail_submit_button.dart';
 
 class BodyType extends StatefulWidget {
@@ -62,7 +59,6 @@ class _BodyTypeState extends State<BodyType> {
               selectedIdx = idx;
             });
           },
-
           title: Padding(
             padding: EdgeInsets.only(bottom: 4),
             child: Text(
@@ -79,8 +75,13 @@ class _BodyTypeState extends State<BodyType> {
             style: TextStyle(
                 color: isSelected
                     ? Colors.white
-                    : Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
-            letterSpacing: 1.2,fontSize: 15),
+                    : Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .color!
+                        .withOpacity(.8),
+                letterSpacing: 1.2,
+                fontSize: 15),
           ),
         ),
       );
@@ -88,9 +89,7 @@ class _BodyTypeState extends State<BodyType> {
 
     return Scaffold(
       bottomNavigationBar:
-          UserDetailSubmitButton(onTap:
-          widget.onNext,
-              isActive: true),
+          UserDetailSubmitButton(onTap: widget.onNext, isActive: true),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 12),
         child: Column(

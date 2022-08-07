@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ConnectivityErrorDialog extends StatelessWidget {
@@ -28,14 +27,21 @@ class ConnectivityErrorDialog extends StatelessWidget {
           SizedBox(
             height: 18,
           ),
-          Text("Poor network connection detected. Please check your connectivity",textAlign: TextAlign.center,),
+          Text(
+            "Poor network connection detected. Please check your connectivity",
+            textAlign: TextAlign.center,
+          ),
           SizedBox(
             height: 32,
           ),
-          ElevatedButton(onPressed: () {
-            Navigator.of(context).pop();
-          }, child: Text("Try Again"),
-          style: ElevatedButton.styleFrom(primary: Colors.red.shade400,minimumSize: Size(150,45)),)
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("Try Again"),
+            style: ElevatedButton.styleFrom(
+                primary: Colors.red.shade400, minimumSize: Size(150, 45)),
+          )
         ],
       ),
     );

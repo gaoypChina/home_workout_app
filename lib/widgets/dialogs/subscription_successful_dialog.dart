@@ -6,32 +6,32 @@ class SubscriptionSuccessfulDialog extends StatefulWidget {
   const SubscriptionSuccessfulDialog({Key? key}) : super(key: key);
 
   @override
-  State<SubscriptionSuccessfulDialog> createState() => _SubscriptionSuccessfulDialogState();
+  State<SubscriptionSuccessfulDialog> createState() =>
+      _SubscriptionSuccessfulDialogState();
 }
 
-class _SubscriptionSuccessfulDialogState extends State<SubscriptionSuccessfulDialog> {
+class _SubscriptionSuccessfulDialogState
+    extends State<SubscriptionSuccessfulDialog> {
   double imgHeight = 50;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(microseconds: 300)).then((value) =>   setState(() {
-      imgHeight =  MediaQuery.of(context).size.height *.35;
-
-    }));
+    Future.delayed(Duration(microseconds: 300)).then((value) => setState(() {
+          imgHeight = MediaQuery.of(context).size.height * .35;
+        }));
   }
-
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.width;
-
     return WillPopScope(
-      onWillPop: ()async{
+      onWillPop: () async {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => MainPage(index: 0,)));
+                builder: (context) => MainPage(
+                      index: 0,
+                    )));
 
         return true;
       },
@@ -78,21 +78,17 @@ class _SubscriptionSuccessfulDialogState extends State<SubscriptionSuccessfulDia
                   flex: 2,
                 ),
                 AnimatedContainer(
-
                   height: imgHeight,
-
-                 decoration: BoxDecoration(
-
-                 ),
+                  decoration: BoxDecoration(),
                   duration: Duration(milliseconds: 300),
                   child: Image.asset(
                     "assets/other/premium_success.png",
                     fit: BoxFit.fill,
-
-
                   ),
                 ),
-                Spacer(flex: 3,),
+                Spacer(
+                  flex: 3,
+                ),
                 // Image.network(
                 //     "https://cdn-icons-png.flaticon.com/128/1054/1054436.png"),
                 Text(
@@ -129,12 +125,17 @@ class _SubscriptionSuccessfulDialogState extends State<SubscriptionSuccessfulDia
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MainPage(index: 0,)));
+                                  builder: (context) => MainPage(
+                                        index: 0,
+                                      )));
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Theme.of(context).primaryColor,
                         ),
-                        child: Text("Continue".toUpperCase(),style: TextStyle(fontSize: 16),))),
+                        child: Text(
+                          "Continue".toUpperCase(),
+                          style: TextStyle(fontSize: 16),
+                        ))),
                 SizedBox(
                   height: 20,
                 ),

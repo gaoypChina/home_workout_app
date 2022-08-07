@@ -1,22 +1,19 @@
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/helper/mediaHelper.dart';
-import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
-import 'package:full_workout/pages/workout_page/check_list.dart';
-import 'package:full_workout/pages/workout_page/pause_page.dart';
-import 'package:full_workout/pages/workout_page/workout_page.dart';
-import 'package:full_workout/components/info_button.dart';
-import 'package:full_workout/components/timer_painter.dart';
-import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+import '../../database/workout_list.dart';
+import '../../helper/mediaHelper.dart';
+import '../../pages/main/setting_page/sound_settings_page.dart';
+import '../../pages/workout_page/check_list.dart';
+import '../../pages/workout_page/pause_page.dart';
+import '../../pages/workout_page/workout_page.dart';
+import '../../components/info_button.dart';
+import '../../components/timer_painter.dart';
+import '../../pages/services/youtube_service/youtube_player.dart';
 import 'package:wakelock/wakelock.dart';
 
 import 'exercise_detail_page.dart';
 
 class InstructionScreen extends StatefulWidget {
-
   final List<Workout> workOutList;
   final String title;
   final List<int> rapList;
@@ -24,14 +21,13 @@ class InstructionScreen extends StatefulWidget {
   final int countDownTime;
   final int restTime;
 
-  InstructionScreen({
-    required this.workOutList,
-    required this.title,
-    required this.rapList,
-    required this.tag,
-    required this.countDownTime,
-    required this.restTime
-  });
+  InstructionScreen(
+      {required this.workOutList,
+      required this.title,
+      required this.rapList,
+      required this.tag,
+      required this.countDownTime,
+      required this.restTime});
 
   @override
   _InstructionScreenState createState() => _InstructionScreenState();
@@ -39,10 +35,8 @@ class InstructionScreen extends StatefulWidget {
 
 class _InstructionScreenState extends State<InstructionScreen>
     with TickerProviderStateMixin {
-
-
   MediaHelper mediaHelper = MediaHelper();
- late AnimationController controller;
+  late AnimationController controller;
 
   String get timerString {
     Duration duration = controller.duration! * controller.value;
@@ -59,13 +53,13 @@ class _InstructionScreenState extends State<InstructionScreen>
         context,
         MaterialPageRoute(
             builder: (context) => WorkoutPage(
-              tag: widget.tag,
-              rapList: widget.rapList,
+                  tag: widget.tag,
+                  rapList: widget.rapList,
                   title: widget.title,
                   workOutList: widget.workOutList,
                   index: 0,
-              restTime: widget.restTime,
-              currTime: DateTime.now().toIso8601String(),
+                  restTime: widget.restTime,
+                  currTime: DateTime.now().toIso8601String(),
                 )));
   }
 
@@ -87,10 +81,8 @@ class _InstructionScreenState extends State<InstructionScreen>
     print(value);
   }
 
-
-
- Future introMessage() async {
-   var workout = widget.workOutList[0];
+  Future introMessage() async {
+    var workout = widget.workOutList[0];
     String intro = "Ready to go! ";
     String isSec = workout.showTimer ? "Seconds " : "";
     String message = "The next ${workout.duration} " + isSec + workout.title;
@@ -100,10 +92,9 @@ class _InstructionScreenState extends State<InstructionScreen>
             .then((value) => mediaHelper.speak(message)));
   }
 
-  awakeScreen(){
+  awakeScreen() {
     Wakelock.enable();
   }
-
 
   @override
   void dispose() {
@@ -170,9 +161,7 @@ class _InstructionScreenState extends State<InstructionScreen>
                             builder: (BuildContext context) => CheckListScreen(
                                 workOutList: widget.workOutList,
                                 tag: "continue",
-                                progress: 0 / widget.workOutList.length,
-
-                                //  progress: 0,
+                                currentWorkout: 0,
                                 title: widget.title)),
                       );
 
@@ -196,7 +185,8 @@ class _InstructionScreenState extends State<InstructionScreen>
                       }
 
                       controller.reverse(
-                          from: controller.value == 0.0 ? 1.0 : controller.value);
+                          from:
+                              controller.value == 0.0 ? 1.0 : controller.value);
                     },
                   ),
                   InfoButton(
@@ -231,7 +221,8 @@ class _InstructionScreenState extends State<InstructionScreen>
                                 )));
                       }
                       controller.reverse(
-                          from: controller.value == 0.0 ? 1.0 : controller.value);
+                          from:
+                              controller.value == 0.0 ? 1.0 : controller.value);
                     },
                   ),
                 ],
@@ -241,8 +232,7 @@ class _InstructionScreenState extends State<InstructionScreen>
     }
 
     Widget getTimer() {
-      return
-        Container(
+      return Container(
         height: height * .45,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -303,8 +293,6 @@ class _InstructionScreenState extends State<InstructionScreen>
                                     animation: controller,
                                     builder:
                                         (BuildContext context, Widget? child) {
-
-
                                       if (timerValue <= 3000 &&
                                           timerValue > 2950) {
                                         mediaHelper.speak('Three');
@@ -357,8 +345,7 @@ class _InstructionScreenState extends State<InstructionScreen>
     }
 
     return WillPopScope(
-      onWillPop: () async =>
-          _onPopBack(),
+      onWillPop: () async => _onPopBack(),
       child: Scaffold(
         body: SafeArea(
           child: Column(
@@ -373,7 +360,3 @@ class _InstructionScreenState extends State<InstructionScreen>
     );
   }
 }
-
-
-
-

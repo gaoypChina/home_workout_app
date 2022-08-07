@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
+import '../../helper/sp_helper.dart';
+import '../../helper/sp_key_helper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class SubscriptionHelper {
@@ -28,7 +28,9 @@ class SubscriptionHelper {
 
   static Future<PurchaserInfo?> purchasePackage(Package package) async {
     try {
-      PurchaserInfo info = await Purchases.purchasePackage(package,);
+      PurchaserInfo info = await Purchases.purchasePackage(
+        package,
+      );
       return info;
     } catch (e) {
       return null;

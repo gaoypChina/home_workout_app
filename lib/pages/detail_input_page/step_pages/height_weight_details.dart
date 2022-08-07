@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/provider/user_detail_provider.dart';
+import '../../../provider/user_detail_provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +37,8 @@ class _HeightWeightDetailsState extends State<HeightWeightDetails> {
             SizedBox(
               height: 18,
             ),
-            DetailPageCustomWidget.buildTitle(title: "Select measurement unit",context: context),
+            DetailPageCustomWidget.buildTitle(
+                title: "Select measurement unit", context: context),
             UnitSelector(),
             SizedBox(
               height: 16,
@@ -99,18 +100,26 @@ class UnitSelector extends StatelessWidget {
         },
         child: Container(
           height: 45,
-         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
           decoration: BoxDecoration(
-            border: Border.all(color:DetailPageCustomWidget.borderColor,width: 1),
-              color: isSelected ? Theme.of(context).primaryColor: DetailPageCustomWidget.tileColor,
-              borderRadius: radius,
-            ),
+            border:
+                Border.all(color: DetailPageCustomWidget.borderColor, width: 1),
+            color: isSelected
+                ? Theme.of(context).primaryColor
+                : DetailPageCustomWidget.tileColor,
+            borderRadius: radius,
+          ),
           child: Center(
             child: Text(
               title,
               style: TextStyle(
-                  color:
-                      isSelected ? Colors.white :Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7),
+                  color: isSelected
+                      ? Colors.white
+                      : Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .color!
+                          .withOpacity(.7),
                   fontSize: 15,
                   fontWeight: FontWeight.w500),
             ),

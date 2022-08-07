@@ -1,13 +1,13 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/widgets/connection_error_page.dart';
-import 'package:full_workout/widgets/dialogs/subscription_successful_dialog.dart';
+import '../../../constants/constant.dart';
+import '../../../helper/sp_helper.dart';
+import '../../../helper/sp_key_helper.dart';
+import '../../../widgets/connection_error_page.dart';
+import '../../../widgets/dialogs/subscription_successful_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -130,6 +130,8 @@ class SubscriptionProvider with ChangeNotifier {
   }
 
   Future<void> setSubscriptionDetails() async {
+    /// todo : remove this in production
+    //  return Future(() => isProUser = true);
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       log("user is not logged in");

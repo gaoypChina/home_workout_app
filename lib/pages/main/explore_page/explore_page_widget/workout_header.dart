@@ -41,8 +41,8 @@ class AnimatedWorkoutHeader extends StatelessWidget {
               borderRadius: BorderRadius.circular(18),
               color: Colors.blue,
               gradient: LinearGradient(colors: [
-                color.withOpacity(isDark? .2:.6),
-                color.withOpacity(isDark? .3:.8),
+                color.withOpacity(isDark ? .2 : .6),
+                color.withOpacity(isDark ? .3 : .8),
               ])),
           padding: EdgeInsets.only(bottom: 18, left: 18, right: 18),
           child: Align(
@@ -63,7 +63,7 @@ class AnimatedWorkoutHeader extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(30),
                         topLeft: Radius.circular(18)),
-                    color: color.withOpacity(isDark ? .1: .5)),
+                    color: color.withOpacity(isDark ? .1 : .5)),
                 height: 150,
                 child: Padding(
                   padding: EdgeInsets.all(8),

@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/helper/weight_db_helper.dart';
-import 'package:full_workout/provider/backup_provider.dart';
-import 'package:full_workout/widgets/loading_indicator.dart';
+import '../constants/constant.dart';
+import '../helper/weight_db_helper.dart';
+import '../provider/backup_provider.dart';
+import '../widgets/loading_indicator.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -177,38 +177,38 @@ class UserDetailProvider with ChangeNotifier {
     await _spHelper.saveBool(_spKey.isGoalSet, true);
   }
 
-  getLocalData() async{
-
+  getLocalData() async {
     SpHelper _spHelper = SpHelper();
     SpKey _spKey = SpKey();
-    name =await _spHelper.loadString(_spKey.name);
-    nameController =TextEditingController(text: name);
+    name = await _spHelper.loadString(_spKey.name);
+    nameController = TextEditingController(text: name);
 
-    String? d =await _spHelper.loadString(_spKey.date);
-    if(d != null){
+    String? d = await _spHelper.loadString(_spKey.date);
+    if (d != null) {
       dob = DateTime.parse(d);
     }
-    gender =await _spHelper.loadInt(_spKey.gender) ?? 3;
+    gender = await _spHelper.loadInt(_spKey.gender) ?? 3;
 
     height = await _spHelper.loadDouble(_spKey.height);
     weight = await _spHelper.loadDouble(_spKey.weight);
-    unit = await _spHelper.loadInt(_spKey.unit)??0;
+    unit = await _spHelper.loadInt(_spKey.unit) ?? 0;
     notifyListeners();
-
-
   }
 
   saveData({required BuildContext context}) async {
     isLoading = true;
     notifyListeners();
     try {
-      showDialog(context: context, builder: (builder)
-      {
-        return CustomLoadingIndicator(msg: "Creating profile",);
-      });
+      showDialog(
+          context: context,
+          builder: (builder) {
+            return CustomLoadingIndicator(
+              msg: "Creating profile",
+            );
+          });
       await saveLocalData();
       await Provider.of<BackupProvider>(context, listen: false)
-          .syncData(context: context, isLoginPage: false,showMsg: false);
+          .syncData(context: context, isLoginPage: false, showMsg: false);
     } catch (e) {
       showDialog(
           context: context,
@@ -221,8 +221,7 @@ class UserDetailProvider with ChangeNotifier {
       Constants().getToast("Profile Created Successfully");
 
       notifyListeners();
-        Navigator.of(context).pushNamed(MainPage.routeName);
+      Navigator.of(context).pushNamed(MainPage.routeName);
     }
   }
 }
-

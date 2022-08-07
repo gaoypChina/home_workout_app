@@ -5,18 +5,17 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/helper/recent_workout_db_helper.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/models/recent_workout.dart';
-import 'package:full_workout/pages/main/home_page/home_page.dart';
-import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
-import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
-import 'package:full_workout/pages/services/bmi_service/bmi_card.dart';
-import 'package:full_workout/pages/workout_page/report_share_page.dart';
-import 'package:full_workout/provider/ads_provider.dart';
-import 'package:full_workout/widgets/slide_fade_transition.dart';
+import '../../constants/constant.dart';
+import '../../helper/recent_workout_db_helper.dart';
+import '../../helper/sp_helper.dart';
+import '../../helper/sp_key_helper.dart';
+import '../../models/recent_workout.dart';
+import '../../pages/main/report_page/workout_report/weekly_workout_report.dart';
+import '../../pages/main/report_page/workout_report/workout_detail_report.dart';
+import '../../pages/services/bmi_service/bmi_card.dart';
+import '../../pages/workout_page/report_share_page.dart';
+import '../../provider/ads_provider.dart';
+import '../../widgets/slide_fade_transition.dart';
 import 'package:path_provider/path_provider.dart' as pp;
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
@@ -24,7 +23,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:wakelock/wakelock.dart';
 
 import '../../widgets/banner_medium_ad.dart';
-import '../main_page.dart';
 
 class ReportScreen extends StatefulWidget {
   final String title;
@@ -32,13 +30,12 @@ class ReportScreen extends StatefulWidget {
   final int totalExercise;
   final String tag;
 
-
-  ReportScreen(
-      {required this.title,
-      required this.dateTime,
+  ReportScreen({
+    required this.title,
+    required this.dateTime,
     required this.totalExercise,
-      required this.tag,
-   });
+    required this.tag,
+  });
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -53,8 +50,7 @@ int activeTime = 0;
 final _screenshotController = ScreenshotController();
 
 class _MyAppState extends State<ReportScreen> {
-
- late ConfettiController _controllerTopCenter;
+  late ConfettiController _controllerTopCenter;
 
   saveWorkoutData() async {
     try {
@@ -74,20 +70,19 @@ class _MyAppState extends State<ReportScreen> {
           widget.tag == spKey.armChallenge ||
           widget.tag == spKey.chestChallenge) {
         int currVal = await spHelper.loadInt(widget.tag) ?? 0;
-      List<String> titleList =  widget.title.split(" ");
-      int currWorkoutDay = int.tryParse(titleList[4])!;
-      if(currWorkoutDay > currVal){
-        spHelper.saveInt(widget.tag, currVal + 1);
-      }
-
+        List<String> titleList = widget.title.split(" ");
+        int currWorkoutDay = int.tryParse(titleList[4])!;
+        if (currWorkoutDay > currVal) {
+          spHelper.saveInt(widget.tag, currVal + 1);
+        }
       } else {
         spHelper.saveString(widget.tag, widget.dateTime);
       }
 
-      int savedActiveTime = await spHelper.loadInt(spKey.time)??0;
+      int savedActiveTime = await spHelper.loadInt(spKey.time) ?? 0;
       int totalActiveTime = savedActiveTime + activeTime;
 
-      int savedExercise = await spHelper.loadInt(spKey.exercise) ??0;
+      int savedExercise = await spHelper.loadInt(spKey.exercise) ?? 0;
       int totalExercise = savedExercise + widget.totalExercise;
 
       spHelper.saveInt(spKey.time, totalActiveTime);
@@ -108,7 +103,7 @@ class _MyAppState extends State<ReportScreen> {
       ReportShare(
         title: widget.title,
         date: widget.dateTime,
-        time: activeTime~/60,
+        time: activeTime ~/ 60,
         calories: (activeTime * (18 / 60)).toInt(),
         exercise: widget.totalExercise,
       ),
@@ -132,13 +127,15 @@ class _MyAppState extends State<ReportScreen> {
     });
   }
 
-  setAwakeScreen()async{
+  setAwakeScreen() async {
     bool isAwake = await spHelper.loadBool(spKey.awakeScreen) ?? false;
     isAwake ? Wakelock.enable() : Wakelock.disable();
   }
 
-  _onNext(){
-    Navigator.of(context).pushReplacementNamed(WorkoutDetailReport.routeName,);
+  _onNext() {
+    Navigator.of(context).pushReplacementNamed(
+      WorkoutDetailReport.routeName,
+    );
   }
 
   @override
@@ -165,14 +162,13 @@ class _MyAppState extends State<ReportScreen> {
       children: [
         Container(
           color: Colors.white,
-          height: height +30,
+          height: height + 30,
           width: width,
           child: Center(
             child: SvgPicture.asset(
               'assets/other/well_done.svg',
               alignment: Alignment.center,
-
-              width: width -50,
+              width: width - 50,
             ),
           ),
         ),
@@ -240,7 +236,7 @@ class _MyAppState extends State<ReportScreen> {
                           ),
                         )
                       : ElevatedButton(
-                    onPressed: () {
+                          onPressed: () {
                             _takeScreenshot();
                           },
                           child: Text(
@@ -254,9 +250,7 @@ class _MyAppState extends State<ReportScreen> {
                     width: 5,
                   ),
                   Spacer(),
-                  TextButton(
-                      onPressed: () =>_onNext(),
-                      child: Text("Next")),
+                  TextButton(onPressed: () => _onNext(), child: Text("Next")),
                 ],
               ),
             )),
@@ -269,7 +263,7 @@ class _MyAppState extends State<ReportScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 24.0, left: 18,bottom: 12),
+          padding: const EdgeInsets.only(top: 24.0, left: 18, bottom: 12),
           child: Text("Past Week", style: constants.titleStyle),
         ),
         IgnorePointer(
@@ -291,7 +285,6 @@ class _MyAppState extends State<ReportScreen> {
         height: MediaQuery.of(context).size.height * .14,
         child: Card(
           elevation: 0,
-
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16))),
           child: Container(
@@ -312,7 +305,6 @@ class _MyAppState extends State<ReportScreen> {
                         fontWeight: FontWeight.w500,
                         fontSize: 18),
                   ),
-
                   SizedBox(
                     height: 10,
                   ),
@@ -323,7 +315,6 @@ class _MyAppState extends State<ReportScreen> {
                         fontWeight: FontWeight.w500,
                         fontSize: 16),
                   ),
-
                 ],
               ),
             ),
@@ -333,8 +324,8 @@ class _MyAppState extends State<ReportScreen> {
     }
 
     int exercise = widget.totalExercise;
-    int calories = (activeTime * (18/60)).toInt();
-    int inMinute = activeTime~/60;
+    int calories = (activeTime * (18 / 60)).toInt();
+    int inMinute = activeTime ~/ 60;
 
     return Container(
       padding: EdgeInsets.only(top: 4),
@@ -342,8 +333,7 @@ class _MyAppState extends State<ReportScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           getCard("Exercise", exercise.toString(), Colors.green.shade500),
-          getCard("Minute", inMinute.toString(),
-              Colors.red.shade400),
+          getCard("Minute", inMinute.toString(), Colors.red.shade400),
           getCard(
               "Calories", calories.toInt().toString(), Colors.orange.shade400),
         ],
@@ -385,8 +375,7 @@ class _MyAppState extends State<ReportScreen> {
             ],
           ),
           Center(
-            child:
-            RatingBar.builder(
+            child: RatingBar.builder(
               unratedColor: Colors.blue.shade100,
               initialRating: 3,
               minRating: 1,
@@ -424,11 +413,10 @@ class _MyAppState extends State<ReportScreen> {
               borderRadius: BorderRadius.circular(30),
             ),
             backgroundColor: Colors.blue.shade700,
-
           ),
           onPressed: () {
             _onNext();
-              },
+          },
           child: Text(
             "Continue",
             style: Theme.of(context).textTheme.button!.merge(TextStyle(
@@ -456,7 +444,7 @@ class _MyAppState extends State<ReportScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var adsProvider = Provider.of<AdsProvider>(context,listen: false);
+    var adsProvider = Provider.of<AdsProvider>(context, listen: false);
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -465,8 +453,8 @@ class _MyAppState extends State<ReportScreen> {
         MediaQuery.of(context).padding.bottom;
 
     return WillPopScope(
-      onWillPop:() {
-       return _onNext();
+      onWillPop: () {
+        return _onNext();
       },
       child: Scaffold(
         body: Stack(
@@ -481,8 +469,10 @@ class _MyAppState extends State<ReportScreen> {
                 BmiCard(
                   showBool: false,
                 ),
-                if (adsProvider.showBannerAd)
-                  constants.getDivider(context: context),
+                SizedBox(
+                  height: 10,
+                ),
+                constants.getDivider(context: context),
                 if (adsProvider.showBannerAd)
                   SizedBox(
                     height: 10,
@@ -508,4 +498,3 @@ class _MyAppState extends State<ReportScreen> {
     );
   }
 }
-

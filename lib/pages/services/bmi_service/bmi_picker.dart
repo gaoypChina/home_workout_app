@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constant.dart';
+import '../../../constants/constant.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-
 
 class BMIPicker extends StatefulWidget {
   final double? height;
@@ -15,7 +14,6 @@ class BMIPicker extends StatefulWidget {
 class _BMIPickerState extends State<BMIPicker> {
   final constants = Constants();
 
-
   int weightIndex = 0;
   int heightIndex = 0;
   double? height = 0;
@@ -23,10 +21,12 @@ class _BMIPickerState extends State<BMIPicker> {
 
   @override
   Widget build(BuildContext context) {
-
-
-    String? heightCm = widget.height == null ? 0.toString() : widget.height!.toStringAsFixed(0);
-    String? weightKg = widget.weight == null ? 0.toString() : widget.weight!.toStringAsFixed(0);
+    String? heightCm = widget.height == null
+        ? 0.toString()
+        : widget.height!.toStringAsFixed(0);
+    String? weightKg = widget.weight == null
+        ? 0.toString()
+        : widget.weight!.toStringAsFixed(0);
 
     TextEditingController _cmController = TextEditingController(text: heightCm);
     TextEditingController _feetController = TextEditingController();
@@ -34,13 +34,10 @@ class _BMIPickerState extends State<BMIPicker> {
     TextEditingController _kgController = TextEditingController(text: weightKg);
     TextEditingController _lbsController = TextEditingController();
 
-
-
-
     onSubmit() {
       if (heightIndex == 0) {
         height = double.tryParse(_cmController.text);
-        if (height == null || height! <=50) {
+        if (height == null || height! <= 50) {
           constants.getToast("Please enter valid height value");
         }
       }
@@ -48,7 +45,7 @@ class _BMIPickerState extends State<BMIPicker> {
       if (heightIndex == 1) {
         double? feet = double.tryParse(_feetController.text);
         double? inch = double.tryParse(_inchController.text);
-        if (feet == null || inch == null || feet <=2) {
+        if (feet == null || inch == null || feet <= 2) {
           constants.getToast("Please enter valid height value");
         } else {
           double inchHeight = (feet * 12) + inch;
@@ -58,27 +55,24 @@ class _BMIPickerState extends State<BMIPicker> {
 
       if (weightIndex == 0) {
         weight = double.tryParse(_kgController.text)!;
-        if (weight == null|| weight! <=20 ) {
+        if (weight == null || weight! <= 20) {
           constants.getToast("Please enter valid weight value");
         }
-
       }
 
       if (weightIndex == 1) {
         double? lbsWeight = double.tryParse(_lbsController.text);
-        if (lbsWeight == null || lbsWeight <=50) {
+        if (lbsWeight == null || lbsWeight <= 50) {
           constants.getToast("Please enter valid weight value");
         } else {
           weight = lbsWeight / 2.205;
           print(weight);
         }
       }
-      if (height != null && weight != null && height! >50 && weight! >20){
+      if (height != null && weight != null && height! > 50 && weight! > 20) {
         Navigator.pop(context, [height, weight]);
       }
-
     }
-
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -120,13 +114,12 @@ class _BMIPickerState extends State<BMIPicker> {
                     ],
                     onToggle: (index) {
                       setState(() {
-                        heightIndex = index??0;
+                        heightIndex = index ?? 0;
                       });
                     },
                   ),
                 ),
               ),
-
               SizedBox(
                 height: 10,
               ),
@@ -149,8 +142,8 @@ class _BMIPickerState extends State<BMIPicker> {
                                         new BorderSide(color: Colors.teal)),
                               ),
                               controller: _feetController,
-                              keyboardType:
-                                  TextInputType.numberWithOptions(decimal: true),
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
                             ),
                           ),
                           SizedBox(
@@ -168,8 +161,8 @@ class _BMIPickerState extends State<BMIPicker> {
                                         new BorderSide(color: Colors.teal)),
                               ),
                               controller: _inchController,
-                              keyboardType:
-                                  TextInputType.numberWithOptions(decimal: true),
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
                             ),
                           ),
                         ],
@@ -183,7 +176,8 @@ class _BMIPickerState extends State<BMIPicker> {
                           labelText: "Height",
                           border: new OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: new BorderSide(color: Colors.blueGrey)),
+                              borderSide:
+                                  new BorderSide(color: Colors.blueGrey)),
                         ),
                         controller: _cmController,
                         keyboardType:
@@ -203,7 +197,6 @@ class _BMIPickerState extends State<BMIPicker> {
               SizedBox(
                 height: 16,
               ),
-
               Align(
                 alignment: Alignment.center,
                 child: Padding(
@@ -230,8 +223,6 @@ class _BMIPickerState extends State<BMIPicker> {
                   ),
                 ),
               ),
-
-
               SizedBox(
                 height: 10,
               ),
@@ -244,7 +235,8 @@ class _BMIPickerState extends State<BMIPicker> {
                           labelText: "Kg",
                           border: new OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: new BorderSide(color: Colors.blueGrey)),
+                              borderSide:
+                                  new BorderSide(color: Colors.blueGrey)),
                         ),
                         controller: _kgController,
                         keyboardType:
@@ -259,7 +251,8 @@ class _BMIPickerState extends State<BMIPicker> {
                           labelText: "Lbs",
                           border: new OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: new BorderSide(color: Colors.blueGrey)),
+                              borderSide:
+                                  new BorderSide(color: Colors.blueGrey)),
                         ),
                         controller: _lbsController,
                         keyboardType:

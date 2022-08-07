@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:full_workout/provider/auth_provider.dart';
-import 'package:full_workout/provider/backup_provider.dart';
+import '../../../provider/auth_provider.dart';
+import '../../../provider/backup_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -226,7 +226,6 @@ class _DataSyncModal extends StatelessWidget {
             SizedBox(
               height: 22,
             ),
-
             Container(
                 width: size.width - 36,
                 height: 45,
@@ -237,8 +236,6 @@ class _DataSyncModal extends StatelessWidget {
                   },
                   child: Text("Sync Data"),
                 )),
-
-
             SizedBox(
               height: 12,
             ),

@@ -42,13 +42,16 @@ class _UserReviewState extends State<UserReview> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 18.0,bottom: 12),
-          child: Text("What People Say About Us",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
+          padding: const EdgeInsets.only(left: 18.0, bottom: 12),
+          child: Text(
+            "What People Say About Us",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          ),
         ),
-
         Container(
           height: 210,
-          child: ListView(physics: BouncingScrollPhysics(),
+          child: ListView(
+            physics: BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             children: [
               ...reviews.map((reviewer) {
@@ -66,7 +69,7 @@ class _UserReviewState extends State<UserReview> {
                       CircleAvatar(
                         radius: 28,
                         backgroundImage: AssetImage(reviewer.imgSrc),
-                      //  child: Text(reviewer.name[0]),
+                        //  child: Text(reviewer.name[0]),
                       ),
                       Spacer(
                         flex: 2,
@@ -74,21 +77,27 @@ class _UserReviewState extends State<UserReview> {
                       Text(
                         reviewer.review,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400,letterSpacing: 1.5),
+                        style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: 1.5),
                       ),
                       Spacer(
                         flex: 2,
                       ),
                       Text(
                         reviewer.name,
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                       Spacer(),
                     ],
                   ),
                 );
               }).toList(),
-              SizedBox(width: 18,)
+              SizedBox(
+                width: 18,
+              )
             ],
           ),
         ),
@@ -104,5 +113,8 @@ class UserReviewModel {
   final Color color;
 
   UserReviewModel(
-      {required this.name, required this.imgSrc, required this.review,required this.color});
+      {required this.name,
+      required this.imgSrc,
+      required this.review,
+      required this.color});
 }

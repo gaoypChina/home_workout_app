@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/pages/main/weight_report_page/weight_report_details/tab_1.dart';
-import 'package:full_workout/pages/main/weight_report_page/weight_report_details/tab_2.dart';
-import 'package:full_workout/provider/weight_report_provider.dart';
+import '../../../../pages/main/weight_report_page/weight_report_details/tab_1.dart';
+import '../../../../pages/main/weight_report_page/weight_report_details/tab_2.dart';
+import '../../../../provider/weight_report_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -30,25 +29,25 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
     return WillPopScope(
       onWillPop: () => widget.onBack(),
       child: Scaffold(
-
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: pageIdx == 0?FloatingActionButton.extended(
-
-          onPressed: () async {
-            provider.addWeight(context: context);
-          },
-          icon: Icon(
-            Icons.add,
-            color: Colors.white,
-            size: 30,
-          ),
-          backgroundColor: Theme.of(context).primaryColor,
-          label: Text(
-            "Add weight",
-            style: TextStyle(fontSize: 16, color: Colors.white),
-            textAlign: TextAlign.end,
-          ),
-        ):null,
+        floatingActionButton: pageIdx == 0
+            ? FloatingActionButton.extended(
+                onPressed: () async {
+                  provider.addWeight(context: context);
+                },
+                icon: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                  size: 30,
+                ),
+                backgroundColor: Theme.of(context).primaryColor,
+                label: Text(
+                  "Add weight",
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  textAlign: TextAlign.end,
+                ),
+              )
+            : null,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
@@ -68,34 +67,34 @@ class _WeightReportDetailState extends State<WeightReportDetail> {
                   fontSize: 18,
                   cornerRadius: 2,
                   iconSize: 20,
-                  inactiveBgColor: Theme.of(context).primaryColor.withOpacity(.1),
+                  inactiveBgColor:
+                      Theme.of(context).primaryColor.withOpacity(.1),
                   icons: const [Icons.history, Icons.bar_chart],
                   labels: const ['History', 'Statics'],
                   onToggle: (int? index) {
                     setState(() {
-                      if(index != null){
+                      if (index != null) {
                         pageIdx = index;
-                        _controller.animateToPage(index, duration: Duration(microseconds: 3000), curve: Curves.easeIn);
-
+                        _controller.animateToPage(index,
+                            duration: Duration(microseconds: 3000),
+                            curve: Curves.easeIn);
                       }
                     });
                   },
                 ),
               ),
-
             ),
           ),
         ),
         body: PageView(
           controller: _controller,
-            scrollDirection: Axis.horizontal,onPageChanged: (int? index){
-
-              setState(() {
-                if(index != null)
-                pageIdx = index;
-              });
-        },
-          children: [ WeightDetailTab1() ,WeightDetailTab2()],
+          scrollDirection: Axis.horizontal,
+          onPageChanged: (int? index) {
+            setState(() {
+              if (index != null) pageIdx = index;
+            });
+          },
+          children: [WeightDetailTab1(), WeightDetailTab2()],
         ),
       ),
     );

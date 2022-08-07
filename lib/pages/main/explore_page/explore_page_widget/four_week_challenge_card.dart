@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/pages/main/explore_page/four_week_challenges_page/four_week_challenge_page.dart';
+import '../../../../pages/main/explore_page/four_week_challenges_page/four_week_challenge_page.dart';
 
 class FourWeekChallengeCard extends StatelessWidget {
   const FourWeekChallengeCard({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class FourWeekChallengeCard extends StatelessWidget {
               child: Container(
                 height: 150,
                 width: double.infinity,
-                padding: EdgeInsets.fromLTRB(12,0, 12,16),
+                padding: EdgeInsets.fromLTRB(12, 0, 12, 16),
                 decoration: BoxDecoration(
                     //color: Colors.black.withOpacity(.1),
                     image: DecorationImage(
@@ -45,7 +45,12 @@ class FourWeekChallengeCard extends StatelessWidget {
                     Text(
                       "The 7 X 4 Day Challenge is a four-week workout program designed by us to achieve your fitness goal.",
                       textAlign: TextAlign.justify,
-                      style: TextStyle(color: Colors.white, fontSize: 14,height: 1.2,letterSpacing: 1.2,fontWeight: FontWeight.w400),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          height: 1.2,
+                          letterSpacing: 1.2,
+                          fontWeight: FontWeight.w400),
                     ),
                   ],
                 ),

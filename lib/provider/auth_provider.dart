@@ -5,9 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/provider/backup_provider.dart';
-import 'package:full_workout/provider/subscription_provider.dart';
+import '../../../helper/sp_key_helper.dart';
+import '../../../provider/backup_provider.dart';
+import '../../../provider/subscription_provider.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,7 +43,8 @@ class AuthProvider with ChangeNotifier {
           // sync data
           var backupProvider =
               Provider.of<BackupProvider>(context, listen: false);
-          await backupProvider.syncData(context: context, isLoginPage: true,showMsg: false);
+          await backupProvider.syncData(
+              context: context, isLoginPage: true, showMsg: false);
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
             return MainPage(index: 0);
           }));
@@ -93,7 +94,7 @@ class AuthProvider with ChangeNotifier {
     try {
       UserCredential credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      if(credential.user == null){
+      if (credential.user == null) {
         throw "user not login properly";
       }
       await navigateToNextPage(context: context);
@@ -290,4 +291,3 @@ class AuthProvider with ChangeNotifier {
     }
   }
 }
-

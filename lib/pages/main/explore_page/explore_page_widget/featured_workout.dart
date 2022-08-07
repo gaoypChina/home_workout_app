@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/pages/main/explore_page/explore_page_widget/workout_header.dart';
+import '../../../../pages/main/explore_page/explore_page_widget/workout_header.dart';
 
 import '../../../../database/explore_page_workout/featured_workout_database.dart';
-import '../../../../widgets/prime_icon.dart';
 import '../workout_setup_page/workout_setup_page.dart';
 
 class FeaturedWorkout extends StatelessWidget {
@@ -41,11 +40,10 @@ class FeaturedWorkout extends StatelessWidget {
                   ...featuredWorkoutList.map((workout) {
                     return InkWell(
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (builder) =>
-                               WorkoutSetupPage(
-                                  workout: workout, header:
-                                WorkoutHeader(imgSrc: workout.imgSrc),)
-                      )),
+                          builder: (builder) => WorkoutSetupPage(
+                                workout: workout,
+                                header: WorkoutHeader(imgSrc: workout.imgSrc),
+                              ))),
                       child: Container(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,4 +89,3 @@ class FeaturedWorkout extends StatelessWidget {
     );
   }
 }
-

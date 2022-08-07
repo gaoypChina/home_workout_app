@@ -95,8 +95,9 @@ class BackupHelper {
 
   Future resetUserProgress(
       {required String uid, required Map<String, dynamic> workoutData}) async {
-    await _db.collection(UserActivityCollection).doc(uid).set({
-      "workout_data": workoutData
-    });
+    await _db
+        .collection(UserActivityCollection)
+        .doc(uid)
+        .set({"workout_data": workoutData});
   }
 }

@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/explore_page_workout/export_workout.dart';
+import '../../../../database/explore_page_workout/export_workout.dart';
 
 import '../../../../database/workout_list.dart';
 import '../all_ercise_page/all_exercise_page.dart';

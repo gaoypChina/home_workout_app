@@ -8,7 +8,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class RecentDatabaseHelper {
-  static final RecentDatabaseHelper _instance = new RecentDatabaseHelper.internal();
+  static final RecentDatabaseHelper _instance =
+      new RecentDatabaseHelper.internal();
   factory RecentDatabaseHelper() => _instance;
   final String tableName = "Workout";
   final String columnId = "id";
@@ -19,7 +20,7 @@ class RecentDatabaseHelper {
   final String columnCalories = "calories";
   final String columnExercise = "exercise";
 
-    Database? _db;
+  Database? _db;
 
   Future<Database> get db async {
     if (_db != null) {
@@ -38,17 +39,16 @@ class RecentDatabaseHelper {
     return ourDb;
   }
 
-
   void _onCreate(Database db, int newVersion) async {
     await db.execute(
       "CREATE TABLE $tableName("
       "$columnId INTEGER PRIMARY KEY,"
       " $columnDate TEXT, "
-          "$columnWorkoutTitle TEXT,"
+      "$columnWorkoutTitle TEXT,"
       "$columnActiveTime INTEGER,"
-          "$columnStars INTEGER,"
-          "$columnCalories REAL,"
-          "$columnExercise INTEGER)",
+      "$columnStars INTEGER,"
+      "$columnCalories REAL,"
+      "$columnExercise INTEGER)",
     );
   }
 
@@ -68,21 +68,19 @@ class RecentDatabaseHelper {
     return result.toList();
   }
 
-
-
- Future<void> setAllWorkout({required List workoutList})async{
-      Database dbClient = await db;
-      List allLocalWorkout = await getAllWorkOut();
-      for(Map<String,dynamic> workout in workoutList){
-        if(!isPresent(workout, allLocalWorkout)){
-          await dbClient.insert('$tableName', workout);
-        }
+  Future<void> setAllWorkout({required List workoutList}) async {
+    Database dbClient = await db;
+    List allLocalWorkout = await getAllWorkOut();
+    for (Map<String, dynamic> workout in workoutList) {
+      if (!isPresent(workout, allLocalWorkout)) {
+        await dbClient.insert('$tableName', workout);
       }
+    }
   }
 
- bool isPresent(Map<String,dynamic> data, List allLocalWorkout){
-    for(Map<String,dynamic> localWorkout in allLocalWorkout){
-      if(localWorkout["id"] == data["id"]){
+  bool isPresent(Map<String, dynamic> data, List allLocalWorkout) {
+    for (Map<String, dynamic> localWorkout in allLocalWorkout) {
+      if (localWorkout["id"] == data["id"]) {
         return true;
       }
     }
@@ -108,8 +106,6 @@ class RecentDatabaseHelper {
     return await dbClient
         .delete(tableName, where: "$columnId = ?", whereArgs: [id]);
   }
-
-
 
   Future<int> updateWorkout(RecentWorkout recentWorkout) async {
     var dbClient = await db;
@@ -137,13 +133,13 @@ class RecentDatabaseHelper {
     return result.toList();
   }
 
-  Future<void> deleteDataBase()async{
+  Future<void> deleteDataBase() async {
     var dbClient = await db;
     dbClient.delete(tableName);
-   //  Directory documentDirectory = await getApplicationDocumentsDirectory();
-   //  String path = join(documentDirectory.path, "RecentWorkout.db");
-   // await deleteDatabase(path);
-   //  await close();
+    //  Directory documentDirectory = await getApplicationDocumentsDirectory();
+    //  String path = join(documentDirectory.path, "RecentWorkout.db");
+    // await deleteDatabase(path);
+    //  await close();
   }
 
   Future close() async {

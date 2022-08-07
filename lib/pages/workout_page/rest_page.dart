@@ -1,20 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:full_workout/components/info_button.dart';
-import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/helper/mediaHelper.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
-import 'package:full_workout/pages/services/youtube_service/youtube_player.dart';
-import 'package:full_workout/pages/workout_page/check_list.dart';
-import 'package:full_workout/pages/workout_page/pause_page.dart';
-import 'package:full_workout/pages/workout_page/workout_page.dart';
-import 'package:full_workout/widgets/banner_regular_ad.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-import '../../widgets/banner_medium_ad.dart';
+import '../../components/info_button.dart';
+import '../../database/workout_list.dart';
+import '../../helper/mediaHelper.dart';
+import '../../helper/sp_helper.dart';
+import '../../helper/sp_key_helper.dart';
+import '../../pages/main/setting_page/sound_settings_page.dart';
+import '../../pages/services/youtube_service/youtube_player.dart';
+import '../../pages/workout_page/check_list.dart';
+import '../../pages/workout_page/pause_page.dart';
+import '../../pages/workout_page/workout_page.dart';
+import '../../widgets/banner_regular_ad.dart';
 import 'exercise_detail_page.dart';
 
 class RestScreen extends StatefulWidget {
@@ -44,15 +42,15 @@ class RestScreen extends StatefulWidget {
 class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
   /// variables
 
- late AnimationController controller;
-  MediaHelper mediaHelper =MediaHelper();
- late bool coachVoice;
- late bool soundEffect;
+  late AnimationController controller;
+  MediaHelper mediaHelper = MediaHelper();
+  late bool coachVoice;
+  late bool soundEffect;
   SpHelper spHelper = SpHelper();
   SpKey spKey = SpKey();
 
- late int index;
-late  Workout item;
+  late int index;
+  late Workout item;
 
   int get secValue {
     Duration duration = controller.duration! * controller.value;
@@ -71,12 +69,9 @@ late  Workout item;
     String exerciseName = workout.title;
     String totalRap = widget.rapList[widget.exerciseNumber + 1].toString();
 
-
-    mediaHelper
-        .playSoundOnce("assets/sound/achievement.wav")
-        .then((value) => Future.delayed(Duration(seconds: 1)).then((value) =>
-            mediaHelper.speak(
-                "Take a rest the next $totalRap $rapType $exerciseName")));
+    mediaHelper.playSoundOnce("assets/sound/achievement.wav").then((value) =>
+        Future.delayed(Duration(seconds: 1)).then((value) => mediaHelper
+            .speak("Take a rest the next $totalRap $rapType $exerciseName")));
   }
 
   _onPause() async {
@@ -84,8 +79,8 @@ late  Workout item;
     if (controller.isAnimating) {
       controller.stop(canceled: true);
     }
-    value =
-        await Navigator.of(context).push(MaterialPageRoute(builder:  (builder) => StopPage()));
+    value = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (builder) => StopPage()));
     if (value == "resume") {
       controller.reverse(
           from: controller.value == 0.0 ? 1.0 : controller.value);
@@ -97,7 +92,7 @@ late  Workout item;
     print(value);
   }
 
-  _onComplete() async{
+  _onComplete() async {
     await mediaHelper.flutterTts.stop();
     Navigator.pushReplacement(
         context,
@@ -136,7 +131,7 @@ late  Workout item;
     _introMessage(item);
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: widget.restTime+1),
+      duration: Duration(seconds: widget.restTime + 1),
     );
 
     controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
@@ -150,27 +145,28 @@ late  Workout item;
     super.initState();
   }
 
-
-
   /// widget functions
 
-  getProgressBar(double width, int currIndex,bool isDark) {
+  getProgressBar(double width, int currIndex, bool isDark) {
     return LinearPercentIndicator(
       padding: EdgeInsets.all(0),
       animation: true,
       lineHeight: 5.0,
       percent: index / widget.workOutList.length,
       width: width,
-      backgroundColor:isDark?Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8):Colors.blue.shade200,
-
+      backgroundColor: isDark
+          ? Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8)
+          : Colors.blue.shade200,
       progressColor: Colors.blue.shade700,
     );
   }
-@override
+
+  @override
   void dispose() {
     controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -181,10 +177,11 @@ late  Workout item;
 
     height = height - safePadding;
     return WillPopScope(
-      onWillPop: ()=>_onPause(),
+      onWillPop: () => _onPause(),
       child: Scaffold(
-        backgroundColor:isDark? Theme.of(context).scaffoldBackgroundColor:Colors.blue.shade700,
-
+        backgroundColor: isDark
+            ? Theme.of(context).scaffoldBackgroundColor
+            : Colors.blue.shade700,
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,7 +191,9 @@ late  Workout item;
                   Container(
                     height: height * .75,
                     width: width,
-                    color:isDark? Theme.of(context).scaffoldBackgroundColor:Colors.blue.shade700,
+                    color: isDark
+                        ? Theme.of(context).scaffoldBackgroundColor
+                        : Colors.blue.shade700,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -218,18 +217,15 @@ late  Workout item;
                               animation: controller,
                               builder: (BuildContext context, Widget? child) {
                                 if (timerValue <= 6000 && timerValue > 5950) {
-                                   mediaHelper.speak('Ready to go');
+                                  mediaHelper.speak('Ready to go');
                                 }
-                                if (timerValue <= 3000 &&
-                                    timerValue > 2950) {
+                                if (timerValue <= 3000 && timerValue > 2950) {
                                   mediaHelper.speak('Three');
                                 }
-                                if (timerValue <= 1600 &&
-                                    timerValue > 1550) {
+                                if (timerValue <= 1600 && timerValue > 1550) {
                                   mediaHelper.speak('Two');
                                 }
-                                if (timerValue <= 200 &&
-                                    timerValue > 150) {
+                                if (timerValue <= 200 && timerValue > 150) {
                                   mediaHelper.speak('One');
                                 }
 
@@ -261,10 +257,14 @@ late  Workout item;
                               ),
                               style: OutlinedButton.styleFrom(
                                 elevation: 1,
-                                backgroundColor:isDark?Theme.of(context).scaffoldBackgroundColor: Colors.blue.shade700,
+                                backgroundColor: isDark
+                                    ? Theme.of(context).scaffoldBackgroundColor
+                                    : Colors.blue.shade700,
                                 side: BorderSide(
                                     style: BorderStyle.solid,
-                                    color: isDark?Colors.white60:Colors.white70,
+                                    color: isDark
+                                        ? Colors.white60
+                                        : Colors.white70,
                                     width: 2),
                                 padding: EdgeInsets.only(
                                     left: 35, right: 35, top: 10, bottom: 10),
@@ -297,8 +297,7 @@ late  Workout item;
                       ],
                     ),
                   ),
-                  RegularBannerAd(
-                  ),
+                  RegularBannerAd(),
                   Positioned(
                       right: 10,
                       top: 20,
@@ -312,11 +311,12 @@ late  Workout item;
 
                               if (controller.isAnimating) {
                                 controller.stop(canceled: true);
-                                await Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DetailPage(
-                                  workout: item,
-                                  rapCount: widget.rapList[index],
-                                )));
-
+                                await Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                              workout: item,
+                                              rapCount: widget.rapList[index],
+                                            )));
                               }
                               controller.reverse(
                                   from: controller.value == 0.0
@@ -331,11 +331,13 @@ late  Workout item;
                               print(controller.status);
                               if (controller.isAnimating) {
                                 controller.stop(canceled: true);
-                                await Navigator.of(context).push(MaterialPageRoute(builder: (context)=>YoutubeTutorial(
-                                  rapCount: widget.rapList[index],
-                                  workout: widget.workOutList[index],
-                                )));
-
+                                await Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                        builder: (context) => YoutubeTutorial(
+                                              rapCount: widget.rapList[index],
+                                              workout:
+                                                  widget.workOutList[index],
+                                            )));
                               }
 
                               controller.reverse(
@@ -352,7 +354,9 @@ late  Workout item;
 
                               if (controller.isAnimating) {
                                 controller.stop(canceled: true);
-                                await Navigator.of(context).push(MaterialPageRoute(builder:(builder) => SoundSetting() ));
+                                await Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (builder) => SoundSetting()));
                               }
 
                               controller.reverse(
@@ -367,12 +371,13 @@ late  Workout item;
                             onPress: () async {
                               controller.stop(canceled: true);
                               await Navigator.of(context).push(
-                                MaterialPageRoute (
-                                  builder: (BuildContext context) =>  CheckListScreen(
-                                      workOutList: widget.workOutList,
-                                      tag: widget.tag,
-                                      progress: index / widget.workOutList.length,
-                                      title: widget.title),
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      CheckListScreen(
+                                          workOutList: widget.workOutList,
+                                          tag: widget.tag,
+                                          currentWorkout: index,
+                                          title: widget.title),
                                 ),
                               );
 
@@ -386,10 +391,10 @@ late  Workout item;
                       )),
                 ],
               ),
-              getProgressBar(width, 3,isDark),
+              getProgressBar(width, 3, isDark),
               Container(
                 height: height * .25 - 5,
-                color:Theme.of(context).cardColor,
+                color: Theme.of(context).cardColor,
                 child: Row(
                   children: [
                     Expanded(
@@ -432,10 +437,9 @@ late  Workout item;
                           ),
                         )),
                     Expanded(
-
-                               child: Hero(
-                                 tag: widget.title,
-                                   child: Image.asset(item.imageSrc))),
+                        child: Hero(
+                            tag: widget.title,
+                            child: Image.asset(item.imageSrc))),
                   ],
                 ),
               )

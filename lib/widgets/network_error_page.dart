@@ -5,7 +5,10 @@ class NetworkErrorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("NO CONNECTION"),),);
-
+    return Scaffold(
+      body: Center(
+        child: Text("NO CONNECTION"),
+      ),
+    );
   }
 }

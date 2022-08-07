@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,15 +9,15 @@ import '../user_detail_widget/user_detail_submit_button.dart';
 class WorkoutPreference extends StatefulWidget {
   final Function onBack;
   final Function onNext;
-  const WorkoutPreference({Key? key,required this.onBack, required this.onNext}) : super(key: key);
-
+  const WorkoutPreference(
+      {Key? key, required this.onBack, required this.onNext})
+      : super(key: key);
 
   @override
   State<WorkoutPreference> createState() => _WorkoutPreferenceState();
 }
 
 class _WorkoutPreferenceState extends State<WorkoutPreference> {
-
   List<DayIndex> trainingDayList = [
     DayIndex(index: 1, value: "1 Day"),
     DayIndex(index: 2, value: "2 Days"),
@@ -36,33 +34,47 @@ class _WorkoutPreferenceState extends State<WorkoutPreference> {
     DayIndex(index: 3, value: "Monday")
   ];
 
-
   @override
   Widget build(BuildContext context) {
-    var provider  = Provider.of<UserDetailProvider>(context);
-   return Scaffold(
-      bottomNavigationBar:UserDetailSubmitButton(onTap:widget.onNext,isActive: true, ),
+    var provider = Provider.of<UserDetailProvider>(context);
+    return Scaffold(
+      bottomNavigationBar: UserDetailSubmitButton(
+        onTap: widget.onNext,
+        isActive: true,
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 18),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 18,),
-            Text("Set your weekly goal",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20),),
-            SizedBox(height: 6,),
-            Text("We recommend training at least 3 days weekly for a better result"),
-            SizedBox(height: 28,),
+            SizedBox(
+              height: 18,
+            ),
+            Text(
+              "Set your weekly goal",
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+            ),
+            SizedBox(
+              height: 6,
+            ),
+            Text(
+                "We recommend training at least 3 days weekly for a better result"),
+            SizedBox(
+              height: 28,
+            ),
             CustomDetailInput(
               hasData: provider.weeklyTrainingDay != null,
-              onTap: () async{
-                int? res =await showDialog(context: context, builder: (context){
-                  return DaySelector(
-                    title: "Weekly training days",
-                    initialValue: provider.weeklyTrainingDay??3,
-                    dayList: trainingDayList,
-                  );
-                });
-               provider.setWeeklyTrainingDays(res);
+              onTap: () async {
+                int? res = await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return DaySelector(
+                        title: "Weekly training days",
+                        initialValue: provider.weeklyTrainingDay ?? 3,
+                        dayList: trainingDayList,
+                      );
+                    });
+                provider.setWeeklyTrainingDays(res);
               },
               title: "Weekly training days",
               content: provider.weeklyTrainingDayString,
@@ -72,24 +84,22 @@ class _WorkoutPreferenceState extends State<WorkoutPreference> {
             ),
             CustomDetailInput(
               hasData: provider.firstDayOfWeek != null,
-              onTap: ()async{
+              onTap: () async {
                 int? res = await showDialog(
                     context: context,
                     builder: (context) {
                       return DaySelector(
                         title: "First Day of week",
-                        initialValue:provider.firstDayOfWeek?? 1,
+                        initialValue: provider.firstDayOfWeek ?? 1,
                         dayList: firstDayList,
                       );
                     });
 
-              provider.setFirstDayOfWeek(res);
+                provider.setFirstDayOfWeek(res);
               },
               title: "First day of week",
               content: provider.firstDayOfWeekString,
             ),
-
-
           ],
         ),
       ),

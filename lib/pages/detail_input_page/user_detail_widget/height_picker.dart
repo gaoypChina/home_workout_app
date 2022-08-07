@@ -1,8 +1,3 @@
-
-
-
-
-
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -39,7 +34,7 @@ class _HeightPickerState extends State<HeightPicker> {
             title,
             style: TextStyle(
                 color:
-                isSelected ? Colors.white : Theme.of(context).primaryColor,
+                    isSelected ? Colors.white : Theme.of(context).primaryColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w500),
           ),
@@ -73,7 +68,9 @@ class _HeightPickerState extends State<HeightPicker> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(width: 8,),
+            SizedBox(
+              width: 8,
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -82,27 +79,25 @@ class _HeightPickerState extends State<HeightPicker> {
                   height: 4,
                 ),
                 _buildUnit(title: " In  ", index: 1),
-
               ],
             ),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-
                 children: [
                   SizedBox(
                     width: 12,
                   ),
-
                   Spacer(),
                   NumberPicker(
                     infiniteLoop: true,
                     itemHeight: 50,
                     value: unit == 0 ? cmValue : feetValue,
                     step: 1,
-                    minValue:unit ==0 ? 30 : 1,
+                    minValue: unit == 0 ? 30 : 1,
                     maxValue: unit == 0 ? 250 : 10,
-                    decoration: BoxDecoration(color: Colors.blue.withOpacity(.2)),
+                    decoration:
+                        BoxDecoration(color: Colors.blue.withOpacity(.2)),
                     selectedTextStyle: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 18,
@@ -116,40 +111,41 @@ class _HeightPickerState extends State<HeightPicker> {
                       });
                     },
                   ),
-
-                  if(unit ==1)        Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(horizontal: 12),
-                    child: Text(
-                      "Ft ",
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16),
+                  if (unit == 1)
+                    Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      child: Text(
+                        "Ft ",
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16),
+                      ),
                     ),
-                  ),
-             if(unit ==1)     NumberPicker(
-               infiniteLoop: true,
-
-               itemHeight: 50,
-                    value: inchValue,
-                    decoration: BoxDecoration(color: Colors.blue.withOpacity(.2)),
-                    step: 1,
-                    minValue: 0,
-                    maxValue: 11,
-                    selectedTextStyle: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500),
-                    textMapper: (title) {
-                      return "$title ";
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        inchValue = value;
-                      });
-                    },
-                  ),
+                  if (unit == 1)
+                    NumberPicker(
+                      infiniteLoop: true,
+                      itemHeight: 50,
+                      value: inchValue,
+                      decoration:
+                          BoxDecoration(color: Colors.blue.withOpacity(.2)),
+                      step: 1,
+                      minValue: 0,
+                      maxValue: 11,
+                      selectedTextStyle: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500),
+                      textMapper: (title) {
+                        return "$title ";
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          inchValue = value;
+                        });
+                      },
+                    ),
                   Text(
                     unit == 0 ? "  Cm " : "  In ",
                     style: TextStyle(
@@ -165,28 +161,31 @@ class _HeightPickerState extends State<HeightPicker> {
             ),
           ],
         ),
-
         SizedBox(
           height: 18,
         ),
         Row(
           children: [
             Spacer(),
-            TextButton(onPressed: () {
-              Navigator.of(context).pop();
-            }, child: Text("CANCEL")),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("CANCEL")),
             SizedBox(
               width: 8,
             ),
-            ElevatedButton(onPressed: () {
-              double res = 0.0;
-              if(unit == 0){
-                res = cmValue.toDouble();
-              }else{
-                res =(feetValue * 12  + inchValue) *2.54;
-              }
-              Navigator.pop(context, res);
-            }, child: Text("DONE")),
+            ElevatedButton(
+                onPressed: () {
+                  double res = 0.0;
+                  if (unit == 0) {
+                    res = cmValue.toDouble();
+                  } else {
+                    res = (feetValue * 12 + inchValue) * 2.54;
+                  }
+                  Navigator.pop(context, res);
+                },
+                child: Text("DONE")),
             SizedBox(
               width: 18,
             )

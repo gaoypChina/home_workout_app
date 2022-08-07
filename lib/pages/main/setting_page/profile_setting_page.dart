@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/provider/user_detail_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
+import '../../../constants/constant.dart';
+import '../../../provider/user_detail_provider.dart';
 import '../../detail_input_page/step_pages/height_weight_details.dart';
 import '../../detail_input_page/user_detail_widget/custom_detail_input.dart';
 import '../../detail_input_page/user_detail_widget/detail_page_custom_widget.dart';
@@ -90,7 +90,8 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
               Container(
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                    border: Border.all(color: DetailPageCustomWidget.borderColor),
+                    border:
+                        Border.all(color: DetailPageCustomWidget.borderColor),
                     color: provider.gender == index
                         ? Theme.of(context).primaryColor
                         : DetailPageCustomWidget.tileColor,
@@ -99,7 +100,7 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
                   icon,
                   color: provider.gender == index
                       ? Colors.white
-                      :Theme.of(context).primaryColor.withOpacity(.6) ,
+                      : Theme.of(context).primaryColor.withOpacity(.6),
                   size: 28,
                 ),
               ),

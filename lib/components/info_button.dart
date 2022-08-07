@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class InfoButton extends StatelessWidget {
@@ -7,11 +5,11 @@ class InfoButton extends StatelessWidget {
   final Function onPress;
   final String tooltip;
 
-  InfoButton({required this.icon, required this.onPress, required this.tooltip});
+  InfoButton(
+      {required this.icon, required this.onPress, required this.tooltip});
 
   @override
   Widget build(BuildContext context) {
-
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         shape: CircleBorder(),
@@ -19,9 +17,13 @@ class InfoButton extends StatelessWidget {
         onPrimary: Colors.black,
       ),
 
-      onPressed:()=> onPress(),
-      child: Icon(icon,color:Colors.white,size: 22,),
-    //  tooltip: tooltip,
+      onPressed: () => onPress(),
+      child: Icon(
+        icon,
+        color: Colors.white,
+        size: 22,
+      ),
+      //  tooltip: tooltip,
     );
-}
+  }
 }

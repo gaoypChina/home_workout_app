@@ -8,21 +8,29 @@ import 'package:url_launcher/url_launcher.dart';
 class Constants {
   String packageName = "com.akashlilhare.homeworkout";
 
-  String playStoreLink ="https://bit.ly/playstore-homeworkout";
+  String playStoreLink = "https://bit.ly/playstore-homeworkout";
 
   //"https://play.google.com/store/apps/details?id=com.akashlilhare.homeworkout";
 
   // ToDo: Update version number
+  // TODO: update phone number
 
-  String versionNumber ="1.8.1";
+  String versionNumber = "1.8.2";
 
+  TextStyle titleStyle =
+      TextStyle(fontWeight: FontWeight.w500, fontSize: 16, letterSpacing: 1.2);
 
-  TextStyle titleStyle =   TextStyle(fontWeight: FontWeight.w500,fontSize: 16,letterSpacing: 1.2);
-
-  var textStyle =TextStyle(wordSpacing:4,fontWeight: FontWeight.w700,fontSize: 18,color: Color(0xffA9A9A9));
-  var listTileTitleStyle = TextStyle(fontWeight: FontWeight.w500,fontSize: 16);
-  Icon trailingIcon = Icon(Icons.arrow_forward_ios,color: Colors.grey,size: 16,);
-
+  var textStyle = TextStyle(
+      wordSpacing: 4,
+      fontWeight: FontWeight.w700,
+      fontSize: 18,
+      color: Color(0xffA9A9A9));
+  var listTileTitleStyle = TextStyle(fontWeight: FontWeight.w500, fontSize: 16);
+  Icon trailingIcon = Icon(
+    Icons.arrow_forward_ios,
+    color: Colors.grey,
+    size: 16,
+  );
 
   getDivider({required BuildContext context}) {
     return Container(
@@ -31,15 +39,15 @@ class Constants {
     );
   }
 
-  getThinDivider(){
-    return  Container(
+  getThinDivider() {
+    return Container(
       height: .5,
       width: double.infinity,
-      color:Colors.grey.shade300.withOpacity(.5),
+      color: Colors.grey.shade300.withOpacity(.5),
     );
   }
 
-  getToast(String message){
+  getToast(String message) {
     return Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
@@ -47,11 +55,10 @@ class Constants {
         timeInSecForIosWeb: 1,
 
         //    textColor: Colors.white,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
 
-  getSnackBar({required BuildContext context, required String msg}){
+  getSnackBar({required BuildContext context, required String msg}) {
     final snackBar = SnackBar(content: Text(msg));
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);

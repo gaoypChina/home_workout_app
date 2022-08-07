@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:full_workout/pages/login_page/widget/login_button.dart';
-import 'package:full_workout/pages/login_page/widget/login_textField.dart';
-import 'package:full_workout/provider/auth_provider.dart';
+import '../../pages/login_page/widget/login_button.dart';
+import '../../pages/login_page/widget/login_textField.dart';
+import '../../provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../enums/app_conection_status.dart';
@@ -68,113 +67,108 @@ class _HomePageState extends State<SignUpPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
-    return Consumer<AuthProvider>(
-        builder: (context, authProvider, _) {
-          return Stack(
-            children: [
-              Scaffold(
-                appBar: AppBar(
-                  elevation: 0,
-                  backgroundColor: Colors.blueGrey.shade900.withOpacity(.5),
-                  leading: IconButton(
-                    color: Colors.white,
-                    icon: Icon(Icons.arrow_back_ios),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  title: Text(
-                    "Create Account",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                backgroundColor: Color(0xff192028),
-                body: ScrollConfiguration(
-                  behavior: MyBehavior(),
-                  child: SingleChildScrollView(
-                    child: SizedBox(
-                      height: size.height - 70,
-                      child: Stack(
+    Size size = MediaQuery.of(context).size;
+    return Consumer<AuthProvider>(builder: (context, authProvider, _) {
+      return Stack(
+        children: [
+          Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.blueGrey.shade900.withOpacity(.5),
+              leading: IconButton(
+                color: Colors.white,
+                icon: Icon(Icons.arrow_back_ios),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              title: Text(
+                "Create Account",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            backgroundColor: Color(0xff192028),
+            body: ScrollConfiguration(
+              behavior: MyBehavior(),
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  height: size.height - 70,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: size.height * (animation1.value + .75),
+                        left: size.width * .81,
+                        child: CustomPaint(
+                          painter: MyPainter(130),
+                        ),
+                      ),
+                      Column(
                         children: [
-                          Positioned(
-                            top: size.height * (animation1.value + .75),
-                            left: size.width * .81,
-                            child: CustomPaint(
-                              painter: MyPainter(130),
-                            ),
+                          SizedBox(
+                            height: size.height * .1,
                           ),
                           Column(
                             children: [
-                              SizedBox(
-                                height: size.height * .1,
-                              ),
-                              Column(
-                                children: [
-                                  Opacity(
-                                    opacity: .8,
-                                    child: ClipRRect(
-                                        borderRadius:
+                              Opacity(
+                                opacity: .8,
+                                child: ClipRRect(
+                                    borderRadius:
                                         BorderRadius.all(Radius.circular(16)),
-                                        child: Image.asset(
-                                          "assets/app_icon.png",
-                                          height: 60,
-                                        )),
-                                  ),
-                                  SizedBox(
-                                    height: 12,
-                                  ),
-                                  Text(
-                                    'Home Workout'.toUpperCase(),
-                                    style: TextStyle(
-                                      color: Colors.blue.shade50.withOpacity(
-                                          .8),
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1,
-                                      wordSpacing: 4,
-                                    ),
-                                  ),
-                                ],
+                                    child: Image.asset(
+                                      "assets/app_icon.png",
+                                      height: 60,
+                                    )),
                               ),
-                              Form(
-                                key: _formKey,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceEvenly,
-                                  children: [
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    LoginTextField(
-                                      controller: _emailController,
-                                      errorMessage: emailError,
-                                      icon: Icons.email_outlined,
-                                      hintText: 'Email...',
-                                      isEmail: true,
-                                      isPassword: false,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty ||
-                                            !RegExp(
-                                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                                .hasMatch(value)) {
-                                          setState(() {
-                                            emailError = "Invalid email";
-                                          });
-                                          return "Invalid email";
-                                        } else {
-                                          emailError = null;
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    LoginTextField(
-                                      controller: _passwordController,
+                              SizedBox(
+                                height: 12,
+                              ),
+                              Text(
+                                'Home Workout'.toUpperCase(),
+                                style: TextStyle(
+                                  color: Colors.blue.shade50.withOpacity(.8),
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1,
+                                  wordSpacing: 4,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                LoginTextField(
+                                  controller: _emailController,
+                                  errorMessage: emailError,
+                                  icon: Icons.email_outlined,
+                                  hintText: 'Email...',
+                                  isEmail: true,
+                                  isPassword: false,
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.isEmpty ||
+                                        !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                            .hasMatch(value)) {
+                                      setState(() {
+                                        emailError = "Invalid email";
+                                      });
+                                      return "Invalid email";
+                                    } else {
+                                      emailError = null;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                LoginTextField(
+                                  controller: _passwordController,
                                   errorMessage: passwordError,
                                   icon: Icons.lock_outline,
                                   hintText: 'Password...',
@@ -215,7 +209,6 @@ class _HomePageState extends State<SignUpPage> with TickerProviderStateMixin {
                                             "Contains at least one special character";
                                         return "invalid password";
                                       }
-
                                     } else {
                                       passwordError = null;
                                       return null;
@@ -262,8 +255,11 @@ class _HomePageState extends State<SignUpPage> with TickerProviderStateMixin {
                                         log("isValid : " + isValid.toString());
                                         if (isValid) {
                                           log("go to next page");
-                                          authProvider.emailSignup(email: _emailController.text, password: _passwordController.text,context: context);
-
+                                          authProvider.emailSignup(
+                                              email: _emailController.text,
+                                              password:
+                                                  _passwordController.text,
+                                              context: context);
                                         }
                                       },
                                     ),
@@ -302,23 +298,23 @@ class _HomePageState extends State<SignUpPage> with TickerProviderStateMixin {
                                 ),
                               ],
                             ),
-                              ),
-                            ],
                           ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
-              if(authProvider.connectionStatus ==
-                  AppConnectionStatus.loading) CustomLoadingIndicator(
-                msg: "Loading...", isLoginPage: true,),
-
-            ],
-          );
-        }
-    );
+            ),
+          ),
+          if (authProvider.connectionStatus == AppConnectionStatus.loading)
+            CustomLoadingIndicator(
+              msg: "Loading...",
+              isLoginPage: true,
+            ),
+        ],
+      );
+    });
   }
 }
 
@@ -353,8 +349,8 @@ class MyPainter extends CustomPainter {
 
 class MyBehavior extends ScrollBehavior {
   @override
-  Widget buildViewportChrome(BuildContext context, Widget child,
-      AxisDirection axisDirection) {
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
     return child;
   }
 }

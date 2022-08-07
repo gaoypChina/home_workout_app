@@ -1,6 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/pages/main/explore_page/explore_page_widget/workout_header.dart';
+import '../../../../pages/main/explore_page/explore_page_widget/workout_header.dart';
 
 import '../../../../database/explore_page_workout/beginner_workout.dart';
 import '../workout_setup_page/workout_setup_page.dart';

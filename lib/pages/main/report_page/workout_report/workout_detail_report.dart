@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/helper/recent_workout_db_helper.dart';
-import 'package:full_workout/models/recent_workout.dart';
+import '../../../../constants/constant.dart';
+import '../../../../helper/recent_workout_db_helper.dart';
+import '../../../../models/recent_workout.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -12,6 +12,7 @@ class WorkoutDetailReport extends StatefulWidget {
   @override
   _WorkoutDetailReportState createState() => _WorkoutDetailReportState();
 }
+
 class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
   RecentDatabaseHelper workoutDb = RecentDatabaseHelper();
   List<RecentWorkout> recentWorkout = [];
@@ -28,19 +29,22 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
   bool isLoading = true;
 
   _readWorkoutData() async {
-    try{
+    try {
       List items = await workoutDb.getAllWorkOut();
       print("length");
       print(items.length);
       items.forEach((element) {
         recentWorkout.add(RecentWorkout.map(element));
       });
-    }catch(e){
-      showDialog(context: context, builder: (_){
-        return AlertDialog(content: Text(e.toString()),);
-      });
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              content: Text(e.toString()),
+            );
+          });
     }
-
   }
 
   Map<DateTime, List<dynamic>> _getWorkout() {
@@ -79,7 +83,8 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
       DateTime curr = DateTime.parse(model.date);
       events.addAll({curr: workoutTitle});
 
-      calenderEvents.addAll({DateTime(curr.year,curr.month,curr.day):workoutTitle});
+      calenderEvents
+          .addAll({DateTime(curr.year, curr.month, curr.day): workoutTitle});
       workoutModelList.add(currDateWorkout);
     }
     return events;
@@ -95,9 +100,9 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
       print(date);
       String workoutTitle = recentWorkout[i].workoutTitle;
       String formatedDayI =
-      DateFormat.yMMMd().format(DateTime.parse(recentWorkout[i].date));
+          DateFormat.yMMMd().format(DateTime.parse(recentWorkout[i].date));
       String formatedDayJ =
-      DateFormat.yMMMd().format(DateTime.parse(recentWorkout[j].date));
+          DateFormat.yMMMd().format(DateTime.parse(recentWorkout[j].date));
       print(formatedDayI + " and " + formatedDayJ);
       if (formatedDayI == formatedDayJ) {
         print("$formatedDayI : $workoutTitle");
@@ -141,7 +146,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
 
   getCard(
     RecentWorkout workout,
-    var size,
+    Size size,
   ) {
     getImage(String tag) {
       var tagList = tag.split(" ");
@@ -151,10 +156,8 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
       if (tagList[0].toLowerCase() == "shoulder")
         return "assets/icons/back.png";
       if (tagList[0].toLowerCase() == "legs") return "assets/icons/lunges.png";
-      if (tagList[0].toLowerCase() == "arms")
-        return "assets/icons/push-up.png";
-      if (tagList[0].toLowerCase() == "full")
-        return "assets/icons/lunges.png";
+      if (tagList[0].toLowerCase() == "arms") return "assets/icons/push-up.png";
+      if (tagList[0].toLowerCase() == "full") return "assets/icons/lunges.png";
       return "assets/icons/exercises.png";
     }
 
@@ -168,9 +171,11 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                 child: Container(
                   margin: EdgeInsets.all(12),
                   padding: EdgeInsets.all(12),
-                  decoration: BoxDecoration(color: Colors.grey.shade500.withOpacity(.1),borderRadius: BorderRadius.all(Radius.circular(18))),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade500.withOpacity(.1),
+                      borderRadius: BorderRadius.all(Radius.circular(18))),
                   height: 70,
-                width: 70,
+                  width: 70,
                   child: Image.asset(
                     getImage(workout.workoutTitle),
                     fit: BoxFit.scaleDown,
@@ -186,23 +191,6 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        DateFormat(
-                          "dd MMM yyyy  |  hh:mm aaa",
-                        ).format(DateTime.parse(workout.date)),
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                            letterSpacing: 1.1,
-                            color: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .color!
-                                .withOpacity(.9)),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
                         workout.workoutTitle,
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -211,7 +199,23 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                         ),
                       ),
                       SizedBox(
-                        height: 8,
+                        height: 6,
+                      ),
+                      Text(
+                        DateFormat(
+                          "dd MMM yyyy, hh:mm aaa",
+                        ).format(DateTime.parse(workout.date)),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: 1,
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .color!
+                                .withOpacity(.9)),
+                      ),
+                      SizedBox(
+                        height: 6,
                       ),
                       Row(
                         children: [
@@ -231,7 +235,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                                     .bodyText1!
                                     .color,
                                 fontWeight: FontWeight.w400,
-                                letterSpacing: 1.2,
+                                letterSpacing: 1,
                                 fontSize: 12),
                           ),
                           Spacer(),
@@ -240,9 +244,9 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                             color: Colors.orangeAccent.withOpacity(.8),
                             size: 20,
                           ),
-
-                          Text(" "+
-                            (workout.activeTime * (18 / 60))
+                          Text(
+                            " " +
+                                (workout.activeTime * (18 / 60))
                                     .toStringAsFixed(2) +
                                 " Cal",
                             style: TextStyle(
@@ -251,7 +255,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                                     .bodyText1!
                                     .color,
                                 fontWeight: FontWeight.w400,
-                                letterSpacing: 1.2,
+                                letterSpacing: 1,
                                 fontSize: 12),
                           ),
                           Spacer(),
@@ -277,104 +281,98 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
     int min = (time / 60).floor();
     String minute = min.toString().length <= 1 ? "0$min" : "$min";
     String second = sec.toString().length <= 1 ? "0$sec" : "$sec";
-
     return "$minute:$second";
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "History",
+        appBar: AppBar(
+          title: Text(
+            "History",
+          ),
         ),
-      ),
-      body: isLoading == true
-          ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-        physics: BouncingScrollPhysics(),
-        itemCount: workoutModelList.length + 1,
-          itemBuilder: (context,index){
-            if(index == 0){
-              return Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: TableCalendar(
-                      firstDay: DateTime(2021, 01, 01),
-                      lastDay: DateTime.now(),
-                      focusedDay: _focusedDay,
-                      sixWeekMonthsEnforced: true,
-                      calendarFormat: _calendarFormat,
-                      rangeSelectionMode: _rangeSelectionMode,
-                      availableGestures:
-                      AvailableGestures.horizontalSwipe,
-                      eventLoader: (DateTime event) {
-                        log("event : " + DateTime.parse(event.toIso8601String()).toString());
-                        if (calenderEvents[DateTime(
-                            event.year, event.month, event.day)] ==
-                            null){
-                          log("inside null");
-                          return [];
-                        }
-                        else{
-                          List? temp = calenderEvents[
-                          DateTime(
-                              event.year, event.month, event.day)];
-                          return temp??[] ;
-                        }
-
-                      },
-                      startingDayOfWeek: StartingDayOfWeek.monday,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                      ),
-                      calendarStyle: CalendarStyle(
-                          todayDecoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(34))),
-                          markerDecoration: BoxDecoration(
-                              color: Colors.blue.shade200,
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(12)))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  constants.getDivider(context: context),
-                  SizedBox(
-                    height: 8,
-                  ),
-                ],
-              );
-            }else if(workoutModelList.length >= 1){
-              List<RecentWorkout> events = workoutModelList[index-1];
-              return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: events.length,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (ctx, idx) {
-                    return getCard(
-                      events[idx],
-                      MediaQuery.of(context).size,
+        body: isLoading == true
+            ? Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                physics: BouncingScrollPhysics(),
+                itemCount: workoutModelList.length,
+                itemBuilder: (context, index) {
+                  List<RecentWorkout> currentDayWorkout =
+                      workoutModelList[index];
+                  if (index == 0) {
+                    return Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: TableCalendar(
+                            firstDay: DateTime(2021, 01, 01),
+                            lastDay: DateTime.now(),
+                            focusedDay: _focusedDay,
+                            sixWeekMonthsEnforced: true,
+                            calendarFormat: _calendarFormat,
+                            rangeSelectionMode: _rangeSelectionMode,
+                            availableGestures:
+                                AvailableGestures.horizontalSwipe,
+                            eventLoader: (DateTime event) {
+                              log("event : " +
+                                  DateTime.parse(event.toIso8601String())
+                                      .toString());
+                              if (calenderEvents[DateTime(
+                                      event.year, event.month, event.day)] ==
+                                  null) {
+                                log("inside null");
+                                return [];
+                              } else {
+                                List? temp = calenderEvents[DateTime(
+                                    event.year, event.month, event.day)];
+                                return temp ?? [];
+                              }
+                            },
+                            startingDayOfWeek: StartingDayOfWeek.monday,
+                            daysOfWeekStyle: DaysOfWeekStyle(),
+                            calendarStyle: CalendarStyle(
+                                todayDecoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(34))),
+                                markerDecoration: BoxDecoration(
+                                    color: Colors.blue.shade200,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12)))),
+                            onFormatChanged: (format) {
+                              if (_calendarFormat != format) {
+                                setState(() {
+                                  _calendarFormat = format;
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          height: 12,
+                        ),
+                        constants.getDivider(context: context),
+                        ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: currentDayWorkout.length,
+                            itemBuilder: (context, idx) {
+                              return getCard(currentDayWorkout[idx],
+                                  MediaQuery.of(context).size);
+                            }),
+                      ],
                     );
-                  });
-            }else{
-              return Container();
-            }
-      }));
-
-
+                  } else {
+                    return ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: currentDayWorkout.length,
+                        itemBuilder: (context, idx) {
+                          return getCard(currentDayWorkout[idx],
+                              MediaQuery.of(context).size);
+                        });
+                  }
+                }));
   }
 }

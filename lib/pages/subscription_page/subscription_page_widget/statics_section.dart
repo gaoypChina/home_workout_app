@@ -1,28 +1,28 @@
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:screenshot/screenshot.dart';
 
 class StaticsSection extends StatelessWidget {
   const StaticsSection({Key? key}) : super(key: key);
 
-  buildCard({required title, required subtitle}){
-    return
-      Expanded(
-        child: Column(
+  buildCard({required title, required subtitle}) {
+    return Expanded(
+      child: Column(
         children: [
-          Text(title,style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20),),
-          SizedBox(height: 8,),
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+          ),
+          SizedBox(
+            height: 8,
+          ),
           Text(subtitle)
         ],
-    ),
-      );
+      ),
+    );
   }
 
-  buildDivider(){
+  buildDivider() {
     return Container(
-height: 40,
+      height: 40,
       width: 1,
       color: Colors.green.withOpacity(.5),
     );
@@ -40,8 +40,6 @@ height: 40,
           buildCard(title: "10000 + ", subtitle: "Active User"),
           buildDivider(),
           buildCard(title: "500 + ", subtitle: "User Seen result"),
-
-
         ],
       ),
     );

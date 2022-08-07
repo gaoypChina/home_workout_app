@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:full_workout/constants/constant.dart';
+import '../../../constants/constant.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 
 class RateAppInitWidget extends StatefulWidget {
@@ -95,30 +95,32 @@ class _RateAppInitWidgetState extends State<RateAppInitWidget> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return RateMyAppBuilder(
-      rateMyApp: RateMyApp(googlePlayIdentifier: constants.packageName,
-      minLaunches: 5,
-      remindDays: 2,
-      minDays: 5,
+      rateMyApp: RateMyApp(
+        googlePlayIdentifier: constants.packageName,
+        minLaunches: 5,
+        remindDays: 2,
+        minDays: 5,
         remindLaunches: 10,
       ),
       onInitialized: (context, rateMyApp) {
         setState(() {
           this.rateMyApp = rateMyApp;
         });
-        if(rateMyApp.shouldOpenDialog){
+        if (rateMyApp.shouldOpenDialog) {
           rateMyApp.showStarRateDialog(context,
               title: "Rate Us",
-              dialogStyle: DialogStyle(dialogShape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(18)))),
+              dialogStyle: DialogStyle(
+                  dialogShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(18)))),
               message: "Do you like this app? Please leave a rating",
-              starRatingOptions: StarRatingOptions(initialRating: 0,),
-              actionsBuilder: (context, stars) {
-                return actionsBuilder(context, stars??1);
-              });
+              starRatingOptions: StarRatingOptions(
+                initialRating: 0,
+              ), actionsBuilder: (context, stars) {
+            return actionsBuilder(context, stars ?? 1);
+          });
         }
       },
       builder: (context) => rateMyApp == null

@@ -9,13 +9,12 @@ class SubscriptionErrorDialog extends StatelessWidget {
       title: Text("Purchase Error"),
       content: Text(
           "If your money detected and not able to enjoy prim feature then you can menage your subscription from subscription settings page or you can contact us."),
-
       actions: [
-        TextButton(onPressed: (){
-          Navigator.of(context).pop();
-        }, child: Text("Close")),
-
-
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("Close")),
       ],
     );
   }

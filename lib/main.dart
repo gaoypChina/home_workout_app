@@ -5,24 +5,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:full_workout/helper/notification_helper.dart';
-import 'package:full_workout/pages/detail_input_page/detail_input_page.dart';
-import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
-import 'package:full_workout/pages/main/setting_page/faq_page.dart';
-import 'package:full_workout/pages/main/setting_page/profile_setting_page.dart';
-import 'package:full_workout/pages/main/setting_page/reminder_screen.dart';
-import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
-import 'package:full_workout/pages/main_page.dart';
-import 'package:full_workout/pages/splash_page.dart';
-import 'package:full_workout/provider/ads_provider.dart';
-import 'package:full_workout/provider/auth_provider.dart';
-import 'package:full_workout/provider/backup_provider.dart';
-import 'package:full_workout/provider/connectivity_provider.dart';
-import 'package:full_workout/provider/subscription_provider.dart';
-import 'package:full_workout/provider/theme_provider.dart';
-import 'package:full_workout/provider/user_detail_provider.dart';
-import 'package:full_workout/provider/weight_report_provider.dart';
-import 'package:full_workout/widgets/connection_error_page.dart';
+import '../../helper/notification_helper.dart';
+import '../../pages/detail_input_page/detail_input_page.dart';
+import '../../pages/main/report_page/workout_report/workout_detail_report.dart';
+import '../../pages/main/setting_page/faq_page.dart';
+import '../../pages/main/setting_page/profile_setting_page.dart';
+import '../../pages/main/setting_page/reminder_screen.dart';
+import '../../pages/main/setting_page/sound_settings_page.dart';
+import '../../pages/main_page.dart';
+import '../../pages/splash_page.dart';
+import '../../provider/ads_provider.dart';
+import '../provider/auth_provider.dart';
+import '../provider/backup_provider.dart';
+import '../provider/connectivity_provider.dart';
+import '../provider/subscription_provider.dart';
+import '../provider/theme_provider.dart';
+import '../provider/user_detail_provider.dart';
+import '../provider/weight_report_provider.dart';
+import '../widgets/connection_error_page.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -102,33 +102,36 @@ class _MyAppState extends State<MyApp> {
                             BlocBuilder<ConnectivityCubit, ConnectivityState>(
                                 builder: (context, state) {
                           return FutureBuilder(
-                            future: Provider.of<SubscriptionProvider>(context, listen: false)
-                              .setSubscriptionDetails(),
-                            builder: (context,snapshot) {
-                              return MaterialApp(
-                                title: 'Home Workout',
-                                darkTheme: darkThemeData,
-                                theme: lightThemeData,
-                                routes: {
-                                  '/': (ctx) => SplashPage(),
-                                  DetailInputPage.routeName: (ctx) =>
-                                      DetailInputPage(),
-                                  ReminderTab.routeName: (ctx) => ReminderTab(),
-                                  FAQPage.routeName: (ctx) => FAQPage(),
-                                  ConnectionErrorPage.routeName: (ctx) =>
-                                      ConnectionErrorPage(),
-                                  MainPage.routeName: (ctx) => MainPage(index: 0),
-                                  ProfileSettingPage.routeName: (ctx) =>
-                                      ProfileSettingPage(),
-                                  SoundSetting.routeName: (ctx) => SoundSetting(),
-                                  WorkoutDetailReport.routeName: (ctx) =>
-                                      WorkoutDetailReport(),
-                                //  LoginPage.routeName: (ctx) => LoginPage()
-                                },
-                                debugShowCheckedModeBanner: false,
-                              );
-                            }
-                          );
+                              future: Provider.of<SubscriptionProvider>(context,
+                                      listen: false)
+                                  .setSubscriptionDetails(),
+                              builder: (context, snapshot) {
+                                return MaterialApp(
+                                  title: 'Home Workout',
+                                  darkTheme: darkThemeData,
+                                  theme: lightThemeData,
+                                  routes: {
+                                    '/': (ctx) => SplashPage(),
+                                    DetailInputPage.routeName: (ctx) =>
+                                        DetailInputPage(),
+                                    ReminderTab.routeName: (ctx) =>
+                                        ReminderTab(),
+                                    FAQPage.routeName: (ctx) => FAQPage(),
+                                    ConnectionErrorPage.routeName: (ctx) =>
+                                        ConnectionErrorPage(),
+                                    MainPage.routeName: (ctx) =>
+                                        MainPage(index: 0),
+                                    ProfileSettingPage.routeName: (ctx) =>
+                                        ProfileSettingPage(),
+                                    SoundSetting.routeName: (ctx) =>
+                                        SoundSetting(),
+                                    WorkoutDetailReport.routeName: (ctx) =>
+                                        WorkoutDetailReport(),
+                                    //  LoginPage.routeName: (ctx) => LoginPage()
+                                  },
+                                  debugShowCheckedModeBanner: false,
+                                );
+                              });
                         }),
                       );
                     });

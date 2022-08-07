@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/workout_plan/four_week_challenges/abs_challenges.dart';
-import 'package:full_workout/database/workout_plan/four_week_challenges/arm_challenges.dart';
-import 'package:full_workout/database/workout_plan/four_week_challenges/chest_challenge.dart';
-import 'package:full_workout/database/workout_plan/four_week_challenges/full_body_challenge.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/models/challenges_model.dart';
-import 'package:full_workout/pages/main/explore_page/four_week_challenges_page/workout_time_line.dat.dart';
-import 'package:full_workout/widgets/prime_icon.dart';
+import '../../../../pages/main/explore_page/four_week_challenges_page/workout_time_line.dat.dart';
+import '../../../../widgets/prime_icon.dart';
 
+import '../../../../database/workout_plan/four_week_challenges/abs_challenges.dart';
+import '../../../../database/workout_plan/four_week_challenges/arm_challenges.dart';
+import '../../../../database/workout_plan/four_week_challenges/chest_challenge.dart';
+import '../../../../database/workout_plan/four_week_challenges/full_body_challenge.dart';
+import '../../../../helper/sp_helper.dart';
+import '../../../../helper/sp_key_helper.dart';
+import '../../../../models/challenges_model.dart';
 import '../../../../widgets/banner_regular_ad.dart';
 
 class FourWeekChallengePage extends StatelessWidget {
@@ -184,8 +184,6 @@ class FourWeekChallengePage extends StatelessWidget {
       );
     }
 
-
-
     return Scaffold(
       bottomNavigationBar: RegularBannerAd(),
       appBar: AppBar(
@@ -219,7 +217,6 @@ class FourWeekChallengePage extends StatelessWidget {
                     letterSpacing: 1.5),
               ),
             ),
-
             SizedBox(
               height: 18,
             ),

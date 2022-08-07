@@ -51,7 +51,6 @@ class HardCoreWorkout extends StatelessWidget {
                                 Positioned(right: 8, top: 4, child: PrimeIcon())
                               ],
                             ),
-
                           );
                         }));
                       },

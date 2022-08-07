@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SubscriptionHeader extends StatefulWidget {
-   SubscriptionHeader({Key? key}) : super(key: key);
+  SubscriptionHeader({Key? key}) : super(key: key);
 
   @override
   _SubscriptionHeaderState createState() => _SubscriptionHeaderState();
@@ -238,4 +238,3 @@ class PremiumItem {
     required this.title,
   });
 }
-

@@ -3,12 +3,12 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/helper/backup_helper.dart';
-import 'package:full_workout/helper/recent_workout_db_helper.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/helper/weight_db_helper.dart';
+import '../../../constants/constant.dart';
+import '../../../helper/backup_helper.dart';
+import '../../../helper/recent_workout_db_helper.dart';
+import '../../../helper/sp_helper.dart';
+import '../../../helper/sp_key_helper.dart';
+import '../../../helper/weight_db_helper.dart';
 
 import '../enums/app_conection_status.dart';
 
@@ -23,7 +23,8 @@ class BackupProvider extends ChangeNotifier {
 
   syncData(
       {required BuildContext context,
-      required bool isLoginPage,required bool showMsg}) async {
+      required bool isLoginPage,
+      required bool showMsg}) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
 
@@ -162,8 +163,7 @@ class BackupProvider extends ChangeNotifier {
     ///abs workout day
     int localAbsDay = await _spHelper.loadInt(_spKey.absChallenge) ?? 0;
     int cloudAbsDay = workoutData["abs"] ?? 0;
-    await _spHelper.saveInt(
-        _spKey.absChallenge, max(localAbsDay, cloudAbsDay));
+    await _spHelper.saveInt(_spKey.absChallenge, max(localAbsDay, cloudAbsDay));
 
     ///chest workout day
     int localChestDay = await _spHelper.loadInt(_spKey.chestChallenge) ?? 0;

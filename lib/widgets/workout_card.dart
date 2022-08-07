@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/pages/workout_page/exercise_list_page.dart';
+import '../../../database/workout_list.dart';
+import '../../../helper/sp_helper.dart';
+import '../../../pages/workout_page/exercise_list_page.dart';
 import 'package:intl/intl.dart';
 
 class WorkoutCard extends StatelessWidget {
@@ -12,7 +12,6 @@ class WorkoutCard extends StatelessWidget {
   final String tag;
   final int index;
 
-
   WorkoutCard({
     required this.title,
     required this.workoutList,
@@ -20,21 +19,18 @@ class WorkoutCard extends StatelessWidget {
     required this.imaUrl,
     required this.tag,
     required this.index,
-
   });
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
     getLastDate() {
-
       return FutureBuilder(
         future: SpHelper().loadString(tag),
         builder: (context, snapShot) {
           if (snapShot.hasData) {
-            String date =
-            DateFormat.MMMd().format(DateTime.parse(snapShot.data.toString()));
+            String date = DateFormat.MMMd()
+                .format(DateTime.parse(snapShot.data.toString()));
             return Padding(
               padding: const EdgeInsets.only(top: 2),
               child: Text("Last Time : $date",
@@ -74,7 +70,9 @@ class WorkoutCard extends StatelessWidget {
                 Icon(
                   Icons.circle,
                   size: 7,
-                  color: getIValue() < i ? Colors.grey.withOpacity(.8) : Colors.blue.withOpacity(1),
+                  color: getIValue() < i
+                      ? Colors.grey.withOpacity(.8)
+                      : Colors.blue.withOpacity(1),
                 ),
             ],
           ));
@@ -95,12 +93,13 @@ class WorkoutCard extends StatelessWidget {
                 Icon(
                   Icons.circle,
                   size: 7,
-                  color: tagValue < i ? Colors.grey.shade500 : Colors.blue.withOpacity(1),
+                  color: tagValue < i
+                      ? Colors.grey.shade500
+                      : Colors.blue.withOpacity(1),
                 ),
             ],
           ));
     }
-
 
     getTitle() {
       return Padding(
@@ -111,7 +110,9 @@ class WorkoutCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           Spacer(flex: 3,),
+            Spacer(
+              flex: 3,
+            ),
             Container(
               child: Text(
                 title.toUpperCase(),
@@ -123,12 +124,11 @@ class WorkoutCard extends StatelessWidget {
               ),
             ),
             getLastDate(),
-            SizedBox(height: 12,),
-
+            SizedBox(
+              height: 12,
+            ),
             Row(
-
               children: [
-
                 Column(
                   children: [
                     Text(
@@ -152,9 +152,9 @@ class WorkoutCard extends StatelessWidget {
                     Text(
                       "Duration",
                       style: TextStyle(
-                color: Colors.white.withOpacity(.8),
-          fontSize: 14,
-          letterSpacing: 1.1),
+                          color: Colors.white.withOpacity(.8),
+                          fontSize: 14,
+                          letterSpacing: 1.1),
                     ),
                     SizedBox(
                       height: 6,
@@ -162,11 +162,9 @@ class WorkoutCard extends StatelessWidget {
                     getDuration(workoutList.length)
                   ],
                 ),
-
               ],
             ),
             Spacer(),
-
           ],
         ),
       );
@@ -174,7 +172,6 @@ class WorkoutCard extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0, left: 10, right: 10),
-      
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(8)),
         child: InkWell(
@@ -196,26 +193,20 @@ class WorkoutCard extends StatelessWidget {
               color: Colors.black54,
               child: Stack(
                 children: [
-                  ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                          isDark
-                              ? Colors.black.withOpacity(.65)
-                              : Colors.black.withOpacity(.45),
-                          BlendMode.darken),
-                      child: Image.asset(
-                        imaUrl,
-                        height: 150,
-                        width: width,
-                        fit: BoxFit.fill,
-                      )),
+                  Image.asset(
+                    imaUrl,
+                    height: 150,
+                    width: width,
+                    fit: BoxFit.fill,
+                  ),
+                  Container(
+                    color: Colors.black.withOpacity(.4),
+                  ),
                   getTitle(),
                 ],
               ),
-            )
-            ),
+            )),
       ),
     );
-
   }
 }
-

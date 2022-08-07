@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/explore_page_workout/picked_workout_database.dart';
-import 'package:full_workout/database/workout_list.dart';
-
+import '../explore_page_workout/picked_workout_database.dart';
 import '../../enums/workout_type.dart';
 import '../../models/explore_workout_card_model.dart';
 
@@ -9,9 +7,7 @@ List<ExploreWorkoutCardModel> stretchWorkoutList = [
   ExploreWorkoutCardModel(
       workoutType: WorkoutType.Beginner,
       description: [],
-      workoutList: [
-
-      ],
+      workoutList: [],
       title: "Full Body Stretching",
       imgSrc: "assets/icons/push-up.png",
       color: Colors.deepOrangeAccent),

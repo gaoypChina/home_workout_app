@@ -1,20 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/explore_page_workout/fast_workout_database.dart';
-import 'package:full_workout/pages/main/explore_page/explore_page_widget/workout_header.dart';
+import '../../../../database/explore_page_workout/fast_workout_database.dart';
+import '../../../../pages/main/explore_page/explore_page_widget/workout_header.dart';
 
 import '../../../../models/explore_workout_model.dart';
-import '../../../../widgets/prime_icon.dart';
 import '../workout_setup_page/workout_setup_page.dart';
 
 class FastWorkout extends StatelessWidget {
-
   const FastWorkout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    return  Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
@@ -40,10 +36,11 @@ class FastWorkout extends StatelessWidget {
               crossAxisSpacing: 4.0,
               children: fastWorkoutList.map((ExploreWorkout workout) {
                 return InkWell(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (builder) => WorkoutSetupPage(
-                          workout: workout, header:
-                          WorkoutHeader(imgSrc: workout.imgSrc),))),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (builder) => WorkoutSetupPage(
+                            workout: workout,
+                            header: WorkoutHeader(imgSrc: workout.imgSrc),
+                          ))),
                   child: Container(
                     //   color: Colors.red,
                     child: Row(
@@ -51,15 +48,24 @@ class FastWorkout extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
-                          flex:3,
+                          flex: 3,
                           child: Card(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8))),
                             child: ClipRRect(
-                                borderRadius: BorderRadius.all(Radius.circular(8)),
-                                child: Image.asset(workout.imgSrc,height: 80,fit: BoxFit.fill,)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                                child: Image.asset(
+                                  workout.imgSrc,
+                                  height: 80,
+                                  fit: BoxFit.fill,
+                                )),
                           ),
                         ),
-                        SizedBox(width: 8,),
+                        SizedBox(
+                          width: 8,
+                        ),
                         Expanded(
                             flex: 5,
                             child: Column(
@@ -68,16 +74,17 @@ class FastWorkout extends StatelessWidget {
                               children: [
                                 Spacer(),
                                 Text(
-                                  workout.title ,
+                                  workout.title,
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.w500),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
                                 ),
                                 SizedBox(
                                   height: 2,
                                 ),
                                 Row(
                                   children: [
-                                    Text( "${workout.getTime} Min"),
+                                    Text("${workout.getTime} Min"),
                                     SizedBox(
                                       width: 4,
                                     ),
@@ -92,13 +99,16 @@ class FastWorkout extends StatelessWidget {
                                   ],
                                 ),
                                 Spacer(),
-                                Container(height: 1,
+                                Container(
+                                  height: 1,
                                   width: 180,
-                                  color: Colors.grey.withOpacity(.3),),
-                                SizedBox(height: 5,)
+                                  color: Colors.grey.withOpacity(.3),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                )
                               ],
                             )),
-
                       ],
                     ),
                   ),
@@ -109,4 +119,3 @@ class FastWorkout extends StatelessWidget {
     );
   }
 }
-

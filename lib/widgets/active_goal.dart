@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/helper/recent_workout_db_helper.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/main.dart';
-import 'package:full_workout/pages/main/report_page/workout_report/weekly_workout_report.dart';
-import 'package:full_workout/pages/main/report_page/workout_report/workout_detail_report.dart';
-import 'package:full_workout/widgets/active_goal_settings.dart';
+import '../../database/workout_list.dart';
+import '../../helper/recent_workout_db_helper.dart';
+import '../../helper/sp_helper.dart';
+import '../../helper/sp_key_helper.dart';
+import '../../pages/main/report_page/workout_report/weekly_workout_report.dart';
+import '../../pages/main/report_page/workout_report/workout_detail_report.dart';
+import '../../widgets/active_goal_settings.dart';
 import 'package:intl/intl.dart';
 
 class ActiveGoal extends StatefulWidget {
@@ -71,8 +70,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
       activeDayList.add(ActiveDay(
           index: i, isDone: value, date: startDate.add(Duration(days: i))));
     }
-    setState(() {
-    });
+    setState(() {});
   }
 
   @override
@@ -87,9 +85,12 @@ class _ActiveGoalState extends State<ActiveGoal> {
     Color textColor = Colors.white;
     double height = MediaQuery.of(context).size.height;
     bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
-    List<Color> backgroundColor = isDark? [
-      Theme.of(context).primaryColor.withOpacity(.8),Theme.of(context).primaryColor.withOpacity(.8),
-    ]:[ Colors.blue.shade700,Colors.blue.shade700];
+    List<Color> backgroundColor = isDark
+        ? [
+            Theme.of(context).primaryColor.withOpacity(.8),
+            Theme.of(context).primaryColor.withOpacity(.8),
+          ]
+        : [Colors.blue.shade700, Colors.blue.shade700];
 
     onTap() async {
       var res = await Navigator.of(context)
@@ -105,6 +106,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
         });
       }
     }
+
     getTitle() {
       return InkWell(
         onTap: onTap,
@@ -164,7 +166,8 @@ class _ActiveGoalState extends State<ActiveGoal> {
                         Text(
                           DateFormat('EEEE').format(activeDay.date)[0],
                           style: TextStyle(
-                              fontWeight: FontWeight.w500, color: textColor.withOpacity(.9)),
+                              fontWeight: FontWeight.w500,
+                              color: textColor.withOpacity(.9)),
                         ),
                         SizedBox(
                           height: 6,
@@ -206,7 +209,8 @@ class _ActiveGoalState extends State<ActiveGoal> {
                         Text(
                           activeDay.date.day.toString(),
                           style: TextStyle(
-                              fontWeight: FontWeight.w500, color: textColor.withOpacity(.9)),
+                              fontWeight: FontWeight.w500,
+                              color: textColor.withOpacity(.9)),
                         ),
                         SizedBox(
                           height: 6,
@@ -232,7 +236,8 @@ class _ActiveGoalState extends State<ActiveGoal> {
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 13,
-                  fontWeight: FontWeight.w400,letterSpacing: 1.2),
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 1.2),
             ),
             ElevatedButton(
               onPressed: () => onTap(),
@@ -265,14 +270,16 @@ class _ActiveGoalState extends State<ActiveGoal> {
           padding: EdgeInsets.symmetric(horizontal: 4),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(12)),
-              gradient: LinearGradient(colors:backgroundColor, begin: Alignment.topRight, end: Alignment.bottomLeft)),
+              gradient: LinearGradient(
+                  colors: backgroundColor,
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft)),
           child: isLoading
               ? Container(
                   height: height * .15,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(16)),
-                      gradient: LinearGradient(
-                          colors: backgroundColor)))
+                      gradient: LinearGradient(colors: backgroundColor)))
               : Column(
                   children: [
                     getTitle(),

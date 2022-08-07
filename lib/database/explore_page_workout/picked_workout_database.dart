@@ -1,5 +1,4 @@
-import 'package:full_workout/database/workout_list.dart';
-
+import '../../database/workout_list.dart';
 import '../../enums/workout_type.dart';
 import '../../models/explore_workout_model.dart';
 
@@ -114,7 +113,6 @@ ExploreWorkout manBoobs = ExploreWorkout(
   imgSrc: "assets/explore_image/img_4.jpg",
   title: "Get rid of man boobs",
 );
-
 
 ExploreWorkout insaneAbs = ExploreWorkout(
   workoutType: WorkoutType.Intermediate,

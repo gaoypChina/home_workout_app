@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class DeleteAccountFailDialog extends StatelessWidget {
@@ -10,7 +8,10 @@ class DeleteAccountFailDialog extends StatelessWidget {
     return AlertDialog(
       title: Text("Account delete fail"),
       content: Text("To delete your data completely please try again."),
-      actions: [TextButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Retry"))],
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.of(context).pop(), child: Text("Retry"))
+      ],
     );
   }
 }

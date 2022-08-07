@@ -111,7 +111,8 @@ List<Workout> chestDay13 = [
   cobraStretch,
   chestStretch
 ];
-List<Workout> chestDay14 = [ jumpingJacks,
+List<Workout> chestDay14 = [
+  jumpingJacks,
   armCircleClockWise,
   pushUps,
   wideArmPushUps,
@@ -126,7 +127,8 @@ List<Workout> chestDay14 = [ jumpingJacks,
   declinePushUps,
   walkingPlank,
   cobraStretch,
-  chestStretch];
+  chestStretch
+];
 List<Workout> chestDay15 = [
   jumpingJacks,
   armCircleClockWise,

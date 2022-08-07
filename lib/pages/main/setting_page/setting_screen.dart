@@ -2,32 +2,33 @@ import 'dart:developer';
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/helper/mediaHelper.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/pages/main/setting_page/contact_us_page/contact_us_page.dart';
-import 'package:full_workout/pages/main/setting_page/faq_page.dart';
-import 'package:full_workout/pages/main/setting_page/feedback_page.dart';
-import 'package:full_workout/pages/main/setting_page/privacy_policy.dart';
-import 'package:full_workout/pages/main/setting_page/profile_setting_page.dart';
-import 'package:full_workout/pages/main/setting_page/reminder_screen.dart';
-import 'package:full_workout/pages/main/setting_page/reset_progress.dart';
-import 'package:full_workout/pages/main/setting_page/sound_settings_page.dart';
-import 'package:full_workout/pages/main/setting_page/theme_setting_page.dart';
-import 'package:full_workout/pages/main/setting_page/training_settings_screen.dart';
-import 'package:full_workout/pages/main/setting_page/voice_option_setting.dart';
-import 'package:full_workout/pages/subscription_page/subscription_page.dart';
-import 'package:full_workout/provider/auth_provider.dart';
-import 'package:full_workout/provider/backup_provider.dart';
-import 'package:full_workout/provider/connectivity_provider.dart';
-import 'package:full_workout/widgets/loading_indicator.dart';
+import '../../../pages/main/setting_page/profile_setting_page.dart';
+import '../../../pages/main/setting_page/reminder_screen.dart';
+import '../../../pages/main/setting_page/reset_progress.dart';
+import '../../../pages/main/setting_page/sound_settings_page.dart';
+import '../../../pages/main/setting_page/theme_setting_page.dart';
+import '../../../pages/main/setting_page/training_settings_screen.dart';
+import '../../../pages/main/setting_page/voice_option_setting.dart';
+import '../../../pages/subscription_page/subscription_page.dart';
+import '../../../provider/auth_provider.dart';
+import '../../../provider/backup_provider.dart';
+import '../../../provider/connectivity_provider.dart';
+import '../../../widgets/loading_indicator.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../constants/constant.dart';
+import '../../../helper/mediaHelper.dart';
+import '../../../helper/sp_helper.dart';
+import '../../../helper/sp_key_helper.dart';
+import '../../../pages/main/setting_page/contact_us_page/contact_us_page.dart';
+import '../../../pages/main/setting_page/faq_page.dart';
+import '../../../pages/main/setting_page/feedback_page.dart';
+import '../../../pages/main/setting_page/privacy_policy.dart';
 import '../../../provider/subscription_provider.dart';
 import '../../../widgets/dialogs/connectivity_error_dialog.dart';
 import '../../rate_my_app/rate_dialog_page.dart';
@@ -192,15 +193,31 @@ class _SettingPageState extends State<SettingPage>
                       return <Widget>[
                         SliverAppBar(
                           automaticallyImplyLeading: false,
-                          title: Text(
-                            isShrink ? name : "",
-                            style: TextStyle(
-                              color: isDark
-                                  ? Colors.white
-                                  : isShrink
-                                      ? Colors.black
-                                      : Colors.white,
-                            ),
+                          title: Row(
+                            children: [
+                              // if (isShrink)
+                              //   CircleAvatar(backgroundColor: Theme.of(context).primaryColor,
+                              //     child: Text(
+                              //       "A",
+                              //       style:
+                              //           TextStyle(fontWeight: FontWeight.w500,fontSize: 22,color: Colors.white),
+                              //     ),
+                              //     radius: 22,
+                              //   ),
+                              // SizedBox(
+                              //   width: 12,
+                              // ),
+                              Text(
+                                isShrink ? name : "",
+                                style: TextStyle(
+                                  color: isDark
+                                      ? Colors.white
+                                      : isShrink
+                                          ? Colors.black
+                                          : Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
                           elevation: .5,
                           centerTitle: false,
@@ -234,7 +251,9 @@ class _SettingPageState extends State<SettingPage>
                                   });
 
                               await backupProvider.syncData(
-                                  context: context, isLoginPage: false,showMsg: true);
+                                  context: context,
+                                  isLoginPage: false,
+                                  showMsg: true);
                               initData();
 
                               Navigator.of(context).pop();
@@ -289,24 +308,27 @@ class _SettingPageState extends State<SettingPage>
                                       });
                                     }
                                   },
-                            trailing: isLoading
-                                ? CircularProgressIndicator()
-                                : Text(
-                              trainingRest.toStringAsFixed(0) + " Sec",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          getDivider(),
-                          CustomTile(
-                            icon: Icons.timer_outlined,
-                            title: "Countdown time",
-                            onPress: () async {
-                              int? num = await showMaterialModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return WorkoutTimePicker(
+                                  trailing: isLoading
+                                      ? CircularProgressIndicator()
+                                      : Text(
+                                          trainingRest.toStringAsFixed(0) +
+                                              " Sec",
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                ),
+                                getDivider(),
+                                CustomTile(
+                                  icon: Icons.timer_outlined,
+                                  title: "Countdown time",
+                                  onPress: () async {
+                                    int? num =
+                                        await showMaterialModalBottomSheet(
+                                            context: context,
+                                            builder: (context) {
+                                              return WorkoutTimePicker(
                                                 value: countdownTime.toInt(),
                                                 minimumVal: 10,
                                                 maximumVal: 15,
@@ -343,14 +365,15 @@ class _SettingPageState extends State<SettingPage>
                               ],
                             ),
                           ),
-                    if (!subscriptionProvider.isProUser) buildPrimeButton(),
-                    getTitle("General Settings"),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 0),
-                      child: Container(
-                        color: cardColor,
-                        child: Column(
-                          children: [
+                          if (!subscriptionProvider.isProUser)
+                            buildPrimeButton(),
+                          getTitle("General Settings"),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 0),
+                            child: Container(
+                              color: cardColor,
+                              child: Column(
+                                children: [
                                   getDivider(),
                                   isLoading
                                       ? CustomTile(
@@ -393,69 +416,72 @@ class _SettingPageState extends State<SettingPage>
                                             ),
                                           ),
                                         ),
-                            getDivider(),
-                            CustomTile(
-                                icon: Icons.lightbulb_outline,
-                                title: "Theme Setting",
-                                onPress: () {
-                                  showMaterialModalBottomSheet(
-                                    context: context,
-                                    builder: (context) => ThemeSettingsPage(),
-                                  );
-                                },
-                                trailing: trailingIcon),
-                            getDivider(),
-                            CustomTile(
-                                icon: Icons.alarm_add_rounded,
-                                title: "Set reminder",
-                                onPress: () {
-                                  Navigator.of(context)
-                                      .pushNamed(ReminderTab.routeName);
-                                },
-                                trailing: trailingIcon),
-                            if (subscriptionProvider.isProUser) getDivider(),
-                            if (subscriptionProvider.isProUser)
-                              CustomTile(
-                                title: "Subscription Settings",
-                                trailing: trailingIcon,
-                                icon: Icons.subscriptions_outlined,
-                                onPress: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SubscribedPage())),
+                                  getDivider(),
+                                  CustomTile(
+                                      icon: Icons.lightbulb_outline,
+                                      title: "Theme Setting",
+                                      onPress: () {
+                                        showMaterialModalBottomSheet(
+                                          context: context,
+                                          builder: (context) =>
+                                              ThemeSettingsPage(),
+                                        );
+                                      },
+                                      trailing: trailingIcon),
+                                  getDivider(),
+                                  CustomTile(
+                                      icon: Icons.alarm_add_rounded,
+                                      title: "Set reminder",
+                                      onPress: () {
+                                        Navigator.of(context)
+                                            .pushNamed(ReminderTab.routeName);
+                                      },
+                                      trailing: trailingIcon),
+                                  if (subscriptionProvider.isProUser)
+                                    getDivider(),
+                                  if (subscriptionProvider.isProUser)
+                                    CustomTile(
+                                      title: "Subscription Settings",
+                                      trailing: trailingIcon,
+                                      icon: Icons.subscriptions_outlined,
+                                      onPress: () => Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SubscribedPage())),
+                                    ),
+                                  getDivider(),
+                                  CustomTile(
+                                      icon: Icons.restart_alt,
+                                      title: "Reset Progress",
+                                      trailing: trailingIcon,
+                                      onPress: () async {
+                                        bool isConnected =
+                                            await connectivityProvider
+                                                .isNetworkConnected;
+                                        showDialog(
+                                            context: context,
+                                            builder: (builder) {
+                                              return isConnected
+                                                  ? ResetProgressDialog(
+                                                      title: "Rest Progress",
+                                                      subtitle:
+                                                          "After resetting process, all workout plan will restart from day 1 ",
+                                                    )
+                                                  : ConnectivityErrorDialog();
+                                            });
+                                      }),
+                                  getDivider(),
+                                ],
                               ),
-                            getDivider(),
-                            CustomTile(
-                                icon: Icons.restart_alt,
-                                title: "Reset Progress",
-                                trailing: trailingIcon,
-                                onPress: () async {
-                                  bool isConnected = await connectivityProvider
-                                      .isNetworkConnected;
-                                  showDialog(
-                                      context: context,
-                                      builder: (builder) {
-                                        return isConnected
-                                            ? ResetProgressDialog(
-                                          title: "Rest Progress",
-                                          subtitle:
-                                          "After resetting process, all workout plan will restart from day 1 ",
-                                        )
-                                            : ConnectivityErrorDialog();
-                                      });
-                                }),
-                            getDivider(),
-                          ],
-                        ),
-                      ),
-                    ),
-                    getTitle("Voice Options"),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 0),
-                      child: Container(
-                        color: cardColor,
-                        child: Column(
-                          children: [
+                            ),
+                          ),
+                          getTitle("Voice Options"),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 0),
+                            child: Container(
+                              color: cardColor,
+                              child: Column(
+                                children: [
                                   getDivider(),
                                   CustomTile(
                                     title: "Test Voice",
@@ -499,16 +525,16 @@ class _SettingPageState extends State<SettingPage>
                                   getDivider(),
                                 ],
                               ),
-                      ),
-                    ),
-                    getTitle("Support Us"),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 0),
-                      color: Colors.orange.withOpacity(.0),
-                      child: Container(
-                        color: cardColor,
-                        child: Column(
-                          children: [
+                            ),
+                          ),
+                          getTitle("Support Us"),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 0),
+                            color: Colors.orange.withOpacity(.0),
+                            child: Container(
+                              color: cardColor,
+                              child: Column(
+                                children: [
                                   getDivider(),
                                   if (!subscriptionProvider.isProUser)
                                     CustomTile(
@@ -539,8 +565,6 @@ class _SettingPageState extends State<SettingPage>
                                     title: "Share With Friends",
                                     trailing: trailingIcon,
                                     onPress: () async {
-                                      final RenderObject? box =
-                                          context.findRenderObject();
                                       final String text =
                                           "I\'m training with Home Workout and am getting great results. \n\nHere are workouts for every muscle group to achieve your fitness goal. no equipment is needed. \n\nDownload the app : ${constants.playStoreLink}";
 
@@ -731,7 +755,7 @@ class _SettingPageState extends State<SettingPage>
                                   child: Text(
                                     "Version - ".toUpperCase() +
                                         constants.versionNumber,
-                                      //  + " (beta)".toUpperCase(),
+                                    //  + " (beta)".toUpperCase(),
                                     style: TextStyle(
                                         fontSize: 12,
                                         letterSpacing: 1.2,

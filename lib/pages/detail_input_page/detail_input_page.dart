@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/pages/detail_input_page/step_pages/basic_details.dart';
-import 'package:full_workout/pages/detail_input_page/step_pages/body_type.dart';
-import 'package:full_workout/pages/detail_input_page/step_pages/height_weight_details.dart';
-import 'package:full_workout/pages/detail_input_page/step_pages/workout_prefrence.dart';
-import 'package:full_workout/pages/detail_input_page/user_detail_widget/custom_loading_indicator.dart';
-import 'package:full_workout/provider/user_detail_provider.dart';
+import '../../pages/detail_input_page/step_pages/basic_details.dart';
+import '../../pages/detail_input_page/step_pages/body_type.dart';
+import '../../pages/detail_input_page/step_pages/height_weight_details.dart';
+import '../../pages/detail_input_page/step_pages/workout_prefrence.dart';
+import '../../provider/user_detail_provider.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/dialogs/exit_app_dialog.dart';
 

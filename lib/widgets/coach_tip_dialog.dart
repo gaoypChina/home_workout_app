@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PushUpLevelDialog extends StatelessWidget {
@@ -23,7 +22,9 @@ class PushUpLevelDialog extends StatelessWidget {
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
-                color:item.index==index?Colors.blue.withOpacity(.8): Colors.blue.withOpacity(.4),
+                color: item.index == index
+                    ? Colors.blue.withOpacity(.8)
+                    : Colors.blue.withOpacity(.4),
               ),
               width: MediaQuery.of(context).size.width * .8,
               // padding: EdgeInsets.symmetric(vertical: 12),
@@ -33,18 +34,21 @@ class PushUpLevelDialog extends StatelessWidget {
                     padding: MaterialStateProperty.all(
                         EdgeInsets.symmetric(vertical: 12))),
                 onPressed: () {
-                  Navigator.pop(context,item.index);
+                  Navigator.pop(context, item.index);
                 },
                 child: Column(
                   children: [
                     Text(
                       item.title,
-                      style: TextStyle(color: Colors.white,fontSize: 18),
+                      style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
-                    SizedBox(height: 3,),
+                    SizedBox(
+                      height: 3,
+                    ),
                     Text(
                       item.subTitle,
-                      style: TextStyle(color: Colors.white,fontWeight: FontWeight.w100),
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w100),
                     )
                   ],
                 ),
@@ -97,7 +101,9 @@ class PushUpLevelDialog extends StatelessWidget {
               ),
             ),
             getTitle(),
-            SizedBox(height: 28,)
+            SizedBox(
+              height: 28,
+            )
           ],
         ),
       ),
@@ -110,5 +116,6 @@ class PushUpLevelItem {
   String subTitle;
   int index;
 
-  PushUpLevelItem({required this.title, required this.subTitle, required this.index});
+  PushUpLevelItem(
+      {required this.title, required this.subTitle, required this.index});
 }

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/pages/detail_input_page/user_detail_widget/custom_loading_indicator.dart';
-import 'package:full_workout/pages/subscription_page/subscription_page_widget/statics_section.dart';
-import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_faq.dart';
-import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_hader.dart';
-import 'package:full_workout/pages/subscription_page/subscription_page_widget/subsctiption_plan.dart';
-import 'package:full_workout/pages/subscription_page/subscription_page_widget/user_review.dart';
-import 'package:full_workout/provider/subscription_provider.dart';
+import '../../../constants/constant.dart';
+import '../../../pages/subscription_page/subscription_page_widget/statics_section.dart';
+import '../../../pages/subscription_page/subscription_page_widget/subscription_faq.dart';
+import '../../../pages/subscription_page/subscription_page_widget/subscription_hader.dart';
+import '../../../pages/subscription_page/subscription_page_widget/subsctiption_plan.dart';
+import '../../../pages/subscription_page/subscription_page_widget/user_review.dart';
+import '../../../provider/subscription_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/loading_indicator.dart';
@@ -22,12 +21,10 @@ class SubscriptionPage extends StatefulWidget {
 class _SubscriptionPageState extends State<SubscriptionPage> {
   @override
   void initState() {
-
     var data = Provider.of<SubscriptionProvider>(context, listen: false);
-    SchedulerBinding.instance.addPostFrameCallback((_) =>  data.fetchOffers());
+    SchedulerBinding.instance.addPostFrameCallback((_) => data.fetchOffers());
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -92,30 +89,27 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                           ),
                         ),
                       ),
-
-
                       Expanded(
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 2, vertical: 12),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 2, vertical: 12),
                           color: Colors.blue.shade700,
                           child: Center(
-                            child:
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "BUY",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      Icon(Icons.arrow_forward),
-
-                                    ],
-                                  ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "BUY",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(Icons.arrow_forward),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -124,7 +118,6 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   style: ElevatedButton.styleFrom(
                       primary: Colors.transparent,
                       elevation: 0,
-
                       padding: EdgeInsets.zero),
                 )),
           ),
@@ -138,7 +131,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
           child: Constants().getDivider(context: context));
     }
 
-    return  Stack(
+    return Stack(
       children: [
         Scaffold(
           appBar: AppBar(
@@ -146,66 +139,73 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               "Get Premium",
             ),
             actions: [
-              data.isLoading?Container():  Padding(
-                padding: EdgeInsets.only(right: 8,top: 10,bottom: 10),
-                child: OutlinedButton(
-
-                  onPressed: () {
-                    data.restoreSubscription(context: context);
-                  },
-                  child: Row(
-                    children: [
-                     Text("Restore"),
-
-
-                    ],
-                  ),
-                  style:
-                      OutlinedButton.styleFrom(primary: Theme.of(context).primaryColor,
-                        side: BorderSide(width: 1, color: Colors.blue),),
-                ),
-              ),
+              data.isLoading
+                  ? Container()
+                  : Padding(
+                      padding: EdgeInsets.only(right: 8, top: 10, bottom: 10),
+                      child: OutlinedButton(
+                        onPressed: () {
+                          data.restoreSubscription(context: context);
+                        },
+                        child: Row(
+                          children: [
+                            Text("Restore"),
+                          ],
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          primary: Theme.of(context).primaryColor,
+                          side: BorderSide(width: 1, color: Colors.blue),
+                        ),
+                      ),
+                    ),
             ],
           ),
           body: data.isLoading
-              ? Center(child: CircularProgressIndicator()) : data.packageList.isEmpty?Center(child: Text("Something went wrong..."),)
-              : SafeArea(
-                  child: Stack(
-                    children: [
-                      ListView(
-                        physics: BouncingScrollPhysics(),
+              ? Center(child: CircularProgressIndicator())
+              : data.packageList.isEmpty
+                  ? Center(
+                      child: Text("Something went wrong..."),
+                    )
+                  : SafeArea(
+                      child: Stack(
                         children: [
-
+                          ListView(
+                            physics: BouncingScrollPhysics(),
+                            children: [
                               SubscriptionHeader(),
-                          buildDivider(),
+                              buildDivider(),
 
-                          SubscriptionPlan(),
+                              SubscriptionPlan(),
 
                               buildDivider(),
 
-                          UserReview(),
-                          SizedBox(
-                            height: 28,
-                          ),
-                          // buildDivider(),
-                          // SubscriptionTime(),
-                          buildDivider(),
+                              UserReview(),
+                              SizedBox(
+                                height: 28,
+                              ),
+                              // buildDivider(),
+                              // SubscriptionTime(),
+                              buildDivider(),
 
-                          SubscriptionFAQ(),
+                              SubscriptionFAQ(),
 
-                          StaticsSection(),
-                          // SizedBox(height: 280, child: buildFAQ()),
-                          SizedBox(
-                            height: 60,
+                              StaticsSection(),
+                              // SizedBox(height: 280, child: buildFAQ()),
+                              SizedBox(
+                                height: 60,
+                              ),
+                            ],
                           ),
+                          buildButton()
                         ],
                       ),
-                buildButton()
-              ],
-            ),
-          ),
+                    ),
         ),
-        if(data.isBuyBtnLoading )CustomLoadingIndicator(msg: "Loading...",)     ],
+        if (data.isBuyBtnLoading)
+          CustomLoadingIndicator(
+            msg: "Loading...",
+          )
+      ],
     );
   }
 }

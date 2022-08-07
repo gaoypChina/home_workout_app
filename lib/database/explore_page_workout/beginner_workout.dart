@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/explore_page_workout/picked_workout_database.dart';
-import 'package:full_workout/database/workout_list.dart';
-
+import '../../database/workout_list.dart';
 import '../../enums/workout_type.dart';
 import '../../models/explore_workout_card_model.dart';
 
@@ -22,7 +20,7 @@ List<ExploreWorkoutCardModel> beginnerWorkoutList = [
         childPose,
         cobraStretch
       ],
-      title: "Abs Beginner",
+      title: "Abs Toner",
       imgSrc: "assets/icons/push-up.png",
       color: Colors.deepOrangeAccent),
   ExploreWorkoutCardModel(
@@ -46,56 +44,92 @@ List<ExploreWorkoutCardModel> beginnerWorkoutList = [
       imgSrc: "assets/icons/lunges.png",
       color: Colors.blueGrey),
   ExploreWorkoutCardModel(
+    workoutType: WorkoutType.Beginner,
+    description: [
+      "Exercises, such as squats, lunges, jumping jacks will improve your range of motion. Once you’ve got the movements and proper mobility down, you’ll be able to safely tackle more weight and ultimately increase your gains.",
+      "Strength training of legs outperforms standard cardio exercises when it comes to keeping metabolism levels high.",
+    ],
+    workoutList: [
+      jumpingJacks,
+      bottomLegLiftLeft,
+      bottomLegLiftRight,
+      sumoSquat,
+      walkingLunges,
+      vUps,
+      flutterKikes2,
+      walkingLunges,
+      wallSit,
+      sumoSquat,
+      wallResistingSingleLegLeft,
+      wallResistingSingleLegRight,
+      lyingButterFlyStretch,
+    ],
+    title: "Leg workout",
+    imgSrc: "assets/icons/exercises.png",
+    color: Colors.redAccent,
+  ),
+  ExploreWorkoutCardModel(
+    workoutType: WorkoutType.Beginner,
+    description: [
+      "If you have no weights in sight or you’re new to arm workouts, you can just use your body weight to get an arm workout.",
+      "According to Salvatore, most arm exercises without weights are just variations of planks or push-ups, which means they require you to engage your core"
+    ],
+    workoutList: [
+      jumpingJacks,
+      armCircleClockWise,
+      tricepsDipsChest,
+      pushUps,
+      elbowPlanks,
+      tricepsDipsChest2,
+      pushUps2,
+      elbowPlanks,
+      tricepsStretchLeft,
+      tricepsStretchLeft,
+      cobraStretch,
+    ],
+    title: "Arm workout",
+    imgSrc: "assets/icons/lunges.png",
+    color: Colors.teal,
+  ),
+  ExploreWorkoutCardModel(
       workoutType: WorkoutType.Beginner,
       description: [
-        "Exercises, such as squats, lunges, jumping jacks will improve your range of motion. Once you’ve got the movements and proper mobility down, you’ll be able to safely tackle more weight and ultimately increase your gains.",
-        "Strength training of legs outperforms standard cardio exercises when it comes to keeping metabolism levels high.",
+        "Shoulder strength is like the foundation pillar for your head, arms and upper torso. Having strong arms means that you can pretty much do any work like a boss.",
+        "An overall toned shoulder benefits other muscles as well. Apart from reduced risk of injury, your biceps and triceps become much stronger. You can perform other types of athletic activities which are indirectly supported by your shoulder muscles."
       ],
       workoutList: [
-        jumpingJacks,
-        bottomLegLiftLeft,
-        bottomLegLiftRight,
-        sumoSquat,
-        walkingLunges,
-        vUps,
-        flutterKikes2,
-        walkingLunges,
-        wallSit,
-        sumoSquat,
-        wallResistingSingleLegLeft,
-        wallResistingSingleLegRight,
-        lyingButterFlyStretch,
+        shoulderStretch,
+        armScissors,
+        floorTricepsDips2,
+        declinePushUps,
+        pikePushUps2,
+        floorTricepsDips2,
+        tricepsStretchLeft,
+        tricepsStretchRight,
+        cobraStretch
       ],
-      title: "Leg workout",
-      imgSrc: "assets/icons/exercises.png",
-      color: Colors.redAccent),
-  ExploreWorkoutCardModel(
-      workoutType: WorkoutType.Beginner,
-      description: bellyFatBurner.description,
-      workoutList: [],
-      title: "Arm workout",
-      imgSrc: "assets/icons/lunges.png",
-      color: Colors.teal),
-  ExploreWorkoutCardModel(
-      workoutType: WorkoutType.Beginner,
-      description: bellyFatBurner.description,
-      workoutList: [],
-      title: "Abs workout",
-      imgSrc: "assets/icons/fitness.png",
-      color: Colors.pinkAccent),
-  ExploreWorkoutCardModel(
-      workoutType: WorkoutType.Beginner,
-      description: bellyFatBurner.description,
-      workoutList: [],
       title: "Wider shoulders",
       imgSrc: "assets/icons/yoga.png",
       color: Colors.blueGrey),
   ExploreWorkoutCardModel(
     workoutType: WorkoutType.Beginner,
-    title: "Beginner push-up",
+    title: "Robust chest beginner",
     imgSrc: "assets/icons/fitness.png",
     color: Colors.brown,
-    description: bellyFatBurner.description,
-    workoutList: bellyFatBurner.workoutList,
+    description: [
+      "As one of the upper body’s biggest muscle groups, your chest muscles are large enough to handle a great deal of weight. Depending on your workout intensity, you can build progressive strength and add muscle to your chest.",
+      "After getting into the groove of chest workouts, you may notice that tasks that were once challenging now require less effort.",
+    ],
+    workoutList: [
+      jumpingJacks,
+      tricepsStretchLeft,
+      tricepsStretchRight,
+      kneePushUps,
+      rhomboidPulls,
+      inclinePushUps2,
+      kneePushUps2,
+      chestStretch,
+      cobraStretch,
+    ],
   ),
 ];

@@ -13,16 +13,11 @@ class ContactUsPage extends StatelessWidget {
         elevation: .5,
         title: Text(
           "Contact Us",
-
         ),
-
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
-            const ContactUsHeader(),
-            const ContactUsCard()
-          ],
+          children: [const ContactUsHeader(), const ContactUsCard()],
         ),
       ),
     );

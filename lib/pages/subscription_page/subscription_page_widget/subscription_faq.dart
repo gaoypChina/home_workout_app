@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/pages/main/setting_page/faq_page.dart';
-
+import '../../../pages/main/setting_page/faq_page.dart';
 
 class SubscriptionFAQ extends StatelessWidget {
-   SubscriptionFAQ({Key? key}) : super(key: key);
+  SubscriptionFAQ({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,32 +32,32 @@ class SubscriptionFAQ extends StatelessWidget {
             .map((faq) => Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(
-                           bottom: 0),
+                      padding: const EdgeInsets.only(bottom: 0),
                       child: Container(
-
                           child: Theme(
-                            data: Theme.of(context)
-                                .copyWith(dividerColor: Colors.transparent),
-                            child: ExpansionTile(
-                              initiallyExpanded: false,
-                              title: Text(
-                                faq.question,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400, fontSize: 15),
+                        data: Theme.of(context)
+                            .copyWith(dividerColor: Colors.transparent),
+                        child: ExpansionTile(
+                          initiallyExpanded: false,
+                          title: Text(
+                            faq.question,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 15),
+                          ),
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 18.0, right: 18, bottom: 18),
+                              child: Text(
+                                faq.answer,
+                                style: TextStyle(letterSpacing: 1.5),
                               ),
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 18.0, right: 18, bottom: 18),
-                                  child: Text(faq.answer,style: TextStyle(letterSpacing: 1.5),),
-                                )
-                              ],
-                            ),
-                          )),
+                            )
+                          ],
+                        ),
+                      )),
                     ),
                     Divider(),
-
                   ],
                 ))
             .toList(),
@@ -73,7 +72,7 @@ class SubscriptionFAQ extends StatelessWidget {
           padding: const EdgeInsets.only(left: 18.0, bottom: 12),
           child: Text(
             "Frequently Asked Questions",
-           style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
         ),
         getFAQTile(),

@@ -8,7 +8,8 @@ import 'package:sqflite/sqflite.dart';
 import '../models/weight_model.dart';
 
 class WeightDatabaseHelper {
-  static final WeightDatabaseHelper _instance = new WeightDatabaseHelper.internal();
+  static final WeightDatabaseHelper _instance =
+      new WeightDatabaseHelper.internal();
   factory WeightDatabaseHelper() => _instance;
   final String tableName = "BmiReport";
   final String columnId = "id";
@@ -16,7 +17,7 @@ class WeightDatabaseHelper {
   final String columnWeight = "weight";
   final String columnKey = "key";
 
-   Database? _db;
+  Database? _db;
 
   Future<Database> get db async {
     if (_db != null) {
@@ -41,7 +42,7 @@ class WeightDatabaseHelper {
       "$columnId INTEGER PRIMARY KEY,"
       " $columnDate TEXT, "
       "$columnWeight REAL,"
-          "$columnKey TEXT)",
+      "$columnKey TEXT)",
     );
   }
 
@@ -56,25 +57,24 @@ class WeightDatabaseHelper {
   // Get Weight
   Future<List> getAllWeight() async {
     Database dbClient = await db;
-    var result = await dbClient
-        .rawQuery("SELECT * FROM $tableName ORDER BY $columnId");
+    var result =
+        await dbClient.rawQuery("SELECT * FROM $tableName ORDER BY $columnId");
     return result.toList();
   }
 
-  Future<void>setAllWeightData({required List weightList})async{
+  Future<void> setAllWeightData({required List weightList}) async {
     var dbClient = await db;
     List allLocalWeight = await getAllWeight();
-    for(var weight in weightList){
-      if(!isPresent(weight, allLocalWeight)){
+    for (var weight in weightList) {
+      if (!isPresent(weight, allLocalWeight)) {
         await dbClient.insert('$tableName', weight);
       }
     }
-
   }
 
-  bool isPresent(Map<String,dynamic> data, List allLocalWeight){
-    for(Map<String,dynamic> localWeight in allLocalWeight){
-      if(localWeight["id"] == data["id"]){
+  bool isPresent(Map<String, dynamic> data, List allLocalWeight) {
+    for (Map<String, dynamic> localWeight in allLocalWeight) {
+      if (localWeight["id"] == data["id"]) {
         return true;
       }
     }
@@ -145,18 +145,18 @@ class WeightDatabaseHelper {
         .delete(tableName, where: "$columnKey = ?", whereArgs: [key]);
   }
 
-
-  Future<int?> addWeight(double value, WeightModel weightModel, String key) async {
+  Future<int?> addWeight(
+      double value, WeightModel weightModel, String key) async {
     var dbClient = await db;
     int? count;
-    count = await getCount(key)??0;
-    if(count > 0){
-     return await dbClient.rawUpdate('''
+    count = await getCount(key) ?? 0;
+    if (count > 0) {
+      return await dbClient.rawUpdate('''
       UPDATE $tableName SET $columnWeight = ? 
       WHERE $columnKey = ?
     ''', [value, key]);
-    }else{
-     return await saveWeight( weightModel);
+    } else {
+      return await saveWeight(weightModel);
     }
   }
 
@@ -166,7 +166,7 @@ class WeightDatabaseHelper {
         where: "$columnId = ?", whereArgs: [weightModel.weight]);
   }
 
-  Future<void> deleteDataBase()async{
+  Future<void> deleteDataBase() async {
     var dbClient = await db;
     dbClient.delete(tableName);
 
@@ -174,7 +174,6 @@ class WeightDatabaseHelper {
     // Directory documentDirectory = await getApplicationDocumentsDirectory();
     // String path = join(documentDirectory.path, "WeightDb.db");
     // await deleteDatabase(path);
-
   }
 
   Future close() async {

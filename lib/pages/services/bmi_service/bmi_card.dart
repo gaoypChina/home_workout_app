@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/helper/weight_db_helper.dart';
-import 'package:full_workout/models/bmi_remark.dart';
-import 'package:full_workout/models/weight_model.dart';
-import 'package:full_workout/pages/workout_page/report_page.dart';
+import '../../../../constants/constant.dart';
+import '../../../helper/sp_helper.dart';
+import '../../../helper/sp_key_helper.dart';
+import '../../../helper/weight_db_helper.dart';
+import '../../../models/bmi_remark.dart';
+import '../../../models/weight_model.dart';
+import '../../../pages/workout_page/report_page.dart';
 import 'package:intl/intl.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
@@ -47,7 +47,6 @@ class _BmiCardState extends State<BmiCard> {
 
   @override
   Widget build(BuildContext context) {
-
     double bmi = 0;
 
     double _calcBmi(double height, double weight) {
@@ -70,7 +69,7 @@ class _BmiCardState extends State<BmiCard> {
         toReturn = 29;
       }
 
-      return toReturn+1;
+      return toReturn + 1;
     }
 
     BmiRemark _getRemark(double bmi) {
@@ -79,24 +78,29 @@ class _BmiCardState extends State<BmiCard> {
         bmiRemark = BmiRemark(
             remark: "Very severely Underweight", color: Colors.redAccent);
       } else if (bmi >= 16 && bmi <= 16.9) {
-        bmiRemark =
-            BmiRemark(remark: "Severely underweight", color: Colors.red.withOpacity(.8));
+        bmiRemark = BmiRemark(
+            remark: "Severely underweight", color: Colors.red.withOpacity(.8));
       } else if (bmi >= 17 && bmi <= 18.4) {
-        bmiRemark = BmiRemark(remark: "Underweight", color: Colors.amber.withOpacity(.8));
+        bmiRemark = BmiRemark(
+            remark: "Underweight", color: Colors.amber.withOpacity(.8));
       } else if (bmi >= 18.5 && bmi <= 24.9) {
-        bmiRemark = BmiRemark(remark: "Healthy weight", color: Colors.green.withOpacity(.8));
+        bmiRemark = BmiRemark(
+            remark: "Healthy weight", color: Colors.green.withOpacity(.8));
       } else if (bmi >= 25 && bmi <= 29.9) {
-        bmiRemark = BmiRemark(remark: "Overweight", color: Colors.orange.withOpacity(.8));
+        bmiRemark = BmiRemark(
+            remark: "Overweight", color: Colors.orange.withOpacity(.8));
       } else if (bmi >= 30 && bmi <= 34.9) {
-        bmiRemark = BmiRemark(remark: "Obese class I", color: Colors.redAccent.withOpacity(.8));
+        bmiRemark = BmiRemark(
+            remark: "Obese class I", color: Colors.redAccent.withOpacity(.8));
       } else if (bmi >= 35 && bmi <= 39.9) {
-        bmiRemark = BmiRemark(remark: "Obese class II", color: Colors.red.withOpacity(.8));
+        bmiRemark = BmiRemark(
+            remark: "Obese class II", color: Colors.red.withOpacity(.8));
       } else {
-        bmiRemark = BmiRemark(remark: "Obese class III", color: Colors.red.withOpacity(.8));
+        bmiRemark = BmiRemark(
+            remark: "Obese class III", color: Colors.red.withOpacity(.8));
       }
       return bmiRemark;
     }
-
 
     showBmiSheet() {
       getWeightDetail(
@@ -117,8 +121,7 @@ class _BmiCardState extends State<BmiCard> {
               ),
               Text(
                 title,
-                style:
-                    TextStyle(fontWeight: FontWeight.w500),
+                style: TextStyle(fontWeight: FontWeight.w500),
               ),
               Spacer(),
               Text(
@@ -137,104 +140,104 @@ class _BmiCardState extends State<BmiCard> {
           extendBody: true,
           snapSpec: const SnapSpec(
             snap: true,
-            snappings: [ 0.7, 1.0],
+            snappings: [0.7, 1.0],
             positioning: SnapPositioning.relativeToSheetHeight,
           ),
           builder: (context, state) {
             return Material(
               color: Theme.of(context).cardColor,
               child: SingleChildScrollView(
-              child:    Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 18,),
-                  Container(
-
-                    height: 30,
-                    child: Row(
-                      children: [
-                        Text(""),
-                        Spacer(),
-                        Text(
-                          "Weight Categories",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 18),
-                          ),
-                        Spacer(),
-                        Text(
-                          "Index",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 18),
-                          ),
-                        SizedBox(
-                          width: 18,
-                        )
-                      ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 18,
                     ),
-                  ),
-                  Divider(),
-                  getWeightDetail(
-                      title: "Very Severely Underweight",
-                      value: "<= 16",
-                      color: Colors.grey),
-                  Divider(),
-                  getWeightDetail(
-                      title: "Severely Underweight",
-                      value: "16 - 16.9",
-                      color: Colors.grey.shade500),
-                  Divider(),
-                  getWeightDetail(
-                      title: "Underweight",
-                      value: "17 - 18.4",
-                      color: Colors.blue),
-                  Divider(),
-                  getWeightDetail(
-                      title: "Healthy weight",
-                      value: "18.5 - 24.9",
-                      color: Colors.green),
-                  Divider(),
-                  getWeightDetail(
-                      title: "Overweight",
-                      value: "25 - 29.9",
-                      color: Colors.orange),
-                  Divider(),
-                  getWeightDetail(
-                      title: "Obese class I",
-                      value: "30 - 34.9",
-                      color: Colors.redAccent),
-                  Divider(),
-                  getWeightDetail(
-                      title: "Obese class II",
-                      value: "35 - 39.9",
-                      color: Colors.red),
-                  Divider(),
-                  getWeightDetail(
-                      title: "Obese class III",
-                      value: ">=40",
-                      color: Colors.red.shade800),
-                  Divider(),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 18.0,vertical: 10),
-                    child: Text(
-                        "The body mass index(BMI) Calculator can be used to calculate BMI value and corresponding weight status."),
-                  ),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.only(
+                    Container(
+                      height: 30,
+                      child: Row(
+                        children: [
+                          Text(""),
+                          Spacer(),
+                          Text(
+                            "Weight Categories",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 18),
+                          ),
+                          Spacer(),
+                          Text(
+                            "Index",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 18),
+                          ),
+                          SizedBox(
+                            width: 18,
+                          )
+                        ],
+                      ),
+                    ),
+                    Divider(),
+                    getWeightDetail(
+                        title: "Very Severely Underweight",
+                        value: "<= 16",
+                        color: Colors.grey),
+                    Divider(),
+                    getWeightDetail(
+                        title: "Severely Underweight",
+                        value: "16 - 16.9",
+                        color: Colors.grey.shade500),
+                    Divider(),
+                    getWeightDetail(
+                        title: "Underweight",
+                        value: "17 - 18.4",
+                        color: Colors.blue),
+                    Divider(),
+                    getWeightDetail(
+                        title: "Healthy weight",
+                        value: "18.5 - 24.9",
+                        color: Colors.green),
+                    Divider(),
+                    getWeightDetail(
+                        title: "Overweight",
+                        value: "25 - 29.9",
+                        color: Colors.orange),
+                    Divider(),
+                    getWeightDetail(
+                        title: "Obese class I",
+                        value: "30 - 34.9",
+                        color: Colors.redAccent),
+                    Divider(),
+                    getWeightDetail(
+                        title: "Obese class II",
+                        value: "35 - 39.9",
+                        color: Colors.red),
+                    Divider(),
+                    getWeightDetail(
+                        title: "Obese class III",
+                        value: ">=40",
+                        color: Colors.red.shade800),
+                    Divider(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 18.0, vertical: 10),
+                      child: Text(
+                          "The body mass index(BMI) Calculator can be used to calculate BMI value and corresponding weight status."),
+                    ),
+                    SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.only(
                           left: 18.0, right: 18, bottom: 4),
                       child: Text("Healthy BMI Range",
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500)),
                     ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 18.0,right: 18),
-                    child: Text(
+                    Padding(
+                      padding: const EdgeInsets.only(left: 18.0, right: 18),
+                      child: Text(
                         "The world health organization\'s (WHO) recommended healthy BMI range is 18.5-25 for both male and female",
-                        ),
-                  ),
-                  SizedBox(
+                      ),
+                    ),
+                    SizedBox(
                       height: 30,
                     )
                   ],
@@ -268,7 +271,11 @@ class _BmiCardState extends State<BmiCard> {
     }
 
     getEditButton(String title) {
-      return TextButton(style: ButtonStyle(padding:MaterialStateProperty.all(EdgeInsets.all(0),)),
+      return TextButton(
+          style: ButtonStyle(
+              padding: MaterialStateProperty.all(
+            EdgeInsets.all(0),
+          )),
           onPressed: () async {
             var res = await showDialog(
                 context: context,
@@ -283,11 +290,14 @@ class _BmiCardState extends State<BmiCard> {
             double toSave = (res[1] == null) ? weight : res[1];
             await spHelper.saveDouble(spKey.weight, toSave);
             String key = DateFormat.yMd().format(selectedDate).toString();
-            WeightModel weightModel =
-            WeightModel(selectedDate.toIso8601String(), toSave, key,  DateTime.now().millisecondsSinceEpoch,);
+            WeightModel weightModel = WeightModel(
+              selectedDate.toIso8601String(),
+              toSave,
+              key,
+              DateTime.now().millisecondsSinceEpoch,
+            );
             if (weightModel.weight == null) return;
-            await weightDb.addWeight(
-                toSave, weightModel, key);
+            await weightDb.addWeight(toSave, weightModel, key);
 
             setState(() {
               _spHelper.saveDouble(_spKey.height, res[0]);
@@ -307,35 +317,45 @@ class _BmiCardState extends State<BmiCard> {
     }
 
     getArrow() {
-      getContainer(){
+      getContainer() {
         return Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
               Radius.circular(30),
             ),
-            color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.5),
-
+            color:
+                Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.5),
           ),
           height: 12.2,
           width: 2.0,
         );
       }
+
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
-           Icons.arrow_upward,
+            Icons.arrow_upward,
             size: 20,
-            color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.6),
+            color:
+                Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.6),
           ),
-          SizedBox(height: 2,),
+          SizedBox(
+            height: 2,
+          ),
           getContainer(),
-          SizedBox(height: 4,),
+          SizedBox(
+            height: 4,
+          ),
           getContainer(),
-          SizedBox(height: 4,),
+          SizedBox(
+            height: 4,
+          ),
           getContainer(),
-          SizedBox(height: 4,),
+          SizedBox(
+            height: 4,
+          ),
         ],
       );
     }
@@ -445,36 +465,45 @@ class _BmiCardState extends State<BmiCard> {
               ),
               Text(title),
               Spacer(),
-              isLoading?CircularProgressIndicator():
-              Text(value)
+              isLoading ? CircularProgressIndicator() : Text(value)
             ],
           ),
         );
       }
+
       return Container(
         child: Column(
           children: [
-        Padding(
-        padding: const EdgeInsets.only(left: 18.0,right: 4),child:  Row(
-              children: [
-                Text(
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0, right: 4),
+              child: Row(
+                children: [
+                  Text(
                     "My Health",
                     style: Constants().titleStyle,
                   ),
-
-                Spacer(),
-                getEditButton("EDIT")
-              ],
-            ),),
+                  Spacer(),
+                  getEditButton("EDIT")
+                ],
+              ),
+            ),
             Column(
               children: [
-                getWeightDetail(color: Colors.red.withOpacity(.8),value: height,title: "Height"),
-                getWeightDetail(color: Colors.green.withOpacity(.8),value: weight,title: "Weight"),
-              ],)
+                getWeightDetail(
+                    color: Colors.red.withOpacity(.8),
+                    value: height,
+                    title: "Height"),
+                getWeightDetail(
+                    color: Colors.green.withOpacity(.8),
+                    value: weight,
+                    title: "Weight"),
+              ],
+            )
           ],
         ),
       );
     }
+
     return (_isLoading)
         ? CircularProgressIndicator()
         : height == null || weight == null
@@ -496,20 +525,23 @@ class _BmiCardState extends State<BmiCard> {
                   ),
                   Text(
                     "Add height and weight to calculate BMI",
-                    style: TextStyle(color:Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8)),
+                    style: TextStyle(
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .color!
+                            .withOpacity(.8)),
                   ),
                   SizedBox(
                     height: 24,
                   )
                 ],
-        )
-        : Column(
-      children: [
-
-        Padding(
-          padding: const EdgeInsets.only(left: 18.0,right: 2),
-          child:
-          Row(
+              )
+            : Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0, right: 2),
+                    child: Row(
                       children: [
                         Text("BMI Calculator", style: Constants().titleStyle),
                         Spacer(),
@@ -564,7 +596,11 @@ class _BmiCardState extends State<BmiCard> {
                     children: [
                       Text("BMI : " + bmi.toStringAsFixed(1),
                           style: TextStyle(
-                              color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7),
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .color!
+                                  .withOpacity(.7),
                               fontWeight: FontWeight.w500,
                               fontSize: 16)),
                       SizedBox(
@@ -572,13 +608,20 @@ class _BmiCardState extends State<BmiCard> {
                       ),
                       Text("(${remark.remark})",
                           style: TextStyle(
-                              color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7),
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .color!
+                                  .withOpacity(.7),
                               fontWeight: FontWeight.w500,
                               fontSize: 16)),
                     ],
                   ),
-        if (widget.showBool)   SizedBox(height: 10,),
-        if (widget.showBool) constants.getDivider(context: context),
+                  if (widget.showBool)
+                    SizedBox(
+                      height: 10,
+                    ),
+                  if (widget.showBool) constants.getDivider(context: context),
                   if (widget.showBool)
                     getMyHealth(height!.toInt().toString() + " Cm",
                         weight!.toInt().toString() + " Kg"),

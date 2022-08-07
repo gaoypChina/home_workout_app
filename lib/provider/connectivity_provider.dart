@@ -1,6 +1,4 @@
-import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -31,5 +29,4 @@ class ConnectivityProvider with ChangeNotifier {
     });
     return isOnline;
   }
-
 }

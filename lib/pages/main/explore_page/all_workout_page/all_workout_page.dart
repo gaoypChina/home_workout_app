@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/models/explore_workout_model.dart';
-import 'package:full_workout/pages/main/explore_page/explore_page_widget/workout_header.dart';
-import 'package:full_workout/pages/main/explore_page/workout_setup_page/workout_setup_page.dart';
+import '../../../../pages/main/explore_page/explore_page_widget/workout_header.dart';
+import '../../../../pages/main/explore_page/workout_setup_page/workout_setup_page.dart';
 
 import '../../../../database/explore_page_workout/export_workout.dart';
 import '../../../../enums/workout_type.dart';
-
 
 class AllWorkoutPage extends StatelessWidget {
   const AllWorkoutPage({Key? key}) : super(key: key);

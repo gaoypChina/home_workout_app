@@ -82,8 +82,9 @@ class _SubscriptionDetailState extends State<SubscriptionDetail> {
               barRadius: Radius.circular(18),
               lineHeight: 6.0,
               percent: getBarPercent(
-                  firstDate: provider.subscriptionDetail!.firstDate,
-                  lastDate: provider.subscriptionDetail!.lastDate) ?? 0.2,
+                      firstDate: provider.subscriptionDetail!.firstDate,
+                      lastDate: provider.subscriptionDetail!.lastDate) ??
+                  0.2,
               backgroundColor: Colors.white.withOpacity(.4),
               progressColor: Colors.white.withOpacity(.80),
             ),

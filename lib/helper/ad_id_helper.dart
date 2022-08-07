@@ -1,10 +1,12 @@
 import 'dart:io';
 
-bool isProduction = true;
+///todo : switch to true while app in production
+bool isProduction = false;
+
 class AdIdHelper {
   static String get bannerAdUnitId {
     if (Platform.isAndroid) {
-      if(isProduction){
+      if (isProduction) {
         return "ca-app-pub-6411653236715435/8096929282";
       }
       return "ca-app-pub-3940256099942544/6300978111";
@@ -15,9 +17,9 @@ class AdIdHelper {
     }
   }
 
-  static String get bannerMediumAdUnitId{
+  static String get bannerMediumAdUnitId {
     if (Platform.isAndroid) {
-      if(isProduction){
+      if (isProduction) {
         return "ca-app-pub-6411653236715435/5279194252";
       }
       return "ca-app-pub-3940256099942544/6300978111";
@@ -28,9 +30,9 @@ class AdIdHelper {
     }
   }
 
-  static String get interstitialAdUnitId{
+  static String get interstitialAdUnitId {
     if (Platform.isAndroid) {
-      if(isProduction){
+      if (isProduction) {
         return "ca-app-pub-6411653236715435/1503600778";
       }
       return "ca-app-pub-3940256099942544/8691691433";
@@ -41,9 +43,9 @@ class AdIdHelper {
     }
   }
 
-  static String get rewardAdUnitId{
+  static String get rewardAdUnitId {
     if (Platform.isAndroid) {
-      if(isProduction){
+      if (isProduction) {
         return "ca-app-pub-6411653236715435/3582969205";
       }
       return "ca-app-pub-3940256099942544/5224354917";

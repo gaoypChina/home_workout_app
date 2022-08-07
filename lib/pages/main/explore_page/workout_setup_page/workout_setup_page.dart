@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
-import 'package:full_workout/pages/main/explore_page/workout_setup_page/widget/get_prime_modal.dart';
-import 'package:full_workout/provider/ads_provider.dart';
-import 'package:full_workout/provider/subscription_provider.dart';
+import '../../../../helper/sp_helper.dart';
+import '../../../../helper/sp_key_helper.dart';
+import '../../../../pages/main/explore_page/workout_setup_page/widget/get_prime_modal.dart';
+import '../../../../provider/ads_provider.dart';
+import '../../../../provider/subscription_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
@@ -35,11 +35,10 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage> {
   getCountDown() async {
     countDownTime = await spHelper.loadDouble(spKey.countdownTime) ?? 10;
     restTime = await spHelper.loadDouble(spKey.trainingRest) ?? 30;
-
   }
 
   checkProUser() async {
-    Provider.of<AdsProvider>(context,listen: false).isRewarded = false;
+    Provider.of<AdsProvider>(context, listen: false).isRewarded = false;
     isUnlocked = await Provider.of<AdsProvider>(context, listen: false)
         .isUnlocked(key: widget.workout.title, context: context);
     setState(() {});
@@ -53,12 +52,10 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage> {
     super.initState();
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
-    bool isProUser = isUnlocked || Provider.of<AdsProvider>(context,listen: true).isRewarded;
+    bool isProUser = isUnlocked ||
+        Provider.of<AdsProvider>(context, listen: true).isRewarded;
 
     void getBottomSheet() async {
       showSlidingBottomSheet(context, builder: (context) {
@@ -95,7 +92,7 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage> {
             children: [
               Icon(
                 icon,
-                color: isDark ? Colors.white70 :Colors.black.withOpacity(.6),
+                color: isDark ? Colors.white70 : Colors.black.withOpacity(.6),
               ),
               SizedBox(
                 width: 8,
@@ -105,7 +102,8 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage> {
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 15,
-                    color: isDark ? Colors.white70 : Colors.black.withOpacity(.7)),
+                    color:
+                        isDark ? Colors.white70 : Colors.black.withOpacity(.7)),
               ),
               SizedBox(
                 width: 2,

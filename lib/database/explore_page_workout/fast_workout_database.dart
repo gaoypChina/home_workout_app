@@ -10,7 +10,6 @@ ExploreWorkout tabata = ExploreWorkout(
 );
 ExploreWorkout looseBellyFat = ExploreWorkout(
   workoutType: WorkoutType.Beginner,
-
   title: "Lose Belly Fat",
   workoutList: [],
   description: [],

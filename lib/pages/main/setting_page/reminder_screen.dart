@@ -1,10 +1,10 @@
 import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:full_workout/constants/constant.dart';
-import 'package:full_workout/helper/notification_helper.dart';
-import 'package:full_workout/helper/sp_helper.dart';
-import 'package:full_workout/helper/sp_key_helper.dart';
+import '../../../constants/constant.dart';
+import '../../../helper/notification_helper.dart';
+import '../../../helper/sp_helper.dart';
+import '../../../helper/sp_key_helper.dart';
 
 class ReminderTab extends StatefulWidget {
   static const routeName = "reminder-screen";
@@ -86,7 +86,7 @@ class _ReminderTabState extends State<ReminderTab> {
         title: "Home Workout Reminder",
         id: 1,
         body:
-        "Complete your daily workout task and move a step closer to your goal",
+            "Complete your daily workout task and move a step closer to your goal",
         time: Time(reminderTime.hour, reminderTime.minute));
   }
 
@@ -96,24 +96,20 @@ class _ReminderTabState extends State<ReminderTab> {
     super.initState();
   }
 
-  String getTimeString(int hour, int minute){
-    String  getParsedTime(int time){
-      if(time.toString().length <=1)
-        return "0$time";
+  String getTimeString(int hour, int minute) {
+    String getParsedTime(int time) {
+      if (time.toString().length <= 1) return "0$time";
       return time.toString();
     }
 
     String getAbsolute(int time) {
-      if(time == 0)
-        return getParsedTime(12);
-      if (time > 12)
-        return getParsedTime(time - 12);
+      if (time == 0) return getParsedTime(12);
+      if (time > 12) return getParsedTime(time - 12);
       return getParsedTime(time);
     }
 
-    getPrefix(int time){
-      if(time >=12)
-        return " PM";
+    getPrefix(int time) {
+      if (time >= 12) return " PM";
       return " AM";
     }
 
@@ -137,34 +133,39 @@ class _ReminderTabState extends State<ReminderTab> {
 
   @override
   Widget build(BuildContext context) {
-
     var titleStyle = TextStyle(
-      fontWeight: FontWeight.w500, fontSize: 17,);
+      fontWeight: FontWeight.w500,
+      fontSize: 17,
+    );
     var timeStyle = TextStyle(
-      fontWeight: FontWeight.w400, fontSize: 15,);
+      fontWeight: FontWeight.w400,
+      fontSize: 15,
+    );
 
-
-    getDivider(){
-      return  Container(
+    getDivider() {
+      return Container(
         height: .8,
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: Colors.grey.withOpacity(.1),
       );
     }
+
     return Scaffold(
       appBar: AppBar(
-      //  elevation: 0,
+        elevation: 0,
         actions: [
-          showSaveButton? Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: TextButton(
-              onPressed: () {
-                _setReminder(isChecked);
-                constants.getToast("Your changes saved successfully");
-                Navigator.of(context).pop();
-              },
-              child: Text("Save"),
-            ),
-          ):Container(),
+          showSaveButton
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: TextButton(
+                    onPressed: () {
+                      _setReminder(isChecked);
+                      constants.getToast("Your changes saved successfully");
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Save"),
+                  ),
+                )
+              : Container(),
         ],
         title: Text(
           "Workout Reminder",
@@ -174,17 +175,19 @@ class _ReminderTabState extends State<ReminderTab> {
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
+            getDivider(),
             SizedBox(
-              height: 16,
+              height: 12,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 2),
               child: Text(
                 "Set a workout reminder to help you meet your goals faster. you can change the frequency or turn off in your account settings at any time.",
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                   fontSize: 14,
-                  height: 1.1,
+                  height: 1.2,
                   fontWeight: FontWeight.w400,
                   letterSpacing: 1.5,
                   color: Theme.of(context)
@@ -198,6 +201,7 @@ class _ReminderTabState extends State<ReminderTab> {
             SizedBox(
               height: 12,
             ),
+            getDivider(),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 0),
               child: Column(
@@ -266,7 +270,7 @@ class _ReminderTabState extends State<ReminderTab> {
                       }
                     },
                     subtitle: Container(
-                      padding: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.only(top: 5),
                       height: 30,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
@@ -274,13 +278,14 @@ class _ReminderTabState extends State<ReminderTab> {
                           itemBuilder: (context, index) {
                             return (selector[index].activate == true)
                                 ? Text(
-                              '${selector[index].day.substring(0, 3)}    ',
-                              style: timeStyle,
-                            )
+                                    '${selector[index].day.substring(0, 3)}    ',
+                                    style: timeStyle,
+                                  )
                                 : Text('');
                           }),
                     ),
                   ),
+                  getDivider(),
                 ],
               ),
             ),
@@ -307,29 +312,48 @@ class _DaySelectorState extends State<DaySelector> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      insetPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(24))),
+          borderRadius: BorderRadius.all(Radius.circular(16))),
       backgroundColor: Colors.white,
       child: Container(
         decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.all(Radius.circular(24))),
+            borderRadius: BorderRadius.all(Radius.circular(16))),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 18,
+              height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 28.0),
-              child: Text(
-                "Select Repeat Day",
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+              padding: const EdgeInsets.only(left: 28.0, right: 24),
+              child: Row(
+                children: [
+                  Text(
+                    "Select Repeat Day",
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                  ),
+                  Spacer(),
+                  InkWell(
+                    onTap: () => Navigator.of(context).pop(),
+                    child: Container(
+                        padding: EdgeInsets.all(8),
+                        child: Icon(Icons.close_outlined)),
+                  )
+                ],
               ),
             ),
             SizedBox(
-              height: 8,
+              height: 10,
+            ),
+            Container(
+              height: 1,
+              color: Colors.grey.withOpacity(.2),
+            ),
+            SizedBox(
+              height: 2,
             ),
             Container(
               child: ListView.builder(
@@ -340,7 +364,7 @@ class _DaySelectorState extends State<DaySelector> {
                     return CheckboxListTile(
                       title: Text(widget.selector[index].day),
                       contentPadding: EdgeInsets.symmetric(horizontal: 28),
-                      activeColor: Colors.blue,
+                      activeColor: Theme.of(context).primaryColor,
                       value: widget.selector[index].activate,
                       onChanged: (value) {
                         setState(() {
@@ -349,6 +373,16 @@ class _DaySelectorState extends State<DaySelector> {
                       },
                     );
                   }),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Container(
+              height: 1,
+              color: Colors.grey.withOpacity(.2),
+            ),
+            SizedBox(
+              height: 2,
             ),
             Row(
               children: [
@@ -359,7 +393,10 @@ class _DaySelectorState extends State<DaySelector> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text("Cancel")),
+                    child: Text(
+                      "Cancel".toUpperCase(),
+                      style: TextStyle(color: Colors.grey),
+                    )),
                 SizedBox(
                   width: 18,
                 ),
@@ -372,14 +409,14 @@ class _DaySelectorState extends State<DaySelector> {
                       });
                       Navigator.pop(context, selectedDayList);
                     },
-                    child: Text("Save")),
+                    child: Text("Save".toUpperCase())),
                 Spacer(
                   flex: 1,
                 )
               ],
             ),
             SizedBox(
-              height: 10,
+              height: 2,
             ),
           ],
         ),

@@ -107,7 +107,8 @@ List<Workout> armDay7 = [
   kneePushUps2,
   catCowPose,
   reclinedRhomboidSqueezes2,
-  childPose];
+  childPose
+];
 List<Workout> armDay8 = [
   jumpingJacks,
   armCircleClockWise,
@@ -143,21 +144,16 @@ List<Workout> armDay9 = [
   childPose,
 ];
 
-
 List<Workout> armDay10 = [...shoulderBeginner];
 List<Workout> armDay11 = [...shoulderBeginner];
 List<Workout> armDay12 = [...shoulderBeginner];
 List<Workout> armDay13 = [...armsBeginner];
 List<Workout> armDay14 = [...armsBeginner];
-List<Workout> armDay15 = [
-  ...armsBeginner
-];
+List<Workout> armDay15 = [...armsBeginner];
 List<Workout> armDay16 = [...shoulderIntermediate];
 List<Workout> armDay17 = [...shoulderIntermediate];
 List<Workout> armDay18 = [...shoulderIntermediate];
-List<Workout> armDay20 = [
-...armsIntermediate
-];
+List<Workout> armDay20 = [...armsIntermediate];
 List<Workout> armDay21 = [
   armCircleClockWise,
   armCircleCounterClockWise,

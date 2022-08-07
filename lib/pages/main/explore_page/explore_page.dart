@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/pages/main/explore_page/explore_page_widget/fast_workout.dart';
-import 'package:full_workout/pages/main/home_page/leading_widget.dart';
+import '../../../pages/main/explore_page/explore_page_widget/fast_workout.dart';
+import '../../../pages/main/home_page/leading_widget.dart';
 
 import 'explore_page_widget/1by1_workout_card.dart';
 import 'explore_page_widget/beginner_workout_challenges.dart';
@@ -22,7 +21,6 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
-
   @override
   Widget build(BuildContext context) {
     buildDivider() {
@@ -47,7 +45,7 @@ class _ExplorePageState extends State<ExplorePage> {
           centerTitle: false,
         ),
         body: SingleChildScrollView(
-          //  padding: EdgeInsets.all(14),
+            //  padding: EdgeInsets.all(14),
             physics: BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,8 +74,8 @@ class _ExplorePageState extends State<ExplorePage> {
                   height: 10,
                 )
               ],
-            )
-        ),
+            )),
       ),
-    );}
+    );
+  }
 }

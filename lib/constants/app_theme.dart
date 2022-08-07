@@ -14,78 +14,80 @@ Color lightCardColor = Color(0xffF7F9F9);
 Color lightPrimaryColor = Colors.blue.shade700;
 
 var lightTheme = ThemeData(
-    //textTheme: lightTextTheme,
-   // useMaterial3: true,
+  //textTheme: lightTextTheme,
+  // useMaterial3: true,
 
-    primaryColor: Colors.blue.shade700,
-    cardColor: lightCardColor,
-    scaffoldBackgroundColor: Colors.white,
-    brightness: Brightness.light,
-    dialogBackgroundColor: lightCardColor,
-    dividerColor: Colors.grey.shade200.withOpacity(.8),
-    dividerTheme: DividerThemeData(
-      thickness: .8,
-      color: Colors.grey.shade200.withOpacity(.7),
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-      primary: lightPrimaryColor,
-    )),
-    textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          primary: lightPrimaryColor,
-        )),
-    iconTheme: IconThemeData(color: Colors.grey.shade700,),
-    appBarTheme: AppBarTheme(
-        backgroundColor: Colors.white,
-        elevation: .5,
-        titleTextStyle: TextStyle(
-            color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
-        iconTheme: IconThemeData(color: Colors.black),
-        actionsIconTheme: IconThemeData(color: Colors.black)),
-    radioTheme: RadioThemeData(
-      fillColor: MaterialStateProperty.all(Colors.blue.shade700),
-    ),
-    // inputDecorationTheme: InputDecorationTheme(
-    //   filled: true,
-    //   fillColor: Colors.white,
-    //   enabledBorder: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(8),
-    //       borderSide: BorderSide(color: Colors.grey)),
-    //   contentPadding: EdgeInsets.symmetric(horizontal: 16),
-    //   focusedBorder: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(8),
-    //       borderSide: BorderSide(color: Colors.blue.shade700)),
-    // )
+  primaryColor: Colors.blue.shade700,
+  cardColor: lightCardColor,
+  scaffoldBackgroundColor: Colors.white,
+  brightness: Brightness.light,
+  dialogBackgroundColor: lightCardColor,
+  dividerColor: Colors.grey.shade200.withOpacity(.8),
+  dividerTheme: DividerThemeData(
+    thickness: .8,
+    color: Colors.grey.shade200.withOpacity(.7),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+    primary: lightPrimaryColor,
+  )),
+  textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+    primary: lightPrimaryColor,
+  )),
+  iconTheme: IconThemeData(
+    color: Colors.grey.shade700,
+  ),
+  appBarTheme: AppBarTheme(
+      backgroundColor: Colors.white,
+      elevation: .5,
+      titleTextStyle: TextStyle(
+          color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
+      iconTheme: IconThemeData(color: Colors.black),
+      actionsIconTheme: IconThemeData(color: Colors.black)),
+  radioTheme: RadioThemeData(
+    fillColor: MaterialStateProperty.all(Colors.blue.shade700),
+  ),
+  // inputDecorationTheme: InputDecorationTheme(
+  //   filled: true,
+  //   fillColor: Colors.white,
+  //   enabledBorder: OutlineInputBorder(
+  //       borderRadius: BorderRadius.circular(8),
+  //       borderSide: BorderSide(color: Colors.grey)),
+  //   contentPadding: EdgeInsets.symmetric(horizontal: 16),
+  //   focusedBorder: OutlineInputBorder(
+  //       borderRadius: BorderRadius.circular(8),
+  //       borderSide: BorderSide(color: Colors.blue.shade700)),
+  // )
 );
 
 var darkTheme = ThemeData(
-    primaryColor: darkPrimaryColor,
-    cardColor: darkSecondaryColor,
-    bottomAppBarColor: darkAppBarColor,
-    brightness: Brightness.dark,
-    scaffoldBackgroundColor: darkBackgroundColor,
-    appBarTheme: AppBarTheme(
-        elevation: .5,
-        shadowColor: Colors.white,
-        backgroundColor: darkAppBarColor,
-        titleTextStyle: TextStyle(
-            fontSize: 20, color: Colors.white, fontWeight: FontWeight.w600)),
-    primarySwatch: Colors.blue,
+  primaryColor: darkPrimaryColor,
+  cardColor: darkSecondaryColor,
+  bottomAppBarColor: darkAppBarColor,
+  brightness: Brightness.dark,
+  scaffoldBackgroundColor: darkBackgroundColor,
+  appBarTheme: AppBarTheme(
+      elevation: .5,
+      shadowColor: Colors.white,
+      backgroundColor: darkAppBarColor,
+      titleTextStyle: TextStyle(
+          fontSize: 20, color: Colors.white, fontWeight: FontWeight.w600)),
+  primarySwatch: Colors.blue,
 
-    dialogBackgroundColor: darkSecondaryColor,
+  dialogBackgroundColor: darkSecondaryColor,
 
-    dividerTheme: DividerThemeData(color: darkSecondaryColor),
-    // inputDecorationTheme: InputDecorationTheme(
-    //   filled: true,
-    //   enabledBorder: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(8),
-    //       borderSide: BorderSide(color:darkPrimaryColor)),
-    //   contentPadding: EdgeInsets.symmetric(horizontal: 16),
-    //   focusedBorder: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(8),
-    //       borderSide: BorderSide(color: darkPrimaryColor)),
-    // )
+  dividerTheme: DividerThemeData(color: darkSecondaryColor),
+  // inputDecorationTheme: InputDecorationTheme(
+  //   filled: true,
+  //   enabledBorder: OutlineInputBorder(
+  //       borderRadius: BorderRadius.circular(8),
+  //       borderSide: BorderSide(color:darkPrimaryColor)),
+  //   contentPadding: EdgeInsets.symmetric(horizontal: 16),
+  //   focusedBorder: OutlineInputBorder(
+  //       borderRadius: BorderRadius.circular(8),
+  //       borderSide: BorderSide(color: darkPrimaryColor)),
+  // )
 );
 
 var lightTextTheme = TextTheme(

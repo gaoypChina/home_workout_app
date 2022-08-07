@@ -1,15 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/database/workout_list.dart';
-import 'package:full_workout/pages/workout_page/detail_dialog_page.dart';
-
-
+import '../../../database/workout_list.dart';
+import '../../../pages/workout_page/detail_dialog_page.dart';
 
 class CustomExerciseCard extends StatefulWidget {
   final List<Workout> workOutList;
   final int index;
   final int time;
-  CustomExerciseCard({required this.workOutList, required this.index, required this.time});
+  CustomExerciseCard(
+      {required this.workOutList, required this.index, required this.time});
 
   @override
   _CustomExerciseCardState createState() => _CustomExerciseCardState();
@@ -21,37 +19,40 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
 
   @override
   Widget build(BuildContext context) {
-
     var item = widget.workOutList[widget.index];
-    return  Container(
-        child:InkWell(
-          onTap: () {
-            showDialog(
-                context: context,
-                builder: (context) => WorkoutDetailDialog(
-                  rapCount: widget.time,
-                  workoutList: widget.workOutList,
-                  index: widget.index,
-                ));
-          },
-          child: Row(
+    return Container(
+      child: InkWell(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (context) => WorkoutDetailDialog(
+                    rapCount: widget.time,
+                    workoutList: widget.workOutList,
+                    index: widget.index,
+                  ));
+        },
+        child: Row(
           children: <Widget>[
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             Expanded(
               flex: 2,
               child: Container(
                 child: Container(
                   height: 100,
                   child: Center(
-                      child: Image.asset(
-                        item.imageSrc,
-                        fit: BoxFit.scaleDown,
+                    child: Image.asset(
+                      item.imageSrc,
+                      fit: BoxFit.scaleDown,
                     ),
                   ),
                 ),
               ),
             ),
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             Expanded(
               flex: 4,
               child: Container(
@@ -60,7 +61,7 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(left: 12.0,right: 8),
+                      padding: const EdgeInsets.only(left: 12.0, right: 8),
                       child: Text(
                         item.title,
                         style: TextStyle(
@@ -76,10 +77,20 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                       padding: const EdgeInsets.only(left: 12.0),
                       child: Row(
                         children: <Widget>[
-                          if(!item.showTimer)   Text("X ", style: Theme.of(context).textTheme.subtitle1,),
-                            Text(widget.time.toString(),style: Theme.of(context).textTheme.subtitle1,),
-
-                     if(item.showTimer)     Text(" Sec", style: Theme.of(context).textTheme.subtitle1,)
+                          if (!item.showTimer)
+                            Text(
+                              "X ",
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                          Text(
+                            widget.time.toString(),
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          if (item.showTimer)
+                            Text(
+                              " Sec",
+                              style: Theme.of(context).textTheme.subtitle1,
+                            )
                         ],
                       ),
                     ),

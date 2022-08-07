@@ -5,7 +5,7 @@ class PrimeIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       decoration: BoxDecoration(
           color: Colors.amberAccent.withOpacity(.6), shape: BoxShape.circle),
       padding: EdgeInsets.all(6),
