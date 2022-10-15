@@ -368,7 +368,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
           ),
           Container(
             height: 100,
-            child: Image.asset("assets/other/empty-box (1).png"),
+            child: Image.asset("assets/other/empty_box.png"),
           ),
           SizedBox(
             height: 8,

@@ -71,7 +71,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
 
     mediaHelper.playSoundOnce("assets/sound/achievement.wav").then((value) =>
         Future.delayed(Duration(seconds: 1)).then((value) => mediaHelper
-            .speak("Take a rest the next $totalRap $rapType $exerciseName")));
+            .readText("Take a rest the next $totalRap $rapType $exerciseName")));
   }
 
   _onPause() async {
@@ -197,8 +197,8 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          height: height * .1,
+                        Spacer(
+                          flex: 2,
                         ),
                         Text(
                           "Rest",
@@ -207,9 +207,7 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                               fontWeight: FontWeight.w700,
                               color: Colors.white),
                         ),
-                        SizedBox(
-                          height: height * .05,
-                        ),
+                       SizedBox(height: height*.02,),
                         Container(
                           height: 50,
                           //  width: double.infinity,
@@ -217,16 +215,16 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                               animation: controller,
                               builder: (BuildContext context, Widget? child) {
                                 if (timerValue <= 6000 && timerValue > 5950) {
-                                  mediaHelper.speak('Ready to go');
+                                  mediaHelper.readText('Ready to go');
                                 }
                                 if (timerValue <= 3000 && timerValue > 2950) {
-                                  mediaHelper.speak('Three');
+                                  mediaHelper.readText('Three');
                                 }
                                 if (timerValue <= 1600 && timerValue > 1550) {
-                                  mediaHelper.speak('Two');
+                                  mediaHelper.readText('Two');
                                 }
                                 if (timerValue <= 200 && timerValue > 150) {
-                                  mediaHelper.speak('One');
+                                  mediaHelper.readText('One');
                                 }
 
                                 return Text(
@@ -237,42 +235,77 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                                 );
                               }),
                         ),
-                        SizedBox(
-                          height: height * .05,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            OutlinedButton(
-                              onPressed: () {
-                                _onPause();
-                              },
-                              child: Text(
-                                "Pause",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white70),
-                              ),
-                              style: OutlinedButton.styleFrom(
-                                elevation: 1,
-                                backgroundColor: isDark
-                                    ? Theme.of(context).scaffoldBackgroundColor
-                                    : Colors.blue.shade700,
-                                side: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: isDark
-                                        ? Colors.white60
-                                        : Colors.white70,
-                                    width: 2),
-                                padding: EdgeInsets.only(
-                                    left: 35, right: 35, top: 10, bottom: 10),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
+                        SizedBox(height: height*.02,),
+                        OutlinedButton(
+                            style: TextButton.styleFrom(
+                              side: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: isDark
+                                      ? Colors.white70
+                                      : Colors.white,
+                                  width: 1),
+                              backgroundColor: Colors.transparent,
+                              padding: EdgeInsets.only(
+                                  left: 25, right: 25, top: 10, bottom: 10),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
                               ),
                             ),
+                            onPressed: (){
+                              controller.duration = Duration(seconds: secValue +  20);
+                              controller.reverse(
+                                  from: 20);
+                              setState(() {
+                              });
+                            }, child: Text("20 + sec",style: TextStyle(
+                          color: Colors.white,     fontSize: 16,
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.w500,),)
+                        ),
+                       Spacer(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Spacer(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                OutlinedButton(
+                                  onPressed: () {
+                                    _onPause();
+                                  },
+                                  child: Text(
+                                    "Pause",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        letterSpacing: 1,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white70),
+                                  ),
+                                  style: OutlinedButton.styleFrom(
+                                    elevation: 1,
+                                    backgroundColor: isDark
+                                        ? Theme.of(context).scaffoldBackgroundColor
+                                        : Colors.blue.shade700,
+                                    side: BorderSide(
+                                        style: BorderStyle.solid,
+                                        color: isDark
+                                            ? Colors.white70
+                                            : Colors.white60,
+                                        width: 1),
+                                    padding: EdgeInsets.only(
+                                        left: 35, right: 35, top: 10, bottom: 10),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
+                                ),
+
+
+                              ],
+                            ),
+                            Spacer(flex: 2,),
                             ElevatedButton(
                               onPressed: () => _onComplete(),
                               child: Text(
@@ -292,15 +325,20 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                                 ),
                               ),
                             ),
+                            Spacer(
+
+                            ),
                           ],
                         ),
+Spacer(),
+
                       ],
                     ),
                   ),
                   RegularBannerAd(),
                   Positioned(
-                      right: 10,
-                      top: 20,
+                      right:6,
+                      top: 40,
                       child: Column(
                         children: [
                           InfoButton(
@@ -334,7 +372,6 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                                 await Navigator.of(context)
                                     .push(MaterialPageRoute(
                                         builder: (context) => YoutubeTutorial(
-                                              rapCount: widget.rapList[index],
                                               workout:
                                                   widget.workOutList[index],
                                             )));
@@ -436,10 +473,8 @@ class _RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                             ],
                           ),
                         )),
-                    Expanded(
-                        child: Hero(
-                            tag: widget.title,
-                            child: Image.asset(item.imageSrc))),
+                     Expanded(child: Image.asset(item.imageSrc)),
+                    
                   ],
                 ),
               )

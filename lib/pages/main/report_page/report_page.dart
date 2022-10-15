@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../../../constants/constant.dart';
 import '../../../pages/main/report_page/workout_report/weekly_workout_report.dart';
 import '../../../../pages/main/report_page/workout_report/workout_detail_report.dart';
@@ -59,6 +60,60 @@ class _ReportPageState extends State<ReportPage>
 
     var adsProvider = Provider.of<AdsProvider>(context, listen: true);
 
+    List<Widget> sections = [
+      constants.getDivider(context: context),
+      Container(
+        padding: const EdgeInsets.only(left: 18.0, right: 8),
+        child: Row(
+          children: [
+            Text(
+              "History",
+              style: Constants().titleStyle,
+            ),
+            Spacer(),
+            TextButton(
+                style: TextButton.styleFrom(
+                    primary: Theme.of(context).primaryColor),
+                onPressed: () => Navigator.pushNamed(
+                    context, WorkoutDetailReport.routeName),
+                child: Text(
+                  "More",
+                )),
+          ],
+        ),
+      ),
+      WeeklyWorkoutReport(
+        showToday: false,
+        onTap: () => Navigator.pushNamed(
+            context, WorkoutDetailReport.routeName),
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      constants.getDivider(context: context),
+      WeightReport(
+        title: "Weight",
+        isShow: true,
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      constants.getDivider(context: context),
+      if (adsProvider.showBannerAd)
+        SizedBox(
+          height: 10,
+        ),
+      MediumBannerAd(),
+      if (adsProvider.showBannerAd)
+        SizedBox(
+          height: 10,
+        ),
+      if (adsProvider.showBannerAd)
+        constants.getDivider(context: context),
+      BmiCard(
+        showBool: true,
+      ),];
+
     return RateAppInitWidget(
         builder: (rateMyApp) => WillPopScope(
               onWillPop: () {
@@ -72,11 +127,6 @@ class _ReportPageState extends State<ReportPage>
                     return <Widget>[
                       SliverAppBar(
                         automaticallyImplyLeading: false,
-                        actions: [
-                          // ...getLeading(
-                          //   context,
-                          // ),
-                        ],
                         title: Text(
                           "Report",
                           style: TextStyle(
@@ -87,6 +137,7 @@ class _ReportPageState extends State<ReportPage>
                                     : Colors.white,
                           ),
                         ),
+
                         elevation: .5,
                         centerTitle: false,
                         expandedHeight: size.height * .20,
@@ -102,67 +153,33 @@ class _ReportPageState extends State<ReportPage>
                       ),
                     ];
                   },
-                  body: SingleChildScrollView(
-                    physics:
-                        isbouncing ? BouncingScrollPhysics() : ScrollPhysics(),
+                  body:
+                  SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        constants.getDivider(context: context),
-                        Container(
-                          padding: const EdgeInsets.only(left: 18.0, right: 8),
-                          child: Row(
-                            children: [
-                              Text(
-                                "History",
-                                style: Constants().titleStyle,
-                              ),
-                              Spacer(),
-                              TextButton(
-                                  style: TextButton.styleFrom(
-                                      primary: Theme.of(context).primaryColor),
-                                  onPressed: () => Navigator.pushNamed(
-                                      context, WorkoutDetailReport.routeName),
-                                  child: Text(
-                                    "More",
-                                  )),
-                            ],
-                          ),
-                        ),
-                        WeeklyWorkoutReport(
-                          showToday: false,
-                          onTap: () => Navigator.pushNamed(
-                              context, WorkoutDetailReport.routeName),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        constants.getDivider(context: context),
-                        WeightReport(
-                          title: "Weight",
-                          isShow: true,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        constants.getDivider(context: context),
-                        if (adsProvider.showBannerAd)
-                          SizedBox(
-                            height: 10,
-                          ),
-                        MediumBannerAd(),
-                        if (adsProvider.showBannerAd)
-                          SizedBox(
-                            height: 10,
-                          ),
-                        if (adsProvider.showBannerAd)
-                          constants.getDivider(context: context),
-                        BmiCard(
-                          showBool: true,
-                        ),
-                      ],
+                      children: sections,
                     ),
-                  ),
+                  )
+
+                  // AnimationLimiter(
+                  //
+                  //   child: ListView.builder(
+                  //     physics:
+                  //     isbouncing ? BouncingScrollPhysics() : ScrollPhysics(),
+                  //     itemCount: sections.length,
+                  //     itemBuilder: (BuildContext context, int index) {
+                  //       return AnimationConfiguration.staggeredList(
+                  //         position: index,
+                  //         duration: const Duration(milliseconds: 605),
+                  //         child: SlideAnimation(
+                  //           verticalOffset: 50.0,
+                  //           child: FadeInAnimation(
+                  //             child: sections[index],
+                  //           ),
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                 ),
               ),
             ));

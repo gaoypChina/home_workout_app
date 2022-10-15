@@ -21,9 +21,8 @@ ExploreWorkout strengthenBody = ExploreWorkout(
   description: [
     "You’re going to be pulling, pushing, jumping, doing any kind of activity using only your weight as the resistance.",
     "It may sound simple but you’ll be surprised by just how more challenging you can make it by implementing even the smallest changes.",
-    "Home workout exercises can promote muscle growth if you increase time under tension. This refers to the amount of time you’re putting strain on your muscles."
   ],
-  imgSrc: "assets/explore_image/img_2.jpg",
+  imgSrc: "assets/explore_image/img_20.jpg",
 );
 
 ExploreWorkout toneAbs = ExploreWorkout(
@@ -43,7 +42,7 @@ ExploreWorkout toneAbs = ExploreWorkout(
     "Building your abs does more than just help you look toned. In fact, a strong core can improve posture, stability, and balance as well as reduce sports-related injuries and low back pain.",
     "A strong core can also make everyday activities easier such as going up the stairs or sitting at your desk for an extended period of time.",
   ],
-  imgSrc: "assets/explore_image/img_3.jpg",
+  imgSrc: "assets/explore_image/img_10.jpg",
   title: "Tone Abs",
 );
 
@@ -73,7 +72,7 @@ ExploreWorkout bellyFatBurner = ExploreWorkout(
       "HIIT involves short bursts of intense exercise alternated with low intensity recovery periods. Interestingly, it is perhaps the most time-efficient way to exercise",
       "HIIT training can increase the rate at which your body burns calories, it is an excellent training method to burn belly fat",
     ],
-    imgSrc: "assets/explore_image/img_1.jpg",
+    imgSrc: "assets/explore_image/img_19.jpg",
     title: "Belly fat burner HIIT",
     customTime: 15);
 
@@ -105,7 +104,24 @@ ExploreWorkout tricepsSmasher = ExploreWorkout(
 
 ExploreWorkout manBoobs = ExploreWorkout(
   workoutType: WorkoutType.Beginner,
-  workoutList: [],
+  workoutList: [
+    crossTouchAndReach,
+    armScissors,
+    armCurlsCrunchLeft,
+    armCurlsCrunchRight,
+    skippingWithOutRope,
+    pushUps,
+    kneeToChestStretch,
+    jumpingSquats,
+    inclinePushUps,
+    reverseCrunches,
+    seatedSpinalTwistLeft,
+    seatedSpinalTwistRight,
+    wallPushUps,
+    threadTheNeedleL,
+    threadTheNeedleR,
+    cobraStretch,
+  ],
   description: [
     "An imbalance between estrogen and androgen hormones typically causes gynecomastia. Men's bodies usually produce small amounts of estrogen, the hormone that controls breast growth.",
     "for the majority of men, man boobs are simply a result of having excess fat on the chest. Your pectoral muscles are underneath the layer of fat. So, by losing body fat and gaining muscle, you can work to get rid of your man boobs.",
@@ -139,7 +155,7 @@ ExploreWorkout insaneAbs = ExploreWorkout(
     "V-cut abs are a coveted shape for many people looking to define their abs.",
     "The V-shape or line is located where the obliques meet the transversus abdominis muscles."
   ],
-  imgSrc: "assets/explore_image/img_5.jpg",
+  imgSrc: "assets/explore_image/img_8.jpg",
   title: "Insane V-shape Abs",
 );
 

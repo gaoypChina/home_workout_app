@@ -1,10 +1,9 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 import '../../helper/notification_helper.dart';
 import '../../pages/detail_input_page/detail_input_page.dart';
 import '../../pages/main/report_page/workout_report/workout_detail_report.dart';
@@ -22,12 +21,10 @@ import '../provider/subscription_provider.dart';
 import '../provider/theme_provider.dart';
 import '../provider/user_detail_provider.dart';
 import '../provider/weight_report_provider.dart';
-import '../widgets/connection_error_page.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
-import 'bloc_provider/connectivity_state_bloc.dart';
 import 'constants/app_theme.dart';
 
 Future<void> main() async {
@@ -38,10 +35,10 @@ Future<void> main() async {
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      systemNavigationBarDividerColor: Colors.transparent,
-      systemNavigationBarColor: Colors.black));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarDividerColor: Colors.transparent,
+        systemNavigationBarColor: Colors.black));
 
   runApp(Phoenix(child: MyApp()));
 }
@@ -90,50 +87,38 @@ class _MyAppState extends State<MyApp> {
                         ? snapShot.data ?? AdaptiveThemeMode.system
                         : AdaptiveThemeMode.system,
                     builder: (lightThemeData, darkThemeData) {
-                      return MultiBlocProvider(
-                        providers: [
-                          BlocProvider<ConnectivityCubit>(
-                            create: (context) => ConnectivityCubit(
-                              connectivity: Connectivity(),
-                            ),
-                          )
-                        ],
-                        child:
-                            BlocBuilder<ConnectivityCubit, ConnectivityState>(
-                                builder: (context, state) {
-                          return FutureBuilder(
-                              future: Provider.of<SubscriptionProvider>(context,
-                                      listen: false)
-                                  .setSubscriptionDetails(),
-                              builder: (context, snapshot) {
-                                return MaterialApp(
-                                  title: 'Home Workout',
-                                  darkTheme: darkThemeData,
-                                  theme: lightThemeData,
-                                  routes: {
-                                    '/': (ctx) => SplashPage(),
-                                    DetailInputPage.routeName: (ctx) =>
-                                        DetailInputPage(),
-                                    ReminderTab.routeName: (ctx) =>
-                                        ReminderTab(),
-                                    FAQPage.routeName: (ctx) => FAQPage(),
-                                    ConnectionErrorPage.routeName: (ctx) =>
-                                        ConnectionErrorPage(),
-                                    MainPage.routeName: (ctx) =>
-                                        MainPage(index: 0),
-                                    ProfileSettingPage.routeName: (ctx) =>
-                                        ProfileSettingPage(),
-                                    SoundSetting.routeName: (ctx) =>
-                                        SoundSetting(),
-                                    WorkoutDetailReport.routeName: (ctx) =>
-                                        WorkoutDetailReport(),
-                                    //  LoginPage.routeName: (ctx) => LoginPage()
-                                  },
-                                  debugShowCheckedModeBanner: false,
-                                );
-                              });
-                        }),
-                      );
+                      return FutureBuilder(
+                          future: Provider.of<SubscriptionProvider>(context,
+                              listen: false)
+                              .setSubscriptionDetails(),
+                          builder: (context, snapshot) {
+                            return MaterialApp(
+                              title: 'Home Workout',
+                              darkTheme: darkThemeData,
+                              theme: lightThemeData,
+                              localizationsDelegates: [
+                                MonthYearPickerLocalizations.delegate,
+                              ],
+                              routes: {
+                                '/': (ctx) => SplashPage(),
+                                DetailInputPage.routeName: (ctx) =>
+                                    DetailInputPage(),
+                                ReminderTab.routeName: (ctx) =>
+                                    ReminderTab(),
+                                FAQPage.routeName: (ctx) => FAQPage(),
+                                MainPage.routeName: (ctx) =>
+                                    MainPage(index: 0),
+                                ProfileSettingPage.routeName: (ctx) =>
+                                    ProfileSettingPage(),
+                                SoundSetting.routeName: (ctx) =>
+                                    SoundSetting(),
+                                WorkoutDetailReport.routeName: (ctx) =>
+                                    WorkoutDetailReport(),
+                                //  LoginPage.routeName: (ctx) => LoginPage()
+                              },
+                              debugShowCheckedModeBanner: false,
+                            );
+                          });
                     });
               });
         });

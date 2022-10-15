@@ -1,10 +1,21 @@
-import 'dart:developer';
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
+
+import '../../../constants/constant.dart';
+import '../../../enums/app_conection_status.dart';
+import '../../../helper/mediaHelper.dart';
+import '../../../helper/sp_helper.dart';
+import '../../../helper/sp_key_helper.dart';
+import '../../../pages/main/setting_page/contact_us_page/contact_us_page.dart';
+import '../../../pages/main/setting_page/faq_page.dart';
+import '../../../pages/main/setting_page/feedback_page.dart';
+import '../../../pages/main/setting_page/privacy_policy.dart';
 import '../../../pages/main/setting_page/profile_setting_page.dart';
 import '../../../pages/main/setting_page/reminder_screen.dart';
 import '../../../pages/main/setting_page/reset_progress.dart';
@@ -16,21 +27,9 @@ import '../../../pages/subscription_page/subscription_page.dart';
 import '../../../provider/auth_provider.dart';
 import '../../../provider/backup_provider.dart';
 import '../../../provider/connectivity_provider.dart';
-import '../../../widgets/loading_indicator.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
-
-import '../../../constants/constant.dart';
-import '../../../helper/mediaHelper.dart';
-import '../../../helper/sp_helper.dart';
-import '../../../helper/sp_key_helper.dart';
-import '../../../pages/main/setting_page/contact_us_page/contact_us_page.dart';
-import '../../../pages/main/setting_page/faq_page.dart';
-import '../../../pages/main/setting_page/feedback_page.dart';
-import '../../../pages/main/setting_page/privacy_policy.dart';
 import '../../../provider/subscription_provider.dart';
 import '../../../widgets/dialogs/connectivity_error_dialog.dart';
+import '../../../widgets/loading_indicator.dart';
 import '../../rate_my_app/rate_dialog_page.dart';
 import '../../rate_my_app/rate_my_app.dart';
 import '../../subscription_page/subscribed_page.dart';
@@ -88,7 +87,6 @@ class _SettingPageState extends State<SettingPage>
     name = await spHelper.loadString(spKey.name) ?? "User";
     lastSync = await spHelper.loadString(spKey.backupTime) ??
         DateTime.now().toIso8601String();
-    log(lastSync.toString() + " last sync");
   }
 
   initData() async {
@@ -187,26 +185,16 @@ class _SettingPageState extends State<SettingPage>
                       ? Theme.of(context).cardColor.withOpacity(.6)
                       : Colors.blueGrey.shade300.withOpacity(.1),
                   body: NestedScrollView(
+
                     controller: _scrollController,
                     headerSliverBuilder:
                         (BuildContext context, bool innerBoxIsScrolled) {
                       return <Widget>[
                         SliverAppBar(
+                       
                           automaticallyImplyLeading: false,
                           title: Row(
                             children: [
-                              // if (isShrink)
-                              //   CircleAvatar(backgroundColor: Theme.of(context).primaryColor,
-                              //     child: Text(
-                              //       "A",
-                              //       style:
-                              //           TextStyle(fontWeight: FontWeight.w500,fontSize: 22,color: Colors.white),
-                              //     ),
-                              //     radius: 22,
-                              //   ),
-                              // SizedBox(
-                              //   width: 12,
-                              // ),
                               Text(
                                 isShrink ? name : "",
                                 style: TextStyle(
@@ -230,7 +218,8 @@ class _SettingPageState extends State<SettingPage>
                               background: BackupDataCard(
                             lastSync: lastSync,
                             name: name,
-                            onSync: () async {
+                            onSync: ()
+                            async {
                               bool isConnected =
                                   await connectivityProvider.isNetworkConnected;
 
@@ -278,10 +267,16 @@ class _SettingPageState extends State<SettingPage>
                                   icon: Icons.person_outline_sharp,
                                   title: "Edit Profile",
                                   trailing: trailingIcon,
-                                  onPress: () => Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (builder) =>
-                                              ProfileSettingPage())),
+                                  onPress: () async {
+                                    await Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (builder) =>
+                                                ProfileSettingPage()));
+                                    name =
+                                        await spHelper.loadString(spKey.name) ??
+                                            "User";
+                                    setState(() {});
+                                  },
                                 ),
                                 getDivider(),
                                 CustomTile(
@@ -401,8 +396,7 @@ class _SettingPageState extends State<SettingPage>
                                             color: Theme.of(context)
                                                 .textTheme
                                                 .bodyText1!
-                                                .color!
-                                                .withOpacity(isDark ? .8 : .6),
+                                                .color,
                                           ),
                                           title: Text(
                                             "Keep screen ${enable ? "On" : "Off"}",
@@ -411,8 +405,7 @@ class _SettingPageState extends State<SettingPage>
                                               color: Theme.of(context)
                                                   .textTheme
                                                   .bodyText1!
-                                                  .color!
-                                                  .withOpacity(.8),
+                                                  .color,
                                             ),
                                           ),
                                         ),
@@ -488,8 +481,8 @@ class _SettingPageState extends State<SettingPage>
                                     icon: Icons.volume_up_outlined,
                                     trailing: trailingIcon,
                                     onPress: () async {
-                                      MediaHelper()
-                                          .speak("Did you Hear the test voice");
+                                      MediaHelper().readText(
+                                          "Did you Hear the test voice");
                                       bool? value = await showDialog(
                                           context: context,
                                           builder: (context) {
@@ -844,15 +837,14 @@ class CustomTile extends StatelessWidget {
         color: Theme.of(context)
             .textTheme
             .bodyText1!
-            .color!
-            .withOpacity(isDark ? .8 : .6),
+            .color
       ),
       onTap: () => onPress(),
       title: Text(
         title,
         style: TextStyle(
           fontWeight: FontWeight.w400,
-          color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
+          color: Theme.of(context).textTheme.bodyText1!.color,
         ),
       ),
       trailing: Padding(padding: EdgeInsets.only(right: 4), child: trailing),

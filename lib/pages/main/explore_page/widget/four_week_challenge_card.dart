@@ -3,7 +3,6 @@ import '../../../../pages/main/explore_page/four_week_challenges_page/four_week_
 
 class FourWeekChallengeCard extends StatelessWidget {
   const FourWeekChallengeCard({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,7 +23,7 @@ class FourWeekChallengeCard extends StatelessWidget {
                     return FourWeekChallengePage();
                   })),
               child: Container(
-                height: 150,
+                height: 160,
                 width: double.infinity,
                 padding: EdgeInsets.fromLTRB(12, 0, 12, 16),
                 decoration: BoxDecoration(

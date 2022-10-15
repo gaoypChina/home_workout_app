@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../../../../helper/sp_helper.dart';
 import '../../../../helper/sp_key_helper.dart';
-import '../../../../pages/main/explore_page/workout_setup_page/widget/get_prime_modal.dart';
+import '../widget/get_prime_bottom_modal.dart';
 import '../../../../provider/ads_provider.dart';
 import '../../../../provider/subscription_provider.dart';
 import 'package:provider/provider.dart';
@@ -85,14 +85,14 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage> {
           margin: EdgeInsets.only(right: 8, bottom: 10),
           padding: EdgeInsets.symmetric(horizontal: 9, vertical: 7),
           decoration: BoxDecoration(
-              color: Colors.blue.withOpacity(.1),
+              color: Colors.blue.withOpacity(.2),
               borderRadius: BorderRadius.all(Radius.circular(12))),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 icon,
-                color: isDark ? Colors.white70 : Colors.black.withOpacity(.6),
+                color: isDark ? Colors.white.withOpacity(.8) : Colors.black.withOpacity(.8),
               ),
               SizedBox(
                 width: 8,
@@ -103,7 +103,7 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage> {
                     fontWeight: FontWeight.w500,
                     fontSize: 15,
                     color:
-                        isDark ? Colors.white70 : Colors.black.withOpacity(.7)),
+                        isDark ? Colors.white.withOpacity(.8) : Colors.black.withOpacity(.8)),
               ),
               SizedBox(
                 width: 2,
@@ -184,10 +184,8 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage> {
               SizedBox(
                 height: 12,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: widget.header,
-              ),
+              widget.header,
+
               SizedBox(
                 height: 18,
               ),

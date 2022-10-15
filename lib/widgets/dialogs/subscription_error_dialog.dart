@@ -6,7 +6,7 @@ class SubscriptionErrorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Purchase Error"),
+      title: Text("Purchase Failed"),
       content: Text(
           "If your money detected and not able to enjoy prim feature then you can menage your subscription from subscription settings page or you can contact us."),
       actions: [

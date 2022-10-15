@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 
 import 'package:flutter/material.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 import '../../../../constants/constant.dart';
 import '../../../helper/sp_helper.dart';
 import '../../../helper/sp_key_helper.dart';
@@ -9,7 +10,6 @@ import '../../../models/weight_list_model.dart';
 import '../../../models/weight_model.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 import '../../detail_input_page/user_detail_widget/weight_picker.dart';
 
@@ -187,10 +187,15 @@ class _WeightChartState extends State<WeightChart> {
                                 backgroundColor: Colors.blue,
                                 primary: Colors.white),
                             onPressed: () async {
-                              DateTime? selectedMonth = await showMonthPicker(
-                                  lastDate: DateTime.now(),
-                                  context: context,
-                                  initialDate: initMonth);
+
+                              final selectedMonth = await showMonthYearPicker(
+
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2021),
+                                lastDate: DateTime.now(),
+                              );
+
                               if (selectedMonth == null) {
                                 return;
                               }

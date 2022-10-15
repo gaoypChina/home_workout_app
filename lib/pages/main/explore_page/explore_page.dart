@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../../pages/main/explore_page/explore_page_widget/fast_workout.dart';
-import '../../../pages/main/home_page/leading_widget.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:full_workout/pages/main/explore_page/widget/beginner_workout_challenges.dart';
+import 'package:full_workout/pages/main/explore_page/widget/body_focus_workout.dart';
+import 'package:full_workout/pages/main/explore_page/widget/daily_workout.dart';
+import 'package:full_workout/pages/main/explore_page/widget/discover_all_workout.dart';
+import 'package:full_workout/pages/main/explore_page/widget/discover_workout.dart';
+import 'package:full_workout/pages/main/explore_page/widget/fast_workout.dart';
+import 'package:full_workout/pages/main/explore_page/widget/four_week_challenge_card.dart';
+import 'package:full_workout/pages/main/explore_page/widget/picks_for_you_workout.dart';
+import 'package:full_workout/pages/main/explore_page/widget/strach_workout.dart';
 
-import 'explore_page_widget/1by1_workout_card.dart';
-import 'explore_page_widget/beginner_workout_challenges.dart';
-import 'explore_page_widget/body_focus_workout.dart';
-import 'explore_page_widget/discover_workout.dart';
-import 'explore_page_widget/four_week_challenge_card.dart';
-import 'explore_page_widget/picks_for_you_workout.dart';
-import 'explore_page_widget/featured_workout.dart';
-import 'explore_page_widget/strach_workout.dart';
+import '../home_page/leading_widget.dart';
+
 
 class ExplorePage extends StatefulWidget {
   final Function onBack;
@@ -26,10 +28,36 @@ class _ExplorePageState extends State<ExplorePage> {
     buildDivider() {
       return Container(
         margin: EdgeInsets.only(top: 16, bottom: 12),
-        color: Colors.grey.withOpacity(.2),
+        color: Colors.grey.withOpacity(.15),
         height: 14,
       );
     }
+
+List<Widget> sections = [
+  SizedBox(
+    height: 12,
+  ),
+  FourWeekChallengeCard(),
+  buildDivider(),
+  PicksForYouWorkout(),
+  buildDivider(),
+  DailyWorkout(),
+  buildDivider(),
+  BeginnerWorkoutSection(),
+  buildDivider(),
+  DiscoverWorkout(),
+  buildDivider(),
+  StretchWorkout(),
+  buildDivider(),
+  FastWorkout(),
+  buildDivider(),
+  BodyFocusWorkout(),
+  buildDivider(),
+  DiscoverAllWorkouts(),
+  SizedBox(
+    height: 10,
+  )
+];
 
     return WillPopScope(
       onWillPop: () => widget.onBack(),
@@ -39,43 +67,43 @@ class _ExplorePageState extends State<ExplorePage> {
           automaticallyImplyLeading: false,
           actions: getLeading(context),
           titleSpacing: 14,
-          title: Text(
-            "Explore",
-          ),
+          title: Text("Explore"),
           centerTitle: false,
         ),
-        body: SingleChildScrollView(
-            //  padding: EdgeInsets.all(14),
+        body:
+        AnimationLimiter(
+          child: ListView.builder(
+            shrinkWrap: true,
             physics: BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 12,
+            itemCount: sections.length,
+            itemBuilder: (BuildContext context, int index) {
+              return AnimationConfiguration.staggeredList(
+                position: index,
+                duration: const Duration(milliseconds: 605),
+                child: SlideAnimation(
+                  verticalOffset: 50.0,
+                  child: FadeInAnimation(
+                    child: sections[index],
+                  ),
                 ),
-                FourWeekChallengeCard(),
-                buildDivider(),
-                PicksForYouWorkout(),
-                buildDivider(),
-                BeginnerWorkoutSection(),
-                buildDivider(),
-                FeaturedWorkout(title: "Sleep"),
-                buildDivider(),
-                HardCoreWorkout(),
-                buildDivider(),
-                StretchWorkout(),
-                buildDivider(),
-                FastWorkout(),
-                buildDivider(),
-                BodyFocusWorkout(),
-                buildDivider(),
-                TopPicksSection(),
-                SizedBox(
-                  height: 10,
-                )
-              ],
-            )),
+              );
+            },
+          ),
+        ),
       ),
+       // AnimationLimiter(
+          // child: SingleChildScrollView(
+          //     physics: BouncingScrollPhysics(),
+          //     child:
+          //
+          //     Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //
+          //       ],
+          //     )),
+      //  ),
+    //  ),
     );
   }
 }

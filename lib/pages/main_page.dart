@@ -1,10 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../pages/main/home_page/home_page.dart';
 
+import '../../../pages/main/home_page/home_page.dart';
 import 'main/explore_page/explore_page.dart';
 import 'main/report_page/report_page.dart';
 import 'main/setting_page/setting_screen.dart';
@@ -23,6 +21,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int? currentIndex = 0;
+
   onBack() {
     setState(() {
       currentIndex = 0;
@@ -38,28 +37,21 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .color!
-                      .withOpacity(.4),
-                  blurRadius: 2,
-                  spreadRadius: .5,
-                  offset: Offset(2, 2)),
-            ],
-          ),
-          child: BottomNavigationBarTheme(
-            data: BottomNavigationBarThemeData(
-                elevation: .5,
-                backgroundColor: Theme.of(context).bottomAppBarColor),
-            child: BottomNavigationBar(
+
+        bottomNavigationBar:
+
+        Column(
+          mainAxisSize: MainAxisSize.min,
+
+          children: [
+            Container(height: 1,
+            color: Colors.grey.withOpacity(.25),),
+            BottomNavigationBar(
+              elevation: 2,
+
+              backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
               selectedLabelStyle:
                   TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
-              showSelectedLabels: true,
               unselectedItemColor: Theme.of(context)
                   .textTheme
                   .bodyText1!
@@ -68,8 +60,8 @@ class _MainPageState extends State<MainPage> {
               unselectedLabelStyle:
                   TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
               selectedItemColor: Theme.of(context).primaryColor,
-              iconSize: 20,
-              showUnselectedLabels: true,
+              iconSize: 22,
+
               currentIndex: currentIndex ?? 0,
               items: [
                 BottomNavigationBarItem(
@@ -88,16 +80,17 @@ class _MainPageState extends State<MainPage> {
                     activeIcon: Icon(EvaIcons.grid),
                     label: "Explore"),
                 BottomNavigationBarItem(
-                    icon: Icon(FontAwesomeIcons.chartBar),
-                    activeIcon: Icon(FontAwesomeIcons.chartBar),
-                    label: "Report"),
-                BottomNavigationBarItem(
                     icon: Icon(
                       EvaIcons.pieChartOutline,
                     ),
                     activeIcon: Icon(
                       EvaIcons.pieChart,
                     ),
+                    label: "Report"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.insert_chart_outlined),
+                    activeIcon: Icon(Icons.insert_chart),
+
                     label: "Weight"),
                 BottomNavigationBarItem(
                     icon: Icon(
@@ -114,7 +107,7 @@ class _MainPageState extends State<MainPage> {
                 });
               },
             ),
-          ),
+          ],
         ),
         body: getIndex());
   }

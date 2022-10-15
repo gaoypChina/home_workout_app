@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:full_workout/pages/main/explore_page/widget/workout_header.dart';
 
-import '../../../../database/explore_page_workout/picked_workout_database.dart';
+import '../../../../database/explore_page_workout/discover_workout.dart';
 import '../../../../models/explore_workout_model.dart';
 import '../../../../widgets/prime_icon.dart';
 import '../workout_setup_page/workout_setup_page.dart';
 
-class HardCoreWorkout extends StatelessWidget {
-  const HardCoreWorkout({Key? key}) : super(key: key);
+class DiscoverWorkout extends StatelessWidget {
+  const DiscoverWorkout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class HardCoreWorkout extends StatelessWidget {
         Padding(
             padding: EdgeInsets.only(left: 12),
             child: Text(
-              "Extreme Workout",
+              "Discover Workout",
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
@@ -36,7 +37,7 @@ class HardCoreWorkout extends StatelessWidget {
                 SizedBox(
                   width: 12,
                 ),
-                ...pickedWorkoutList.map((ExploreWorkout workout) {
+                ...discoverWorkoutList.map((ExploreWorkout workout) {
                   return Padding(
                     padding: EdgeInsets.only(right: 18),
                     child: InkWell(
@@ -45,11 +46,8 @@ class HardCoreWorkout extends StatelessWidget {
                             .push(MaterialPageRoute(builder: (builder) {
                           return WorkoutSetupPage(
                             workout: workout,
-                            header: Stack(
-                              children: [
-                                Image.asset(workout.imgSrc),
-                                Positioned(right: 8, top: 4, child: PrimeIcon())
-                              ],
+                            header:  ExploreWorkoutHeader(
+                              workoutType: workout.workoutType,title: workout.title,imgSrc: workout.imgSrc,
                             ),
                           );
                         }));
@@ -73,8 +71,9 @@ class HardCoreWorkout extends StatelessWidget {
                           Text(
                             workout.title,
                             style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 16,fontWeight: FontWeight.w500,
                                 letterSpacing: 0.4,
+
                                 color: Theme.of(context)
                                     .textTheme
                                     .bodyText1!
@@ -87,7 +86,7 @@ class HardCoreWorkout extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                "30 Sec",
+                                workout.getTime.toString() +" Min",
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .textTheme

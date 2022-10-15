@@ -172,6 +172,7 @@ class FourWeekChallengePage extends StatelessWidget {
                           )),
                       Spacer(
                         flex: 1,
+
                       ),
                     ],
                   ),

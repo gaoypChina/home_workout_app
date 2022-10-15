@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:full_workout/helper/mediaHelper.dart';
 import '../../../pages/main/report_page/workout_report/workout_detail_report.dart';
 import '../../../pages/main/setting_page/reminder_screen.dart';
 import '../../../widgets/prime_button.dart';
@@ -38,8 +39,12 @@ List<Widget> getLeading(BuildContext context) {
         ? PrimeButton()
         : Row(
             children: [
-              // Image.network("https://cdn-icons.flaticon.com/png/512/2278/premium/2278049.png?token=exp=1654648220~hmac=3ce5606aa4fcc1316c40746d5e69b263",
-              // width: 23,color: Colors.white,),
+
+
+              SizedBox(
+                width: 8,
+              ),
+
               buildButton(
                 icon: Icons.calendar_today_outlined,
                 onTap: () {

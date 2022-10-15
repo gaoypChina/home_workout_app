@@ -27,6 +27,10 @@ var lightTheme = ThemeData(
     thickness: .8,
     color: Colors.grey.shade200.withOpacity(.7),
   ),
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    selectedLabelStyle: TextStyle(fontSize: 40),
+    unselectedLabelStyle:  TextStyle(fontSize: 40),
+  ),
   elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
     primary: lightPrimaryColor,
@@ -48,17 +52,6 @@ var lightTheme = ThemeData(
   radioTheme: RadioThemeData(
     fillColor: MaterialStateProperty.all(Colors.blue.shade700),
   ),
-  // inputDecorationTheme: InputDecorationTheme(
-  //   filled: true,
-  //   fillColor: Colors.white,
-  //   enabledBorder: OutlineInputBorder(
-  //       borderRadius: BorderRadius.circular(8),
-  //       borderSide: BorderSide(color: Colors.grey)),
-  //   contentPadding: EdgeInsets.symmetric(horizontal: 16),
-  //   focusedBorder: OutlineInputBorder(
-  //       borderRadius: BorderRadius.circular(8),
-  //       borderSide: BorderSide(color: Colors.blue.shade700)),
-  // )
 );
 
 var darkTheme = ThemeData(

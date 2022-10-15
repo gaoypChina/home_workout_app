@@ -12,10 +12,11 @@ class ConfirmVoiceDialog extends StatelessWidget {
         style: TextStyle(fontSize: 16, letterSpacing: 1.3),
       ),
       actions: [
-        TextButton(
+        ElevatedButton(
             onPressed: () => Navigator.pop(context, false), child: Text("No")),
-        TextButton(
+        ElevatedButton(
             onPressed: () => Navigator.pop(context, true), child: Text("Yes")),
+        SizedBox(width: 8,)
       ],
     );
   }
@@ -26,13 +27,13 @@ class OpenDeviceTTSSettingsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        "Open TTS Setting",
+        "Open TTS Setting?",
         style: TextStyle(fontSize: 16, letterSpacing: 1.3),
       ),
       actions: [
-        TextButton(
+        ElevatedButton(
             onPressed: () => Navigator.of(context).pop(), child: Text("No")),
-        TextButton(
+        ElevatedButton(
             onPressed: () async {
               try {
                 AndroidIntent intent = AndroidIntent(

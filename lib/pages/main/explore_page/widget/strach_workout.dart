@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../../../pages/main/explore_page/explore_page_widget/workout_header.dart';
+import 'package:full_workout/pages/main/explore_page/widget/workout_header.dart';
 
-import '../../../../database/explore_page_workout/beginner_workout.dart';
+import '../../../../database/explore_page_workout/stretch_workout.dart';
 import '../workout_setup_page/workout_setup_page.dart';
 
-class BeginnerWorkoutSection extends StatelessWidget {
-  const BeginnerWorkoutSection({Key? key}) : super(key: key);
+class StretchWorkout extends StatelessWidget {
+  const StretchWorkout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class BeginnerWorkoutSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 12.0),
           child: Text(
-            "Beginner Workout",
+            "Stretching Workout",
             style: TextStyle(
                 fontSize: 18, fontWeight: FontWeight.w500, letterSpacing: 1.2),
           ),
@@ -32,7 +32,7 @@ class BeginnerWorkoutSection extends StatelessWidget {
               SizedBox(
                 width: 10,
               ),
-              ...beginnerWorkoutList.map((workout) => Padding(
+              ...stretchWorkoutList.map((workout) => Padding(
                     padding: EdgeInsets.only(right: 10),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
@@ -41,10 +41,10 @@ class BeginnerWorkoutSection extends StatelessWidget {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (builder) => WorkoutSetupPage(
                                     workout: workout,
-                                    header: AnimatedWorkoutHeader(
-                                      color: workout.color,
+                                    header: ExploreWorkoutHeader(
                                       title: workout.title,
                                       imgSrc: workout.imgSrc,
+                                      workoutType: workout.workoutType,
                                     )))),
                         child: Card(
                           elevation: 0,

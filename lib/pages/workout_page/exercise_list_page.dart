@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import '../../database/workout_list.dart';
 import '../../helper/sp_helper.dart';
@@ -33,7 +34,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   late ScrollController _scrollController;
   late List<String> items;
   late TabController tabContoller;
-  double padValue = 0;
   int pushUpIndex = 1;
   bool isLoading = true;
   bool lastStatus = true;
@@ -92,13 +92,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
     return length + 6;
   }
 
-  getPadding() async {
-    Future.delayed(Duration(milliseconds: 100)).then((value) {
-      setState(() {
-        padValue = 1;
-      });
-    });
-  }
 
   getCountDown() async {
     countDownTime = await spHelper.loadDouble(spKey.countdownTime) ?? 10;
@@ -138,7 +131,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   loadData() async {
     await getCountDown();
     await getPushUpLevel();
-    await getPadding();
     getWorkoutList();
     getTitle();
     getCoverImage();
@@ -260,85 +252,91 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                   body: TabBarView(
                     controller: tabContoller,
                     children: [
-                      ListView.builder(
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              if (index == 0)
+                      Column(
+                        children: [
+                          Container(
+                            color: Colors.blue.withOpacity(.1),
+                            padding:
+                                EdgeInsets.only(left: 20, top: 12, bottom: 12),
+                            child: Row(
+                              children: [
                                 Container(
-                                  color: Colors.blue.withOpacity(.1),
-                                  padding: EdgeInsets.only(
-                                      left: padValue * 20,
-                                      right: padValue,
-                                      top: padValue * 12,
-                                      bottom: padValue * 12),
-                                  child: Row(
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 5,
-                                        backgroundColor:
-                                            Colors.red.withOpacity(.9),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        widget.workOutList.length.toString() +
-                                            " Workouts",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        width: 30,
-                                      ),
-                                      CircleAvatar(
-                                        radius: 5,
-                                        backgroundColor:
-                                            Colors.orange.withOpacity(.9),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        getTime().toString() + " Minutes",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 15),
-                                      ),
-                                    ],
-                                  ),
+                                    height: 16,
+                                    width: 5,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12)),
+                                        color: Colors.red)),
+                                SizedBox(
+                                  width: 8,
                                 ),
-                              if (index == 0)
+                                Text(
+                                  widget.workOutList.length.toString() +
+                                      " Workouts",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 15),
+                                ),
+                                SizedBox(
+                                  width: 30,
+                                ),
                                 Container(
-                                  color: Colors.grey.withOpacity(.2),
-                                  height: 1,
+                                    height: 16,
+                                    width: 5,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12)),
+                                        color: Colors.green)),
+                                SizedBox(
+                                  width: 8,
                                 ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              AnimatedPadding(
-                                duration: Duration(milliseconds: 1000),
-                                curve: Curves.easeOutCubic,
-                                padding: EdgeInsets.only(
-                                    top: padValue * 1,
-                                    left: padValue * 1,
-                                    right: padValue * 1),
-                                child: CustomExerciseCard(
-                                  index: index,
-                                  workOutList: widget.workOutList,
-                                  time: rapList[index],
+                                Text(
+                                  getTime().toString() + " Minutes",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 15),
                                 ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            color: Colors.grey.withOpacity(.1),
+                            height: 1,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Expanded(
+                            child: AnimationLimiter(
+                              child: ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                padding: EdgeInsets.only(bottom: 100),
+                                itemCount: widget.workOutList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return AnimationConfiguration.staggeredList(
+                                    position: index,
+                                    duration: const Duration(milliseconds: 605),
+                                    child: SlideAnimation(
+                                      verticalOffset: 50.0,
+                                      child: FadeInAnimation(
+                                        child: Column(
+                                          children: [
+                                            CustomExerciseCard(
+                                              index: index,
+                                              workOutList: widget.workOutList,
+                                              time: rapList[index],
+                                            ),
+                                            Divider(),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
-                              Divider(
-                                thickness: 1,
-                              ),
-                            ],
-                          );
-                        },
-                        padding: EdgeInsets.only(bottom: 100),
-                        physics: BouncingScrollPhysics(),
-                        itemCount: widget.workOutList.length,
+                            ),
+                          ),
+                        ],
                       )
                     ],
                   ),

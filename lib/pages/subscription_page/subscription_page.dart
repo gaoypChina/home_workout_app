@@ -172,11 +172,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                           ListView(
                             physics: BouncingScrollPhysics(),
                             children: [
-                              SubscriptionHeader(),
-                              buildDivider(),
-
+                              SizedBox(
+                                height: 12,
+                              ),
                               SubscriptionPlan(),
-
+                              buildDivider(),
+                              SubscriptionHeader(),
                               buildDivider(),
 
                               UserReview(),

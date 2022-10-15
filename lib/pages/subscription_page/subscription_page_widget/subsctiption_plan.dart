@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../../../constants/constant.dart';
 import '../../../provider/subscription_provider.dart';
-import 'package:provider/provider.dart';
 
 class SubscriptionPlan extends StatelessWidget {
   const SubscriptionPlan({Key? key}) : super(key: key);
@@ -51,10 +52,12 @@ class SubscriptionPlan extends StatelessWidget {
                               : Colors.transparent,
                           borderRadius: BorderRadius.all(Radius.circular(16)),
                           border: Border.all(
-                              width: 1,
+                              width: 2,
                               color: isSelected
                                   ? Theme.of(context).primaryColor
-                                  : Colors.blue.withOpacity(.5))),
+                                  : Theme.of(context)
+                                      .primaryColor
+                                      .withOpacity(.2))),
                       child: Row(
                         children: [
                           SizedBox(
@@ -74,7 +77,9 @@ class SubscriptionPlan extends StatelessWidget {
                                       fontSize: 12,
                                       color: isSelected
                                           ? Colors.white
-                                          : Colors.blue,
+                                          : Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!.color!.withOpacity(.8),
                                       fontWeight: FontWeight.w600),
                                 ),
                                 SizedBox(
@@ -90,10 +95,9 @@ class SubscriptionPlan extends StatelessWidget {
                                           : Theme.of(context)
                                               .textTheme
                                               .bodyText1!
-                                              .color!
-                                              .withOpacity(.8),
+                                              .color,
                                       fontSize: 22,
-                                      fontWeight: FontWeight.w600),
+                                      fontWeight: FontWeight.w500),
                                 ),
                                 SizedBox(
                                   height: 8,
@@ -108,8 +112,7 @@ class SubscriptionPlan extends StatelessWidget {
                                             ? Colors.white
                                             : Theme.of(context)
                                                 .textTheme
-                                                .bodyText1!
-                                                .color!,
+                                                .bodyText1!.color!.withOpacity(.8),
                                       ),
                                     ),
                                   ],
@@ -127,8 +130,10 @@ class SubscriptionPlan extends StatelessWidget {
                                       color: Colors.white,
                                     )
                                   : Icon(
-                                      Icons.circle,
-                                      color: Colors.blue.withOpacity(.2),
+                                Icons.circle,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!.color!.withOpacity(.2),
                                     )),
                         ],
                       ),
@@ -141,7 +146,7 @@ class SubscriptionPlan extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(12)),
-                            color: isSelected ? Colors.amber : Colors.amber,
+                            color:  Colors.amber,
                           ),
                           padding:
                               EdgeInsets.symmetric(horizontal: 12, vertical: 6),

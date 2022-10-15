@@ -128,9 +128,9 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
     setState(() {
       isLoading = true;
     });
-    log("cp1");
+
     await _readWorkoutData();
-    log("cp2");
+
     _getWorkout();
     _getWorkoutData();
     setState(() {
@@ -294,7 +294,57 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
         ),
         body: isLoading == true
             ? Center(child: CircularProgressIndicator())
-            : ListView.builder(
+            :
+            workoutModelList.length == 0 ?
+                Column(children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: TableCalendar(
+                      firstDay: DateTime(2021, 01, 01),
+                      lastDay: DateTime.now(),
+                      focusedDay: _focusedDay,
+                      sixWeekMonthsEnforced: true,
+                      calendarFormat: _calendarFormat,
+                      rangeSelectionMode: _rangeSelectionMode,
+                      availableGestures:
+                      AvailableGestures.horizontalSwipe,
+                      eventLoader: (DateTime event) {
+                        if (calenderEvents[DateTime(
+                            event.year, event.month, event.day)] ==
+                            null) {
+                          return [];
+                        } else {
+                          List? temp = calenderEvents[DateTime(
+                              event.year, event.month, event.day)];
+                          return temp ?? [];
+                        }
+                      },
+                      startingDayOfWeek: StartingDayOfWeek.monday,
+                      daysOfWeekStyle: DaysOfWeekStyle(),
+                      calendarStyle: CalendarStyle(
+                          todayDecoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(34))),
+                          markerDecoration: BoxDecoration(
+                              color: Colors.blue.shade200,
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(12)))),
+                      onFormatChanged: (format) {
+                        if (_calendarFormat != format) {
+                          setState(() {
+                            _calendarFormat = format;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+
+
+                ],)
+
+                :
+        ListView.builder(
                 physics: BouncingScrollPhysics(),
                 itemCount: workoutModelList.length,
                 itemBuilder: (context, index) {
@@ -315,13 +365,10 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                             availableGestures:
                                 AvailableGestures.horizontalSwipe,
                             eventLoader: (DateTime event) {
-                              log("event : " +
-                                  DateTime.parse(event.toIso8601String())
-                                      .toString());
+
                               if (calenderEvents[DateTime(
                                       event.year, event.month, event.day)] ==
                                   null) {
-                                log("inside null");
                                 return [];
                               } else {
                                 List? temp = calenderEvents[DateTime(

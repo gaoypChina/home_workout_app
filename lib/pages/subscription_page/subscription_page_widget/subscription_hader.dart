@@ -42,9 +42,7 @@ class _SubscriptionHeaderState extends State<SubscriptionHeader> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 16,
-        ),
+
         Padding(
           padding: const EdgeInsets.only(left: 18.0),
           child: Text(

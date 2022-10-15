@@ -23,7 +23,6 @@ class BackupDataCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    var backupProvider = Provider.of<BackupProvider>(context);
     var authProvider = Provider.of<AuthProvider>(context);
 
     String getParsedTime({required String dateTime}) {
@@ -56,6 +55,7 @@ class BackupDataCard extends StatelessWidget {
                 ),
                 InkWell(
                     onTap: () async {
+                      var backupProvider = Provider.of<BackupProvider>(context);
                       bool isDisabled = backupProvider.connectionStatus ==
                               AppConnectionStatus.loading ||
                           authProvider.connectionStatus ==
@@ -70,7 +70,7 @@ class BackupDataCard extends StatelessWidget {
                           isDismissible: !isDisabled,
                           context: context,
                           builder: (context) {
-                            return _DataSyncModal(
+                            return DataSyncModal(
                               userName: name,
                               onSync: onSync,
                             );
@@ -147,11 +147,11 @@ class BackupDataCard extends StatelessWidget {
   }
 }
 
-class _DataSyncModal extends StatelessWidget {
+class DataSyncModal extends StatelessWidget {
   final String userName;
   final Function onSync;
 
-  const _DataSyncModal({Key? key, required this.userName, required this.onSync})
+  const DataSyncModal({Key? key, required this.userName, required this.onSync})
       : super(key: key);
 
   @override

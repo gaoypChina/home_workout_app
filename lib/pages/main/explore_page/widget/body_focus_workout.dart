@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../database/explore_page_workout/export_workout.dart';
-import '../../../../enums/workout_type.dart';
-import '../../../../models/explore_workout_card_model.dart';
+import '../../../../models/explore_workout_model.dart';
 import '../body_focus_workout_page/body_focus_workout_page.dart';
 
 class BodyFocusWorkout extends StatelessWidget {
@@ -10,35 +9,47 @@ class BodyFocusWorkout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<ExploreWorkoutCardModel> _challenges = [
-      ExploreWorkoutCardModel(
-          workoutType: WorkoutType.Beginner,
-          workoutList: [],
-          description: [],
-          title: "4 Day Challenge",
+    List<BodyFocusWorkoutModel> _challenges = [
+      BodyFocusWorkoutModel(
+          workoutList: ExportWorkout().chestWorkoutList,
+          title: "Chest Workout",
           imgSrc: "assets/icons/push-up.png",
-          color: Colors.blueGrey),
-      ExploreWorkoutCardModel(
-          workoutType: WorkoutType.Beginner,
-          workoutList: [],
-          description: [],
-          title: "Plack Challenge",
+          coverImg: "assets/explore_image/img_8.jpg",
+          color: Colors.blueGrey,
+         description: [
+           "Exercises for chest results in building a bigger and wider chest that tapers into a narrow waist, offering you exactly what you are looking for through your fitness routine.",
+           "Exercises for chest, when performed regularly and in the right way, trains the deltoids and introduces a healthy balance of muscles."
+         ]),
+      BodyFocusWorkoutModel(
+          workoutList: ExportWorkout().buttAndLesWorkoutList,
+          title: "Butt & Legs",
+          coverImg: "assets/explore_image/img_8.jpg",
           imgSrc: "assets/icons/exercises.png",
-          color: Colors.redAccent),
-      ExploreWorkoutCardModel(
-          workoutType: WorkoutType.Beginner,
-          workoutList: [],
-          description: [],
-          title: "Push-up Challenge",
+          color: Colors.redAccent,
+          description: [
+            "Legs are the pillars for a healthy body and training them should be a top priority for overall physique and health.",
+            "The power generated from your lower half is essential for nearly every sport. A well-developed lower body will allow you to exert a maximal amount of force in a minimal amount of time, which in turn makes you faster and stronger.",
+          ]),
+      BodyFocusWorkoutModel(
+          workoutList: ExportWorkout().armsAndShoulderWorkoutList,
+          title: "Arms & Shoulder",
+          coverImg: "assets/explore_image/img_8.jpg",
           imgSrc: "assets/icons/lunges.png",
-          color: Colors.teal),
-      ExploreWorkoutCardModel(
-          workoutType: WorkoutType.Beginner,
-          workoutList: [],
-          description: [],
-          title: "Full Body Challenge",
+          color: Colors.teal,
+          description: ["The shoulder muscles are responsible for maintaining the widest range of motion of any joint in your body.",
+            "Strong arms and shoulder can help you with everyday tasks such as lifting heavy objects or playing sports"]),
+      BodyFocusWorkoutModel(
+          workoutList: ExportWorkout().sixPackAbsWorkoutList,
+          title: "Six Pack Abs",
+          coverImg: "assets/explore_image/img_8.jpg",
           imgSrc: "assets/icons/fitness.png",
-          color: Colors.pinkAccent),
+          color: Colors.brown,
+          description: [
+            "The abdominal muscles contract and force the diaphragm upwards therefore providing further power to empty your lungs. Stronger abdominals will give you the ability to run faster and for longer periods of time.",
+            "Strong core muscles are also important for athletes, such as runners, as weak core muscles can lead to more fatigue, less endurance and injuries."
+          ]
+
+         ),
     ];
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
@@ -61,7 +72,7 @@ class BodyFocusWorkout extends StatelessWidget {
         mainAxisSpacing: 8.0,
         crossAxisSpacing: 8.0,
         children: [
-          ..._challenges.map((e) => Card(
+          ..._challenges.map((workout) => Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
@@ -72,9 +83,7 @@ class BodyFocusWorkout extends StatelessWidget {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (builder) {
                         return BodyFocusWorkoutPage(
-                          title: "Body Focus Workout",
-                          imgSrc: "assets/home_cover/1.jpg",
-                          workoutList: bodyFocusList,
+                          workoutModel: workout,
                         );
                       }));
                     },
@@ -85,8 +94,8 @@ class BodyFocusWorkout extends StatelessWidget {
                               color: Colors.blue,
                               gradient: LinearGradient(
                                   colors: [
-                                    e.color.withOpacity(.6),
-                                    e.color.withOpacity(.8),
+                                    workout.color.withOpacity(.6),
+                                    workout.color.withOpacity(.8),
                                   ],
                                   begin: Alignment.topRight,
                                   end: Alignment.bottomLeft,
@@ -96,7 +105,7 @@ class BodyFocusWorkout extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.bottomLeft,
                             child: Text(
-                              e.title,
+                              workout.title,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -113,10 +122,10 @@ class BodyFocusWorkout extends StatelessWidget {
                                     borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(30),
                                         bottomRight: Radius.circular(0)),
-                                    color: e.color.withOpacity(.8)),
+                                    color: workout.color.withOpacity(.8)),
                                 height: 70,
                                 child: Image.asset(
-                                  e.imgSrc,
+                                  workout.imgSrc,
                                 )))
                       ],
                     ),
@@ -127,4 +136,21 @@ class BodyFocusWorkout extends StatelessWidget {
       )
     ]);
   }
+}
+
+class BodyFocusWorkoutModel {
+  final List<ExploreWorkout> workoutList;
+  final Color color;
+  final String imgSrc;
+  final String title;
+  final String coverImg;
+  final List<String> description;
+
+  BodyFocusWorkoutModel(
+      {required this.workoutList,
+      required this.color,
+      required this.imgSrc,
+      required this.title,
+      required this.coverImg,
+      required this.description});
 }

@@ -55,8 +55,12 @@ class _ResetProgressDialogState extends State<ResetProgressDialog> {
                 Navigator.of(context).pop();
               },
               child: Text("Yes")),
-          TextButton(onPressed: () {}, child: Text("No")),
+          ElevatedButton(onPressed: () {
+            Navigator.of(context).pop();
+          }, child: Text("No")),
+          SizedBox(width: 8,)
         ],
+
       ),
     );
   }

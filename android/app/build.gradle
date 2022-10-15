@@ -36,6 +36,10 @@ if (keystorePropertiesFile.exists()) {
 android {
     compileSdkVersion 31
 
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -78,7 +82,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     def billing_version = "4.0.0"
     implementation "com.android.billingclient:billing:$billing_version"
-    implementation 'com.google.android.gms:play-services-ads:20.6.0'
-
+    implementation 'com.google.android.gms:play-services-ads:21.1.0'
+    implementation platform('com.google.firebase:firebase-bom:30.3.1')
+    implementation 'com.google.firebase:firebase-analytics'
 }
 apply plugin: 'com.google.gms.google-services'

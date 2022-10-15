@@ -26,7 +26,6 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
           showDialog(
               context: context,
               builder: (context) => WorkoutDetailDialog(
-                    rapCount: widget.time,
                     workoutList: widget.workOutList,
                     index: widget.index,
                   ));
@@ -65,7 +64,7 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                       child: Text(
                         item.title,
                         style: TextStyle(
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w500,
                           fontSize: 18,
                         ),
                       ),

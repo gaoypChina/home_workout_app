@@ -72,8 +72,9 @@ class AuthProvider with ChangeNotifier {
       final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
       await FirebaseAuth.instance.signInWithCredential(credential);
-      await navigateToNextPage(context: context);
       await SpHelper().saveBool(SpKey().authByGoogle, true);
+      await navigateToNextPage(context: context);
+
       _constants.getToast("User Login Successfully");
     } catch (e) {
       log("error while login with google: $e");

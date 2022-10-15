@@ -137,24 +137,6 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
       );
     }
 
-    _buildExercise({required String title, required String subtitle}) {
-      return Expanded(
-          child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            subtitle,
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w500, fontSize: 18),
-          ),
-          Text(
-            title,
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w500, fontSize: 16),
-          ),
-        ],
-      ));
-    }
 
     return Scaffold(
       bottomNavigationBar: isEditOn
@@ -168,8 +150,10 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
                   setState(() {
                     isLoading = true;
                   });
+                  await   provider.saveLocalData();
+                  await   provider.getLocalData();
                   await Future.delayed(Duration(seconds: 1));
-                  provider.saveLocalData();
+
                   Constants().getToast("Profile updated successfully");
                   Navigator.of(context).pop();
                 },

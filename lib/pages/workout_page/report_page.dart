@@ -5,6 +5,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:full_workout/pages/main_page.dart';
 import '../../constants/constant.dart';
 import '../../helper/recent_workout_db_helper.dart';
 import '../../helper/sp_helper.dart';
@@ -133,7 +134,11 @@ class _MyAppState extends State<ReportScreen> {
   }
 
   _onNext() {
-    Navigator.of(context).pushReplacementNamed(
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context)=>
+      MainPage(index: 0),)
+    );
+    Navigator.of(context).pushNamed(
       WorkoutDetailReport.routeName,
     );
   }

@@ -112,7 +112,8 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
             );
           },
         ),
-        TextButton(
+        SizedBox(width: 8,),
+        ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text("Cancel".toUpperCase())),
       ],

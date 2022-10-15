@@ -451,7 +451,7 @@ Workout jumpingSquats = Workout(
   advanceRap: 14,
   imageSrc: 'assets/all-workouts/jumpingSquats.gif',
 );
-Workout wallSit = Workout(
+Workout wallUp = Workout(
     title: 'Wall Sit',
     steps: [
       'Make sure your back is flat against the wall.',
@@ -465,7 +465,7 @@ Workout wallSit = Workout(
     showTimer: true,
     duration: 30,
     imageSrc: 'assets/all-workouts/wallUp.gif');
-Workout leftQuadStretch = Workout(
+Workout quadStretchLeft = Workout(
   title: 'Left Quad Stretch',
   steps: [
     'Stand up tall and shift your weight to the right leg.',
@@ -477,7 +477,7 @@ Workout leftQuadStretch = Workout(
   duration: 30,
   imageSrc: 'assets/all-workouts/quadStretchWithWallLeft.png',
 );
-Workout rightQuadStretch = Workout(
+Workout quadStretchright = Workout(
   title: 'Right Quad Stretch',
   steps: [
     'Stand up tall and shift your weight to the left leg.',
@@ -1640,7 +1640,7 @@ Workout shoulderStretch = Workout(
   steps: [
     'Bring one arm across your upper body and hold it straight.',
     'Grasp the elbow with the other arm and gently pull toward your chest.',
-    'Hold for 5to 10 seconds and repeat on the other side.',
+    'Hold for 5 to 10 seconds and repeat on the other side.',
   ],
   videoLink:
       'https://www.youtube.com/watch?v=KNfqxl7jkiU&ab_channel=NHSAyrshire%26Arran',
@@ -1727,8 +1727,91 @@ Workout spiderManPushUps = Workout(
   advanceRap: 16,
 );
 
+/// new workouts
+Workout forwardBend = Workout(
+    title: "Forward Bend",
+    imageSrc: "assets/all-workouts/forward_bend.png",
+    steps: [
+      "Stand up tall and bend forward by rotating your hip joints.",
+      "Keep your knees straight and place your palms on the floor, or hold the back of your ankles.",
+      "Stay in standing forward bend pose for 30 seconds.",
+    ],
+    videoLink: "https://www.youtube.com/watch?v=WklJNYaayP8",
+    showTimer: true,
+    duration: 30);
+
+Workout crossTouchAndReach = Workout(
+    title: "Cross Touch And Reach",
+    imageSrc: "assets/all-workouts/crossTouchAndReach.gif",
+    steps: [
+      "At shoulder height, extend your arms to your right sides.",
+      "Using your left hand, touch your right foot or get as close as you can and switch sides.",
+      "During bending, exhale and inhale when rising.",
+    ],
+    videoLink: "https://www.youtube.com/watch?v=_Q8gUutHiCQ",
+    showTimer: true,
+    duration: 30);
+
+Workout seatedSideBendL = Workout(
+    title: "Seated Side Bend Left",
+    imageSrc: "assets/all-workouts/seated_side_bend_L.png",
+    steps: [
+      "Start in easy pose and place your left hand on the floor with your elbow slightly bent.",
+      "Reach your right arm up and overhead and lean to the left side.",
+      "Hold the pose for 30 seconds.",
+    ],
+    videoLink: "https://www.youtube.com/watch?v=Et5Wwq7_5_U",
+    showTimer: true,
+    duration: 30);
+
+Workout seatedSideBendR = Workout(
+    title: "Seated Side Bend Right",
+    imageSrc: "assets/all-workouts/seated_side_bend_R.png",
+    steps: [
+      "Start in easy pose and place your right hand on the floor with your elbow slightly bent.",
+      "Reach your left arm up and overhead and lean to the right side.",
+      "Hold the pose for 30 seconds.",
+    ],
+    videoLink: "https://www.youtube.com/watch?v=Et5Wwq7_5_U",
+    showTimer: true,
+    duration: 30);
+
+Workout seatedSpinalTwistLeft = Workout(
+  title: "Seated Spinal Twist Left",
+  imageSrc: "assets/all-workouts/seated_spinal_twist_L.png",
+  showTimer: true,
+  duration: 30,
+  steps: [
+    "Start in easy pose with your back straight and arms relaxed.",
+    "Place your right hand on the left knee and twist your torso to the left.",
+    "Hold the pose for 30 seconds, switch sides, and repeat.",
+  ],
+  videoLink: "https://www.youtube.com/watch?v=qEVNj4tcr0Y",
+);
+
+Workout seatedSpinalTwistRight = Workout(
+  title: "Seated Spinal Twist Right",
+  imageSrc: "assets/all-workouts/seated_spinal_twist_R.png",
+  showTimer: true,
+  duration: 30,
+  steps: [
+    "Start in easy pose with your back straight and arms relaxed.",
+    "Place your left hand on the right knee and twist your torso to the right.",
+    "Hold the pose for 30 seconds, switch sides, and repeat.",
+  ],
+  videoLink: "https://www.youtube.com/watch?v=qEVNj4tcr0Y",
+);
+
+var newWorkout = [
+  forwardBend,
+  crossTouchAndReach,
+  seatedSpinalTwistLeft,
+  seatedSpinalTwistRight,
+  seatedSideBendL,
+  seatedSideBendR,
+];
+
 // -----------------------------------CHEST------------------------------------------
-/// todo : uncomment while in production
 List<Workout> chestBeginner = [
   jumpingJacks,
   kneePushUps,
@@ -1931,8 +2014,8 @@ List<Workout> legsBeginner = [
   fireHydrantRight,
   fireHydrantLeft,
   fireHydrantRight,
-  leftQuadStretch,
-  rightQuadStretch,
+  quadStretchLeft,
+  quadStretchright,
   kneeToChestStretch,
   kneeToChestStretch,
   wallResistingSingleLegLeft,
@@ -1965,8 +2048,8 @@ List<Workout> legsIntermediate = [
   fireHydrantRight,
   fireHydrantLeft,
   fireHydrantRight,
-  leftQuadStretch,
-  rightQuadStretch,
+  quadStretchLeft,
+  quadStretchright,
   lyingButterFlyStretch,
   walkingLunges,
   walkingLunges,
@@ -2007,10 +2090,10 @@ List<Workout> legsAdvance = [
   lateralSquat,
   lateralSquat,
   lateralSquat,
-  wallSit,
-  wallSit,
-  leftQuadStretch,
-  rightQuadStretch,
+  wallUp,
+  wallUp,
+  quadStretchLeft,
+  quadStretchright,
   walkingLunges,
   walkingLunges,
   walkingLunges,
@@ -2122,5 +2205,6 @@ Set<Workout> allWorkOut = [
   ...shoulderIntermediate,
   ...armsAdvance,
   ...armsBeginner,
-  ...armsIntermediate
+  ...armsIntermediate,
+  ...newWorkout
 ].toSet();

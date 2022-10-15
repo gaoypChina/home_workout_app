@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../../../pages/main/explore_page/explore_page_widget/workout_header.dart';
-
-import '../../../../database/explore_page_workout/featured_workout_database.dart';
+import 'package:full_workout/pages/main/explore_page/widget/workout_header.dart';
+import '../../../../database/explore_page_workout/picked_workout_database.dart';
+import '../../../../database/explore_page_workout/stretch_workout.dart';
 import '../workout_setup_page/workout_setup_page.dart';
 
-class FeaturedWorkout extends StatelessWidget {
-  final String title;
+class OtherWorkoutCard extends StatelessWidget {
 
-  const FeaturedWorkout({Key? key, required this.title}) : super(key: key);
+  const OtherWorkoutCard({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +36,12 @@ class FeaturedWorkout extends StatelessWidget {
                 mainAxisSpacing: 0.0,
                 crossAxisSpacing: 0.0,
                 children: [
-                  ...featuredWorkoutList.map((workout) {
+                  ...stretchWorkoutList.map((workout) {
                     return InkWell(
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
                           builder: (builder) => WorkoutSetupPage(
                                 workout: workout,
-                                header: WorkoutHeader(imgSrc: workout.imgSrc),
+                                header: ExploreWorkoutHeader(imgSrc: workout.imgSrc,title: workout.title,workoutType: workout.workoutType),
                               ))),
                       child: Container(
                         child: Column(

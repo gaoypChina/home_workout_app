@@ -108,7 +108,6 @@ class DetailPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => YoutubeTutorial(
-                        rapCount: rapCount,
                         workout: workout,
                       ),
                     ));

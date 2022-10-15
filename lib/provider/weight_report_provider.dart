@@ -1,5 +1,6 @@
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 import '../../../constants/constant.dart';
 import '../../../helper/sp_helper.dart';
 import '../../../helper/sp_key_helper.dart';
@@ -7,10 +8,10 @@ import '../../../helper/weight_db_helper.dart';
 import '../../../models/weight_list_model.dart';
 import '../../../models/weight_model.dart';
 import 'package:intl/intl.dart';
-import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 import '../enums/weight_filter.dart';
 import '../pages/detail_input_page/user_detail_widget/weight_picker.dart';
+import '../widgets/dialogs/range_date_picker.dart';
 
 class WeightReportProvider with ChangeNotifier {
   bool isLoading = true;
@@ -110,9 +111,12 @@ class WeightReportProvider with ChangeNotifier {
       lastDate = DateFormat.yMMMd().format(DateTime.now());
     } else if (filter == WeightFilter.month) {
       isLoading = true;
-      DateTime? selectedMonth = await showMonthPicker(
+
+      final selectedMonth = await showMonthYearPicker(
         context: context,
         initialDate: DateTime.now(),
+        firstDate: DateTime(2021),
+        lastDate: DateTime.now(),
       );
       if (selectedMonth == null) {
         isLoading = false;
@@ -135,10 +139,9 @@ class WeightReportProvider with ChangeNotifier {
       isLoading = false;
       notifyListeners();
     } else if (filter == WeightFilter.custom) {
-      DateTimeRange? dateSelected = await showDateRangePicker(
-          context: context,
-          firstDate: DateTime(2019, 01, 01),
-          lastDate: DateTime.now());
+      DateTimeRange? dateSelected = await showDialog(context: context, builder: (builder){
+        return RangeDatePicker();
+      });
       if (dateSelected == null) {
         isLoading = false;
         notifyListeners();

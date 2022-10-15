@@ -87,9 +87,9 @@ class _InstructionScreenState extends State<InstructionScreen>
     String isSec = workout.showTimer ? "Seconds " : "";
     String message = "The next ${workout.duration} " + isSec + workout.title;
     print(message);
-    await mediaHelper.speak(intro).then((value) =>
+    await mediaHelper.readText(intro).then((value) =>
         Future.delayed(Duration(seconds: 1))
-            .then((value) => mediaHelper.speak(message)));
+            .then((value) => mediaHelper.readText(message)));
   }
 
   awakeScreen() {
@@ -179,7 +179,6 @@ class _InstructionScreenState extends State<InstructionScreen>
                         controller.stop(canceled: true);
                         await Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => YoutubeTutorial(
-                                  rapCount: widget.rapList[0],
                                   workout: widget.workOutList[0],
                                 )));
                       }
@@ -295,15 +294,15 @@ class _InstructionScreenState extends State<InstructionScreen>
                                         (BuildContext context, Widget? child) {
                                       if (timerValue <= 3000 &&
                                           timerValue > 2950) {
-                                        mediaHelper.speak('Three');
+                                        mediaHelper.readText('Three');
                                       }
                                       if (timerValue <= 1600 &&
                                           timerValue > 1550) {
-                                        mediaHelper.speak('Two');
+                                        mediaHelper.readText('Two');
                                       }
                                       if (timerValue <= 200 &&
                                           timerValue > 150) {
-                                        mediaHelper.speak('One');
+                                        mediaHelper.readText('One');
                                       }
 
                                       return Text(

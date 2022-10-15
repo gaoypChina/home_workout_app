@@ -11,9 +11,8 @@ import '../../../widgets/banner_regular_ad.dart';
 
 class YoutubeTutorial extends StatefulWidget {
   final Workout workout;
-  final int rapCount;
 
-  const YoutubeTutorial({required this.workout, required this.rapCount});
+  const YoutubeTutorial({required this.workout});
 
   @override
   _YoutubeTutorialState createState() => _YoutubeTutorialState();
@@ -49,6 +48,17 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
 
   @override
   Widget build(BuildContext context) {
+    getTitle(Workout workout) {
+
+      return  Padding(
+        padding: EdgeInsets.only(left: 8),
+        child: Text(
+            "${workout.title}",
+            style: TextStyle(
+                fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white
+            )),
+      );
+    }
     getTopBar() {
       return Container(
         padding: EdgeInsets.only(top: 10),
@@ -58,10 +68,10 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
             Navigator.pop(context, true);
           },
           icon: Icon(
-            Icons.arrow_back,
+            Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          label: Text(""),
+          label:  getTitle(widget.workout),
         ),
       );
     }
@@ -149,19 +159,7 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
       });
     }
 
-    getTitle(Workout workout) {
-      String rap = workout.showTimer == true
-          ? "${widget.rapCount}s"
-          : "X ${widget.rapCount}";
-      return Padding(
-        padding: const EdgeInsets.only(top: 8.0, left: 18),
-        child: Text(
-          "${workout.title} $rap",
-          style: TextStyle(
-              fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white),
-        ),
-      );
-    }
+
 
     getSteps(Workout workout) {
       return ListView.builder(
@@ -205,7 +203,6 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
               children: [
                 getTopBar(),
                 getImage(widget.workout, height, width),
-                getTitle(widget.workout),
                 getSteps(widget.workout)
               ],
             ),

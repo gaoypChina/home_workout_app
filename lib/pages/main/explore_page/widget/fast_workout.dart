@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:full_workout/pages/main/explore_page/widget/workout_header.dart';
 import '../../../../database/explore_page_workout/fast_workout_database.dart';
-import '../../../../pages/main/explore_page/explore_page_widget/workout_header.dart';
 
 import '../../../../models/explore_workout_model.dart';
 import '../workout_setup_page/workout_setup_page.dart';
@@ -39,7 +39,7 @@ class FastWorkout extends StatelessWidget {
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (builder) => WorkoutSetupPage(
                             workout: workout,
-                            header: WorkoutHeader(imgSrc: workout.imgSrc),
+                            header: ExploreWorkoutHeader(imgSrc: workout.imgSrc,workoutType: workout.workoutType,title: workout.title),
                           ))),
                   child: Container(
                     //   color: Colors.red,

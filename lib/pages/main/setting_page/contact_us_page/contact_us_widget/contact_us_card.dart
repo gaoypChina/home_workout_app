@@ -60,12 +60,12 @@ class ContactUsCard extends StatelessWidget {
                 return WriteUsPage();
               }));
             }),
-        buildDivider(),
-        buildCard(
-            title: "Call Now",
-            subTitle: "Call us to discuss your problem",
-            icon: Icons.phone_outlined,
-            onTap: () => _constants.openUrl(url: "tel: +91 ${9669395879}")),
+        // buildDivider(),
+        // buildCard(
+        //     title: "Call Now",
+        //     subTitle: "Call us to discuss your problem",
+        //     icon: Icons.phone_outlined,
+        //     onTap: () => _constants.openUrl(url: "tel: +91 ${9669395879}")),
         buildDivider(),
       ],
     );

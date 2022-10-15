@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../provider/subscription_provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
+import '../../../provider/subscription_provider.dart';
 import '../../components/info_button.dart';
 import '../../database/workout_list.dart';
 import '../../helper/mediaHelper.dart';
@@ -72,11 +72,11 @@ class _WorkoutPageState extends State<WorkoutPage>
     String exerciseName = workout.title;
     String totalRap = widget.rapList[currIndex].toString();
     String message = "Start $totalRap $rapType $exerciseName";
-    mediaHelper.playSoundOnce(audioPath).then((value) =>
+    mediaHelper.playSoundOnce(audioPath).then((_) =>
         Future.delayed(Duration(seconds: 1))
-            .then((value) => mediaHelper.speak(message))
-            .then((value) => Future.delayed(Duration(seconds: 3))
-                .then((value) => mediaHelper.speak(workout.steps[0]))));
+            .then((__) => mediaHelper.readText(message))
+            .then((___) => Future.delayed(Duration(seconds: 3))
+                .then((____) => mediaHelper.readText(workout.steps[0]))));
   }
 
   _onPopBack() async {
@@ -242,7 +242,6 @@ class _WorkoutPageState extends State<WorkoutPage>
                       await Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => YoutubeTutorial(
                                 workout: item,
-                                rapCount: widget.rapList[currIndex],
                               )));
                     }
 
@@ -359,13 +358,13 @@ class _WorkoutPageState extends State<WorkoutPage>
                             animation: controller,
                             builder: (BuildContext context, Widget? child) {
                               if (timerValue <= 3000 && timerValue > 2950) {
-                                mediaHelper.speak('Three');
+                                mediaHelper.readText('Three');
                               }
                               if (timerValue <= 1600 && timerValue > 1550) {
-                                mediaHelper.speak('Two');
+                                mediaHelper.readText('Two');
                               }
                               if (timerValue <= 200 && timerValue > 150) {
-                                mediaHelper.speak('One');
+                                mediaHelper.readText('One');
                               }
 
                               String parsedTime = timerString.length == 1
@@ -400,7 +399,7 @@ class _WorkoutPageState extends State<WorkoutPage>
                       color: Colors.white),
                 ),
                 style: TextButton.styleFrom(
-                  backgroundColor: Colors.blue.shade700,
+                  backgroundColor: Theme.of(context).primaryColor,
                   padding:
                       EdgeInsets.only(left: 40, right: 40, top: 15, bottom: 15),
                   shape: RoundedRectangleBorder(

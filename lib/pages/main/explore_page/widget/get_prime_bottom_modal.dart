@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:full_workout/provider/connectivity_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../provider/ads_provider.dart';
-import '../../../../subscription_page/subscription_page.dart';
+import '../../../../provider/ads_provider.dart';
+import '../../../../widgets/dialogs/connectivity_error_dialog.dart';
+import '../../../subscription_page/subscription_page.dart';
 
 class GetPrimeBottomSheet extends StatefulWidget {
   final String spKey;
+
   const GetPrimeBottomSheet({Key? key, required this.spKey}) : super(key: key);
 
   @override
@@ -175,11 +178,22 @@ class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
                   child: ElevatedButton.icon(
                     style:
                         ElevatedButton.styleFrom(primary: Colors.amberAccent),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return SubscriptionPage();
-                      }));
+                    onPressed: () async {
+                      bool isConnected =
+                          await Provider.of<ConnectivityProvider>(context,
+                                  listen: false)
+                              .isNetworkConnected;
+                      if (isConnected) {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return SubscriptionPage();
+                        }));
+                      } else {
+                        Navigator.of(context).pop();
+                        showDialog(
+                            context: context,
+                            builder: (context) => ConnectivityErrorDialog());
+                      }
                     },
                     label: Text(
                       "Get Prime",
@@ -195,7 +209,7 @@ class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
                 height: 44,
               ),
               Text(
-                "Get Premium Workout For 7 days free and then subscription plan starts at 1199 / year. you can also select from other plans.",
+                "With a premium workout subscription, you will be able to reach your fitness goals in less time. You will have access to 50+ workout plans with the premium subscription.",
                 style: TextStyle(
                     fontSize: 13.5,
                     letterSpacing: 1.2,

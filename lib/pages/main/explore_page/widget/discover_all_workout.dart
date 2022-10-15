@@ -5,8 +5,8 @@ import '../../../../database/workout_list.dart';
 import '../all_ercise_page/all_exercise_page.dart';
 import '../all_workout_page/all_workout_page.dart';
 
-class TopPicksSection extends StatelessWidget {
-  const TopPicksSection({Key? key}) : super(key: key);
+class DiscoverAllWorkouts extends StatelessWidget {
+  const DiscoverAllWorkouts({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class TopPicksSection extends StatelessWidget {
                     color: Colors.white,
                   )),
               title: Text("All Workouts"),
-              subtitle: Text("${allExploreWorkout.length} Workouts"),
+              subtitle: Text("${ExportWorkout().allExploreWorkout.length} Workouts"),
             ),
             Divider(),
             ListTile(

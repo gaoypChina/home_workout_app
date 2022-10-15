@@ -6,16 +6,13 @@ import 'package:flutter/material.dart';
 import '../../../constants/constant.dart';
 import '../../../helper/sp_helper.dart';
 import '../../../helper/sp_key_helper.dart';
-import '../../../widgets/connection_error_page.dart';
 import '../../../widgets/dialogs/subscription_successful_dialog.dart';
-import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../helper/subscription_helper.dart';
 import '../models/subscription_date_model.dart';
 import '../widgets/dialogs/subscription_error_dialog.dart';
-import 'connectivity_provider.dart';
 
 class SubscriptionProvider with ChangeNotifier {
   bool isBuyBtnLoading = false;
@@ -130,8 +127,7 @@ class SubscriptionProvider with ChangeNotifier {
   }
 
   Future<void> setSubscriptionDetails() async {
-    /// todo : remove this in production
-    //  return Future(() => isProUser = true);
+
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       log("user is not logged in");
@@ -175,14 +171,5 @@ class SubscriptionProvider with ChangeNotifier {
     }
   }
 
-  checkConnection({required BuildContext context}) async {
-    bool isConnected =
-        await Provider.of<ConnectivityProvider>(context, listen: false)
-            .isNetworkConnected;
 
-    if (!isConnected) {
-      Navigator.pop(context);
-      Navigator.of(context).pushNamed(ConnectionErrorPage.routeName);
-    }
-  }
 }

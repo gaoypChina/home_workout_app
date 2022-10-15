@@ -71,8 +71,8 @@ class WorkoutCard extends StatelessWidget {
                   Icons.circle,
                   size: 7,
                   color: getIValue() < i
-                      ? Colors.grey.withOpacity(.8)
-                      : Colors.blue.withOpacity(1),
+                      ? Colors.grey.shade500
+                      : Colors.black.withOpacity(.8),
                 ),
             ],
           ));
@@ -95,7 +95,7 @@ class WorkoutCard extends StatelessWidget {
                   size: 7,
                   color: tagValue < i
                       ? Colors.grey.shade500
-                      : Colors.blue.withOpacity(1),
+                      : Colors.black.withOpacity(.8),
                 ),
             ],
           ));
@@ -116,7 +116,8 @@ class WorkoutCard extends StatelessWidget {
             Container(
               child: Text(
                 title.toUpperCase(),
-                style: TextStyle(
+                style:TextStyle(
+
                     color: Colors.white.withOpacity(.9),
                     fontSize: 18,
                     letterSpacing: 1.5,

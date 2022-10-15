@@ -12,7 +12,7 @@ import '../../../../pages/workout_page/exercise_list_page.dart';
 import '../../../../provider/connectivity_provider.dart';
 import '../../../../widgets/banner_medium_ad.dart';
 import '../../../../widgets/dialogs/connectivity_error_dialog.dart';
-import 'four_week_challenge_reset_dialog.dart';
+import '../widget/four_week_challenge_reset_dialog.dart';
 
 class WorkoutTimeLine extends StatefulWidget {
   final ChallengesModel challengesModel;

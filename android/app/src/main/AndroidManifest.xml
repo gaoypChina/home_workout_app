@@ -55,11 +55,14 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
-<!--        3347511713 : is text ad unit id-->
+        <!--        3347511713 : is text ad unit id-->
         <meta-data
-        android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="ca-app-pub-6411653236715435~8288500974"/>
-        <!--            android:value="ca-app-pub-3940256099942544~3347511713"/>-->
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7026200685541671~1886584399" />
+
+<!--        android:value="ca-app-pub-3940256099942544~3347511713" />-->
+
+
 
     </application>
     <queries>

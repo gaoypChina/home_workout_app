@@ -8,7 +8,7 @@ class SubscriptionHelper {
   static SpKey _spKey = SpKey();
   static SpHelper _spHelper = SpHelper();
 
-  static const _apiKey = "goog_KCimKbWZceCgDURNizOVthdqVUi";
+  static const _apiKey = "goog_uNuJkHhSxcJWwpEoHdVNLvmDUiB";
 
   static Future init() async {
     await Purchases.setDebugLogsEnabled(true);

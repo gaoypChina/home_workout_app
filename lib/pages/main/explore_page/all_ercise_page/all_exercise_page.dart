@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../database/workout_list.dart';
+import '../../../../widgets/custom_exercise_card.dart';
 
 class AllExercisePage extends StatelessWidget {
   const AllExercisePage({Key? key}) : super(key: key);
@@ -12,53 +13,20 @@ class AllExercisePage extends StatelessWidget {
           title: Text("All Exercise"),
         ),
         body: ListView.separated(
+
             padding: EdgeInsets.symmetric(vertical: 8),
             physics: BouncingScrollPhysics(),
             itemCount: allWorkOut.length,
             separatorBuilder: (context, index) {
               return Divider(
-                color: Colors.blue.withOpacity(.5),
+                color: Colors.grey.withOpacity(.15),
               );
             },
             itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ExerciseInstCard(
-                          workout: allWorkOut.elementAt(index),
-                        ))),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 18),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: Image.asset(
-                              allWorkOut.elementAt(index).imageSrc)),
-                      SizedBox(
-                        width: 18,
-                      ),
-                      Expanded(
-                          flex: 2,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                allWorkOut.elementAt(index).title,
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                              ),
-                              Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Beginner"),
-                                ),
-                                color: Colors.green.withOpacity(.2),
-                              )
-                            ],
-                          ))
-                    ],
-                  ),
-                ),
+              return CustomExerciseCard(
+                index: index,time: 30,workOutList: allWorkOut.toList(),
               );
+
             }));
   }
 }

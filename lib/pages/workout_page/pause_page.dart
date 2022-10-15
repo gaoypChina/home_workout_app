@@ -72,6 +72,22 @@ class StopPage extends StatelessWidget {
                     fontWeight: FontWeight.w700),
               ),
               Spacer(),
+              Container(
+                height: 50,
+                width: double.infinity,
+                margin: EdgeInsets.only(left: 25, right: 25, bottom: 10),
+                child: ElevatedButton(
+                  child: Text(
+                    "Resume",
+                  ),
+                  onPressed: () => Navigator.pop(context, "resume"),
+                  style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      )),
+                ),
+              ),
               getButton(
                   title: "Restart Program",
                   onPress: () async {
@@ -139,22 +155,7 @@ class StopPage extends StatelessWidget {
                   },
                   backgroundColor: defaultBackgroundColor,
                   textColor: defaultTextColor),
-              Container(
-                height: 50,
-                width: double.infinity,
-                margin: EdgeInsets.only(left: 25, right: 25, bottom: 10),
-                child: ElevatedButton(
-                  child: Text(
-                    "Resume",
-                  ),
-                  onPressed: () => Navigator.pop(context, "resume"),
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.blue.shade700,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      )),
-                ),
-              ),
+
               Spacer(),
             ],
           ),
@@ -167,7 +168,7 @@ class StopPage extends StatelessWidget {
                   onPressed: () => Navigator.pop(context, "resume"),
                   child: Icon(Icons.arrow_back),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue.shade700,
+                    primary: Theme.of(context).primaryColor,
                     shape: CircleBorder(),
                   ),
                 )

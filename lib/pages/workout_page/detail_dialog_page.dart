@@ -7,11 +7,10 @@ import '../../pages/services/youtube_service/youtube_player.dart';
 
 class WorkoutDetailDialog extends StatefulWidget {
   final List<Workout> workoutList;
-  final int rapCount;
   final int index;
 
   WorkoutDetailDialog(
-      {required this.workoutList, required this.index, required this.rapCount});
+      {required this.workoutList, required this.index});
 
   @override
   _WorkoutDetailDialogState createState() => _WorkoutDetailDialogState();
@@ -102,9 +101,8 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       YoutubeTutorial(
-                                                    rapCount: widget.rapCount,
                                                     workout: widget.workoutList[
-                                                        widget.index],
+                                                        currPage],
                                                   ),
                                                 ));
                                           })),
