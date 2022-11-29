@@ -23,37 +23,37 @@ class _DailyWorkoutState extends State<DailyWorkout> {
     List<DailyWorkoutModel> workoutList = [
       DailyWorkoutModel(
           workout: weekdayWorkoutList[0],
-          imgSrc: "assets/explore_image/img_8.jpg",
+          imgSrc: weekdayWorkoutList[0].imgSrc,
           index: 1,
           dayName: "Monday"),
       DailyWorkoutModel(
           workout: weekdayWorkoutList[1],
-          imgSrc: "assets/explore_image/img_9.jpg",
+          imgSrc: weekdayWorkoutList[1].imgSrc,
           index: 2,
           dayName: "Tuesday"),
       DailyWorkoutModel(
           workout: weekdayWorkoutList[2],
-          imgSrc: "assets/explore_image/img_10.jpg",
+          imgSrc: weekdayWorkoutList[2].imgSrc,
           index: 3,
           dayName: "Wednesday"),
       DailyWorkoutModel(
           workout: weekdayWorkoutList[3],
-          imgSrc: "assets/explore_image/img_18.jpg",
+          imgSrc: weekdayWorkoutList[3].imgSrc,
           index: 4,
           dayName: "Thursday"),
       DailyWorkoutModel(
           workout: weekdayWorkoutList[4],
-          imgSrc: "assets/explore_image/img_19.jpg",
+          imgSrc: weekdayWorkoutList[4].imgSrc,
           index: 5,
           dayName: "Friday"),
       DailyWorkoutModel(
           workout: weekdayWorkoutList[5],
-          imgSrc: "assets/explore_image/img_20.jpg",
+          imgSrc: weekdayWorkoutList[5].imgSrc,
           index: 6,
           dayName: "Saturday"),
       DailyWorkoutModel(
           workout: weekdayWorkoutList[6],
-          imgSrc: "assets/explore_image/img_8.jpg",
+          imgSrc: weekdayWorkoutList[6].imgSrc,
           index: 7,
           dayName: "Sunday"),
     ];

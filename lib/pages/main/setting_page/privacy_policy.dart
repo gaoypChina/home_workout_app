@@ -13,6 +13,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
   Widget build(BuildContext context) {
     String src = '''
 
+
 **Last updated August 12, 2021**
 
 
@@ -22,7 +23,7 @@ This privacy notice for Beast Fitness ("**Company**," "**we**," "**us**," or "**
 
 *   Engage with us in other related ways, including any sales, marketing, or events
 
-**Questions or concerns?** Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at akashlilhare14@gmail.com.
+**Questions or concerns?**  Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at workoutfeedback@gmail.com.
 
   
 
@@ -116,7 +117,7 @@ Want to learn more about what Beast Fitness does with any information we collect
 
   
 
-**_In Short:_** _We collect personal information that you provide to us._
+**In Short:**   We collect personal information that you provide to us.
 
   
 
@@ -138,7 +139,7 @@ We collect personal information that you voluntarily provide to us when you regi
 
   
 
-**Social Media Login Data.** We may provide you with the option to register with us using your existing social media account details, like your Facebook, Twitter, or other social media account. If you choose to register in this way, we will collect the information described in the section called "[HOW DO WE HANDLE YOUR SOCIAL LOGINS?](#sociallogins)" below.
+**Social Media Login Data.**  We may provide you with the option to register with us using your existing social media account details, like your Facebook, Twitter, or other social media account. If you choose to register in this way, we will collect the information described in the section called "[HOW DO WE HANDLE YOUR SOCIAL LOGINS?](#sociallogins)" below.
 
   
 
@@ -158,7 +159,7 @@ All personal information that you provide to us must be true, complete, and accu
 
   
 
-**_In Short:_** _Some information — such as your Internet Protocol (IP) address and/or browser and device characteristics — is collected automatically when you visit our Services._
+**_In Short:_**  _Some information — such as your Internet Protocol (IP) address and/or browser and device characteristics — is collected automatically when you visit our Services._
 
   
 
@@ -174,13 +175,13 @@ The information we collect includes:
 
   
 
-**_In Short:_** _We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent._
+**_In Short:_**   We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent._
 
   
 
 **We process your personal information for a variety of reasons, depending on how you interact with our Services, including:**
 
-*   **To facilitate account creation and authentication and otherwise manage user accounts.** We may process your information so you can create and log in to your account, as well as keep your account in working order.
+*   **To facilitate account creation and authentication and otherwise manage user accounts.**  We may process your information so you can create and log in to your account, as well as keep your account in working order.
 
 *   **To save or protect an individual's vital interest.** We may process your information when necessary to save or protect an individual’s vital interest, such as to prevent harm.
 
@@ -190,7 +191,7 @@ The information we collect includes:
 
   
 
-_**In Short:** We only process your personal information when we believe it is necessary and we have a valid legal reason (i.e., legal basis) to do so under applicable law, like with your consent, to comply with laws, to provide you with services to enter into or fulfill our contractual obligations, to protect your rights, or to fulfill our legitimate business interests._
+_**In Short:**  We only process your personal information when we believe it is necessary and we have a valid legal reason (i.e., legal basis) to do so under applicable law, like with your consent, to comply with laws, to provide you with services to enter into or fulfill our contractual obligations, to protect your rights, or to fulfill our legitimate business interests._
 
   
 
@@ -200,7 +201,7 @@ _**If you are located in the EU or UK, this section applies to you.**_
 
 The General Data Protection Regulation (GDPR) and UK GDPR require us to explain the valid legal bases we rely on in order to process your personal information. As such, we may rely on the following legal bases to process your personal information:
 
-*   **Consent.** We may process your information if you have given us permission (i.e., consent) to use your personal information for a specific purpose. You can withdraw your consent at any time. Click [here](#withdrawconsent) to learn more.
+*   **Consent.**  We may process your information if you have given us permission (i.e., consent) to use your personal information for a specific purpose. You can withdraw your consent at any time. Click [here](#withdrawconsent) to learn more.
 
 *   **Legal Obligations.** We may process your information where we believe it is necessary for compliance with our legal obligations, such as to cooperate with a law enforcement body or regulatory agency, exercise or defend our legal rights, or disclose your information as evidence in litigation in which we are involved.  
     
@@ -247,7 +248,7 @@ In some exceptional cases, we may be legally permitted under applicable law to p
 
   
 
-**_In Short:_** _We may share information in specific situations described in this section and/or with the following third parties._
+**_In Short:_**  We may share information in specific situations described in this section and/or with the following third parties._
 
   
 
@@ -255,7 +256,7 @@ We may need to share your personal information in the following situations:
 
 *   **Business Transfers.** We may share or transfer your information in connection with, or during negotiations of, any merger, sale of company assets, financing, or acquisition of all or a portion of our business to another company.
 
-*   **Offer Wall.** Our application(s) may display a third-party hosted "offer wall." Such an offer wall allows third-party advertisers to offer virtual currency, gifts, or other items to users in return for the acceptance and completion of an advertisement offer. Such an offer wall may appear in our application(s) and be displayed to you based on certain data, such as your geographic area or demographic information. When you click on an offer wall, you will be brought to an external website belonging to other persons and will leave our application(s). A unique identifier, such as your user ID, will be shared with the offer wall provider in order to prevent fraud and properly credit your account with the relevant reward.
+*   **Offer Wall.**  Our application(s) may display a third-party hosted "offer wall." Such an offer wall allows third-party advertisers to offer virtual currency, gifts, or other items to users in return for the acceptance and completion of an advertisement offer. Such an offer wall may appear in our application(s) and be displayed to you based on certain data, such as your geographic area or demographic information. When you click on an offer wall, you will be brought to an external website belonging to other persons and will leave our application(s). A unique identifier, such as your user ID, will be shared with the offer wall provider in order to prevent fraud and properly credit your account with the relevant reward.
 
   
 
@@ -263,7 +264,7 @@ We may need to share your personal information in the following situations:
 
   
 
-**_In Short:_** _We are not responsible for the safety of any information that you share with third parties that we may link to or who advertise on our Services, but are not affiliated with, our Services._
+**_In Short:_**  _We are not responsible for the safety of any information that you share with third parties that we may link to or who advertise on our Services, but are not affiliated with, our Services.
 
   
 
@@ -275,7 +276,7 @@ The Services, including our offer wall, may link to third-party websites, online
 
   
 
-**_In Short:_** _If you choose to register or log in to our services using a social media account, we may have access to certain information about you._
+**_In Short:_**  If you choose to register or log in to our services using a social media account, we may have access to certain information about you.
 
   
 
@@ -291,7 +292,7 @@ We will use the information we receive only for the purposes that are described 
 
   
 
-**_In Short:_** _We keep your information for as long as necessary to fulfill the purposes outlined in this privacy notice unless otherwise required by law._
+**_In Short:_**  We keep your information for as long as necessary to fulfill the purposes outlined in this privacy notice unless otherwise required by law.
 
   
 
@@ -307,7 +308,7 @@ When we have no ongoing legitimate business need to process your personal inform
 
   
 
-**_In Short:_** _We aim to protect your personal information through a system of organizational and technical security measures._
+**_In Short:_**   _We aim to protect your personal information through a system of organizational and technical security measures._
 
   
 
@@ -319,7 +320,7 @@ We have implemented appropriate and reasonable technical and organizational secu
 
   
 
-**_In Short:_** _In some regions, such as the European Economic Area (EEA), United Kingdom (UK), and Canada, you have rights that allow you greater access to and control over your personal information. You may review, change, or terminate your account at any time._
+**_In Short:_**   _In some regions, such as the European Economic Area (EEA), United Kingdom (UK), and Canada, you have rights that allow you greater access to and control over your personal information. You may review, change, or terminate your account at any time._
 
   
 
@@ -373,7 +374,7 @@ Most web browsers and some mobile operating systems and mobile applications incl
 
   
 
-**_In Short:_** _Yes, if you are a resident of California, you are granted specific rights regarding access to your personal information._
+**_In Short:_**   _Yes, if you are a resident of California, you are granted specific rights regarding access to your personal information._
 
   
 
@@ -647,7 +648,7 @@ To exercise these rights, you can contact us by email at workoutfeedback@gmail.
 
   
 
-_**In Short:** Yes, we will update this notice as necessary to stay compliant with relevant laws._
+_**In Short:**   Yes, we will update this notice as necessary to stay compliant with relevant laws._
 
   
 

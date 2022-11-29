@@ -92,7 +92,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                   },
                   child: Text(
                     "Delete".toUpperCase(),
-                    style: TextStyle(color: Colors.red.shade300),
+                    style: TextStyle(color: Colors.red,fontWeight: FontWeight.w500),
                   ));
             }
             return Row(

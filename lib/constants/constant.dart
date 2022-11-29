@@ -15,7 +15,7 @@ class Constants {
   // ToDo: Update version number
   // TODO: update phone number
 
-  String versionNumber = "1.9.2";
+  String versionNumber = "1.9.3";
 
   TextStyle titleStyle =
       TextStyle(fontWeight: FontWeight.w500, fontSize: 16, letterSpacing: 1.2);

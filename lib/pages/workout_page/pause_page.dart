@@ -98,17 +98,17 @@ class StopPage extends StatelessWidget {
                             content: Text(
                               "Restart Session form Beginning?",
                               style:
-                                  TextStyle(fontSize: 14, letterSpacing: 1.2),
+                                  TextStyle(fontSize: 16, letterSpacing: 1.2),
                             ),
                             actions: [
-                              TextButton(
+                              ElevatedButton(
                                   onPressed: () =>
                                       Navigator.pop(context, "resume"),
-                                  child: Text("Cancel")),
-                              TextButton(
+                                  child: Text("No")),
+                              ElevatedButton(
                                   onPressed: () =>
                                       Navigator.pop(context, "restart"),
-                                  child: Text("Restart"))
+                                  child: Text("Yes"))
                             ],
                           );
                         });
@@ -129,17 +129,18 @@ class StopPage extends StatelessWidget {
                             content: Text(
                               "Do you want to quit the exercise session?",
                               style:
-                                  TextStyle(fontSize: 14, letterSpacing: 1.2),
+                                  TextStyle(fontSize: 16, letterSpacing: 1.2),
                             ),
                             actions: [
                               TextButton(
                                   onPressed: () =>
                                       Navigator.pop(context, "quit"),
                                   child: Text("Yes")),
-                              TextButton(
+                              ElevatedButton(
                                   onPressed: () =>
                                       Navigator.pop(context, "restart"),
-                                  child: Text("No"))
+                                  child: Text("No")),
+                              SizedBox(width: 12,)
                             ],
                           );
                         });

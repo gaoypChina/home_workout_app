@@ -5,7 +5,7 @@ import '../workout_list.dart';
 List<ExploreWorkout> weekdayWorkoutList = [
   ExploreWorkout(
       title: "Monday Workout Challenge",
-      imgSrc: "assets/explore_image/img_6.jpg",
+      imgSrc: "assets/explore_image/img_2.jpg",
       workoutType: WorkoutType.Intermediate,
       description: [],
       workoutList: _mondayWorkout),

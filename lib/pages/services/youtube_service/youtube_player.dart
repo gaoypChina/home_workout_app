@@ -1,12 +1,10 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../bloc_provider/connectivity_state_bloc.dart';
-import '../../../database/workout_list.dart';
+import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../../../database/workout_list.dart';
+import '../../../provider/connectivity_provider.dart';
 import '../../../widgets/banner_regular_ad.dart';
 
 class YoutubeTutorial extends StatefulWidget {
@@ -22,7 +20,7 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
   late YoutubePlayerController _controller;
   bool isConnected = false;
   bool isLoading = true;
-  bool loadVideo = true;
+
 
   @override
   void initState() {
@@ -34,13 +32,10 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
   }
 
   checkConnectivity() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
-      isConnected = true;
-    } else {
-      isConnected = false;
-    }
+    var connectivityProvider =
+        Provider.of<ConnectivityProvider>(context, listen: false);
+    isConnected = await connectivityProvider.isNetworkConnected;
+
     setState(() {
       isLoading = false;
     });
@@ -77,45 +72,37 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
     }
 
     getImage(Workout workout, double height, double width) {
-      return BlocBuilder<ConnectivityCubit, ConnectivityState>(
-          builder: (context, state) {
-        if (state is ConnectivityConnected) {
-          return Container(
-            height: height * .3,
-            width: width,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.white, width: 1),
-                borderRadius: BorderRadius.all(Radius.circular(12))),
-            margin: EdgeInsets.all(8),
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              child: YoutubePlayer(
-                bufferIndicator: CircularProgressIndicator(),
-                bottomActions: [
-                  Container(
-                    color: Colors.red,
-                  )
-                ],
-                controller: _controller,
-                showVideoProgressIndicator: true,
-                liveUIColor: Colors.blue,
-                progressColors: ProgressBarColors(
-                    backgroundColor: Colors.white,
-                    bufferedColor: Colors.white,
-                    handleColor: Colors.white,
-                    playedColor: Colors.blue),
-                controlsTimeOut: Duration(seconds: 10),
+      return isConnected
+          ? Container(
+              height: height * .3,
+              width: width,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.white, width: 1),
+                  borderRadius: BorderRadius.all(Radius.circular(12))),
+              margin: EdgeInsets.all(8),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                child: YoutubePlayer(
+                  bufferIndicator: CircularProgressIndicator(),
+                  bottomActions: [
+                    Container(
+                      color: Colors.red,
+                    )
+                  ],
+                  controller: _controller,
+                  showVideoProgressIndicator: true,
+                  liveUIColor: Colors.blue,
+                  progressColors: ProgressBarColors(
+                      backgroundColor: Colors.white,
+                      bufferedColor: Colors.white,
+                      handleColor: Colors.white,
+                      playedColor: Colors.blue),
+                  controlsTimeOut: Duration(seconds: 10),
+                ),
               ),
-            ),
-          );
-        } else {
-          Future.delayed(Duration(seconds: 2)).then((value) {
-            setState(() {
-              loadVideo = false;
-            });
-          });
-          return Container(
+            )
+          : Container(
               height: height * .3,
               width: width,
               decoration: BoxDecoration(
@@ -123,22 +110,17 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
                   border: Border.all(color: Colors.white, width: 2),
                   borderRadius: BorderRadius.all(Radius.circular(12))),
               margin: EdgeInsets.all(8),
-              child: loadVideo
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ),
-                    )
-                  : Column(
+              child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           FontAwesomeIcons.wifi,
                           color: Colors.white,
-                          size: height * .15,
+                          size: height * .1,
                         ),
+                        SizedBox(height: 18,),
                         Text(
-                          "No internet Connection found",
+                          "Please connect to Internet",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -146,20 +128,14 @@ class _YoutubeTutorialState extends State<YoutubeTutorial> {
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(
-                          height: 5,
+                          height: 8,
                         ),
-                        Text(
-                          "Please connect to network to watch video tutorial",
-                          style: TextStyle(color: Colors.white),
-                          textAlign: TextAlign.center,
-                        )
+                        ElevatedButton(onPressed: (){
+                          checkConnectivity();
+                        }, child: Text("Retry"))
                       ],
                     ));
-        }
-      });
     }
-
-
 
     getSteps(Workout workout) {
       return ListView.builder(

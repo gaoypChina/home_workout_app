@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import '../../../helper/sp_key_helper.dart';
 import '../../../provider/backup_provider.dart';
@@ -186,30 +185,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future facebookLogin({required BuildContext context}) async {
-    try {
-      authLoading = true;
-      notifyListeners();
-      final LoginResult loginResult = await FacebookAuth.instance.login();
-      if (loginResult.accessToken != null &&
-          loginResult.accessToken?.token != null) {
-        final OAuthCredential facebookAuthCredential =
-            FacebookAuthProvider.credential(loginResult.accessToken!.token);
-        FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-      } else {
-        throw ("facebook login error : facebook user in null \nline 86 authProvider");
-      }
 
-      _constants.getToast("User Login Successfully");
-      Navigator.of(context).pop();
-    } catch (e) {
-      dev.log(e.toString());
-      _constants.getToast("Something went wrong");
-    } finally {
-      authLoading = false;
-      notifyListeners();
-    }
-  }
 
   Future logout({required BuildContext context}) async {
     authLoading = true;

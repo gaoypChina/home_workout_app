@@ -30,7 +30,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   List<int> rapList = [];
   double countDownTime = 30;
   double restTime = 30;
-  final TextEditingController searchQuery = new TextEditingController();
   late ScrollController _scrollController;
   late List<String> items;
   late TabController tabContoller;
@@ -159,7 +158,8 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
-    return Scaffold(
+    return
+      Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButton: Container(

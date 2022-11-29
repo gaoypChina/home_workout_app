@@ -6,8 +6,8 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_material_pickers/main.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:full_workout/main.dart';
 
 
 void main() {

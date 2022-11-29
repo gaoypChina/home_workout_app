@@ -13,14 +13,16 @@ Future<bool> exitAppDialog({required BuildContext context}) async {
                 style: TextStyle(fontSize: 18, letterSpacing: 1.5),
               ),
               actions: [
-                TextButton(
-                  child: const Text("No"),
-                  onPressed: () => Navigator.pop(context, false),
-                ),
+
                 TextButton(
                   child: const Text("Yes"),
                   onPressed: () => Navigator.pop(context, true),
                 ),
+                ElevatedButton(
+                  child: const Text("No"),
+                  onPressed: () => Navigator.pop(context, false),
+                ),
+                SizedBox(width: 12,)
               ],
             );
           }) ??

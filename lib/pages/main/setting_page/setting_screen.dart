@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../constants/constant.dart';
-import '../../../enums/app_conection_status.dart';
 import '../../../helper/mediaHelper.dart';
 import '../../../helper/sp_helper.dart';
 import '../../../helper/sp_key_helper.dart';
@@ -646,31 +645,57 @@ class _SettingPageState extends State<SettingPage>
                                     title: "Logout",
                                     trailing: trailingIcon,
                                     onPress: () async {
-                                      bool isConnected =
-                                          await connectivityProvider
-                                              .isNetworkConnected;
-
-                                      if (!isConnected) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (builder) =>
-                                                ConnectivityErrorDialog());
-                                        return;
-                                      }
-
-                                      showDialog(
+                                      bool? res = await showDialog(
                                           context: context,
-                                          builder: (builder) {
-                                            return CustomLoadingIndicator(
-                                              msg: "Loading",
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title:
+                                                  Text("Log out"),
+                                              content:  Text("Are you sure you want to Logout?"),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context, true);
+                                                    },
+                                                    child: Text("Yes")),
+                                                ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context, false);
+                                                    },
+                                                    child: Text("No")),
+                                              ],
                                             );
                                           });
-                                      var authProvider =
-                                          Provider.of<AuthProvider>(context,
-                                              listen: false);
-                                      await authProvider.logout(
-                                          context: context);
-                                      Navigator.of(context).pop();
+
+                                      if(res == null || res == false)
+                                        return;
+                                      if (res == true) {
+                                        bool isConnected =
+                                            await connectivityProvider
+                                                .isNetworkConnected;
+
+                                        if (!isConnected) {
+                                          showDialog(
+                                              context: context,
+                                              builder: (builder) =>
+                                                  ConnectivityErrorDialog());
+                                          return;
+                                        }
+
+                                        showDialog(
+                                            context: context,
+                                            builder: (builder) {
+                                              return CustomLoadingIndicator(
+                                                msg: "Login out...",
+                                              );
+                                            });
+                                        var authProvider =
+                                            Provider.of<AuthProvider>(context,
+                                                listen: false);
+                                        await authProvider.logout(
+                                            context: context);
+                                        Navigator.of(context).pop();
+                                      }
                                     },
                                   ),
                                   getDivider(),

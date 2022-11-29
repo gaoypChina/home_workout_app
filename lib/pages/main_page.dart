@@ -116,7 +116,6 @@ class _MainPageState extends State<MainPage> {
     if (currentIndex == 0) {
       return HomePage();
     } else if (currentIndex == 1) {
-      //return FourWeekChallengePage();
       return ExplorePage(
         onBack: onBack,
       );
