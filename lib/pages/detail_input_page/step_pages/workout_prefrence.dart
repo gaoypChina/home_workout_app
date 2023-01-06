@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 import '../../../provider/user_detail_provider.dart';
 import '../../../widgets/active_goal_settings.dart';
 import '../user_detail_widget/custom_detail_input.dart';

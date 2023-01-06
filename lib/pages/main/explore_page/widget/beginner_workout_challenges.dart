@@ -43,7 +43,7 @@ class BeginnerWorkoutSection extends StatelessWidget {
                                     workout: workout,
                                     header: ExploreWorkoutHeader(
                                       title: workout.title,
-                                      imgSrc: workout.imgSrc, workoutType: workout.workoutType,
+                                      imgSrc: "assets/explore_image/img_20.jpg", workoutType: workout.workoutType,
                                     )))),
                         child: Card(
                           elevation: 0,

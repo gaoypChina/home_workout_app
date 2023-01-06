@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:full_workout/models/explore_workout_model.dart';
-
 import '../../../../models/main_page_item.dart';
-import '../../../widgets/achivement.dart';
 import '../../../widgets/active_goal.dart';
 import '../../../widgets/dialogs/exit_app_dialog.dart';
 import '../../../widgets/workout_card.dart';
-import '../report_page/workout_report/workout_detail_report.dart';
 import 'leading_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -129,14 +125,15 @@ class HomePage extends StatelessWidget {
                     text: "Home ".toUpperCase(),
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                         letterSpacing: 1,
-                       color: Theme.of(context).primaryColor,
+                     //  color: Theme.of(context).primaryColor,
                         fontSize: 18)),
                 TextSpan(
                     text: "Workout".toUpperCase(),
                     style: TextStyle(
                         letterSpacing: 1,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                         color: Theme.of(context).textTheme.bodyText1!.color,
                         fontSize: 18))
               ])),

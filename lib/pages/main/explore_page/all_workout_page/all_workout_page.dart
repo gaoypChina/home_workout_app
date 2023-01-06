@@ -37,11 +37,11 @@ class _AllWorkoutPageState extends State<AllWorkoutPage> {
   Widget build(BuildContext context) {
     Color tileColor({required WorkoutType workoutType}) {
       Color titleColor;
-      if (workoutType == WorkoutType.Beginner) {
+      if (workoutType == WorkoutType.beginner) {
         titleColor = Colors.green;
-      } else if (workoutType == WorkoutType.Intermediate) {
+      } else if (workoutType == WorkoutType.intermediate) {
         titleColor = Colors.orange;
-      } else if(workoutType == WorkoutType.Advance){
+      } else if(workoutType == WorkoutType.advance){
         titleColor = Colors.red;
       }else{
         titleColor = Colors.amber;

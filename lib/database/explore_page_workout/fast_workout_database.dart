@@ -3,7 +3,7 @@ import '../../models/explore_workout_model.dart';
 import '../workout_list.dart';
 
 ExploreWorkout tabata = ExploreWorkout(
-  workoutType: WorkoutType.Intermediate,
+  workoutType: WorkoutType.intermediate,
   title: "4 MIN Tabata",
   workoutList: [
     jumpingJacks,
@@ -22,7 +22,7 @@ ExploreWorkout tabata = ExploreWorkout(
   imgSrc: "assets/explore_image/img_13.jpg",
 );
 ExploreWorkout looseBellyFat = ExploreWorkout(
-  workoutType: WorkoutType.Beginner,
+  workoutType: WorkoutType.beginner,
   title: "Lose Belly Fat",
   workoutList: [
     jumpingJacks,
@@ -40,7 +40,7 @@ ExploreWorkout looseBellyFat = ExploreWorkout(
   imgSrc: "assets/explore_image/img_14.jpg",
 );
 ExploreWorkout cardio = ExploreWorkout(
-  workoutType: WorkoutType.Beginner,
+  workoutType: WorkoutType.beginner,
   title: "Warmup Exercise",
   workoutList: [
     crossTouchAndReach,
@@ -56,7 +56,7 @@ ExploreWorkout cardio = ExploreWorkout(
   imgSrc: "assets/explore_image/img_15.jpg",
 );
 ExploreWorkout classic = ExploreWorkout(
-  workoutType: WorkoutType.Intermediate,
+  workoutType: WorkoutType.intermediate,
   title: "8 min Classic",
   customTime: 8,
   workoutList: [
@@ -81,7 +81,7 @@ ExploreWorkout classic = ExploreWorkout(
   imgSrc: "assets/explore_image/img_16.jpg",
 );
 ExploreWorkout hiitFatBurning = ExploreWorkout(
-  workoutType: WorkoutType.Beginner,
+  workoutType: WorkoutType.beginner,
   title: "Fat burning HIIT",
   workoutList: [
     sumoSquat,
@@ -99,7 +99,7 @@ ExploreWorkout hiitFatBurning = ExploreWorkout(
   imgSrc: "assets/explore_image/img_17.jpg",
 );
 ExploreWorkout absWorkout = ExploreWorkout(
-  workoutType: WorkoutType.Intermediate,
+  workoutType: WorkoutType.intermediate,
   customTime: 7,
   title: "7 min abs workout",
   workoutList: [

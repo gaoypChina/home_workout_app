@@ -42,10 +42,11 @@ class SubscriptionPlan extends StatelessWidget {
                 elevation: 0,
                 child: Stack(
                   children: [
-                    Container(
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
                       width: double.infinity,
                       padding:
-                          EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                      EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                       decoration: BoxDecoration(
                           color: isSelected
                               ? Theme.of(context).primaryColor
@@ -55,9 +56,7 @@ class SubscriptionPlan extends StatelessWidget {
                               width: 2,
                               color: isSelected
                                   ? Theme.of(context).primaryColor
-                                  : Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(.2))),
+                                  : Theme.of(context).primaryColor.withOpacity(.2))),
                       child: Row(
                         children: [
                           SizedBox(
@@ -86,16 +85,15 @@ class SubscriptionPlan extends StatelessWidget {
                                   height: 8,
                                 ),
                                 Text(
-                                  Constants()
-                                          .getPerMonthPrice(product: product) +
-                                      " Per Month",
+                                  "${Constants()
+                                      .getPerMonthPrice(product: product)} Per Month",
                                   style: TextStyle(
                                       color: isSelected
                                           ? Colors.white
                                           : Theme.of(context)
-                                              .textTheme
-                                              .bodyText1!
-                                              .color,
+                                          .textTheme
+                                          .bodyText1!
+                                          .color,
                                       fontSize: 22,
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -111,8 +109,8 @@ class SubscriptionPlan extends StatelessWidget {
                                         color: isSelected
                                             ? Colors.white
                                             : Theme.of(context)
-                                                .textTheme
-                                                .bodyText1!.color!.withOpacity(.8),
+                                            .textTheme
+                                            .bodyText1!.color!.withOpacity(.8),
                                       ),
                                     ),
                                   ],
@@ -126,15 +124,15 @@ class SubscriptionPlan extends StatelessWidget {
                           Expanded(
                               child: isSelected
                                   ? Icon(
-                                      Icons.check_circle,
-                                      color: Colors.white,
-                                    )
+                                Icons.check_circle,
+                                color: Colors.white,
+                              )
                                   : Icon(
                                 Icons.circle,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!.color!.withOpacity(.2),
-                                    )),
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!.color!.withOpacity(.2),
+                              )),
                         ],
                       ),
                     ),
@@ -145,14 +143,15 @@ class SubscriptionPlan extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(12)),
-                            color:  Colors.amber,
+                                topRight: Radius.circular(12),
+                            bottomLeft: Radius.circular(8)),
+                            color:  Colors.amber.shade700,
                           ),
                           padding:
                               EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                           child: Text(
                             discount.toString() + "% OFF",
-                            style: TextStyle(fontWeight: FontWeight.w600),
+                            style: TextStyle(fontWeight: FontWeight.w600,color: Colors.white),
                           ),
                         ),
                       ),

@@ -5,6 +5,7 @@ import '../../database/workout_list.dart';
 import '../../helper/sp_helper.dart';
 import '../../helper/sp_key_helper.dart';
 import '../../widgets/custom_exercise_card.dart';
+import '../../widgets/custom_rounded_button.dart';
 import 'exercise_instruction_screen.dart';
 
 class ExerciseListScreen extends StatefulWidget {
@@ -12,12 +13,14 @@ class ExerciseListScreen extends StatefulWidget {
   final String tag;
   final String title;
   final int tagValue;
+  final String imgSrc;
 
   ExerciseListScreen(
       {required this.workOutList,
       required this.tag,
       required this.tagValue,
-      required this.title});
+      required this.title,
+      required this.imgSrc});
 
   @override
   _ExerciseListScreenState createState() => _ExerciseListScreenState();
@@ -91,7 +94,6 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
     return length + 6;
   }
 
-
   getCountDown() async {
     countDownTime = await spHelper.loadDouble(spKey.countdownTime) ?? 10;
     restTime = await spHelper.loadDouble(spKey.trainingRest) ?? 30;
@@ -99,6 +101,23 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
 
   getPushUpLevel() async {
     pushUpIndex = await spHelper.loadInt(spKey.pushUpLevel) ?? 1;
+  }
+
+  String getDifficulty() {
+    List<String> tagList = widget.tag.split(" ");
+    int length = tagList.length;
+    if (length > 1 && length == 2) {
+      return tagList[1];
+    }
+
+    if (length <= 10) {
+      return "Beginner";
+    } else if (length <= 16) {
+      return "Intermediate";
+    } else {
+      return "Advance";
+    }
+
   }
 
   getCoverImage() {
@@ -158,49 +177,78 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
-    return
-      Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-        floatingActionButton: Container(
-          padding: EdgeInsets.only(bottom: 0.0),
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: FloatingActionButton.extended(
-              backgroundColor: Colors.blue.shade700,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => InstructionScreen(
-                      tag: widget.tag,
-                      title: widget.title,
-                      workOutList: widget.workOutList,
-                      rapList: rapList,
-                      countDownTime: countDownTime.toInt(),
-                      restTime: restTime.toInt(),
-                    ),
-                  ),
-                );
-              },
-              icon: Icon(
-                Icons.local_fire_department_sharp,
-                color: Colors.white,
-                size: 30,
-              ),
-              label: Text(
-                "Start Workout",
-                style: TextStyle(fontSize: 16, color: Colors.white),
-                textAlign: TextAlign.end,
-              ),
+    buildChip({
+      required String title,
+      required IconData icon,
+    }) {
+      return Expanded(
+          child: Container(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        color: Colors.blue.withOpacity(.2),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon,
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .color!
+                        .withOpacity(.8)),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  title,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      color: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .color!
+                          .withOpacity(.8)),
+                ),
+              ],
             ),
-          ),
+          ],
+        ),
+      ));
+    }
+
+    return Scaffold(
+        bottomNavigationBar: Material(
+          elevation: 5,
+          color: Theme.of(context).bottomAppBarColor,
+          child: Container(
+              height: 80,
+              padding: EdgeInsets.symmetric(horizontal: 18)
+                  .copyWith(bottom: 16, top: 12),
+              child: RoundedIconButton(
+                icon: Icons.play_arrow,
+                title: "Start Workout".toUpperCase(),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => InstructionScreen(
+                        tag: widget.tag,
+                        title: widget.title,
+                        workOutList: widget.workOutList,
+                        rapList: rapList,
+                        countDownTime: countDownTime.toInt(),
+                        restTime: restTime.toInt(),
+                      ),
+                    ),
+                  );
+                },
+              )),
         ),
         body: isLoading
             ? CircularProgressIndicator()
             : NestedScrollView(
                 controller: _scrollController,
-                physics: BouncingScrollPhysics(),
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return [
@@ -218,7 +266,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                           Navigator.of(context).pop(true);
                         },
                       ),
-                      expandedHeight: 150.0,
+                      expandedHeight: 130.0,
                       pinned: true,
                       floating: false,
                       forceElevated: innerBoxIsScrolled,
@@ -226,6 +274,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                         title: Text(
                           title,
                           style: TextStyle(
+                            fontSize:isShrink?18: 16,
                               color: isDark
                                   ? Colors.white
                                   : isShrink
@@ -235,8 +284,10 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                         background: Stack(
                           children: [
                             Image.asset(
-                              coverImgPath,
-                              fit: BoxFit.cover,
+                              widget.imgSrc,
+                              fit: BoxFit.fill,
+                              height: 120 +80,
+
                               width: double.infinity,
                             ),
                             Container(
@@ -255,62 +306,40 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                       Column(
                         children: [
                           Container(
-                            color: Colors.blue.withOpacity(.1),
-                            padding:
-                                EdgeInsets.only(left: 20, top: 12, bottom: 12),
-                            child: Row(
-                              children: [
-                                Container(
-                                    height: 16,
-                                    width: 5,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(12)),
-                                        color: Colors.red)),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  widget.workOutList.length.toString() +
-                                      " Workouts",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 15),
-                                ),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                Container(
-                                    height: 16,
-                                    width: 5,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(12)),
-                                        color: Colors.green)),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  getTime().toString() + " Minutes",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 15),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            color: Colors.grey.withOpacity(.1),
                             height: 1,
+                            color:
+                                Theme.of(context).appBarTheme.backgroundColor,
                           ),
-                          SizedBox(
-                            height: 8,
+                          Row(
+                            children: [
+                              buildChip(
+                                icon: Icons.timer_outlined,
+                                title: "${getTime()} Minute",
+                              ),
+                              SizedBox(
+                                width: 1,
+                              ),
+                              buildChip(
+                                icon: Icons.library_books_outlined,
+                                title: widget.workOutList.length.toString() +
+                                    " Workout",
+                              ),
+                              SizedBox(
+                                width: 1,
+                              ),
+                              buildChip(
+                                icon: Icons.person_outline,
+                                title: getDifficulty(),
+                              ),
+                            ],
                           ),
+
+
                           Expanded(
                             child: AnimationLimiter(
                               child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                padding: EdgeInsets.only(bottom: 100),
+                                physics: isShrink ? BouncingScrollPhysics():ScrollPhysics(),
+                                padding: EdgeInsets.only(top: 8),
                                 itemCount: widget.workOutList.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return AnimationConfiguration.staggeredList(

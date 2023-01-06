@@ -1,18 +1,18 @@
 enum WorkoutType {
-  Beginner,
-  Intermediate,
-  Advance,
-  None
+  beginner,
+  intermediate,
+  advance,
+  none
 }
 WorkoutType workoutTypeFromInt(int value){
   if(value == 0){
-    return WorkoutType.Beginner;
+    return WorkoutType.beginner;
   }else if(value == 1){
-    return WorkoutType.Intermediate;
+    return WorkoutType.intermediate;
   }else if(value == 2){
-    return WorkoutType.Advance;
+    return WorkoutType.advance;
   }else{
-    return WorkoutType.Beginner;
+    return WorkoutType.beginner;
   }
 
 }

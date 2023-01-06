@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import '../../../constants/app_theme.dart';
 import '../../../constants/constant.dart';
-import '../../../helper/sp_helper.dart';
-import '../../../helper/sp_key_helper.dart';
 import 'package:numberpicker/numberpicker.dart';
 
+import '../helper/sp_helper.dart';
+import '../helper/sp_key_helper.dart';
+
+
+
 class WeekGoalSettings extends StatefulWidget {
+  const WeekGoalSettings({super.key});
+
   @override
-  _WeekGoalSettingsState createState() => _WeekGoalSettingsState();
+  WeekGoalSettingsState createState() => WeekGoalSettingsState();
 }
 
-class _WeekGoalSettingsState extends State<WeekGoalSettings> {
+class WeekGoalSettingsState extends State<WeekGoalSettings> {
   SpKey spKey = SpKey();
   SpHelper spHelper = SpHelper();
 
@@ -47,8 +52,8 @@ class _WeekGoalSettingsState extends State<WeekGoalSettings> {
     int trainingDayRes = await spHelper.loadInt(spKey.trainingDay) ?? 3;
     setState(() {
       trainingDay = trainingDayRes == 1
-          ? trainingDayRes.toString() + " Day"
-          : trainingDayRes.toString() + " Days";
+          ? "$trainingDayRes Day"
+          : "$trainingDayRes Days";
       firstDay = loadDay(firstDayRes)!;
       trainingDayVal = firstDayRes;
       activeDayVal = trainingDayRes;
@@ -72,201 +77,196 @@ class _WeekGoalSettingsState extends State<WeekGoalSettings> {
                 "assets/other/backgroudnd_2.jpg",
               ),
               fit: BoxFit.cover,
-              colorFilter: new ColorFilter.mode(
+              colorFilter: ColorFilter.mode(
                   darkTheme.scaffoldBackgroundColor.withOpacity(.5),
                   BlendMode.dstATop),
             )),
-        child: Container(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(height: 50),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.all(8),
-                  shape: CircleBorder(),
-                  primary: Colors.blue,
-                  onPrimary: Colors.black,
-                ),
-
-                onPressed: () => Navigator.of(context).pop(),
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                  size: 22,
-                ),
-                //  tooltip: tooltip,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          SizedBox(height: 50),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.black, padding: EdgeInsets.all(8), backgroundColor: Theme.of(context).primaryColor,
+                shape: CircleBorder(),
               ),
+
+              onPressed: () => Navigator.of(context).pop(),
+              child: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+                size: 22,
+              ),
+              //  tooltip: tooltip,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 20),
-                  Text(
-                    "Set your weekly goal",
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20),
+                Text(
+                  "Set your weekly goal",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                      color: Colors.white),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "We recommend training at least 3 days weekly for a better result",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                      color: Colors.grey),
+                ),
+                SizedBox(height: 30),
+                Text("Weekly training days",
                     style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        color: Colors.white),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    "We recommend training at least 3 days weekly for a better result",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w500,
                         fontSize: 16,
-                        color: Colors.grey),
-                  ),
-                  SizedBox(height: 30),
-                  Text("Weekly training days",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: Colors.white)),
-                  SizedBox(height: 10),
-                  InkWell(
-                    onTap: () async {
-                      int? res = await showDialog(
-                          context: context,
-                          builder: (context) {
-                            return DaySelector(
-                              title: "Weekly training days",
-                              initialValue: activeDayVal,
-                              dayList: trainingDayList,
-                            );
-                          });
-
-                      if (res != null) {
-                        setState(() {
-                          trainingDay = res == 1
-                              ? res.toString() + " Day"
-                              : res.toString() + " Days";
-                          activeDayVal = res;
+                        color: Colors.white)),
+                SizedBox(height: 10),
+                InkWell(
+                  onTap: () async {
+                    int? res = await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return DaySelector(
+                            title: "Weekly training days",
+                            initialValue: activeDayVal,
+                            dayList: trainingDayList,
+                          );
                         });
-                      }
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: Colors.white,
-                      ),
-                      height: 40,
-                      width: 200,
-                      child: Row(
-                        children: [
-                          Text(
-                            trainingDay,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          Spacer(),
-                          Icon(
-                            Icons.arrow_drop_down_rounded,
-                            color: Colors.black,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Text("First day of week",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: Colors.white)),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      int? res = await showDialog(
-                          context: context,
-                          builder: (context) {
-                            return DaySelector(
-                              title: "First Day of week",
-                              initialValue: trainingDayVal == 6
-                                  ? 1
-                                  : trainingDayVal == 7
-                                      ? 2
-                                      : 3,
-                              dayList: firstDayList,
-                            );
-                          });
 
-                      if (res != null) {
-                        String resString = "";
-                        if (res == 1) {
-                          resString = "Saturday";
-                          trainingDayVal = 6;
-                        } else if (res == 2) {
-                          resString = "Sunday";
-                          trainingDayVal = 7;
-                        } else {
-                          resString = "Monday";
-                          trainingDayVal = 1;
-                        }
-                        setState(() {
-                          firstDay = resString;
-                        });
-                      }
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: Colors.white,
-                      ),
-                      height: 40,
-                      width: 200,
-                      child: Row(
-                        children: [
-                          Text(
-                            firstDay,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          Spacer(),
-                          Icon(
-                            Icons.arrow_drop_down_rounded,
-                            color: Colors.black,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Spacer(),
-            Container(
-              padding: EdgeInsets.only(bottom: 0.0),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: FloatingActionButton.extended(
-                  backgroundColor: Colors.blue.shade700,
-                  onPressed: () {
-                    spHelper.saveInt(spKey.firstDay, trainingDayVal);
-                    spHelper.saveInt(spKey.trainingDay, activeDayVal);
-                    spHelper.saveBool(spKey.isGoalSet, true);
-                    Navigator.pop(context, [trainingDayVal, activeDayVal, 0]);
+                    if (res != null) {
+                      setState(() {
+                        trainingDay = res == 1
+                            ? "$res Day"
+                            : "$res Days";
+                        activeDayVal = res;
+                      });
+                    }
                   },
-                  label: Text(
-                    "SAVE",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                    textAlign: TextAlign.end,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      color: Colors.white,
+                    ),
+                    height: 40,
+                    width: 200,
+                    child: Row(
+                      children: [
+                        Text(
+                          trainingDay,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.arrow_drop_down_rounded,
+                          color: Colors.black,
+                        )
+                      ],
+                    ),
                   ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Text("First day of week",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.white)),
+                SizedBox(
+                  height: 10,
+                ),
+                InkWell(
+                  onTap: () async {
+                    int? res = await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return DaySelector(
+                            title: "First Day of week",
+                            initialValue: trainingDayVal == 6
+                                ? 1
+                                : trainingDayVal == 7
+                                ? 2
+                                : 3,
+                            dayList: firstDayList,
+                          );
+                        });
+
+                    if (res != null) {
+                      String resString = "";
+                      if (res == 1) {
+                        resString = "Saturday";
+                        trainingDayVal = 6;
+                      } else if (res == 2) {
+                        resString = "Sunday";
+                        trainingDayVal = 7;
+                      } else {
+                        resString = "Monday";
+                        trainingDayVal = 1;
+                      }
+                      setState(() {
+                        firstDay = resString;
+                      });
+                    }
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      color: Colors.white,
+                    ),
+                    height: 40,
+                    width: 200,
+                    child: Row(
+                      children: [
+                        Text(
+                          firstDay,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.arrow_drop_down_rounded,
+                          color: Colors.black,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Spacer(),
+          Container(
+            padding: EdgeInsets.only(bottom: 0.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: FloatingActionButton.extended(
+                backgroundColor:Theme.of(context).primaryColor,
+                onPressed: () {
+                  spHelper.saveInt(spKey.firstDay, trainingDayVal);
+                  spHelper.saveInt(spKey.trainingDay, activeDayVal);
+                  spHelper.saveBool(spKey.isGoalSet, true);
+                  Navigator.pop(context, [trainingDayVal, activeDayVal, 0]);
+                },
+                label: Text(
+                  "SAVE",
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  textAlign: TextAlign.end,
                 ),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-          ]),
-        ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+        ]),
       ),
     );
   }
@@ -277,14 +277,14 @@ class DaySelector extends StatefulWidget {
   final String title;
   final int initialValue;
 
-  DaySelector(
-      {required this.dayList, required this.title, required this.initialValue});
+  const DaySelector(
+      {super.key, required this.dayList, required this.title, required this.initialValue});
 
   @override
-  _QuitPageState createState() => _QuitPageState();
+  QuitPageState createState() => QuitPageState();
 }
 
-class _QuitPageState extends State<DaySelector> {
+class QuitPageState extends State<DaySelector> {
   Constants constants = Constants();
   int selectedValue = 2;
 
@@ -305,7 +305,7 @@ class _QuitPageState extends State<DaySelector> {
         minValue: 1,
         maxValue: widget.dayList.length,
         selectedTextStyle: TextStyle(
-            color: Colors.blue.shade700,
+            color:Theme.of(context).primaryColor,
             fontSize: 22,
             fontWeight: FontWeight.w500),
         textMapper: (title) {
@@ -322,9 +322,11 @@ class _QuitPageState extends State<DaySelector> {
           onPressed: () => Navigator.pop(context),
           child: Text("Cancel"),
         ),
-        TextButton(
+        SizedBox(width:4,),
+        ElevatedButton(
             onPressed: () => Navigator.pop(context, selectedValue),
             child: Text("Save")),
+        SizedBox(width:4,),
       ],
     );
   }

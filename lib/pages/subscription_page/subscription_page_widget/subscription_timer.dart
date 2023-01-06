@@ -1,4 +1,3 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
@@ -8,6 +7,10 @@ class SubscriptionTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double cardHeight = 140;
+    double radius = 36;
+    double vertical = 45;
+    double horizontal = 28;
     DateTime tomorrow = DateTime.now().add(Duration(hours: 24));
 
     int endTime = DateTime.now().millisecondsSinceEpoch +
@@ -26,86 +29,127 @@ class SubscriptionTime extends StatelessWidget {
       }
     }
 
-    var timeStyle = TextStyle(color: Colors.white);
-    return Container(
-      padding: EdgeInsets.only(left: 8, right: 8, bottom: 12),
-      color: Colors.grey.shade800,
-      child: Row(
+    var fgColor = Colors.white;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+      child: Stack(
         children: [
-          Image.asset(
-            "assets/other/offer.png",
-            height: 90,
-          ),
-          SizedBox(
-            width: 8,
-          ),
           Container(
-            child: Expanded(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "For new members: 50% off".toUpperCase(),
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  CountdownTimer(
-                    endTime: endTime,
-                    widgetBuilder: (_, CurrentRemainingTime? time) {
-                      if (time == null) {
-                        return Text(
-                          'Sale Over',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        );
-                      }
-                      return Row(
-                        children: [
-                          DottedBorder(
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(4),
-                            color: Colors.white70,
-                            padding: EdgeInsets.all(4),
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12)),
-                              child: Container(
-                                child: Text(
-                                  "UPTO : 50% OFF",
-                                  style: TextStyle(color: Colors.white70),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            '${getTime(time.days)}  :  \nDay',
-                            style: timeStyle,
-                          ),
-                          Text(
-                            "${getTime(time.hours)}  :  \nHrs",
-                            style: timeStyle,
-                          ),
-                          Text(
-                            "${getTime(time.min)}  :  \nMin",
-                            style: timeStyle,
-                          ),
-                          Text(
-                            "${getTime(time.sec)}   \nSec",
-                            style: timeStyle,
-                          )
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
+            decoration: BoxDecoration(
+                color: Colors.amber.shade900,
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(12),
+                    topLeft: Radius.circular(12),
+                    bottomLeft: Radius.circular(12),
+                    bottomRight: Radius.circular(12))),
+            height: cardHeight,
+          ),
+          Positioned(
+
+              top: vertical,
+               left: -1 * horizontal,
+              child: Container(
+            height: radius,
+            width: radius,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
             ),
-          )
-        ],
+          )),
+          Positioned(
+              top: vertical,
+              right: -1 * horizontal,
+              child: Container(
+                height: radius,
+                width: radius,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+              )),
+            Container(
+            decoration: BoxDecoration(
+
+                borderRadius: BorderRadius.all(Radius.circular(12))),
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.only(left: 8, right: 8, bottom: 12, top: 12),
+            child: Row(
+              children: [
+                // Image.asset(
+                //   "assets/other/offer.png",
+                //   height: 90,
+                // ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "New member pass",
+                        style: TextStyle(
+                            color: fgColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        "For new members upto 50% off",
+                        style: TextStyle(
+                            color: fgColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500),
+                      ),
+                        SizedBox(height: 12,),
+                      Text(
+                        "Offer end in :",
+                        style: TextStyle(
+                            color: fgColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500),
+                      ),
+                        CountdownTimer(
+                          endTime: endTime,
+                          widgetBuilder: (_, CurrentRemainingTime? time) {
+                            if (time == null) {
+                              return Text(
+                                'Sale Over',
+                              style: TextStyle(color: fgColor, fontSize: 16),
+                            );
+                            }
+                            return Row(
+                              children: [
+
+                                Text(
+                                  '${getTime(time.days)}  :  \nDay',
+                                style: TextStyle(color: fgColor),
+                              ),
+                                Text(
+                                  "${getTime(time.hours)}  :  \nHrs",
+                                style: TextStyle(color: fgColor),
+                              ),
+                                Text(
+                                  "${getTime(time.min)}  :  \nMin",
+                                style: TextStyle(color: fgColor),
+                              ),
+                                Text(
+                                  "${getTime(time.sec)}   \nSec",
+                                style: TextStyle(color: fgColor),
+                              )
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+
+            )],
       ),
     );
+
   }
 }

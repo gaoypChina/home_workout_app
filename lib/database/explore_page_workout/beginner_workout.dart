@@ -14,7 +14,7 @@ List<ExploreWorkoutCardModel> beginnerWorkoutList = [
 ];
 
 ExploreWorkoutCardModel absMaker = ExploreWorkoutCardModel(
-    workoutType: WorkoutType.Beginner,
+    workoutType: WorkoutType.beginner,
     description: [
       "Abs workout for beginner is a combination of high-intensity body weight and body weight strength training that requires zero equipment.",
       "The idea is to understand that no equipment does not necessarily mean that one cannot work hard, train muscles, get fitter and a more toned body. In fact, there's a lot that you can achieve with some body weight exercises that just need to be done with the right technique."
@@ -33,7 +33,7 @@ ExploreWorkoutCardModel absMaker = ExploreWorkoutCardModel(
     imgSrc: "assets/icons/push-up.png",
     color: Colors.deepOrangeAccent);
 ExploreWorkoutCardModel lightCardio = ExploreWorkoutCardModel(
-    workoutType: WorkoutType.Beginner,
+    workoutType: WorkoutType.beginner,
     description: [
       "Light cardio allow a person to perform cardio exercise almost anywhere, such as in their home, public park, or outdoor space.",
       "The following are calorie-burning exercises that a person can do at home with minimal equipment.",
@@ -53,7 +53,7 @@ ExploreWorkoutCardModel lightCardio = ExploreWorkoutCardModel(
     imgSrc: "assets/icons/lunges.png",
     color: Colors.blueGrey);
 ExploreWorkoutCardModel legWorkout = ExploreWorkoutCardModel(
-  workoutType: WorkoutType.Beginner,
+  workoutType: WorkoutType.beginner,
   description: [
     "Exercises, such as squats, lunges, jumping jacks will improve your range of motion. Once you’ve got the movements and proper mobility down, you’ll be able to safely tackle more weight and ultimately increase your gains.",
     "Strength training of legs outperforms standard cardio exercises when it comes to keeping metabolism levels high.",
@@ -78,7 +78,7 @@ ExploreWorkoutCardModel legWorkout = ExploreWorkoutCardModel(
   color: Colors.redAccent,
 );
 ExploreWorkoutCardModel armWorkout = ExploreWorkoutCardModel(
-  workoutType: WorkoutType.Beginner,
+  workoutType: WorkoutType.beginner,
   description: [
     "If you have no weights in sight or you’re new to arm workouts, you can just use your body weight to get an arm workout.",
     "According to Salvatore, most arm exercises without weights are just variations of planks or push-ups, which means they require you to engage your core"
@@ -101,7 +101,7 @@ ExploreWorkoutCardModel armWorkout = ExploreWorkoutCardModel(
   color: Colors.teal,
 );
 ExploreWorkoutCardModel widerShoulder = ExploreWorkoutCardModel(
-    workoutType: WorkoutType.Beginner,
+    workoutType: WorkoutType.beginner,
     description: [
       "Shoulder strength is like the foundation pillar for your head, arms and upper torso. Having strong arms means that you can pretty much do any work like a boss.",
       "An overall toned shoulder benefits other muscles as well. Apart from reduced risk of injury, your biceps and triceps become much stronger. You can perform other types of athletic activities which are indirectly supported by your shoulder muscles."
@@ -121,7 +121,7 @@ ExploreWorkoutCardModel widerShoulder = ExploreWorkoutCardModel(
     imgSrc: "assets/icons/yoga.png",
     color: Colors.blueGrey);
 ExploreWorkoutCardModel robustChestBeginner = ExploreWorkoutCardModel(
-  workoutType: WorkoutType.Beginner,
+  workoutType: WorkoutType.beginner,
   title: "Robust chest beginner",
   imgSrc: "assets/icons/fitness.png",
   color: Colors.brown,

@@ -55,7 +55,7 @@ class BackupDataCard extends StatelessWidget {
                 ),
                 InkWell(
                     onTap: () async {
-                      var backupProvider = Provider.of<BackupProvider>(context);
+                      var backupProvider = Provider.of<BackupProvider>(context,listen: false);
                       bool isDisabled = backupProvider.connectionStatus ==
                               AppConnectionStatus.loading ||
                           authProvider.connectionStatus ==

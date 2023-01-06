@@ -123,11 +123,12 @@ class _SettingPageState extends State<SettingPage>
       color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
     );
 
+
     buildPrimeButton() {
       return Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 0, top: 16),
         child: ElevatedButton.icon(
-          icon: FaIcon(FontAwesomeIcons.ad),
+          icon: FaIcon(FontAwesomeIcons.rectangleAd),
           onPressed: () async {
             bool isConnected = await connectivityProvider.isNetworkConnected;
             if (isConnected) {
@@ -140,14 +141,25 @@ class _SettingPageState extends State<SettingPage>
             }
           },
           style: ElevatedButton.styleFrom(
-              primary: Theme.of(context).primaryColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(22))),
               minimumSize: Size(double.infinity, 50)),
-          label: Text("Get Premium now"),
+          label: const Text(
+            "Get Premium now",
+            style: TextStyle(fontSize: 15),
+          ),
         ),
       );
     }
+
+    buildRateButton() {
+      return RateAppInitWidget(
+        builder: (rateMyApp) => RateDialogPage(
+          rateMyApp: rateMyApp,
+        ),
+      );
+    }
+
 
     getTitle(String text) {
       return Container(
@@ -190,7 +202,7 @@ class _SettingPageState extends State<SettingPage>
                         (BuildContext context, bool innerBoxIsScrolled) {
                       return <Widget>[
                         SliverAppBar(
-                       
+
                           automaticallyImplyLeading: false,
                           title: Row(
                             children: [
@@ -283,7 +295,7 @@ class _SettingPageState extends State<SettingPage>
                                   icon: CupertinoIcons.time,
                                   onPress: () async {
                                     int? num =
-                                        await showMaterialModalBottomSheet(
+                                    await showMaterialModalBottomSheet(
                                       context: context,
                                       builder: (context) {
                                         return WorkoutTimePicker(
@@ -305,13 +317,10 @@ class _SettingPageState extends State<SettingPage>
                                   trailing: isLoading
                                       ? CircularProgressIndicator()
                                       : Text(
-                                          trainingRest.toStringAsFixed(0) +
-                                              " Sec",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontWeight: FontWeight.w600),
-                                        ),
+                                    "${trainingRest.toStringAsFixed(0)} Sec",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600),
+                                  ),
                                 ),
                                 getDivider(),
                                 CustomTile(
@@ -319,15 +328,15 @@ class _SettingPageState extends State<SettingPage>
                                   title: "Countdown time",
                                   onPress: () async {
                                     int? num =
-                                        await showMaterialModalBottomSheet(
-                                            context: context,
-                                            builder: (context) {
-                                              return WorkoutTimePicker(
-                                                value: countdownTime.toInt(),
-                                                minimumVal: 10,
-                                                maximumVal: 15,
-                                              );
-                                            });
+                                    await showMaterialModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return WorkoutTimePicker(
+                                            value: countdownTime.toInt(),
+                                            minimumVal: 10,
+                                            maximumVal: 15,
+                                          );
+                                        });
                                     if (num != null) {
                                       await spHelper.saveDouble(
                                           spKey.countdownTime, num.toDouble());
@@ -339,13 +348,10 @@ class _SettingPageState extends State<SettingPage>
                                   trailing: isLoading
                                       ? CircularProgressIndicator()
                                       : Text(
-                                          countdownTime.toStringAsFixed(0) +
-                                              " Sec",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontWeight: FontWeight.w600),
-                                        ),
+                                    "${countdownTime.toStringAsFixed(0)} Sec",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600),
+                                  ),
                                 ),
                                 getDivider(),
                                 CustomTile(
@@ -361,6 +367,7 @@ class _SettingPageState extends State<SettingPage>
                           ),
                           if (!subscriptionProvider.isProUser)
                             buildPrimeButton(),
+                          buildRateButton(),
                           getTitle("General Settings"),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 0),
@@ -565,12 +572,7 @@ class _SettingPageState extends State<SettingPage>
                                       );
                                     },
                                   ),
-                                  getDivider(),
-                                  RateAppInitWidget(
-                                    builder: (rateMyApp) => RateDialogPage(
-                                      rateMyApp: rateMyApp,
-                                    ),
-                                  ),
+
                                   getDivider(),
                                   CustomTile(
                                     icon: Icons.chat_outlined,

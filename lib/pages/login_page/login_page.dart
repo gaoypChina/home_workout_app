@@ -361,14 +361,14 @@ class _HomePageState extends State<LoginPage> with TickerProviderStateMixin {
                   width: 8,
                 ),
                 Container(
-                    padding: EdgeInsets.all(0),
+                    padding: EdgeInsets.all(7),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle, color: Colors.white),
                     height: 40,
                     child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(18)),
                         child: Image.asset(
-                            "packages/flutter_signin_button/assets/logos/2.0x/google_light.png"))),
+                            "assets/icons/google_icon.png"))),
                 Spacer(),
                 Text(
                   "Continue with Google",

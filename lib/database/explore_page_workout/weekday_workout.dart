@@ -6,41 +6,41 @@ List<ExploreWorkout> weekdayWorkoutList = [
   ExploreWorkout(
       title: "Monday Workout Challenge",
       imgSrc: "assets/explore_image/img_2.jpg",
-      workoutType: WorkoutType.Intermediate,
+      workoutType: WorkoutType.intermediate,
       description: [],
       workoutList: _mondayWorkout),
   ExploreWorkout(
       title: "Tuesday Workout Challenge",
       imgSrc: "assets/explore_image/img_12.jpg",
-      workoutType: WorkoutType.Beginner,
+      workoutType: WorkoutType.beginner,
       description: ["Weekly workout plan provide exercises for different mussels group In order to acchive your fitness goal"],
       workoutList: _tuesdayWorkout),
   ExploreWorkout(
       title: "Wednesday Workout Challenge",
       imgSrc: "assets/explore_image/img_8.jpg",
-      workoutType: WorkoutType.Intermediate,
+      workoutType: WorkoutType.intermediate,
       description: [],
       workoutList: _wednesdayWorkout),
   ExploreWorkout(
       title: "Thursday Workout Challenge",
       imgSrc: "assets/explore_image/img_13.jpg",
-      workoutType: WorkoutType.Beginner,
+      workoutType: WorkoutType.beginner,
       description: [], workoutList: _thursdayWorkout),
   ExploreWorkout(
       title: "Friday Workout Challenge",
       imgSrc: "assets/explore_image/img_14.jpg",
-      workoutType: WorkoutType.Advance,
+      workoutType: WorkoutType.advance,
       description: [],
       workoutList: _fridayWorkout),
   ExploreWorkout(
       title: "Saturday Workout Challenge",
       imgSrc: "assets/explore_image/img_15.jpg",
-      workoutType: WorkoutType.Intermediate,
+      workoutType: WorkoutType.intermediate,
       description:[],  workoutList: _saturdayWorkout),
   ExploreWorkout(
       title: "Sunday Workout Challenge",
       imgSrc: "assets/explore_image/img_16.jpg",
-      workoutType: WorkoutType.Beginner,
+      workoutType: WorkoutType.beginner,
       description: [],
       workoutList: _sundayWorkout),
 ];

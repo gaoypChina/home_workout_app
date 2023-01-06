@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../database/workout_list.dart';
 import '../../helper/mediaHelper.dart';
-import '../../pages/main/setting_page/sound_settings_page.dart';
 import '../../pages/workout_page/check_list.dart';
 import '../../pages/workout_page/pause_page.dart';
 import '../../pages/workout_page/workout_page.dart';
@@ -10,7 +9,7 @@ import '../../components/info_button.dart';
 import '../../components/timer_painter.dart';
 import '../../pages/services/youtube_service/youtube_player.dart';
 import 'package:wakelock/wakelock.dart';
-
+import '../main/setting_page/sound_settings_page.dart';
 import 'exercise_detail_page.dart';
 
 class InstructionScreen extends StatefulWidget {
@@ -21,26 +20,26 @@ class InstructionScreen extends StatefulWidget {
   final int countDownTime;
   final int restTime;
 
-  InstructionScreen(
-      {required this.workOutList,
-      required this.title,
-      required this.rapList,
-      required this.tag,
-      required this.countDownTime,
-      required this.restTime});
+  const InstructionScreen(
+      {super.key, required this.workOutList,
+        required this.title,
+        required this.rapList,
+        required this.tag,
+        required this.countDownTime,
+        required this.restTime});
 
   @override
-  _InstructionScreenState createState() => _InstructionScreenState();
+  InstructionScreenState createState() => InstructionScreenState();
 }
 
-class _InstructionScreenState extends State<InstructionScreen>
+class InstructionScreenState extends State<InstructionScreen>
     with TickerProviderStateMixin {
   MediaHelper mediaHelper = MediaHelper();
   late AnimationController controller;
 
   String get timerString {
     Duration duration = controller.duration! * controller.value;
-    return '${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+    return (duration.inSeconds % 60).toString().padLeft(2, '0');
   }
 
   int get timerValue {
@@ -53,24 +52,24 @@ class _InstructionScreenState extends State<InstructionScreen>
         context,
         MaterialPageRoute(
             builder: (context) => WorkoutPage(
-                  tag: widget.tag,
-                  rapList: widget.rapList,
-                  title: widget.title,
-                  workOutList: widget.workOutList,
-                  index: 0,
-                  restTime: widget.restTime,
-                  currTime: DateTime.now().toIso8601String(),
-                )));
+              tag: widget.tag,
+              rapList: widget.rapList,
+              title: widget.title,
+              workOutList: widget.workOutList,
+              index: 0,
+              restTime: widget.restTime,
+              currTime: DateTime.now().toIso8601String(),
+            )));
   }
 
   _onPopBack() async {
-    String value = "";
+
     if (controller.isAnimating) {
       controller.stop(canceled: true);
     }
-    value = await Navigator.of(context)
+    String? value = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (builder) => StopPage()));
-    if (value == "resume") {
+    if (value == null || value == "resume") {
       controller.reverse(
           from: controller.value == 0.0 ? 1.0 : controller.value);
     }
@@ -78,15 +77,13 @@ class _InstructionScreenState extends State<InstructionScreen>
       Navigator.of(context).pop();
     }
     controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
-    print(value);
   }
 
   Future introMessage() async {
     var workout = widget.workOutList[0];
     String intro = "Ready to go! ";
     String isSec = workout.showTimer ? "Seconds " : "";
-    String message = "The next ${workout.duration} " + isSec + workout.title;
-    print(message);
+    String message = "The next ${workout.duration} $isSec${workout.title}";
     await mediaHelper.readText(intro).then((value) =>
         Future.delayed(Duration(seconds: 1))
             .then((value) => mediaHelper.readText(message)));
@@ -114,7 +111,6 @@ class _InstructionScreenState extends State<InstructionScreen>
 
     controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
     controller.addStatusListener((status) {
-      print(status);
       if (status == AnimationStatus.dismissed) {
         _onComplete();
       }
@@ -140,11 +136,10 @@ class _InstructionScreenState extends State<InstructionScreen>
               top: 20,
               child: ElevatedButton(
                 onPressed: () => _onPopBack(),
-                child: Icon(Icons.arrow_back),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
                   shape: CircleBorder(),
                 ),
+                child: Icon(Icons.arrow_back),
               )),
           Positioned(
               right: 2,
@@ -152,6 +147,8 @@ class _InstructionScreenState extends State<InstructionScreen>
               child: Column(
                 children: [
                   InfoButton(
+                    bgColor: Theme.of(context).primaryColor,
+                    fgColor: Colors.white,
                     icon: Icons.list_alt_outlined,
                     tooltip: "Exercise Plane",
                     onPress: () async {
@@ -167,61 +164,60 @@ class _InstructionScreenState extends State<InstructionScreen>
 
                       controller.reverse(
                           from:
-                              controller.value == 0.0 ? 1.0 : controller.value);
+                          controller.value == 0.0 ? 1.0 : controller.value);
                     },
                   ),
                   InfoButton(
+                    bgColor: Theme.of(context).primaryColor,
+                    fgColor: Colors.white,
                     icon: Icons.ondemand_video_outlined,
                     tooltip: "Video",
                     onPress: () async {
-                      print(controller.status);
                       if (controller.isAnimating) {
                         controller.stop(canceled: true);
                         await Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => YoutubeTutorial(
-                                  workout: widget.workOutList[0],
-                                )));
+                              workout: widget.workOutList[0],
+                            )));
                       }
-
                       controller.reverse(
                           from:
-                              controller.value == 0.0 ? 1.0 : controller.value);
+                          controller.value == 0.0 ? 1.0 : controller.value);
                     },
                   ),
                   InfoButton(
+                    bgColor: Theme.of(context).primaryColor,
+                    fgColor: Colors.white,
                     icon: Icons.volume_up_outlined,
                     tooltip: "Sound",
                     onPress: () async {
-                      print(controller.status);
-
                       if (controller.isAnimating) {
                         controller.stop(canceled: true);
                         await Navigator.of(context).push(MaterialPageRoute(
                             builder: (builder) => SoundSetting()));
                       }
-
                       controller.reverse(
                           from:
-                              controller.value == 0.0 ? 1.0 : controller.value);
+                          controller.value == 0.0 ? 1.0 : controller.value);
                     },
                   ),
                   InfoButton(
-                    icon: FontAwesomeIcons.questionCircle,
+                    bgColor: Theme.of(context).primaryColor,
+                    fgColor: Colors.white,
+                    icon: FontAwesomeIcons.circleQuestion,
                     tooltip: "Steps",
                     onPress: () async {
-                      print(controller.status);
-
                       if (controller.isAnimating) {
                         controller.stop(canceled: true);
                         await Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => DetailPage(
-                                  workout: item,
-                                  rapCount: widget.rapList[0],
-                                )));
+                              workout: item,
+                              rapCount: widget.rapList[0],
+                            )));
                       }
                       controller.reverse(
                           from:
-                              controller.value == 0.0 ? 1.0 : controller.value);
+                          controller.value == 0.0 ? 1.0 : controller.value);
                     },
                   ),
                 ],
@@ -231,7 +227,7 @@ class _InstructionScreenState extends State<InstructionScreen>
     }
 
     Widget getTimer() {
-      return Container(
+      return SizedBox(
         height: height * .45,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -240,7 +236,8 @@ class _InstructionScreenState extends State<InstructionScreen>
               height: 30,
             ),
             Text(
-              "Ready to go!",
+              //  "Ready to go!",
+              widget.title,
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             SizedBox(
@@ -251,10 +248,10 @@ class _InstructionScreenState extends State<InstructionScreen>
               style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
-                  color: Colors.grey),
+                  color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8)),
             ),
             Spacer(),
-            Container(
+            SizedBox(
               width: double.infinity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -262,7 +259,7 @@ class _InstructionScreenState extends State<InstructionScreen>
                   SizedBox(
                     width: width / 3.1,
                   ),
-                  Container(
+                  SizedBox(
                     height: height / 6,
                     width: height / 6,
                     child: AspectRatio(
@@ -275,10 +272,10 @@ class _InstructionScreenState extends State<InstructionScreen>
                               builder: (BuildContext context, Widget? child) {
                                 return CustomPaint(
                                     painter: TimerPainter(
-                                  animation: controller,
-                                  backgroundColor: Colors.blue,
-                                  color: Colors.blue.shade100,
-                                ));
+                                      animation: controller,
+                                      backgroundColor: Theme.of(context).primaryColor,
+                                      color: Colors.grey.shade200.withOpacity(.8),
+                                    ));
                               },
                             ),
                           ),
@@ -326,8 +323,8 @@ class _InstructionScreenState extends State<InstructionScreen>
                     onPressed: () {
                       _onComplete();
                     },
-                    child: Text('Skip'),
                     style: ElevatedButton.styleFrom(shape: StadiumBorder()),
+                    child: Text('Skip'),
                   ),
                   SizedBox(
                     width: 10,

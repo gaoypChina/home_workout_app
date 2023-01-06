@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:full_workout/pages/subscription_page/subscription_page.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 import '../../helper/notification_helper.dart';
 import '../../pages/detail_input_page/detail_input_page.dart';
@@ -80,6 +81,7 @@ class _MyAppState extends State<MyApp> {
                   Provider.of<ThemeProvider>(context, listen: false).getTheme(),
               initialData: AdaptiveThemeMode.system,
               builder: (context, snapShot) {
+                Provider.of<BackupProvider>(context).dailyBackup();
                 return AdaptiveTheme(
                     light: lightTheme,
                     dark: darkTheme,
@@ -114,6 +116,8 @@ class _MyAppState extends State<MyApp> {
                                     SoundSetting(),
                                 WorkoutDetailReport.routeName: (ctx) =>
                                     WorkoutDetailReport(),
+                                SubscriptionPage.routeName: (ctx) =>
+                                    SubscriptionPage(),
                                 //  LoginPage.routeName: (ctx) => LoginPage()
                               },
                               debugShowCheckedModeBanner: false,

@@ -69,6 +69,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                   tag: widget.challengesModel.tag,
                   title: widget.challengesModel.title + " Day ${currIndex + 1}",
                   tagValue: currentDay + 1,
+              imgSrc: widget.challengesModel.imageUrl,
                 )),
       );
     }

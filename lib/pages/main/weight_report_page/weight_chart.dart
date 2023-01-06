@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 import '../../../../constants/constant.dart';
 import '../../../helper/sp_helper.dart';
@@ -13,19 +14,20 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../detail_input_page/user_detail_widget/weight_picker.dart';
 
+
 class WeightChart extends StatefulWidget {
   final Function onAdd;
   final bool showButton;
   final String title;
 
-  WeightChart(
-      {required this.onAdd, required this.title, required this.showButton});
+  const WeightChart(
+      {super.key, required this.onAdd, required this.title, required this.showButton});
 
   @override
-  _WeightChartState createState() => _WeightChartState();
+  WeightChartState createState() => WeightChartState();
 }
 
-class _WeightChartState extends State<WeightChart> {
+class WeightChartState extends State<WeightChart> {
   bool isLoading = true;
   DateTime currDate = DateTime.now();
   var weightDb = WeightDatabaseHelper();
@@ -56,19 +58,19 @@ class _WeightChartState extends State<WeightChart> {
     List<dynamic> minWeightDB = await weightDb.getMinWeight();
 
     minWeight =
-        (minWeightDB[0]["MIN(weight)"] == null || minWeightDB.length == 0)
-            ? 0
-            : minWeightDB[0]["MIN(weight)"];
+    (minWeightDB[0]["MIN(weight)"] == null || minWeightDB.isEmpty)
+        ? 0
+        : minWeightDB[0]["MIN(weight)"];
 
     List<dynamic> maxWeightDB = await weightDb.getMaxWeight();
     maxWeight =
-        (maxWeightDB[0]["MAX(weight)"] == null || maxWeightDB.length == 0)
-            ? 0
-            : maxWeightDB[0]["MAX(weight)"];
+    (maxWeightDB[0]["MAX(weight)"] == null || maxWeightDB.isEmpty)
+        ? 0
+        : maxWeightDB[0]["MAX(weight)"];
     DateTime parsedStartDate =
-        DateTime(startDate.year, startDate.month, startDate.day + 1);
+    DateTime(startDate.year, startDate.month, startDate.day + 1);
     DateTime parsedEndDate =
-        DateTime(endDate.year, endDate.month, endDate.day + 1);
+    DateTime(endDate.year, endDate.month, endDate.day + 1);
     List items = await weightDb.getRangeData(parsedStartDate, parsedEndDate);
     for (int idx = 0; idx < items.length; idx++) {
       weightDataList.add(
@@ -142,101 +144,112 @@ class _WeightChartState extends State<WeightChart> {
     double height = MediaQuery.of(context).size.height;
 
     return isLoading
-        ? Container(
-            height: height * .6,
-            width: double.infinity,
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          )
+        ? SizedBox(
+      height: height * .6,
+      width: double.infinity,
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    )
         : Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(
+                  left: 18.0, bottom: widget.showButton ? 0 : 18),
+              child: Text(
+                widget.title,
+                style: Constants().titleStyle,
+              ),
+            ),
+            Spacer(),
+            widget.showButton
+                ? TextButton(
+                onPressed: () async => addWeight(),
+                child: Icon(Icons.add))
+                : Container()
+          ],
+        ),
+        Container(
+          padding:
+          EdgeInsets.only(right: 18, left: 10, bottom: 5, top: 5),
+          height: height * .55,
+          child: Stack(
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: 18.0, bottom: widget.showButton ? 0 : 18),
-                    child: Text(
-                      widget.title,
-                      style: Constants().titleStyle,
-                    ),
-                  ),
-                  Spacer(),
-                  widget.showButton
-                      ? TextButton(
-                          onPressed: () async => addWeight(),
-                          child: Icon(Icons.add))
-                      : Container()
-                ],
+              LineChart(
+                mainData(),
               ),
-              Container(
-                padding:
-                    EdgeInsets.only(right: 18, left: 10, bottom: 5, top: 5),
-                height: height * .55,
-                child: Stack(
-                  children: [
-                    LineChart(
-                      mainData(),
-                    ),
-                    Positioned(
-                        right: 5,
-                        child: TextButton(
-                            style: TextButton.styleFrom(
-                                padding: EdgeInsets.only(left: 4),
-                                backgroundColor: Colors.blue,
-                                primary: Colors.white),
-                            onPressed: () async {
+              Positioned(
+                  right: 5,
+                  child: ElevatedButton(
+                      style: TextButton.styleFrom(
+                          foregroundColor: Colors.white, padding: EdgeInsets.only(left: 8)),
+                      onPressed: () async {
+                        DateTime? selectedMonth =
+                        await DatePicker.showPicker(
+                            context,
+                            pickerModel: CustomMonthPicker(
+                                minTime: DateTime(2020, 08, 1),
+                                maxTime: DateTime.now(),
+                                currentTime: DateTime.now()),theme: DatePickerTheme(
+                          backgroundColor: Theme.of(context).cardColor,
+                          cancelStyle: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8)),
+                          doneStyle: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.w700,),
+                          itemStyle: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
+                        ));
 
-                              final selectedMonth = await showMonthYearPicker(
+                        // await showMonthYearPicker(locale:  Locale('fr', 'CH'),
+                        //
+                        //   context: context,
+                        //   initialDate: DateTime.now(),
+                        //   firstDate: DateTime(2021),
+                        //   lastDate: DateTime.now(),
+                        // );
 
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(2021),
-                                lastDate: DateTime.now(),
-                              );
-
-                              if (selectedMonth == null) {
-                                return;
-                              }
-                              await loadCurrentMonth(selectedMonth);
-                              setState(() {
-                                currDate = selectedMonth;
-                                _loadRangeData(
-                                    DateTime(selectedMonth.year,
-                                        selectedMonth.month, 01),
-                                    DateTime(selectedMonth.year,
-                                        selectedMonth.month + 1, 01));
-                              });
-                            },
-                            child: Row(
-                              children: [
-                                Text(DateFormat.yMMM().format(currDate)),
-                                SizedBox(
-                                  width: 2,
-                                ),
-                                Icon(
-                                  Icons.arrow_drop_down_rounded,
-                                ),
-                              ],
-                            )))
-                  ],
-                ),
-              ),
+                        if (selectedMonth == null) {
+                          return;
+                        }
+                        await loadCurrentMonth(selectedMonth);
+                        setState(() {
+                          currDate = selectedMonth;
+                          _loadRangeData(
+                              DateTime(selectedMonth.year,
+                                  selectedMonth.month, 01),
+                              DateTime(selectedMonth.year,
+                                  selectedMonth.month + 1, 01));
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Text(DateFormat.yMMM().format(currDate)),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Icon(
+                            Icons.arrow_drop_down_rounded,
+                          ),
+                        ],
+                      )))
             ],
-          );
+          ),
+        ),
+      ],
+    );
   }
 
   LineChartData mainData() {
     List<Color> gradientColors = [
-      Colors.blue.shade500,
-      Colors.blue,
+      Theme.of(context).primaryColor,
+      Theme.of(context).primaryColor,
+      // Colors.blue,
     ];
 
     double presentValue = 0;
     Color color = Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7);
 
-    if (weightDataList.length > 0) {
+    if (weightDataList.isNotEmpty) {
       presentValue =
           weightDataList[weightDataList.length - 1].weightModel.weight;
     }
@@ -255,7 +268,9 @@ class _WeightChartState extends State<WeightChart> {
 
     return LineChartData(
       lineTouchData: LineTouchData(
-          enabled: true, touchTooltipData: LineTouchTooltipData()),
+          enabled: true, touchTooltipData: LineTouchTooltipData(
+          tooltipBgColor: Colors.white
+      )),
       gridData: FlGridData(
         show: true,
         drawVerticalLine: true,
@@ -278,20 +293,20 @@ class _WeightChartState extends State<WeightChart> {
           show: true,
           bottomTitles: AxisTitles(
               sideTitles: SideTitles(
-            interval: 1,
-            showTitles: true,
-            reservedSize: 20,
-            getTitlesWidget: (value, _) {
-              if (value.toInt() % 2 == 0) {
-                return Text(
-                  (value.toInt()).toString(),
-                  style: TextStyle(
-                      color: color, fontWeight: FontWeight.w600, fontSize: 12),
-                );
-              }
-              return Container();
-            },
-          )),
+                interval: 1,
+                showTitles: true,
+                reservedSize: 20,
+                getTitlesWidget: (value, _) {
+                  if (value.toInt() % 2 == 0) {
+                    return Text(
+                      (value.toInt()).toString(),
+                      style: TextStyle(
+                          color: color, fontWeight: FontWeight.w600, fontSize: 12),
+                    );
+                  }
+                  return Container();
+                },
+              )),
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
                 showTitles: true,
@@ -311,12 +326,12 @@ class _WeightChartState extends State<WeightChart> {
           border: Border.all(color: const Color(0xff37434d), width: 1.5)),
       minX: 1,
       maxX: 30,
-      minY: weightDataList.length == 0 ? 0 : minWeight - 18,
-      maxY: weightDataList.length == 0
+      minY: weightDataList.isEmpty ? 0 : minWeight - 18,
+      maxY: weightDataList.isEmpty
           ? 50
           : maxWeight == 0
-              ? 90
-              : maxWeight + 18,
+          ? 90
+          : maxWeight + 18,
       lineBarsData: [
         LineChartBarData(
           spots: getData(),
@@ -339,3 +354,17 @@ class _WeightChartState extends State<WeightChart> {
     );
   }
 }
+
+class CustomMonthPicker extends DatePickerModel {
+  CustomMonthPicker({
+    required DateTime currentTime,
+    required DateTime minTime,
+    required DateTime maxTime,
+  }) : super(minTime: minTime, maxTime: maxTime, currentTime: currentTime);
+
+  @override
+  List<int> layoutProportions() {
+    return [1, 1, 0];
+  }
+}
+

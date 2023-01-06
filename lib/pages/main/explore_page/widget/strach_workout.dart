@@ -43,7 +43,7 @@ class StretchWorkout extends StatelessWidget {
                                     workout: workout,
                                     header: ExploreWorkoutHeader(
                                       title: workout.title,
-                                      imgSrc: workout.imgSrc,
+                                      imgSrc:"assets/explore_image/img_13.jpg",
                                       workoutType: workout.workoutType,
                                     )))),
                         child: Card(

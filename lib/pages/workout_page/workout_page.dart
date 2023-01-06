@@ -8,16 +8,17 @@ import 'package:provider/provider.dart';
 import '../../../provider/subscription_provider.dart';
 import '../../components/info_button.dart';
 import '../../database/workout_list.dart';
+
 import '../../helper/mediaHelper.dart';
 import '../../helper/sp_helper.dart';
 import '../../helper/sp_key_helper.dart';
-import '../../pages/main/setting_page/sound_settings_page.dart';
 import '../../pages/services/youtube_service/youtube_player.dart';
 import '../../pages/workout_page/exercise_detail_page.dart';
 import '../../pages/workout_page/pause_page.dart';
 import '../../pages/workout_page/report_page.dart';
 import '../../pages/workout_page/rest_page.dart';
 import '../../provider/ads_provider.dart';
+import '../main/setting_page/sound_settings_page.dart';
 import 'check_list.dart';
 
 class WorkoutPage extends StatefulWidget {
@@ -28,7 +29,7 @@ class WorkoutPage extends StatefulWidget {
   final String currTime;
   final String tag;
   final int restTime;
-  WorkoutPage({
+  const WorkoutPage({super.key,
     required this.workOutList,
     required this.title,
     required this.index,
@@ -39,10 +40,10 @@ class WorkoutPage extends StatefulWidget {
   });
 
   @override
-  _WorkoutPageState createState() => _WorkoutPageState();
+  WorkoutPageState createState() => WorkoutPageState();
 }
 
-class _WorkoutPageState extends State<WorkoutPage>
+class WorkoutPageState extends State<WorkoutPage>
     with SingleTickerProviderStateMixin {
   int currIndex = 0;
   SpKey spKey = SpKey();
@@ -76,17 +77,17 @@ class _WorkoutPageState extends State<WorkoutPage>
         Future.delayed(Duration(seconds: 1))
             .then((__) => mediaHelper.readText(message))
             .then((___) => Future.delayed(Duration(seconds: 3))
-                .then((____) => mediaHelper.readText(workout.steps[0]))));
+            .then((____) => mediaHelper.readText(workout.steps[0]))));
   }
 
   _onPopBack() async {
-    String value = "";
+
     if (controller.isAnimating) {
       controller.stop(canceled: true);
     }
-    value = await Navigator.of(context)
+    String? value = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (builder) => StopPage()));
-    if (value == "resume") {
+    if (value == null || value == "resume") {
       controller.reverse(
           from: controller.value == 0.0 ? 1.0 : controller.value);
     }
@@ -94,25 +95,25 @@ class _WorkoutPageState extends State<WorkoutPage>
       Navigator.of(context).pop();
     }
     controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
-    print(value);
+
   }
 
   _showInterstitialAd() {
     var subscriptionProvider =
-        Provider.of<SubscriptionProvider>(context, listen: false);
+    Provider.of<SubscriptionProvider>(context, listen: false);
     if (!subscriptionProvider.isProUser) {
       var provider = Provider.of<AdsProvider>(context, listen: false);
       if (provider.interstitialAd != null) {
         provider.interstitialAd!.fullScreenContentCallback =
             FullScreenContentCallback(
                 onAdDismissedFullScreenContent: (InterstitialAd ad) {
-          ad.dispose();
-          provider.createInterstitialAd();
-        }, onAdFailedToShowFullScreenContent:
-                    (InterstitialAd ad, AdError error) {
-          ad.dispose();
-          provider.createInterstitialAd();
-        });
+                  ad.dispose();
+                  provider.createInterstitialAd();
+                }, onAdFailedToShowFullScreenContent:
+                (InterstitialAd ad, AdError error) {
+              ad.dispose();
+              provider.createInterstitialAd();
+            });
         provider.interstitialAd!.show();
       }
     }
@@ -126,11 +127,11 @@ class _WorkoutPageState extends State<WorkoutPage>
           context,
           MaterialPageRoute(
               builder: (context) => ReportScreen(
-                    tag: widget.tag,
-                    title: widget.title,
-                    dateTime: widget.currTime,
-                    totalExercise: widget.workOutList.length,
-                  )));
+                tag: widget.tag,
+                title: widget.title,
+                dateTime: widget.currTime,
+                totalExercise: widget.workOutList.length,
+              )));
     }
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
       return RestScreen(
@@ -166,7 +167,7 @@ class _WorkoutPageState extends State<WorkoutPage>
     }
     if (currIndex + 1 == widget.workOutList.length) {
       var subscriptionProvider =
-          Provider.of<SubscriptionProvider>(context, listen: false);
+      Provider.of<SubscriptionProvider>(context, listen: false);
       var adsProvider = Provider.of<AdsProvider>(context, listen: false);
       if (!subscriptionProvider.isProUser) {
         adsProvider.disposeInterstitialAd();
@@ -199,6 +200,7 @@ class _WorkoutPageState extends State<WorkoutPage>
           child: Container(
             height: height / 2,
             width: double.infinity,
+            color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.only(top: 18.0, left: 18, right: 18),
               child: Image.asset(
@@ -206,7 +208,6 @@ class _WorkoutPageState extends State<WorkoutPage>
                 fit: BoxFit.scaleDown,
               ),
             ),
-            color: Colors.white,
           ),
         ),
         Positioned(
@@ -215,34 +216,35 @@ class _WorkoutPageState extends State<WorkoutPage>
             child: Column(
               children: [
                 InfoButton(
-                  icon: FontAwesomeIcons.questionCircle,
+                  bgColor: Theme.of(context).primaryColor,
+                  fgColor: Colors.white,
+                  icon: FontAwesomeIcons.circleQuestion,
                   tooltip: "Steps",
                   onPress: () async {
-                    print(controller.status);
-
                     if (controller.isAnimating) {
                       controller.stop(canceled: true);
                       await Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => DetailPage(
-                                workout: item,
-                                rapCount: widget.rapList[currIndex],
-                              )));
+                            workout: item,
+                            rapCount: widget.rapList[currIndex],
+                          )));
                     }
                     controller.reverse(
                         from: controller.value == 0.0 ? 1.0 : controller.value);
                   },
                 ),
                 InfoButton(
+                  bgColor: Theme.of(context).primaryColor,
+                  fgColor: Colors.white,
                   icon: Icons.ondemand_video_outlined,
                   tooltip: "Video",
                   onPress: () async {
-                    print(controller.status);
                     if (controller.isAnimating) {
                       controller.stop(canceled: true);
                       await Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => YoutubeTutorial(
-                                workout: item,
-                              )));
+                            workout: item,
+                          )));
                     }
 
                     controller.reverse(
@@ -250,11 +252,11 @@ class _WorkoutPageState extends State<WorkoutPage>
                   },
                 ),
                 InfoButton(
+                  bgColor: Theme.of(context).primaryColor,
+                  fgColor: Colors.white,
                   icon: Icons.volume_up_outlined,
                   tooltip: "Sound",
                   onPress: () async {
-                    print(controller.status);
-
                     if (controller.isAnimating) {
                       controller.stop(canceled: true);
                       await Navigator.of(context).push(MaterialPageRoute(
@@ -266,6 +268,8 @@ class _WorkoutPageState extends State<WorkoutPage>
                   },
                 ),
                 InfoButton(
+                  bgColor: Theme.of(context).primaryColor,
+                  fgColor: Colors.white,
                   icon: Icons.list_alt_outlined,
                   tooltip: "Exercise Plane",
                   onPress: () async {
@@ -298,15 +302,15 @@ class _WorkoutPageState extends State<WorkoutPage>
       width: width,
       backgroundColor: isDark
           ? Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8)
-          : Colors.blue.shade200,
+          : Theme.of(context).primaryColor.withOpacity(.2),
       barRadius: Radius.circular(18),
-      progressColor: Colors.blue.shade700,
+      progressColor: Theme.of(context).primaryColor,
     );
   }
 
   getTitleCard(Workout item, int currIndex, bool isDark) {
     Color greyColor =
-        Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.55);
+    Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8);
 
     return Expanded(
       child: Container(
@@ -321,7 +325,9 @@ class _WorkoutPageState extends State<WorkoutPage>
                   ),
                   Text(
                     "${currIndex + 1} of ${widget.workOutList.length}",
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).textTheme.bodyText1!.color),
                   ),
                   SizedBox(
                     height: 10,
@@ -351,37 +357,37 @@ class _WorkoutPageState extends State<WorkoutPage>
               ),
               Container(
                 child: item.showTimer == true
-                    ? Container(
-                        height: 50,
-                        //  width: double.infinity,
-                        child: AnimatedBuilder(
-                            animation: controller,
-                            builder: (BuildContext context, Widget? child) {
-                              if (timerValue <= 3000 && timerValue > 2950) {
-                                mediaHelper.readText('Three');
-                              }
-                              if (timerValue <= 1600 && timerValue > 1550) {
-                                mediaHelper.readText('Two');
-                              }
-                              if (timerValue <= 200 && timerValue > 150) {
-                                mediaHelper.readText('One');
-                              }
+                    ? SizedBox(
+                  height: 50,
+                  //  width: double.infinity,
+                  child: AnimatedBuilder(
+                      animation: controller,
+                      builder: (BuildContext context, Widget? child) {
+                        if (timerValue <= 3000 && timerValue > 2950) {
+                          mediaHelper.readText('Three');
+                        }
+                        if (timerValue <= 1600 && timerValue > 1550) {
+                          mediaHelper.readText('Two');
+                        }
+                        if (timerValue <= 200 && timerValue > 150) {
+                          mediaHelper.readText('One');
+                        }
 
-                              String parsedTime = timerString.length == 1
-                                  ? "0" + timerString
-                                  : timerString;
-                              return Text(
-                                "00:" + parsedTime,
-                                style: TextStyle(fontSize: 40),
-                                //    style: themeData.textTheme.display4,
-                              );
-                            }),
-                      )
+                        String parsedTime = timerString.length == 1
+                            ? "0$timerString"
+                            : timerString;
+                        return Text(
+                          "00:$parsedTime",
+                          style: TextStyle(fontSize: 40),
+                          //    style: themeData.textTheme.display4,
+                        );
+                      }),
+                )
                     : Text(
-                        "X ${widget.rapList[currIndex]}",
-                        style: TextStyle(
-                            fontSize: 44, fontWeight: FontWeight.w500),
-                      ),
+                  "X ${widget.rapList[currIndex]}",
+                  style: TextStyle(
+                      fontSize: 44, fontWeight: FontWeight.w500),
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -390,6 +396,14 @@ class _WorkoutPageState extends State<WorkoutPage>
                 onPressed: () {
                   _onComplete(currIndex);
                 },
+                style: TextButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  padding:
+                  EdgeInsets.only(left: 40, right: 40, top: 15, bottom: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
                 child: Text(
                   "Done",
                   style: TextStyle(
@@ -397,14 +411,6 @@ class _WorkoutPageState extends State<WorkoutPage>
                       letterSpacing: 2,
                       fontWeight: FontWeight.w500,
                       color: Colors.white),
-                ),
-                style: TextButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  padding:
-                      EdgeInsets.only(left: 40, right: 40, top: 15, bottom: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
                 ),
               ),
               SizedBox(

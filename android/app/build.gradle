@@ -78,22 +78,17 @@ flutter {
 
 
 
-//dependencies {
-//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-//    def billing_version = "4.0.0"
-//    implementation "com.android.billingclient:billing:$billing_version"
-//    implementation 'com.google.android.gms:play-services-ads:21.3.0'
-//    implementation platform('com.google.firebase:firebase-bom:31.0.0')
-//    implementation 'com.google.firebase:firebase-analytics'
-//    implementation('com.google.firebase:firebase-auth') {
-//        exclude module: "play-services-safetynet"
-//    }
-//}
-
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    def billing_version = "4.0.0"
+    implementation "com.android.billingclient:billing:$billing_version"
+    implementation 'com.google.android.gms:play-services-ads:21.4.0'
     implementation platform('com.google.firebase:firebase-bom:31.0.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation('com.google.firebase:firebase-auth') {
+        exclude module: "play-services-safetynet"
+    }
 }
+
 
 apply plugin: 'com.google.gms.google-services'

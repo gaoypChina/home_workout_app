@@ -1,5 +1,4 @@
-import '../../database/workout_list.dart';
-
+import '../database/workout_list.dart';
 import '../enums/workout_type.dart';
 
 class ExploreWorkout {
@@ -9,6 +8,7 @@ class ExploreWorkout {
   final String imgSrc;
   final List<String> description;
   int? customTime;
+  String? tag;
 
   ExploreWorkout(
       {required this.workoutType,
@@ -16,7 +16,8 @@ class ExploreWorkout {
       required this.description,
       required this.imgSrc,
       required this.title,
-      this.customTime});
+      this.customTime,
+      this.tag});
 
   List<int> get getRapList {
     List<int> rapList = [];
@@ -25,11 +26,11 @@ class ExploreWorkout {
       if (workoutList[index].showTimer == true) {
         time = workoutList[index].duration ?? 30;
       } else {
-        if (workoutType == WorkoutType.Beginner) {
+        if (workoutType == WorkoutType.beginner) {
           time = workoutList[index].beginnerRap ?? 8;
-        } else if (workoutType == WorkoutType.Intermediate) {
+        } else if (workoutType == WorkoutType.intermediate) {
           time = workoutList[index].intermediateRap ?? 10;
-        } else if (workoutType == WorkoutType.Advance) {
+        } else if (workoutType == WorkoutType.advance) {
           time = workoutList[index].advanceRap ?? 14;
         } else {
           time = 20;
@@ -62,5 +63,7 @@ class ExploreWorkout {
     return "$exerciseCount Exercise";
   }
 
-  String get getWorkoutType => workoutType.name;
+  String get getWorkoutType =>
+      workoutType.name.substring(0, 1).toUpperCase() +
+      workoutType.name.substring(1, workoutType.name.length);
 }

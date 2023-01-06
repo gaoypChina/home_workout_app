@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constants/app_theme.dart';
 import '../../database/workout_list.dart';
 import '../../pages/services/youtube_service/youtube_player.dart';
 import '../../widgets/banner_regular_ad.dart';
@@ -7,7 +8,7 @@ class DetailPage extends StatelessWidget {
   final Workout workout;
   final int rapCount;
 
-  DetailPage({required this.workout, required this.rapCount});
+  const DetailPage({super.key, required this.workout, required this.rapCount});
 
   @override
   Widget build(BuildContext context) {
@@ -55,18 +56,18 @@ class DetailPage extends StatelessWidget {
 
     getSteps(Workout workout) {
       return ListView.builder(
-        shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
-              minVerticalPadding: 0,
+              minVerticalPadding: 12,
               leading: Text("Step ${index + 1}: ",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
-                      fontWeight: FontWeight.w500)),
+                      fontWeight: FontWeight.w700)),
               title: Text(
-                "${workout.steps[index]}",
+                workout.steps[index],
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
@@ -78,8 +79,9 @@ class DetailPage extends StatelessWidget {
       );
     }
 
+
     return Scaffold(
-      bottomNavigationBar: Container(height: 60, child: RegularBannerAd()),
+      bottomNavigationBar: SizedBox(height: 60, child: RegularBannerAd()),
       appBar: AppBar(
         toolbarHeight: 50,
         title: Text(
@@ -88,7 +90,7 @@ class DetailPage extends StatelessWidget {
         ),
         elevation: 0,
         backgroundColor:
-            isDark ? Theme.of(context).scaffoldBackgroundColor : Colors.blue,
+        isDark ? Theme.of(context).scaffoldBackgroundColor :darkAppBarColor,
         leading: TextButton.icon(
           onPressed: () {
             Navigator.pop(context, true);
@@ -114,23 +116,22 @@ class DetailPage extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                   maximumSize: Size(150, 40),
-                  primary: isDark ? Colors.grey.shade200 : Colors.white,
+                  backgroundColor:  Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 4)),
               child: Text(
-                "Video".toUpperCase(),
+                "Video",
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    letterSpacing: 1.0
-                    //   color: Colors.grey.shade800,
-                    ),
+                    color: Colors.black
+                ),
               ),
             ),
           )
         ],
       ),
       backgroundColor:
-          isDark ? Theme.of(context).scaffoldBackgroundColor : Colors.blue,
+      isDark ? Theme.of(context).scaffoldBackgroundColor :darkAppBarColor,
       body: SingleChildScrollView(
         child: Column(
           children: [

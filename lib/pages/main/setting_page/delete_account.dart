@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
-import '../../../provider/auth_provider.dart';
-import '../../../provider/subscription_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../provider/subscription_provider.dart';
 
 class DeleteAccountDialog extends StatefulWidget {
   const DeleteAccountDialog({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
 
   @override
   Widget build(BuildContext context) {
-    _buildDetail(String detail) {
+    buildDetail(String detail) {
       return Row(
         children: [
           Icon(
@@ -32,47 +32,47 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
       );
     }
 
-    _buildCancelSubscription() {
+    buildCancelSubscription() {
       return RichText(
           text: TextSpan(children: [
-        TextSpan(
-            text:
+            TextSpan(
+                text:
                 "NOTE: If you have subscribed to any workout plan then you have to ",
-            style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .color!
-                    .withOpacity(.7),
-                fontSize: 14)),
-        WidgetSpan(
-            child: InkWell(
-          onTap: () => Provider.of<SubscriptionProvider>(context, listen: false)
-              .cancelSubscription(),
-          child: Text(
-            "Cancel subscription".toUpperCase(),
-            style: TextStyle(
-              color: Colors.blue,
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-              decoration: TextDecoration.underline,
-            ),
-          ),
-        )),
-        TextSpan(
-            text:
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .color!
+                        .withOpacity(.7),
+                    fontSize: 14)),
+            WidgetSpan(
+                child: InkWell(
+                  onTap: () => Provider.of<SubscriptionProvider>(context, listen: false)
+                      .cancelSubscription(),
+                  child: Text(
+                    "Cancel subscription".toUpperCase(),
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                )),
+            TextSpan(
+                text:
                 " manually otherwise you will be charged at the end of billing cycle.",
-            style: TextStyle(
-                letterSpacing: 1,
-                fontWeight: FontWeight.w500,
-                color: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .color!
-                    .withOpacity(.7),
-                fontSize: 14)),
-      ]));
+                style: TextStyle(
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .color!
+                        .withOpacity(.7),
+                    fontSize: 14)),
+          ]));
     }
 
     return AlertDialog(
@@ -84,11 +84,8 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
             if (time == null) {
               return TextButton(
                   onPressed: () {
-                    setState(() {
-                      isHidden = true;
-                    });
-                    Provider.of<AuthProvider>(context, listen: false)
-                        .deleteAccount(context: context);
+
+                    Navigator.pop(context, true);
                   },
                   child: Text(
                     "Delete".toUpperCase(),
@@ -105,17 +102,18 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                           .textTheme
                           .bodyText1!
                           .color!
-                          .withOpacity(.6),
-                      fontWeight: FontWeight.w500),
+                          .withOpacity(.8),
+                      fontWeight: FontWeight.w600),
                 ),
               ],
             );
           },
         ),
-        SizedBox(width: 8,),
+        SizedBox(width: 4,),
         ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text("Cancel".toUpperCase())),
+            child: Text("Cancel")),
+        SizedBox(width: 4,)
       ],
       content: Padding(
         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
@@ -129,13 +127,13 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
             SizedBox(
               height: 4,
             ),
-            _buildDetail("Your workout history."),
-            _buildDetail("Your profile details."),
-            _buildDetail("Identity details."),
+            buildDetail("Your workout history."),
+            buildDetail("Your profile details."),
+            buildDetail("Identity details."),
             SizedBox(
               height: 12,
             ),
-            _buildCancelSubscription(),
+            buildCancelSubscription(),
           ],
         ),
       ),

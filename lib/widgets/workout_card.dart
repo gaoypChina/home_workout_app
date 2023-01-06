@@ -175,38 +175,40 @@ class WorkoutCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8.0, left: 10, right: 10),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(8)),
-        child: InkWell(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ExerciseListScreen(
-                          workOutList: workoutList,
-                          tag: tag,
-                          title: title,
-                          tagValue: tagValue,
-                        )),
-              );
-            },
-            child: Container(
-              height: 150,
-              color: Colors.black54,
-              child: Stack(
-                children: [
-                  Image.asset(
-                    imaUrl,
-                    height: 150,
-                    width: width,
-                    fit: BoxFit.fill,
-                  ),
-                  Container(
-                    color: Colors.black.withOpacity(.4),
-                  ),
-                  getTitle(),
-                ],
+        child:  InkWell(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ExerciseListScreen(
+                        imgSrc: imaUrl,
+                            workOutList: workoutList,
+                            tag: tag,
+                            title: title,
+                            tagValue: tagValue,
+                          )),
+                );
+              },
+              child:Container(
+                height: 150,
+                color: Colors.black54,
+                child: Stack(
+              children: [
+                Image.asset(
+                  imaUrl,
+                  height: 150,
+                  width: width,
+                  fit: BoxFit.fill,
+                ),
+                Container(
+                  color: Colors.black.withOpacity(.4),
+                ),
+                getTitle(),
+              ],
+                ),
               ),
-            )),
+        ),
       ),
     );
   }

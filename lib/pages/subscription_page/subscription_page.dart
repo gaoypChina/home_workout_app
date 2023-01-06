@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_timer.dart';
 import '../../../constants/constant.dart';
 import '../../../pages/subscription_page/subscription_page_widget/statics_section.dart';
 import '../../../pages/subscription_page/subscription_page_widget/subscription_faq.dart';
@@ -12,6 +13,8 @@ import 'package:provider/provider.dart';
 import '../../widgets/loading_indicator.dart';
 
 class SubscriptionPage extends StatefulWidget {
+  static const routeName = "subscription-page";
+
   SubscriptionPage({Key? key}) : super(key: key);
 
   @override
@@ -142,19 +145,22 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               data.isLoading
                   ? Container()
                   : Padding(
-                      padding: EdgeInsets.only(right: 8, top: 10, bottom: 10),
+                      padding: EdgeInsets.only(right: 12, top: 10, bottom: 10),
                       child: OutlinedButton(
                         onPressed: () {
                           data.restoreSubscription(context: context);
                         },
                         child: Row(
                           children: [
-                            Text("Restore"),
+                            Text("Restore",style: TextStyle(fontWeight: FontWeight.w700),),
                           ],
                         ),
                         style: OutlinedButton.styleFrom(
-                          primary: Theme.of(context).primaryColor,
-                          side: BorderSide(width: 1, color: Colors.blue),
+                          primary: Theme.of(context).primaryColor.withOpacity(.8),
+                          side: BorderSide(
+                              width: 1.5,
+                              color: Theme.of(context)
+                                  .primaryColor.withOpacity(.7)),
                         ),
                       ),
                     ),
@@ -170,12 +176,18 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                       child: Stack(
                         children: [
                           ListView(
-                            physics: BouncingScrollPhysics(),
+                      //      physics: BouncingScrollPhysics(),
                             children: [
                               SizedBox(
                                 height: 12,
                               ),
                               SubscriptionPlan(),
+
+                              // SubscriptionTime(),
+                              //  SizedBox(
+                              //    height: 12,
+                              //  ),
+
                               buildDivider(),
                               SubscriptionHeader(),
                               buildDivider(),

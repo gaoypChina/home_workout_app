@@ -4,24 +4,30 @@ class InfoButton extends StatelessWidget {
   final IconData icon;
   final Function onPress;
   final String tooltip;
+  final Color bgColor;
+  final Color fgColor;
 
-  InfoButton(
-      {required this.icon, required this.onPress, required this.tooltip});
+  const InfoButton(
+      {super.key, required this.icon,
+        required this.onPress,
+        required this.tooltip,
+        required this.bgColor,
+        required this.fgColor});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        shape: CircleBorder(),
-        primary: Colors.blue,
-        onPrimary: Colors.black,
+        shape: const CircleBorder(),
+        backgroundColor: bgColor,
+        foregroundColor: fgColor,
       ),
 
       onPressed: () => onPress(),
       child: Icon(
         icon,
-        color: Colors.white,
         size: 22,
+        color: fgColor,
       ),
       //  tooltip: tooltip,
     );

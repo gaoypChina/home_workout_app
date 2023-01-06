@@ -13,9 +13,8 @@ class Constants {
   //"https://play.google.com/store/apps/details?id=com.akashlilhare.homeworkout";
 
   // ToDo: Update version number
-  // TODO: update phone number
 
-  String versionNumber = "1.9.3";
+  String versionNumber = "2.0.1";
 
   TextStyle titleStyle =
       TextStyle(fontWeight: FontWeight.w500, fontSize: 16, letterSpacing: 1.2);

@@ -51,6 +51,35 @@ class BackupProvider extends ChangeNotifier {
     }
   }
 
+  dailyBackup() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        throw "user not found";
+      }
+      String? savedTime = await _spHelper.loadString(_spKey.backupTime);
+      bool isNewDay = false;
+      if (savedTime != null) {
+        isNewDay =
+            DateTime.now().difference(DateTime.parse(savedTime)).inHours > 24;
+      }
+
+      if (savedTime == null || isNewDay) {
+        await _getUser(user: user);
+        await _setUser(user: user);
+        await _getProUser(user: user);
+        await _setProUser(user: user);
+        await _getUserActivity(uid: user.uid);
+        await _setUserActivity(uid: user.uid);
+
+        await _spHelper.saveString(
+            _spKey.backupTime, DateTime.now().toIso8601String());
+      }
+    } catch (e) {
+      dev.log("daily backup error ${e.toString()}");
+    }
+  }
+
   saveData({required User user}) async {
     await _setUser(user: user);
     await _setProUser(user: user);

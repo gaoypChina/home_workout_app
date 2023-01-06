@@ -17,9 +17,9 @@ class BodyFocusWorkoutPage extends StatelessWidget {
 
     Color  tileColor({required WorkoutType workoutType}) {
       Color titleColor;
-      if (workoutType == WorkoutType.Beginner) {
+      if (workoutType == WorkoutType.beginner) {
         titleColor = Colors.green;
-      } else if (workoutType == WorkoutType.Intermediate) {
+      } else if (workoutType == WorkoutType.intermediate) {
         titleColor = Colors.orange;
       } else {
         titleColor = Colors.red;

@@ -9,17 +9,17 @@ class WorkoutDetailDialog extends StatefulWidget {
   final List<Workout> workoutList;
   final int index;
 
-  WorkoutDetailDialog(
-      {required this.workoutList, required this.index});
+  const WorkoutDetailDialog(
+      {super.key, required this.workoutList, required this.index});
 
   @override
-  _WorkoutDetailDialogState createState() => _WorkoutDetailDialogState();
+  WorkoutDetailDialogState createState() => WorkoutDetailDialogState();
 }
 
-class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
+class WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
   @override
   Widget build(BuildContext context) {
-    PageController _controller = PageController(initialPage: widget.index);
+    PageController controller = PageController(initialPage: widget.index);
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -28,22 +28,22 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
 
     var item = widget.workoutList;
 
-    _onLeftAction(StateSetter setState) {
+    onLeftAction(StateSetter setState) {
       if (currPage > 0) {
         setState(() {
           currPage--;
         });
-        _controller.animateToPage(currPage,
+        controller.animateToPage(currPage,
             duration: Duration(milliseconds: 500), curve: Curves.decelerate);
       }
     }
 
-    _onRightAction(StateSetter setState) {
+    onRightAction(StateSetter setState) {
       if (currPage < item.length - 1) {
         setState(() {
           currPage++;
         });
-        _controller.animateToPage(currPage,
+        controller.animateToPage(currPage,
             duration: Duration(milliseconds: 500), curve: Curves.decelerate);
       }
     }
@@ -59,84 +59,85 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
             horizontal: width * .07, vertical: height * .13),
         child: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
-          return Container(
-            decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: BorderRadius.all(Radius.circular(16))),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
-                    child: PageView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: item.length,
-                        controller: _controller,
-                        itemBuilder: (context, index) {
-                          currPage = index;
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Stack(
+              return Container(
+                decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.all(Radius.circular(16))),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        child: PageView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: item.length,
+                            controller: controller,
+                            itemBuilder: (context, index) {
+                              currPage = index;
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    color: Colors.white,
-                                    child: Center(
-                                      child: Image.asset(
-                                        item[index].imageSrc,
-                                        fit: BoxFit.scaleDown,
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        color: Colors.white,
+                                        height: height * .2,
+                                        child: Center(
+                                          child: Image.asset(
+                                            item[index].imageSrc,
+                                            fit: BoxFit.scaleDown,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    height: height * .2,
+                                      Positioned(
+                                          right: 10,
+                                          top: 10,
+                                          child: InfoButton(
+                                              bgColor: Theme.of(context).primaryColor,
+                                              fgColor: Colors.white,
+                                              tooltip: "Video",
+                                              icon: Icons.ondemand_video,
+                                              onPress: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          YoutubeTutorial(
+                                                            workout: widget.workoutList[
+                                                            currPage],
+                                                          ),
+                                                    ));
+                                              })),
+                                    ],
                                   ),
-                                  Positioned(
-                                      right: 10,
-                                      top: 10,
-                                      child: InfoButton(
-                                          tooltip: "Video",
-                                          icon: Icons.ondemand_video,
-                                          onPress: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      YoutubeTutorial(
-                                                    workout: widget.workoutList[
-                                                        currPage],
-                                                  ),
-                                                ));
-                                          })),
-                                ],
-                              ),
-                              Container(
-                                height: 1.5,
-                                color: Theme.of(context).dividerColor,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top: 10, left: 16, bottom: 4),
-                                child: Text(
-                                  item[index].title,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 18),
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(
-                                    left: 16, right: 16, top: 8),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: Theme.of(context).cardColor,
-                                ),
-                                height: height * .32,
-                                child: ListView.separated(
-                                  physics: BouncingScrollPhysics(),
-                                  padding: EdgeInsets.only(bottom: 8),
-                                  itemCount: item[index].steps.length,
-                                  itemBuilder: (ctx, i) {
-                                    return Container(
-                                        child: Text.rich(TextSpan(
+                                  Container(
+                                    height: 1.5,
+                                    color: Theme.of(context).dividerColor,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 10, left: 16, bottom: 4),
+                                    child: Text(
+                                      item[index].title,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 18),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        left: 16, right: 16, top: 8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Theme.of(context).cardColor,
+                                    ),
+                                    height: height * .32,
+                                    child: ListView.separated(
+                                      physics: BouncingScrollPhysics(),
+                                      padding: EdgeInsets.only(bottom: 8),
+                                      itemCount: item[index].steps.length,
+                                      itemBuilder: (ctx, i) {
+                                        return Text.rich(TextSpan(
                                             text: "Step ${i + 1}: ",
                                             style: TextStyle(
                                               fontSize: 14,
@@ -144,95 +145,93 @@ class _WorkoutDetailDialogState extends State<WorkoutDetailDialog> {
                                               fontWeight: FontWeight.w500,
                                             ),
                                             children: <InlineSpan>[
-                                          TextSpan(
-                                              text: item[index].steps[i],
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
-                                              )),
-                                        ])));
-                                  },
-                                  separatorBuilder: (context, index) {
-                                    return Divider(
-                                      height: 16,
-                                      thickness: .0,
-                                    );
-                                  },
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Spacer(),
-                                  TextButton(
-                                    child: Text("Close"),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
+                                              TextSpan(
+                                                  text: item[index].steps[i],
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400,
+                                                  )),
+                                            ]));
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return Divider(
+                                          height: 16,
+                                          thickness: .0,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Spacer(),
+                                      TextButton(
+                                        child: Text("Close"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
                                   ),
                                 ],
-                              ),
-                            ],
-                          );
-                        }),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.blue.shade700,
-                      borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(16),
-                          bottomLeft: Radius.circular(16))),
-                  height: 60,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            _onLeftAction(setState);
-                          },
-                          icon: Icon(
-                            FontAwesomeIcons.stepBackward,
-                            color: (currPage > 0)
-                                ? Colors.white
-                                : Colors.grey.shade300.withOpacity(.5),
-                          )),
-                      Container(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "${currPage + 1} / ",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            Text(
-                              "${item.length}",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                            )
-                          ],
-                        ),
+                              );
+                            }),
                       ),
-                      IconButton(
-                          onPressed: () {
-                            _onRightAction(setState);
-                          },
-                          icon: Icon(
-                            FontAwesomeIcons.stepForward,
-                            color: (currPage < item.length - 1)
-                                ? Colors.white
-                                : Colors.grey.shade300.withOpacity(.5),
-                          ))
-                    ],
-                  ),
-                )
-              ],
-            ),
-          );
-        }),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(16),
+                              bottomLeft: Radius.circular(16))),
+                      height: 60,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                onLeftAction(setState);
+                              },
+                              icon: Icon(
+                                FontAwesomeIcons.backwardStep,
+                                color: (currPage > 0)
+                                    ? Colors.white
+                                    : Colors.grey.shade300.withOpacity(.5),
+                              )),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "${currPage + 1} / ",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              Text(
+                                "${item.length}",
+                                style:
+                                TextStyle(color: Colors.white, fontSize: 16),
+                              )
+                            ],
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                onRightAction(setState);
+                              },
+                              icon: Icon(
+                                FontAwesomeIcons.forwardStep,
+                                color: (currPage < item.length - 1)
+                                    ? Colors.white
+                                    : Colors.grey.shade300.withOpacity(.5),
+                              ))
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }),
       ),
     );
   }

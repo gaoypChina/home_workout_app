@@ -4,7 +4,7 @@ import '../../models/explore_workout_model.dart';
 
 ExploreWorkout strengthenBody = ExploreWorkout(
   title: "Strengthen Body Plan",
-  workoutType: WorkoutType.Beginner,
+  workoutType: WorkoutType.beginner,
   workoutList: [
     jumpingJacks,
     kneeToChestStretch,
@@ -26,7 +26,7 @@ ExploreWorkout strengthenBody = ExploreWorkout(
 );
 
 ExploreWorkout toneAbs = ExploreWorkout(
-  workoutType: WorkoutType.Beginner,
+  workoutType: WorkoutType.beginner,
   workoutList: [
     jumpingJacks,
     walkingPlank,
@@ -47,7 +47,7 @@ ExploreWorkout toneAbs = ExploreWorkout(
 );
 
 ExploreWorkout bellyFatBurner = ExploreWorkout(
-    workoutType: WorkoutType.Beginner,
+    workoutType: WorkoutType.beginner,
     workoutList: [
       jumpingJacks,
       jumpingSquats,
@@ -77,7 +77,7 @@ ExploreWorkout bellyFatBurner = ExploreWorkout(
     customTime: 15);
 
 ExploreWorkout tricepsSmasher = ExploreWorkout(
-  workoutType: WorkoutType.Intermediate,
+  workoutType: WorkoutType.intermediate,
   workoutList: [
     jumpingJacks,
     benchDips,
@@ -103,7 +103,7 @@ ExploreWorkout tricepsSmasher = ExploreWorkout(
 );
 
 ExploreWorkout manBoobs = ExploreWorkout(
-  workoutType: WorkoutType.Beginner,
+  workoutType: WorkoutType.beginner,
   workoutList: [
     crossTouchAndReach,
     armScissors,
@@ -126,12 +126,12 @@ ExploreWorkout manBoobs = ExploreWorkout(
     "An imbalance between estrogen and androgen hormones typically causes gynecomastia. Men's bodies usually produce small amounts of estrogen, the hormone that controls breast growth.",
     "for the majority of men, man boobs are simply a result of having excess fat on the chest. Your pectoral muscles are underneath the layer of fat. So, by losing body fat and gaining muscle, you can work to get rid of your man boobs.",
   ],
-  imgSrc: "assets/explore_image/img_4.jpg",
+  imgSrc: "assets/explore_image/img_20.jpg",
   title: "Get rid of man boobs",
 );
 
 ExploreWorkout insaneAbs = ExploreWorkout(
-  workoutType: WorkoutType.Intermediate,
+  workoutType: WorkoutType.intermediate,
   workoutList: [
     jumpingJacks,
     pulseUp,
@@ -160,7 +160,7 @@ ExploreWorkout insaneAbs = ExploreWorkout(
 );
 
 ExploreWorkout hiitIntermediate = ExploreWorkout(
-  workoutType: WorkoutType.Intermediate,
+  workoutType: WorkoutType.intermediate,
   workoutList: [
     jumpingJacks,
     armScissors,
