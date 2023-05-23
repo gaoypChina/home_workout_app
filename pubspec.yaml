@@ -1,7 +1,7 @@
 name: full_workout
 description: A new Flutter application.
 
-version: 2.0.1+28
+version: 2.0.3+30
 
 environment:
   sdk: '>=2.18.1 <3.0.0'
@@ -35,7 +35,7 @@ dependencies:
   firebase_core: ^2.1.1
   flutter_phoenix: ^1.0.0
   convex_bottom_bar: ^3.0.0
-  sqflite: ^2.0.3+1
+  sqflite: ^2.2.6
   carousel_slider: ^4.1.1
   percent_indicator: ^4.2.2
   rename: ^2.0.1
@@ -43,9 +43,8 @@ dependencies:
   google_mobile_ads: ^2.0.1
   awesome_dialog: ^3.0.1
   google_sign_in: ^5.4.1
-  firebase_auth: ^4.1.1
   cloud_firestore: ^4.0.4
-  month_year_picker: ^0.2.0+2
+  month_year_picker: ^0.1.0+3
   flutter_staggered_animations: ^1.1.1
   table_calendar: ^3.0.7
   sliding_sheet: ^0.5.2
@@ -75,6 +74,11 @@ dependencies:
   purchases_flutter: ^3.10.0
   dashed_circle: ^0.0.2
   timelines: ^0.1.0
+  metadata_fetch: ^0.4.1
+  firebase_auth: ^4.4.0
+
+
+
 
 
 dev_dependencies:

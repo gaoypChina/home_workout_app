@@ -178,7 +178,6 @@ class WeightDatabaseHelper {
 
   Future close() async {
     var dbClient = await db;
-
     return dbClient.close();
   }
 }

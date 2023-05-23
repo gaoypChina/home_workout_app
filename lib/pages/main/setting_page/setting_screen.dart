@@ -31,6 +31,7 @@ import '../../../widgets/dialogs/connectivity_error_dialog.dart';
 import '../../../widgets/loading_indicator.dart';
 import '../../rate_my_app/rate_dialog_page.dart';
 import '../../rate_my_app/rate_my_app.dart';
+import '../../store/store_page.dart';
 import '../../subscription_page/subscribed_page.dart';
 import 'backup_data_page.dart';
 import 'delete_account.dart';
@@ -126,7 +127,7 @@ class _SettingPageState extends State<SettingPage>
 
     buildPrimeButton() {
       return Padding(
-        padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 0, top: 16),
+        padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 0),
         child: ElevatedButton.icon(
           icon: FaIcon(FontAwesomeIcons.rectangleAd),
           onPressed: () async {
@@ -355,17 +356,28 @@ class _SettingPageState extends State<SettingPage>
                                 ),
                                 getDivider(),
                                 CustomTile(
-                                  title: "Sound",
+                                  title: "Sound Setting",
                                   trailing: trailingIcon,
                                   icon: Icons.volume_up_outlined,
                                   onPress: () => Navigator.of(context)
                                       .pushNamed(SoundSetting.routeName),
                                 ),
                                 getDivider(),
+                                // CustomTile(
+                                //   title: "Visit Store",
+                                //   trailing: trailingIcon,
+                                //   icon: Icons.shopping_bag_outlined,
+                                //   onPress: () => Navigator.of(context).push(
+                                //       MaterialPageRoute(builder: (builder) {
+                                //     return StorePage();
+                                //   })),
+                                // ),
+                                // getDivider(),
                               ],
                             ),
                           ),
-                          if (!subscriptionProvider.isProUser)
+                      SizedBox(height: 12,),
+                      if (!subscriptionProvider.isProUser)
                             buildPrimeButton(),
                           buildRateButton(),
                           getTitle("General Settings"),

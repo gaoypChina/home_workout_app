@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:full_workout/helper/mediaHelper.dart';
 import 'package:provider/provider.dart';
-import '../../../constants/constant.dart';
 import '../../../pages/main/report_page/workout_report/workout_detail_report.dart';
 import '../../../pages/main/setting_page/reminder_screen.dart';
 import '../../../provider/subscription_provider.dart';
-import '../../../widgets/prime_button.dart';
 import '../../subscription_page/subscription_page.dart';
+
+
 
 List<Widget> getLeading(BuildContext context) {
   bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
@@ -41,6 +40,7 @@ List<Widget> getLeading(BuildContext context) {
     ),
       );
   }
+
 
 
   buildUserAvatar() {
