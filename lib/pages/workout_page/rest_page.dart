@@ -158,7 +158,7 @@ class RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
       percent: index / widget.workOutList.length,
       width: width,
       backgroundColor: isDark
-          ? Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8)
+          ? Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.8)
           : Colors.grey.withOpacity(.8),
       progressColor: Theme.of(context).primaryColor,
     );
@@ -176,7 +176,7 @@ class RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
     var height = size.height;
     var width = size.width;
     var safePadding = MediaQuery.of(context).padding.top;
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
 
     height = height - safePadding;
     return WillPopScope(
@@ -464,7 +464,7 @@ class RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                                     fontWeight: FontWeight.w600,
                                     color: Theme.of(context)
                                         .textTheme
-                                        .bodyText1!
+                                        .bodyLarge!
                                         .color!
                                         .withOpacity(.7)),
                               ),
@@ -485,7 +485,7 @@ class RestScreenState extends State<RestScreen> with TickerProviderStateMixin {
                                     fontWeight: FontWeight.w600,
                                     color: Theme.of(context)
                                         .textTheme
-                                        .bodyText1!
+                                        .bodyLarge!
                                         .color!
                                         .withOpacity(.7)),
                               ),

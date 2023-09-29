@@ -693,7 +693,7 @@ Based on the applicable laws of your country, you may have the right to request 
         child: Markdown(
           styleSheet: MarkdownStyleSheet(
               h2Padding: const EdgeInsets.only(top: 18),
-              h3: Theme.of(context).textTheme.bodyText1,
+              h3: Theme.of(context).textTheme.bodyLarge,
               textAlign: WrapAlignment.spaceBetween),
           padding: EdgeInsets.zero,
           onTapLink: (_, url, __) async {

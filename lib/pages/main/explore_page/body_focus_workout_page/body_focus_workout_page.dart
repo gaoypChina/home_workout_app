@@ -13,7 +13,7 @@ class BodyFocusWorkoutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
 
     Color  tileColor({required WorkoutType workoutType}) {
       Color titleColor;
@@ -57,7 +57,7 @@ class BodyFocusWorkoutPage extends StatelessWidget {
                   Icons.circle,
                   size: 6,
                   color:
-                      Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.4),
+                      Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.4),
                 ),
                 SizedBox(
                   width: 6,
@@ -149,7 +149,7 @@ class BodyFocusWorkoutPage extends StatelessWidget {
                   children: workoutModel.description.map((detail) =>   Padding(
                     padding: EdgeInsets.only(bottom: 10),
                     child: Text(detail,
-                      style: TextStyle(fontSize: 15,color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7)),textAlign: TextAlign.justify,),
+                      style: TextStyle(fontSize: 15,color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.7)),textAlign: TextAlign.justify,),
                   )).toList()
                 )
                 ),

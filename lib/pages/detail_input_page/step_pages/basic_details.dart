@@ -58,7 +58,7 @@ class _BasicDetailsState extends State<BasicDetails> {
                 style: TextStyle(
                     color: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.8)),
                 decoration: InputDecoration(
@@ -113,7 +113,7 @@ class _BasicDetailsState extends State<BasicDetails> {
                     fontWeight: FontWeight.w400,
                     color: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.8)),
               )

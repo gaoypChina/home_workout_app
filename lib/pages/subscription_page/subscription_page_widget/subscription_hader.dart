@@ -83,7 +83,7 @@ class _SubscriptionHeaderState extends State<SubscriptionHeader> {
                       style: TextStyle(
                         color: Theme.of(context)
                             .textTheme
-                            .bodyText1!
+                            .bodyLarge!
                             .color!
                             .withOpacity(.7),
                         fontSize: 13.5,
@@ -95,7 +95,7 @@ class _SubscriptionHeaderState extends State<SubscriptionHeader> {
                       style: TextStyle(
                           color: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .color!
                               .withOpacity(.9),
                           fontSize: 15,

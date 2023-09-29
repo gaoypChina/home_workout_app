@@ -40,7 +40,7 @@ class ConnectivityErrorDialog extends StatelessWidget {
             },
             child: Text("Try Again"),
             style: ElevatedButton.styleFrom(
-                primary: Colors.red.shade400, minimumSize: Size(150, 45)),
+                backgroundColor: Colors.red.shade400, minimumSize: Size(150, 45)),
           )
         ],
       ),

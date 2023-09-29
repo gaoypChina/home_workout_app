@@ -14,7 +14,7 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
 
     getImage(Workout workout, double height, double width) {
       return Container(

@@ -211,7 +211,7 @@ class FourWeekChallengePage extends StatelessWidget {
                 style: TextStyle(
                     color: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.5),
                     fontSize: 14,

@@ -9,7 +9,7 @@ class PrimeButton extends StatelessWidget {
       padding: EdgeInsets.only(top: 12, bottom: 10, right: 8),
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              primary: Theme.of(context).primaryColor,
+              backgroundColor: Theme.of(context).primaryColor,
               elevation: 1,
               padding: EdgeInsets.only(left: 12, right: 10),
               shape: RoundedRectangleBorder(

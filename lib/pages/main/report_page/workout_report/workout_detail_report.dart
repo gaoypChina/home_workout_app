@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import '../../../../constants/constant.dart';
 import '../../../../helper/recent_workout_db_helper.dart';
@@ -210,7 +208,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                             letterSpacing: 1,
                             color: Theme.of(context)
                                 .textTheme
-                                .bodyText1!
+                                .bodyLarge!
                                 .color!
                                 .withOpacity(.9)),
                       ),
@@ -232,7 +230,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .textTheme
-                                    .bodyText1!
+                                    .bodyLarge!
                                     .color,
                                 fontWeight: FontWeight.w400,
                                 letterSpacing: 1,
@@ -252,7 +250,7 @@ class _WorkoutDetailReportState extends State<WorkoutDetailReport> {
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .textTheme
-                                    .bodyText1!
+                                    .bodyLarge!
                                     .color,
                                 fontWeight: FontWeight.w400,
                                 letterSpacing: 1,

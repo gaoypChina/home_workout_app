@@ -54,14 +54,14 @@ class _SubscriptionSuccessfulDialogState
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             letterSpacing: 1,
-                            color: Theme.of(context).textTheme.bodyText1!.color,
+                            color: Theme.of(context).textTheme.bodyLarge!.color,
                             fontSize: 22)),
                     TextSpan(
                         text: "Workout".toUpperCase(),
                         style: TextStyle(
                             letterSpacing: 1,
                             fontWeight: FontWeight.w700,
-                            color: Theme.of(context).textTheme.bodyText1!.color,
+                            color: Theme.of(context).textTheme.bodyLarge!.color,
                             //     color: Theme.of(context).primaryColor,
                             fontSize: 22)),
                     TextSpan(
@@ -106,7 +106,7 @@ class _SubscriptionSuccessfulDialogState
                       letterSpacing: 1.2,
                       color: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyLarge!
                           .color!
                           .withOpacity(.8)),
                 ),
@@ -130,7 +130,7 @@ class _SubscriptionSuccessfulDialogState
                                       )));
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Theme.of(context).primaryColor,
+                          backgroundColor: Theme.of(context).primaryColor,
                         ),
                         child: Text(
                           "Continue".toUpperCase(),

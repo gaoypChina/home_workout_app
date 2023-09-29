@@ -42,7 +42,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                     fontWeight: FontWeight.w500,
                     color: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.7),
                     fontSize: 14)),
@@ -68,7 +68,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                     fontWeight: FontWeight.w500,
                     color: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.7),
                     fontSize: 14)),
@@ -100,7 +100,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                   style: TextStyle(
                       color: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyLarge!
                           .color!
                           .withOpacity(.8),
                       fontWeight: FontWeight.w600),

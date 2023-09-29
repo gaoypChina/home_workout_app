@@ -44,7 +44,7 @@ class _SubscribedPageState extends State<SubscribedPage> {
           Container(
             height: 1,
             color:
-                Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.1),
+                Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.1),
           ),
           Container(
             color: Theme.of(context).cardColor.withOpacity(.5),
@@ -151,7 +151,7 @@ class SubscribedFAQ extends StatelessWidget {
                               fontSize: 15,
                               color: Theme.of(context)
                                   .textTheme
-                                  .bodyText1!
+                                  .bodyLarge!
                                   .color!
                                   .withOpacity(.9)),
                         ),

@@ -301,7 +301,7 @@ class WorkoutPageState extends State<WorkoutPage>
       percent: (currIndex + 1) / widget.workOutList.length,
       width: width,
       backgroundColor: isDark
-          ? Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8)
+          ? Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.8)
           : Theme.of(context).primaryColor.withOpacity(.2),
       barRadius: Radius.circular(18),
       progressColor: Theme.of(context).primaryColor,
@@ -310,7 +310,7 @@ class WorkoutPageState extends State<WorkoutPage>
 
   getTitleCard(Workout item, int currIndex, bool isDark) {
     Color greyColor =
-    Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8);
+    Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.8);
 
     return Expanded(
       child: Container(
@@ -327,7 +327,7 @@ class WorkoutPageState extends State<WorkoutPage>
                     "${currIndex + 1} of ${widget.workOutList.length}",
                     style: TextStyle(
                         fontSize: 16,
-                        color: Theme.of(context).textTheme.bodyText1!.color),
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   SizedBox(
                     height: 10,
@@ -478,7 +478,7 @@ class WorkoutPageState extends State<WorkoutPage>
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
 
     return WillPopScope(
       onWillPop: () => _onPopBack(),

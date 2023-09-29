@@ -78,7 +78,7 @@ class SubscriptionPlan extends StatelessWidget {
                                           ? Colors.white
                                           : Theme.of(context)
                                           .textTheme
-                                          .bodyText1!.color!.withOpacity(.8),
+                                          .bodyLarge!.color!.withOpacity(.8),
                                       fontWeight: FontWeight.w600),
                                 ),
                                 SizedBox(
@@ -92,7 +92,7 @@ class SubscriptionPlan extends StatelessWidget {
                                           ? Colors.white
                                           : Theme.of(context)
                                           .textTheme
-                                          .bodyText1!
+                                          .bodyLarge!
                                           .color,
                                       fontSize: 22,
                                       fontWeight: FontWeight.w500),
@@ -110,7 +110,7 @@ class SubscriptionPlan extends StatelessWidget {
                                             ? Colors.white
                                             : Theme.of(context)
                                             .textTheme
-                                            .bodyText1!.color!.withOpacity(.8),
+                                            .bodyLarge!.color!.withOpacity(.8),
                                       ),
                                     ),
                                   ],
@@ -131,7 +131,7 @@ class SubscriptionPlan extends StatelessWidget {
                                 Icons.circle,
                                 color: Theme.of(context)
                                     .textTheme
-                                    .bodyText1!.color!.withOpacity(.2),
+                                    .bodyLarge!.color!.withOpacity(.2),
                               )),
                         ],
                       ),

@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:full_workout/pages/subscription_page/subscription_page.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/subscription_provider.dart';
 import 'login_page/login_page.dart';
 import 'main_page.dart';
 
@@ -16,8 +19,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     init();
+    setSubscription();
     super.initState();
   }
+
 
   init() async {
     await Future.delayed(Duration(seconds: 0));
@@ -28,6 +33,16 @@ class _SplashPageState extends State<SplashPage> {
     } else {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => MainPage(index: 0)));
+    }
+  }
+
+  setSubscription() async {
+    var provider = Provider.of<SubscriptionProvider>(context, listen: false);
+    await
+    provider.setSubscriptionDetails();
+    var user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await provider.showSubscriptionDialog(context: context);
     }
   }
 
@@ -42,21 +57,23 @@ class _SplashPageState extends State<SplashPage> {
             children: [
               RichText(
                   text: TextSpan(children: [
-                TextSpan(
-                    text: "Home ".toUpperCase(),
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 1,
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 32)),
-                TextSpan(
-                    text: "Workout".toUpperCase(),
-                    style: TextStyle(
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontSize: 32))
-              ])),
+                    TextSpan(
+                        text: "Home ".toUpperCase(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1,
+                            color: Theme
+                                .of(context)
+                                .primaryColor,
+                            fontSize: 32)),
+                    TextSpan(
+                        text: "Workout".toUpperCase(),
+                        style: TextStyle(
+                            letterSpacing: 1,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            fontSize: 32))
+                  ])),
               SizedBox(
                 height: 28,
               ),

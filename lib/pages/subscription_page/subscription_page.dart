@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_timer.dart';
 import '../../../constants/constant.dart';
 import '../../../pages/subscription_page/subscription_page_widget/statics_section.dart';
 import '../../../pages/subscription_page/subscription_page_widget/subscription_faq.dart';
@@ -13,9 +12,10 @@ import 'package:provider/provider.dart';
 import '../../widgets/loading_indicator.dart';
 
 class SubscriptionPage extends StatefulWidget {
+  final bool showCrossButton ;
   static const routeName = "subscription-page";
 
-  SubscriptionPage({Key? key}) : super(key: key);
+  SubscriptionPage({Key? key,required this.showCrossButton}) : super(key: key);
 
   @override
   State<SubscriptionPage> createState() => _SubscriptionPageState();
@@ -119,7 +119,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                     ],
                   ),
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
+                      backgroundColor: Colors.transparent,
                       elevation: 0,
                       padding: EdgeInsets.zero),
                 )),
@@ -138,6 +138,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       children: [
         Scaffold(
           appBar: AppBar(
+            leading: widget.showCrossButton ? IconButton(onPressed: (){Navigator.of(context).pop();}, icon: Icon(Icons.close)):null,
             title: Text(
               "Get Premium",
             ),
@@ -156,8 +157,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                           ],
                         ),
                         style: OutlinedButton.styleFrom(
-                          primary: Theme.of(context).primaryColor.withOpacity(.8),
-                          side: BorderSide(
+                          foregroundColor: Theme.of(context).primaryColor.withOpacity(.8), side: BorderSide(
                               width: 1.5,
                               color: Theme.of(context)
                                   .primaryColor.withOpacity(.7)),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:full_workout/pages/main/explore_page/widget/workout_header.dart';
-import '../../../../database/explore_page_workout/picked_workout_database.dart';
 import '../../../../database/explore_page_workout/stretch_workout.dart';
 import '../workout_setup_page/workout_setup_page.dart';
 
@@ -73,7 +72,7 @@ class OtherWorkoutCard extends StatelessWidget {
                                     letterSpacing: 1.4,
                                     color: Theme.of(context)
                                         .textTheme
-                                        .bodyText1!
+                                        .bodyLarge!
                                         .color!
                                         .withOpacity(.7)),
                               ),

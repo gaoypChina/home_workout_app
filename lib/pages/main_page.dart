@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:full_workout/pages/subscription_page/subscription_page.dart';
 
 import '../../../pages/main/home_page/home_page.dart';
 import 'main/explore_page/explore_page.dart';
@@ -54,7 +55,7 @@ class _MainPageState extends State<MainPage> {
                   TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
               unselectedItemColor: Theme.of(context)
                   .textTheme
-                  .bodyText1!
+                  .bodyLarge!
                   .color!
                   .withOpacity(.85),
               unselectedLabelStyle:

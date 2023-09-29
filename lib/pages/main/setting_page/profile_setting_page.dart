@@ -59,7 +59,7 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
                 style: TextStyle(
                     color: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.8)),
                 decoration: InputDecoration(
@@ -144,7 +144,7 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
               padding: EdgeInsets.only(left: 18, right: 18, bottom: 8, top: 8),
               height: 60,
               width: double.infinity,
-              color: Theme.of(context).bottomAppBarColor,
+              color: Theme.of(context).bottomAppBarTheme.color,
               child: ElevatedButton(
                 onPressed: () async {
                   setState(() {
@@ -167,7 +167,7 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
                         ))
                     : Text("Save".toUpperCase()),
                 style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor),
+                    backgroundColor: Theme.of(context).primaryColor),
               ),
             )
           : null,

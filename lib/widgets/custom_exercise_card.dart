@@ -79,16 +79,16 @@ class _CustomExerciseCardState extends State<CustomExerciseCard> {
                           if (!item.showTimer)
                             Text(
                               "X ",
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context).textTheme.titleMedium,
                             ),
                           Text(
                             widget.time.toString(),
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
                           if (item.showTimer)
                             Text(
                               " Sec",
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context).textTheme.titleMedium,
                             )
                         ],
                       ),

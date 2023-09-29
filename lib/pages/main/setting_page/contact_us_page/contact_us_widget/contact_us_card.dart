@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../../constants/constant.dart';
 import '../../../../../pages/main/setting_page/faq_page.dart';
 
 import '../write_us_page.dart';
@@ -9,7 +8,6 @@ class ContactUsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Constants _constants = Constants();
 
     buildDivider() {
       return Container(
@@ -31,7 +29,7 @@ class ContactUsCard extends StatelessWidget {
           title,
           style: Theme.of(context)
               .textTheme
-              .bodyText1!
+              .bodyLarge!
               .copyWith(fontSize: 16, fontWeight: FontWeight.w400),
         ),
         subtitle: Text(subTitle),

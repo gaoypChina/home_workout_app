@@ -38,8 +38,8 @@ class AdHelper {
   _showFailMessage({required BuildContext context, required String content}) {
     AwesomeDialog(
       context: context,
-      dialogType: DialogType.ERROR,
-      animType: AnimType.BOTTOMSLIDE,
+      dialogType: DialogType.error,
+      animType: AnimType.bottomSlide,
       title: 'Fail to load reward',
       desc: content,
       btnCancelOnPress: () {},
@@ -54,8 +54,8 @@ class AdHelper {
     Provider.of<AdsProvider>(context, listen: false).onRewardLoaded();
     AwesomeDialog(
       context: context,
-      dialogType: DialogType.SUCCES,
-      animType: AnimType.BOTTOMSLIDE,
+      dialogType: DialogType.success,
+      animType: AnimType.bottomSlide,
       title: 'Reward generated successfully',
       btnOkText: "Continue",
       btnOkOnPress: () {

@@ -1,4 +1,3 @@
-import 'dart:developer' as dev;
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +18,7 @@ import '../helper/sp_helper.dart';
 import '../helper/weight_db_helper.dart';
 import '../pages/detail_input_page/detail_input_page.dart';
 import '../pages/main_page.dart';
+import '../pages/splash_page.dart';
 import '../widgets/dialogs/delete_account_fail_dialog.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -45,7 +45,7 @@ class AuthProvider with ChangeNotifier {
           await backupProvider.syncData(
               context: context, isLoginPage: true, showMsg: false);
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return MainPage(index: 0);
+            return SplashPage();
           }));
         } else {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {

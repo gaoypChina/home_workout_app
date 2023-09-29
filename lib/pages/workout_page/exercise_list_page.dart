@@ -175,7 +175,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
 
     buildChip({
       required String title,
@@ -193,7 +193,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                 Icon(icon,
                     color: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.8)),
                 SizedBox(
@@ -206,7 +206,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
                       fontSize: 14,
                       color: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyLarge!
                           .color!
                           .withOpacity(.8)),
                 ),
@@ -220,7 +220,7 @@ class _ExerciseListScreenState extends State<ExerciseListScreen>
     return Scaffold(
         bottomNavigationBar: Material(
           elevation: 5,
-          color: Theme.of(context).bottomAppBarColor,
+          color: Theme.of(context).bottomAppBarTheme.color,
           child: Container(
               height: 80,
               padding: EdgeInsets.symmetric(horizontal: 18)

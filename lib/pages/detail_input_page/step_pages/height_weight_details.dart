@@ -117,7 +117,7 @@ class UnitSelector extends StatelessWidget {
                       ? Colors.white
                       : Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyLarge!
                           .color!
                           .withOpacity(.7),
                   fontSize: 15,

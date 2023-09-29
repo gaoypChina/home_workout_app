@@ -1,6 +1,7 @@
-import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
+import 'package:day_night_time_picker/lib/daynight_timepicker.dart' as dayNightPicker;
+import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart' as localNoti;
 import '../../../constants/constant.dart';
 import '../../../helper/notification_helper.dart';
 import '../../../helper/sp_helper.dart';
@@ -14,7 +15,7 @@ class ReminderTab extends StatefulWidget {
 }
 
 class _ReminderTabState extends State<ReminderTab> {
-  late FlutterLocalNotificationsPlugin fltrNotification;
+  late localNoti.FlutterLocalNotificationsPlugin fltrNotification;
   Constants constants = Constants();
   SpHelper spHelper = SpHelper();
   SpKey spKey = SpKey();
@@ -87,7 +88,7 @@ class _ReminderTabState extends State<ReminderTab> {
         id: 1,
         body:
             "Complete your daily workout task and move a step closer to your goal",
-        time: Time(reminderTime.hour, reminderTime.minute));
+        time: localNoti.Time(reminderTime.hour, reminderTime.minute));
   }
 
   @override
@@ -117,10 +118,10 @@ class _ReminderTabState extends State<ReminderTab> {
   }
 
   _pickTime() async {
-    Navigator.of(context).push(showPicker(
+    Navigator.of(context).push(dayNightPicker.showPicker(
       context: context,
       iosStylePicker: true,
-      value: reminderTime,
+      value:Time(hour: reminderTime.hour,minute: reminderTime.minute) ,
       onChange: (TimeOfDay t) {
         spHelper.saveInt(spKey.hourTime, t.hour);
         spHelper.saveInt(spKey.minuteTime, t.minute);
@@ -192,7 +193,7 @@ class _ReminderTabState extends State<ReminderTab> {
                   letterSpacing: 1.5,
                   color: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .bodyLarge!
                       .color!
                       .withOpacity(.8),
                 ),

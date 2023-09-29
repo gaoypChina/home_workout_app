@@ -12,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../helper/subscription_helper.dart';
 import '../models/subscription_date_model.dart';
+import '../pages/subscription_page/subscription_page.dart';
 import '../widgets/dialogs/subscription_error_dialog.dart';
 
 class SubscriptionProvider with ChangeNotifier {
@@ -127,7 +128,6 @@ class SubscriptionProvider with ChangeNotifier {
   }
 
   Future<void> setSubscriptionDetails() async {
-
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       log("user is not logged in");
@@ -171,5 +171,23 @@ class SubscriptionProvider with ChangeNotifier {
     }
   }
 
+  showSubscriptionDialog({required BuildContext context}) async {
+    String? savedTime =
+        await SpHelper().loadString(SpKey().subscriptionDialogTime);
 
+    bool isNewDay = false;
+    if (savedTime != null) {
+      isNewDay =
+          DateTime.now().difference(DateTime.parse(savedTime)).inDays > 7;
+    }
+
+    if (savedTime == null || isNewDay) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
+        return SubscriptionPage(showCrossButton: true,);
+      }));
+
+      await SpHelper().saveString(
+          SpKey().subscriptionDialogTime, DateTime.now().toIso8601String());
+    }
+  }
 }

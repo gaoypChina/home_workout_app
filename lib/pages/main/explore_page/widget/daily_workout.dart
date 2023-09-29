@@ -1,6 +1,5 @@
 import 'package:full_workout/pages/main/explore_page/widget/workout_header.dart';
 
-import '../../../../constants/constant.dart';
 import '../../../../database/explore_page_workout/weekday_workout.dart';
 import '../../../../models/daily_workout_model.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ class DailyWorkout extends StatefulWidget {
 class _DailyWorkoutState extends State<DailyWorkout> {
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
 
     int todayIdx = DateTime.now().weekday -1;
     List<DailyWorkoutModel> workoutList = [
@@ -142,7 +141,7 @@ class _DailyWorkoutState extends State<DailyWorkout> {
                                             fontWeight: FontWeight.w400,
                                             color: Theme.of(context)
                                                 .textTheme
-                                                .bodyText1
+                                                .bodyLarge
                                                 ?.color!
                                                 .withOpacity(.9)),
                                       ),

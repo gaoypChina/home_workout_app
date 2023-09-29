@@ -121,7 +121,7 @@ class _ExerciseListScreenState extends State<CheckListScreen>
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
@@ -160,7 +160,7 @@ class _ExerciseListScreenState extends State<CheckListScreen>
                     fontSize: 13,
                     color: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.6)),
               )

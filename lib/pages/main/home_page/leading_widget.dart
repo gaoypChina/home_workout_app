@@ -9,7 +9,7 @@ import '../../subscription_page/subscription_page.dart';
 
 
 List<Widget> getLeading(BuildContext context) {
-  bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+  bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
 
   buildButton({required IconData icon, required Function onTap}) {
     return
@@ -31,7 +31,7 @@ List<Widget> getLeading(BuildContext context) {
         child: CircleAvatar(
           child: Icon(
             icon,
-            color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.9),
+            color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.9),
             size: 24,
           ),
           backgroundColor: Colors.transparent,

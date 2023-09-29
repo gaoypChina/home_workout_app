@@ -26,7 +26,6 @@ class ExploreWorkoutHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
     return imgSrc.contains("icons")
         ? Container(

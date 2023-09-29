@@ -55,6 +55,7 @@ class SpKey {
 
   String newDevice = "newDevice";
   String backupTime = "backupTime";
+  String subscriptionDialogTime = "subscriptionDialogTime";
 
   /// Auth data
   String authByGoogle = "authByGoogle";

@@ -249,7 +249,7 @@ class _MyAppState extends State<ReportScreen> {
                             style: TextStyle(color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(
-                              primary: Theme.of(context).primaryColor),
+                              backgroundColor: Theme.of(context).primaryColor),
                         ),
                   SizedBox(
                     width: 5,
@@ -424,7 +424,7 @@ class _MyAppState extends State<ReportScreen> {
           },
           child: Text(
             "Continue",
-            style: Theme.of(context).textTheme.button!.merge(TextStyle(
+            style: Theme.of(context).textTheme.bodyLarge!.merge(TextStyle(
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.w500)),

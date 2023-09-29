@@ -1,4 +1,3 @@
-
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +30,6 @@ import '../../../widgets/dialogs/connectivity_error_dialog.dart';
 import '../../../widgets/loading_indicator.dart';
 import '../../rate_my_app/rate_dialog_page.dart';
 import '../../rate_my_app/rate_my_app.dart';
-import '../../store/store_page.dart';
 import '../../subscription_page/subscribed_page.dart';
 import 'backup_data_page.dart';
 import 'delete_account.dart';
@@ -115,15 +113,14 @@ class _SettingPageState extends State<SettingPage>
         Provider.of<SubscriptionProvider>(context, listen: false);
     var connectivityProvider =
         Provider.of<ConnectivityProvider>(context, listen: false);
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
     double height = MediaQuery.of(context).size.height;
 
     Icon trailingIcon = Icon(
       Icons.arrow_forward_ios,
       size: 16,
-      color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8),
+      color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.8),
     );
-
 
     buildPrimeButton() {
       return Padding(
@@ -134,7 +131,7 @@ class _SettingPageState extends State<SettingPage>
             bool isConnected = await connectivityProvider.isNetworkConnected;
             if (isConnected) {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (builder) => SubscriptionPage()));
+                  MaterialPageRoute(builder: (builder) => SubscriptionPage(showCrossButton: false,)));
             } else {
               showDialog(
                   context: context,
@@ -160,7 +157,6 @@ class _SettingPageState extends State<SettingPage>
         ),
       );
     }
-
 
     getTitle(String text) {
       return Container(
@@ -197,13 +193,11 @@ class _SettingPageState extends State<SettingPage>
                       ? Theme.of(context).cardColor.withOpacity(.6)
                       : Colors.blueGrey.shade300.withOpacity(.1),
                   body: NestedScrollView(
-
                     controller: _scrollController,
                     headerSliverBuilder:
                         (BuildContext context, bool innerBoxIsScrolled) {
                       return <Widget>[
                         SliverAppBar(
-
                           automaticallyImplyLeading: false,
                           title: Row(
                             children: [
@@ -230,8 +224,7 @@ class _SettingPageState extends State<SettingPage>
                               background: BackupDataCard(
                             lastSync: lastSync,
                             name: name,
-                            onSync: ()
-                            async {
+                            onSync: () async {
                               bool isConnected =
                                   await connectivityProvider.isNetworkConnected;
 
@@ -296,7 +289,7 @@ class _SettingPageState extends State<SettingPage>
                                   icon: CupertinoIcons.time,
                                   onPress: () async {
                                     int? num =
-                                    await showMaterialModalBottomSheet(
+                                        await showMaterialModalBottomSheet(
                                       context: context,
                                       builder: (context) {
                                         return WorkoutTimePicker(
@@ -318,10 +311,10 @@ class _SettingPageState extends State<SettingPage>
                                   trailing: isLoading
                                       ? CircularProgressIndicator()
                                       : Text(
-                                    "${trainingRest.toStringAsFixed(0)} Sec",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600),
-                                  ),
+                                          "${trainingRest.toStringAsFixed(0)} Sec",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                        ),
                                 ),
                                 getDivider(),
                                 CustomTile(
@@ -329,15 +322,15 @@ class _SettingPageState extends State<SettingPage>
                                   title: "Countdown time",
                                   onPress: () async {
                                     int? num =
-                                    await showMaterialModalBottomSheet(
-                                        context: context,
-                                        builder: (context) {
-                                          return WorkoutTimePicker(
-                                            value: countdownTime.toInt(),
-                                            minimumVal: 10,
-                                            maximumVal: 15,
-                                          );
-                                        });
+                                        await showMaterialModalBottomSheet(
+                                            context: context,
+                                            builder: (context) {
+                                              return WorkoutTimePicker(
+                                                value: countdownTime.toInt(),
+                                                minimumVal: 10,
+                                                maximumVal: 15,
+                                              );
+                                            });
                                     if (num != null) {
                                       await spHelper.saveDouble(
                                           spKey.countdownTime, num.toDouble());
@@ -349,10 +342,10 @@ class _SettingPageState extends State<SettingPage>
                                   trailing: isLoading
                                       ? CircularProgressIndicator()
                                       : Text(
-                                    "${countdownTime.toStringAsFixed(0)} Sec",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600),
-                                  ),
+                                          "${countdownTime.toStringAsFixed(0)} Sec",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                        ),
                                 ),
                                 getDivider(),
                                 CustomTile(
@@ -376,8 +369,10 @@ class _SettingPageState extends State<SettingPage>
                               ],
                             ),
                           ),
-                      SizedBox(height: 12,),
-                      if (!subscriptionProvider.isProUser)
+                          SizedBox(
+                            height: 12,
+                          ),
+                          if (!subscriptionProvider.isProUser)
                             buildPrimeButton(),
                           buildRateButton(),
                           getTitle("General Settings"),
@@ -413,7 +408,7 @@ class _SettingPageState extends State<SettingPage>
                                             Icons.toggle_on_outlined,
                                             color: Theme.of(context)
                                                 .textTheme
-                                                .bodyText1!
+                                                .bodyLarge!
                                                 .color,
                                           ),
                                           title: Text(
@@ -422,7 +417,7 @@ class _SettingPageState extends State<SettingPage>
                                               fontWeight: FontWeight.w400,
                                               color: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1!
+                                                  .bodyLarge!
                                                   .color,
                                             ),
                                           ),
@@ -560,7 +555,7 @@ class _SettingPageState extends State<SettingPage>
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (builder) =>
-                                                      SubscriptionPage()));
+                                                      SubscriptionPage(showCrossButton: false,)));
                                         } else {
                                           showDialog(
                                               context: context,
@@ -584,7 +579,6 @@ class _SettingPageState extends State<SettingPage>
                                       );
                                     },
                                   ),
-
                                   getDivider(),
                                   CustomTile(
                                     icon: Icons.chat_outlined,
@@ -598,11 +592,20 @@ class _SettingPageState extends State<SettingPage>
                                     },
                                   ),
                                   getDivider(),
+                                  getDivider(),
+                                  CustomTile(
+                                    icon: Icons.shopping_bag_outlined,
+                                    title: "Our other apps",
+                                    trailing: trailingIcon,
+                                    onPress: () async {
+                                      constants.openUrl(url: "https://play.google.com/store/apps/dev?id=6652795005413832872");
+
+                                    },
+                                  ),
                                 ],
                               ),
                             ),
                           ),
-
                           getTitle("About us"),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 0),
@@ -624,7 +627,7 @@ class _SettingPageState extends State<SettingPage>
                                   ),
                                   getDivider(),
                                   CustomTile(
-                                    icon: FontAwesomeIcons.questionCircle,
+                                    icon: FontAwesomeIcons.circleQuestion,
                                     title: "FAQ",
                                     onPress: () => Navigator.of(context)
                                         .pushNamed(FAQPage.routeName),
@@ -663,26 +666,27 @@ class _SettingPageState extends State<SettingPage>
                                           context: context,
                                           builder: (context) {
                                             return AlertDialog(
-                                              title:
-                                                  Text("Log out"),
-                                              content:  Text("Are you sure you want to Logout?"),
+                                              title: Text("Log out"),
+                                              content: Text(
+                                                  "Are you sure you want to Logout?"),
                                               actions: [
                                                 TextButton(
                                                     onPressed: () {
-                                                      Navigator.pop(context, true);
+                                                      Navigator.pop(
+                                                          context, true);
                                                     },
                                                     child: Text("Yes")),
                                                 ElevatedButton(
                                                     onPressed: () {
-                                                      Navigator.pop(context, false);
+                                                      Navigator.pop(
+                                                          context, false);
                                                     },
                                                     child: Text("No")),
                                               ],
                                             );
                                           });
 
-                                      if(res == null || res == false)
-                                        return;
+                                      if (res == null || res == false) return;
                                       if (res == true) {
                                         bool isConnected =
                                             await connectivityProvider
@@ -758,18 +762,14 @@ class _SettingPageState extends State<SettingPage>
                               ),
                             ),
                           ),
-                          // SizedBox(
-                          //   height: 40,
-                          // ),
-                          // SocialIcons(),
                           SizedBox(
-                            height: 30,
+                            height: 40,
                           ),
+                          SocialIcons(),
 
                           SizedBox(
                             height: 40,
                           ),
-
                           Center(
                               child: Text(
                             "Made With ❤ in India".toUpperCase(),
@@ -793,7 +793,7 @@ class _SettingPageState extends State<SettingPage>
                                         letterSpacing: 1.2,
                                         color: Theme.of(context)
                                             .textTheme
-                                            .bodyText1!
+                                            .bodyLarge!
                                             .color!
                                             .withOpacity(.7),
                                         fontWeight: FontWeight.w600),
@@ -822,31 +822,61 @@ class SocialIcons extends StatefulWidget {
 }
 
 class _SocialIconsState extends State<SocialIcons> {
+
   @override
   Widget build(BuildContext context) {
-    buildIcon({required String imgScr}) {
-      return Container(
-        height: 32,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
+    Constants constants = Constants();
+    buildIcon({required String imgScr, required Function onTap}) {
+      return InkWell(
+        onTap: (){
+          onTap();
+        },
+        child: Container(
+          height: 32,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+          ),
+          child: Image.network(imgScr),
         ),
-        child: Image.network(imgScr),
       );
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Column(
       children: [
-        buildIcon(
-            imgScr: "https://cdn-icons-png.flaticon.com/512/174/174855.png"),
-        buildIcon(
-            imgScr: "https://cdn-icons-png.flaticon.com/512/174/174848.png"),
-        buildIcon(
-            imgScr: "https://cdn-icons-png.flaticon.com/512/174/174879.png"),
-        buildIcon(
-            imgScr: "https://cdn-icons-png.flaticon.com/512/174/174857.png"),
-        buildIcon(
-            imgScr: "https://cdn-icons-png.flaticon.com/512/174/174876.png"),
+        Text("Follow us"),
+        SizedBox(
+          height: 8,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildIcon(
+                imgScr:
+                    "https://cdn-icons-png.flaticon.com/512/174/174855.png",
+            onTap: (){
+              constants.openUrl(url: "https://www.instagram.com/beast._.fitness");
+
+            }),
+            SizedBox(
+              width: 22,
+            ),
+            buildIcon(
+                imgScr:
+                    "https://cdn-icons-png.flaticon.com/512/174/174848.png",  onTap: (){
+              constants.openUrl(url: "https://www.facebook.com/profile.php?id=100093072879042");
+
+            }),
+            SizedBox(
+              width: 22,
+            ),
+            buildIcon(
+                imgScr:
+                    "https://cdn-icons-png.flaticon.com/512/174/174857.png",  onTap: (){
+              constants.openUrl(url: "https://www.linkedin.com/company/feet-and-flex");
+
+            }),
+          ],
+        ),
       ],
     );
   }
@@ -867,23 +897,16 @@ class CustomTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
 
     return ListTile(
       contentPadding: EdgeInsets.only(left: 18, right: 14, top: 2, bottom: 2),
-      leading: Icon(
-        icon,
-        color: Theme.of(context)
-            .textTheme
-            .bodyText1!
-            .color
-      ),
+      leading: Icon(icon, color: Theme.of(context).textTheme.bodyLarge!.color),
       onTap: () => onPress(),
       title: Text(
         title,
         style: TextStyle(
           fontWeight: FontWeight.w400,
-          color: Theme.of(context).textTheme.bodyText1!.color,
+          color: Theme.of(context).textTheme.bodyLarge!.color,
         ),
       ),
       trailing: Padding(padding: EdgeInsets.only(right: 4), child: trailing),

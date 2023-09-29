@@ -87,7 +87,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
   getVLine() {
     return Container(
       width: .4,
-      color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.5),
+      color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.5),
     );
   }
 
@@ -95,7 +95,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
     return Container(
       height: double.infinity,
       width: .5,
-      color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.5),
+      color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.5),
     );
   }
 
@@ -144,7 +144,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                       height: .5,
                       color: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyLarge!
                           .color!
                           .withOpacity(.5)),
                   ...provider.weight.map((item) {
@@ -267,7 +267,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                                           style: TextStyle(
                                               color: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1!
+                                                  .bodyLarge!
                                                   .color,
                                               fontSize: 20,
                                               fontWeight: FontWeight.w300),
@@ -277,7 +277,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                                           style: TextStyle(
                                               color: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1!
+                                                  .bodyLarge!
                                                   .color,
                                               fontSize: 18,
                                               fontWeight: FontWeight.w300),
@@ -321,7 +321,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                                               fontWeight: FontWeight.w400,
                                               color: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1!
+                                                  .bodyLarge!
                                                   .color,
                                               fontSize: 16),
                                         ),
@@ -331,7 +331,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                                               fontWeight: FontWeight.w400,
                                               color: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1!
+                                                  .bodyLarge!
                                                   .color,
                                               fontSize: 14),
                                         ),
@@ -348,7 +348,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                           height: .5,
                           color: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .color!
                               .withOpacity(.5),
                         ),
@@ -380,7 +380,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
                 fontWeight: FontWeight.w400,
                 color: Theme.of(context)
                     .textTheme
-                    .bodyText1
+                    .bodyLarge
                     ?.color
                     ?.withOpacity(.7)),
           )
@@ -485,7 +485,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
               height: .5,
               color: Theme.of(context)
                   .textTheme
-                  .bodyText1!
+                  .bodyLarge!
                   .color!
                   .withOpacity(.5)),
           getDetail(),

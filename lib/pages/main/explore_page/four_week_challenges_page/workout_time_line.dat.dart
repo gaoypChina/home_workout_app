@@ -89,10 +89,10 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
 
     Color grayColor =
-        Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.4);
+        Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.4);
     List<String> title = ["Week 1", "Week 2", "Week 3", "Week 4"];
     getWeekTile(int index) {
       getDay(String day, int currIndex) {
@@ -116,7 +116,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                               border: Border.all(
                                   color: Theme.of(context)
                                       .textTheme
-                                      .bodyText1!
+                                      .bodyLarge!
                                       .color!
                                       .withOpacity(.35),
                                   width: 1.2)),
@@ -126,7 +126,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .textTheme
-                                        .bodyText1!
+                                        .bodyLarge!
                                         .color!
                                         .withOpacity(.5)),
                               ),
@@ -276,7 +276,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                   return DashedLineConnector(
                     color: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.3),
                     dash: 1,
@@ -322,7 +322,7 @@ class _WorkoutTimeLineState extends State<WorkoutTimeLine>
                             title[index],
                             style: Theme.of(context)
                                 .textTheme
-                                .subtitle2!
+                                .titleSmall!
                                 .merge(TextStyle(fontSize: 16)),
                           ),
                           Spacer(),

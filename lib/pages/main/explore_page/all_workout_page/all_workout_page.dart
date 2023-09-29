@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../../database/explore_page_workout/export_workout.dart';
 import '../../../../enums/workout_type.dart';
@@ -93,7 +92,7 @@ class _AllWorkoutPageState extends State<AllWorkoutPage> {
                           size: 6,
                           color: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .color!
                               .withOpacity(.4),
                         ),

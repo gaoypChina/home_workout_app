@@ -38,12 +38,12 @@ class CustomDetailInput extends StatelessWidget {
                       color: hasData
                           ? Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .color!
                               .withOpacity(.8)
                           : Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .color!
                               .withOpacity(.6),
                       fontWeight: hasData ? FontWeight.w400 : FontWeight.w400),

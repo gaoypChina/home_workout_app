@@ -3,7 +3,6 @@ import 'package:full_workout/pages/main/explore_page/widget/workout_header.dart'
 
 import '../../../../database/explore_page_workout/discover_workout.dart';
 import '../../../../models/explore_workout_model.dart';
-import '../../../../widgets/prime_icon.dart';
 import '../workout_setup_page/workout_setup_page.dart';
 
 class DiscoverWorkout extends StatelessWidget {
@@ -76,7 +75,7 @@ class DiscoverWorkout extends StatelessWidget {
 
                                 color: Theme.of(context)
                                     .textTheme
-                                    .bodyText1!
+                                    .bodyLarge!
                                     .color!
                                     .withOpacity(.8)),
                           ),
@@ -90,7 +89,7 @@ class DiscoverWorkout extends StatelessWidget {
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .textTheme
-                                        .bodyText1!
+                                        .bodyLarge!
                                         .color!
                                         .withOpacity(.8)),
                               ),
@@ -109,7 +108,7 @@ class DiscoverWorkout extends StatelessWidget {
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .textTheme
-                                        .bodyText1!
+                                        .bodyLarge!
                                         .color!
                                         .withOpacity(.8)),
                               )

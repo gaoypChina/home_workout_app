@@ -77,7 +77,7 @@ class _BodyTypeState extends State<BodyType> {
                     ? Colors.white
                     : Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.8),
                 letterSpacing: 1.2,

@@ -66,11 +66,11 @@ class FeedbackPage extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
                   letterSpacing: 1.5,
-                  color: Theme.of(context).textTheme.headline1!.color)),
+                  color: Theme.of(context).textTheme.displayLarge!.color)),
           WidgetSpan(
               child: InkWell(
             onTap: () async {
-              if (!await launch(Constants().playStoreLink))
+              if (!await launchUrl(Uri.parse(Constants().playStoreLink)))
                 throw 'Could not launch ${Constants().playStoreLink}';
             },
             child: Row(
@@ -99,7 +99,7 @@ class FeedbackPage extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
                   letterSpacing: 1.5,
-                  color: Theme.of(context).textTheme.headline1!.color)),
+                  color: Theme.of(context).textTheme.displayLarge!.color)),
           WidgetSpan(
               child: InkWell(
             onTap: () async {
@@ -123,7 +123,7 @@ class FeedbackPage extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
                   letterSpacing: 1.5,
-                  color: Theme.of(context).textTheme.headline1!.color)),
+                  color: Theme.of(context).textTheme.displayLarge!.color)),
         ]),
       );
     }

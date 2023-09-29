@@ -10,6 +10,7 @@ import 'package:full_workout/pages/main/explore_page/widget/four_week_challenge_
 import 'package:full_workout/pages/main/explore_page/widget/picks_for_you_workout.dart';
 import 'package:full_workout/pages/main/explore_page/widget/strach_workout.dart';
 
+import '../../../widgets/motivational_quotes.dart';
 import '../home_page/leading_widget.dart';
 
 
@@ -54,9 +55,8 @@ List<Widget> sections = [
   BodyFocusWorkout(),
   buildDivider(),
   DiscoverAllWorkouts(),
-  SizedBox(
-    height: 10,
-  )
+  buildDivider(),
+  MotivationalQuotes(),
 ];
 
     return WillPopScope(
@@ -91,19 +91,6 @@ List<Widget> sections = [
           ),
         ),
       ),
-       // AnimationLimiter(
-          // child: SingleChildScrollView(
-          //     physics: BouncingScrollPhysics(),
-          //     child:
-          //
-          //     Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [
-          //
-          //       ],
-          //     )),
-      //  ),
-    //  ),
     );
   }
 }

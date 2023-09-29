@@ -18,7 +18,7 @@ class ContactUsHeader extends StatelessWidget {
                   "Contact Us",
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .bodyLarge!
                       .copyWith(fontWeight: FontWeight.w400, fontSize: 18),
                 ),
                 const SizedBox(
@@ -29,7 +29,7 @@ class ContactUsHeader extends StatelessWidget {
                   style: TextStyle(
                       color: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyLarge!
                           .color!
                           .withOpacity(.7)),
                 )

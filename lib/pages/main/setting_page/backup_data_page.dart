@@ -214,7 +214,7 @@ class DataSyncModal extends StatelessWidget {
                           fontSize: 15,
                           color: Theme.of(context)
                               .textTheme
-                              .bodyText2!
+                              .bodyMedium!
                               .color!
                               .withOpacity(.7),
                           fontWeight: FontWeight.w500),
@@ -270,7 +270,7 @@ class DataSyncModal extends StatelessWidget {
                   letterSpacing: 1.2,
                   color: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .bodyLarge!
                       .color!
                       .withOpacity(.6)),
               textAlign: TextAlign.center,

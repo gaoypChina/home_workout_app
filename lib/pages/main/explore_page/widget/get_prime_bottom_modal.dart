@@ -122,7 +122,7 @@ class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
                           context: context, key: widget.spKey);
                     },
                     style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).primaryColor),
+                        backgroundColor: Theme.of(context).primaryColor),
                     icon: provider.isLoading
                         ? Container(
                             height: 25,
@@ -157,7 +157,7 @@ class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
                       style: TextStyle(
                           color: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .color!
                               .withOpacity(.6)),
                     ),
@@ -177,7 +177,7 @@ class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
                   height: 48,
                   child: ElevatedButton.icon(
                     style:
-                        ElevatedButton.styleFrom(primary: Colors.amberAccent),
+                        ElevatedButton.styleFrom(backgroundColor: Colors.amberAccent),
                     onPressed: () async {
                       bool isConnected =
                           await Provider.of<ConnectivityProvider>(context,
@@ -186,7 +186,7 @@ class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
                       if (isConnected) {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
-                          return SubscriptionPage();
+                          return SubscriptionPage(showCrossButton: false,);
                         }));
                       } else {
                         Navigator.of(context).pop();
@@ -215,7 +215,7 @@ class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
                     letterSpacing: 1.2,
                     color: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.6)),
                 textAlign: TextAlign.justify,

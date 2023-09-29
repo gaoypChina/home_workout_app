@@ -62,8 +62,10 @@ class _MyAppState extends State<MyApp> {
 
   onClickedNotification(String payload) => Navigator.of(context).pushNamed("/");
 
+
   @override
   Widget build(BuildContext context) {
+
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => SubscriptionProvider()),
@@ -81,7 +83,7 @@ class _MyAppState extends State<MyApp> {
                   Provider.of<ThemeProvider>(context, listen: false).getTheme(),
               initialData: AdaptiveThemeMode.system,
               builder: (context, snapShot) {
-                Provider.of<BackupProvider>(context).dailyBackup();
+                Provider.of<BackupProvider>(context, listen: false).dailyBackup();
                 return AdaptiveTheme(
                     light: lightTheme,
                     dark: darkTheme,
@@ -89,40 +91,34 @@ class _MyAppState extends State<MyApp> {
                         ? snapShot.data ?? AdaptiveThemeMode.system
                         : AdaptiveThemeMode.system,
                     builder: (lightThemeData, darkThemeData) {
-                      return FutureBuilder(
-                          future: Provider.of<SubscriptionProvider>(context,
-                              listen: false)
-                              .setSubscriptionDetails(),
-                          builder: (context, snapshot) {
-                            return MaterialApp(
-                              title: 'Home Workout',
-                              darkTheme: darkThemeData,
-                              theme: lightThemeData,
-                              localizationsDelegates: [
-                                MonthYearPickerLocalizations.delegate,
-                              ],
-                              routes: {
-                                '/': (ctx) => SplashPage(),
-                                DetailInputPage.routeName: (ctx) =>
-                                    DetailInputPage(),
-                                ReminderTab.routeName: (ctx) =>
-                                    ReminderTab(),
-                                FAQPage.routeName: (ctx) => FAQPage(),
-                                MainPage.routeName: (ctx) =>
-                                    MainPage(index: 0),
-                                ProfileSettingPage.routeName: (ctx) =>
-                                    ProfileSettingPage(),
-                                SoundSetting.routeName: (ctx) =>
-                                    SoundSetting(),
-                                WorkoutDetailReport.routeName: (ctx) =>
-                                    WorkoutDetailReport(),
-                                SubscriptionPage.routeName: (ctx) =>
-                                    SubscriptionPage(),
-                                //  LoginPage.routeName: (ctx) => LoginPage()
-                              },
-                              debugShowCheckedModeBanner: false,
-                            );
-                          });
+                      return MaterialApp(
+                        title: 'Home Workout',
+                        darkTheme: darkThemeData,
+                        theme: lightThemeData,
+                        localizationsDelegates: [
+                          MonthYearPickerLocalizations.delegate,
+                        ],
+                        home:SplashPage(),
+                        routes: {
+                          DetailInputPage.routeName: (ctx) =>
+                              DetailInputPage(),
+                          ReminderTab.routeName: (ctx) =>
+                              ReminderTab(),
+                          FAQPage.routeName: (ctx) => FAQPage(),
+                          MainPage.routeName: (ctx) =>
+                              MainPage(index: 0),
+                          ProfileSettingPage.routeName: (ctx) =>
+                              ProfileSettingPage(),
+                          SoundSetting.routeName: (ctx) =>
+                              SoundSetting(),
+                          WorkoutDetailReport.routeName: (ctx) =>
+                              WorkoutDetailReport(),
+                          SubscriptionPage.routeName: (ctx) =>
+                              SubscriptionPage(showCrossButton: false,),
+                          //  LoginPage.routeName: (ctx) => LoginPage()
+                        },
+                        debugShowCheckedModeBanner: false,
+                      );
                     });
               });
         });

@@ -26,7 +26,7 @@ class FAQPage extends StatelessWidget {
                           fontSize: 15.5,
                           color: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .color!
                               .withOpacity(.7)),
                     ),
@@ -40,7 +40,7 @@ class FAQPage extends StatelessWidget {
                               letterSpacing: 1.5,
                               color: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyLarge
                                   ?.color
                                   ?.withOpacity(.7)),
                         ),

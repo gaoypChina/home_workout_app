@@ -296,7 +296,6 @@ class _BmiCardState extends State<BmiCard> {
               key,
               DateTime.now().millisecondsSinceEpoch,
             );
-            if (weightModel.weight == null) return;
             await weightDb.addWeight(toSave, weightModel, key);
 
             setState(() {
@@ -324,7 +323,7 @@ class _BmiCardState extends State<BmiCard> {
               Radius.circular(30),
             ),
             color:
-                Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.5),
+                Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.5),
           ),
           height: 12.2,
           width: 2.0,
@@ -339,7 +338,7 @@ class _BmiCardState extends State<BmiCard> {
             Icons.arrow_upward,
             size: 20,
             color:
-                Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.6),
+                Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.6),
           ),
           SizedBox(
             height: 2,
@@ -528,7 +527,7 @@ class _BmiCardState extends State<BmiCard> {
                     style: TextStyle(
                         color: Theme.of(context)
                             .textTheme
-                            .bodyText1!
+                            .bodyLarge!
                             .color!
                             .withOpacity(.8)),
                   ),
@@ -598,7 +597,7 @@ class _BmiCardState extends State<BmiCard> {
                           style: TextStyle(
                               color: Theme.of(context)
                                   .textTheme
-                                  .bodyText1!
+                                  .bodyLarge!
                                   .color!
                                   .withOpacity(.7),
                               fontWeight: FontWeight.w500,
@@ -610,7 +609,7 @@ class _BmiCardState extends State<BmiCard> {
                           style: TextStyle(
                               color: Theme.of(context)
                                   .textTheme
-                                  .bodyText1!
+                                  .bodyLarge!
                                   .color!
                                   .withOpacity(.7),
                               fontWeight: FontWeight.w500,

@@ -32,8 +32,6 @@ class _HeightSelectorState extends State<HeightSelector> {
     String feetHeight = "0";
     String inchHeight = "0";
 
-    if (widget.height == null) {
-    } else {
       cmHeight = widget.height.toStringAsFixed(0);
 
       int feetVal = widget.height ~/ 30.48;
@@ -46,7 +44,7 @@ class _HeightSelectorState extends State<HeightSelector> {
       } else {
         inchHeight = inchVal.toStringAsFixed(0);
       }
-    }
+
 
     _cmController = TextEditingController(text: cmHeight);
     _feetController = TextEditingController(text: feetHeight);
@@ -58,7 +56,7 @@ class _HeightSelectorState extends State<HeightSelector> {
     onSubmit() {
       if (heightIndex == 0) {
         height = double.tryParse(_cmController.text)!;
-        if (height == null || height <= 50) {
+        if (height <= 50) {
           constants.getToast("Please enter valid height value");
         }
       }

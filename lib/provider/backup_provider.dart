@@ -11,6 +11,7 @@ import '../../../helper/sp_key_helper.dart';
 import '../../../helper/weight_db_helper.dart';
 
 import '../enums/app_conection_status.dart';
+import '../pages/subscription_page/subscription_page.dart';
 
 class BackupProvider extends ChangeNotifier {
   BackupHelper _dbHelper = BackupHelper();
@@ -79,6 +80,8 @@ class BackupProvider extends ChangeNotifier {
       dev.log("daily backup error ${e.toString()}");
     }
   }
+
+
 
   saveData({required User user}) async {
     await _setUser(user: user);

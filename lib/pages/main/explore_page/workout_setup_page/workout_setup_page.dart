@@ -122,7 +122,7 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage>
                 Icon(icon,
                     color: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.9)),
                 SizedBox(
@@ -135,7 +135,7 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage>
                       fontSize: 14,
                       color: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyLarge!
                           .color!
                           .withOpacity(.9)),
                 ),
@@ -146,13 +146,13 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage>
       ));
     }
 
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
 
     return Consumer<SubscriptionProvider>(builder: (context, data, _) {
       return Scaffold(
           bottomNavigationBar: Material(
             elevation: 5,
-            color: Theme.of(context).bottomAppBarColor,
+            color: Theme.of(context).bottomAppBarTheme.color,
             child: Container(
               height: 65,
               padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
@@ -191,8 +191,7 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage>
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(32))),
-                          primary: Theme.of(context).primaryColor),
+                                  BorderRadius.all(Radius.circular(32))), backgroundColor: Theme.of(context).primaryColor),
                       onPressed: getBottomSheet,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -310,7 +309,7 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage>
                                                 letterSpacing: 1.2,
                                                 color: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1!
+                                                    .bodyLarge!
                                                     .color!
                                                     .withOpacity(.8)),
                                             textAlign: TextAlign.justify,

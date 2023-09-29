@@ -248,7 +248,7 @@ class InstructionScreenState extends State<InstructionScreen>
               style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
-                  color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8)),
+                  color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.8)),
             ),
             Spacer(),
             SizedBox(

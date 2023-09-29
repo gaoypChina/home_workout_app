@@ -14,7 +14,7 @@ class DetailPageCustomWidget {
               fontWeight: FontWeight.w400,
               color: Theme.of(context)
                   .textTheme
-                  .bodyText1!
+                  .bodyLarge!
                   .color!
                   .withOpacity(.9)),
         ),

@@ -18,7 +18,7 @@ class UserDetailSubmitButton extends StatelessWidget {
         onPressed: !isActive ? null : () => onTap(),
         child: Text("Continue".toUpperCase()),
         style:
-            ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+            ElevatedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
       ),
     );
   }

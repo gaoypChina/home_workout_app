@@ -2,7 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:month_year_picker/month_year_picker.dart';
 import '../../../../constants/constant.dart';
 import '../../../helper/sp_helper.dart';
 import '../../../helper/sp_key_helper.dart';
@@ -195,9 +194,9 @@ class WeightChartState extends State<WeightChart> {
                                 maxTime: DateTime.now(),
                                 currentTime: DateTime.now()),theme: DatePickerTheme(
                           backgroundColor: Theme.of(context).cardColor,
-                          cancelStyle: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.8)),
+                          cancelStyle: TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.8)),
                           doneStyle: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.w700,),
-                          itemStyle: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
+                          itemStyle: TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color),
                         ));
 
                         // await showMonthYearPicker(locale:  Locale('fr', 'CH'),
@@ -247,7 +246,7 @@ class WeightChartState extends State<WeightChart> {
     ];
 
     double presentValue = 0;
-    Color color = Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.7);
+    Color color = Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.7);
 
     if (weightDataList.isNotEmpty) {
       presentValue =

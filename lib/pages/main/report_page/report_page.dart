@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../../../constants/constant.dart';
 import '../../../pages/main/report_page/workout_report/weekly_workout_report.dart';
 import '../../../../pages/main/report_page/workout_report/workout_detail_report.dart';
@@ -54,7 +53,7 @@ class _ReportPageState extends State<ReportPage>
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
     Constants constants = Constants();
     var size = MediaQuery.of(context).size;
 
@@ -73,7 +72,7 @@ class _ReportPageState extends State<ReportPage>
             Spacer(),
             TextButton(
                 style: TextButton.styleFrom(
-                    primary: Theme.of(context).primaryColor),
+                    foregroundColor: Theme.of(context).primaryColor),
                 onPressed: () => Navigator.pushNamed(
                     context, WorkoutDetailReport.routeName),
                 child: Text(

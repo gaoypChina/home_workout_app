@@ -9,7 +9,7 @@ import 'leading_widget.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
 
     getTitle(String title) {
       return Container(
@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
                   fontSize: 18,
                   color: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .bodyLarge!
                       .color!
                       .withOpacity(.8),
                   letterSpacing: 1.0,
@@ -125,7 +125,7 @@ class HomePage extends StatelessWidget {
                     text: "Home ".toUpperCase(),
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
-                        color: Theme.of(context).textTheme.bodyText1!.color,
+                        color: Theme.of(context).textTheme.bodyLarge!.color,
                         letterSpacing: 1,
                      //  color: Theme.of(context).primaryColor,
                         fontSize: 18)),
@@ -134,7 +134,7 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                         letterSpacing: 1,
                         fontWeight: FontWeight.w700,
-                        color: Theme.of(context).textTheme.bodyText1!.color,
+                        color: Theme.of(context).textTheme.bodyLarge!.color,
                         fontSize: 18))
               ])),
             ),

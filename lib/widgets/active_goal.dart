@@ -84,7 +84,7 @@ class _ActiveGoalState extends State<ActiveGoal> {
   Widget build(BuildContext context) {
     Color textColor = Colors.white;
     double height = MediaQuery.of(context).size.height;
-    bool isDark = Theme.of(context).textTheme.bodyText1!.color == Colors.white;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
     List<Color> backgroundColor = isDark
         ? [
             Theme.of(context).primaryColor.withOpacity(.8),
