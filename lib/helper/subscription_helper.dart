@@ -26,9 +26,9 @@ class SubscriptionHelper {
     }
   }
 
-  static Future<PurchaserInfo?> purchasePackage(Package package) async {
+  static Future<CustomerInfo?> purchasePackage(Package package) async {
     try {
-      PurchaserInfo info = await Purchases.purchasePackage(
+      CustomerInfo info = await Purchases.purchasePackage(
         package,
       );
       return info;
@@ -38,7 +38,7 @@ class SubscriptionHelper {
   }
 
   static Future savePurchaseDates(
-      {required PurchaserInfo info, String? price}) async {
+      {required CustomerInfo info, String? price}) async {
     String identifier = info.activeSubscriptions.first;
     String firstDate = info.allPurchaseDates[identifier]!;
     String lastDate = info.allExpirationDates[identifier]!;

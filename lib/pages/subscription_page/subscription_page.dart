@@ -64,7 +64,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  data.packageList[data.offerIndex].product
+                                  data.packageList[data.offerIndex].storeProduct
                                       .priceString,
                                   style: TextStyle(
                                       fontSize: 16,
@@ -79,7 +79,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                       constants.getPerMonthPrice(
                                         product: data
                                             .packageList[data.offerIndex]
-                                            .product,
+                                            .storeProduct,
                                       ) +
                                       "/M",
                                   style: TextStyle(

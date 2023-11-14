@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import '../../database/workout_list.dart';
 import '../../helper/mediaHelper.dart';
 import '../../pages/workout_page/check_list.dart';
@@ -8,7 +9,6 @@ import '../../pages/workout_page/workout_page.dart';
 import '../../components/info_button.dart';
 import '../../components/timer_painter.dart';
 import '../../pages/services/youtube_service/youtube_player.dart';
-import 'package:wakelock/wakelock.dart';
 import '../main/setting_page/sound_settings_page.dart';
 import 'exercise_detail_page.dart';
 
@@ -90,7 +90,7 @@ class InstructionScreenState extends State<InstructionScreen>
   }
 
   awakeScreen() {
-    Wakelock.enable();
+    WakelockPlus.enable();
   }
 
   @override

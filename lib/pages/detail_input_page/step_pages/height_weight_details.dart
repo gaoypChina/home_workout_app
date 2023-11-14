@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../provider/user_detail_provider.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 import '../user_detail_widget/custom_detail_input.dart';
@@ -48,7 +47,7 @@ class _HeightWeightDetailsState extends State<HeightWeightDetails> {
             ),
             CustomDetailInput(
               onTap: () async {
-                double? weight = await showMaterialModalBottomSheet(
+                double? weight = await showModalBottomSheet(
                   context: context,
                   builder: (context) => WeightPicker(),
                 );
@@ -65,7 +64,7 @@ class _HeightWeightDetailsState extends State<HeightWeightDetails> {
             CustomDetailInput(
               hasData: provider.height != null,
               onTap: () async {
-                double? height = await showMaterialModalBottomSheet(
+                double? height = await showModalBottomSheet(
                   context: context,
                   builder: (context) => HeightPicker(),
                 );

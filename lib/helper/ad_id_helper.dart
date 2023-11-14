@@ -1,7 +1,7 @@
 import 'dart:io';
 
 ///todo : switch to true while app in production
-bool isProduction = true;
+bool isProduction = false;
 
 class AdIdHelper {
   static String get bannerAdUnitId {

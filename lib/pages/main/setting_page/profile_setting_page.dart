@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/constant.dart';
@@ -306,7 +305,7 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
                       ),
                       CustomDetailInput(
                         onTap: () async {
-                          double? weight = await showMaterialModalBottomSheet(
+                          double? weight = await showModalBottomSheet(
                             context: context,
                             builder: (context) => WeightPicker(),
                           );
@@ -323,7 +322,7 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
                       CustomDetailInput(
                         hasData: provider.height != null,
                         onTap: () async {
-                          double? height = await showMaterialModalBottomSheet(
+                          double? height = await showModalBottomSheet(
                             context: context,
                             builder: (context) => HeightPicker(),
                           );

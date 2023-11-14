@@ -7,7 +7,6 @@ import '../../../models/bmi_remark.dart';
 import '../../../models/weight_model.dart';
 import '../../../pages/workout_page/report_page.dart';
 import 'package:intl/intl.dart';
-import 'package:sliding_sheet/sliding_sheet.dart';
 
 import 'bmi_picker.dart';
 
@@ -133,7 +132,112 @@ class _BmiCardState extends State<BmiCard> {
         );
       }
 
-      return showSlidingBottomSheet(context, builder: (context) {
+      return
+
+      showBottomSheet(context: context, builder: (context){
+        return  Material(
+          color: Theme.of(context).cardColor,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 18,
+                ),
+                Container(
+                  height: 30,
+                  child: Row(
+                    children: [
+                      Text(""),
+                      Spacer(),
+                      Text(
+                        "Weight Categories",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 18),
+                      ),
+                      Spacer(),
+                      Text(
+                        "Index",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 18),
+                      ),
+                      SizedBox(
+                        width: 18,
+                      )
+                    ],
+                  ),
+                ),
+                Divider(),
+                getWeightDetail(
+                    title: "Very Severely Underweight",
+                    value: "<= 16",
+                    color: Colors.grey),
+                Divider(),
+                getWeightDetail(
+                    title: "Severely Underweight",
+                    value: "16 - 16.9",
+                    color: Colors.grey.shade500),
+                Divider(),
+                getWeightDetail(
+                    title: "Underweight",
+                    value: "17 - 18.4",
+                    color: Colors.blue),
+                Divider(),
+                getWeightDetail(
+                    title: "Healthy weight",
+                    value: "18.5 - 24.9",
+                    color: Colors.green),
+                Divider(),
+                getWeightDetail(
+                    title: "Overweight",
+                    value: "25 - 29.9",
+                    color: Colors.orange),
+                Divider(),
+                getWeightDetail(
+                    title: "Obese class I",
+                    value: "30 - 34.9",
+                    color: Colors.redAccent),
+                Divider(),
+                getWeightDetail(
+                    title: "Obese class II",
+                    value: "35 - 39.9",
+                    color: Colors.red),
+                Divider(),
+                getWeightDetail(
+                    title: "Obese class III",
+                    value: ">=40",
+                    color: Colors.red.shade800),
+                Divider(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 18.0, vertical: 10),
+                  child: Text(
+                      "The body mass index(BMI) Calculator can be used to calculate BMI value and corresponding weight status."),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 18.0, right: 18, bottom: 4),
+                  child: Text("Healthy BMI Range",
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w500)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 18.0, right: 18),
+                  child: Text(
+                    "The world health organization\'s (WHO) recommended healthy BMI range is 18.5-25 for both male and female",
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                )
+              ],
+            ),
+          ),
+        );
+      });
+
+        /*showSlidingBottomSheet(context, builder: (context) {
         return SlidingSheetDialog(
           elevation: 8,
           cornerRadius: 16,
@@ -246,7 +350,7 @@ class _BmiCardState extends State<BmiCard> {
             );
           },
         );
-      });
+      });*/
     }
 
     late BmiRemark remark;

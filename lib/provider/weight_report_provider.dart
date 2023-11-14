@@ -1,5 +1,4 @@
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 import '../../../constants/constant.dart';
 import '../../../helper/sp_helper.dart';
@@ -39,7 +38,7 @@ class WeightReportProvider with ChangeNotifier {
   }
 
   addWeight({required BuildContext context}) async {
-    double? value = await showMaterialModalBottomSheet(
+    double? value = await showModalBottomSheet(
       context: context,
       builder: (context) => WeightPicker(),
     );

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:full_workout/pages/main_page.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import '../../constants/constant.dart';
 import '../../helper/recent_workout_db_helper.dart';
 import '../../helper/sp_helper.dart';
@@ -21,7 +22,6 @@ import 'package:path_provider/path_provider.dart' as pp;
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:wakelock/wakelock.dart';
 
 import '../../widgets/banner_medium_ad.dart';
 
@@ -130,7 +130,7 @@ class _MyAppState extends State<ReportScreen> {
 
   setAwakeScreen() async {
     bool isAwake = await spHelper.loadBool(spKey.awakeScreen) ?? false;
-    isAwake ? Wakelock.enable() : Wakelock.disable();
+    isAwake ? WakelockPlus.enable() : WakelockPlus.disable();
   }
 
   _onNext() {

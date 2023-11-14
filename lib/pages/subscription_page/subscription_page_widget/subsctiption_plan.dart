@@ -20,7 +20,7 @@ class SubscriptionPlan extends StatelessWidget {
           ),
         ),
         ...provider.packageList.map((package) {
-          var product = package.product;
+          var product = package.storeProduct;
           List<String> durationDiscount = product.description.split(" ");
           int? duration = int.tryParse(durationDiscount[0]);
           int? discount = int.tryParse(durationDiscount[1]);

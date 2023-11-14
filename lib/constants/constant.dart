@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:purchases_flutter/models/product_wrapper.dart';
+ import 'package:purchases_flutter/models/store_product_wrapper.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Constants {
@@ -63,7 +63,7 @@ class Constants {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  String getPerMonthPrice({required Product product}) {
+  String getPerMonthPrice({required StoreProduct product}) {
     String currencySymbol = product.priceString[0];
     double price = product.price;
     int duration = int.parse(product.description.split(" ")[0]);

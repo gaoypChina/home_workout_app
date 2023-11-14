@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../../provider/weight_report_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:sliding_sheet/sliding_sheet.dart';
 
 import '../../../../enums/weight_filter.dart';
 
@@ -21,6 +20,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
     super.initState();
   }
 
+/*
   getBottomSheet({
     required BuildContext context,
     required String date,
@@ -83,6 +83,7 @@ class _WeightDetailTab1State extends State<WeightDetailTab1> {
           );
         });
   }
+*/
 
   getVLine() {
     return Container(

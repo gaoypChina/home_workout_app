@@ -1,8 +1,9 @@
+import 'dart:math';
+
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -130,8 +131,10 @@ class _SettingPageState extends State<SettingPage>
           onPressed: () async {
             bool isConnected = await connectivityProvider.isNetworkConnected;
             if (isConnected) {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (builder) => SubscriptionPage(showCrossButton: false,)));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (builder) => SubscriptionPage(
+                        showCrossButton: false,
+                      )));
             } else {
               showDialog(
                   context: context,
@@ -288,8 +291,7 @@ class _SettingPageState extends State<SettingPage>
                                   title: "Training Rest",
                                   icon: CupertinoIcons.time,
                                   onPress: () async {
-                                    int? num =
-                                        await showMaterialModalBottomSheet(
+                                    int? num = await showModalBottomSheet(
                                       context: context,
                                       builder: (context) {
                                         return WorkoutTimePicker(
@@ -321,16 +323,15 @@ class _SettingPageState extends State<SettingPage>
                                   icon: Icons.timer_outlined,
                                   title: "Countdown time",
                                   onPress: () async {
-                                    int? num =
-                                        await showMaterialModalBottomSheet(
-                                            context: context,
-                                            builder: (context) {
-                                              return WorkoutTimePicker(
-                                                value: countdownTime.toInt(),
-                                                minimumVal: 10,
-                                                maximumVal: 15,
-                                              );
-                                            });
+                                    int? num = await showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return WorkoutTimePicker(
+                                            value: countdownTime.toInt(),
+                                            minimumVal: 10,
+                                            maximumVal: 15,
+                                          );
+                                        });
                                     if (num != null) {
                                       await spHelper.saveDouble(
                                           spKey.countdownTime, num.toDouble());
@@ -427,7 +428,7 @@ class _SettingPageState extends State<SettingPage>
                                       icon: Icons.lightbulb_outline,
                                       title: "Theme Setting",
                                       onPress: () {
-                                        showMaterialModalBottomSheet(
+                                        showModalBottomSheet(
                                           context: context,
                                           builder: (context) =>
                                               ThemeSettingsPage(),
@@ -555,7 +556,9 @@ class _SettingPageState extends State<SettingPage>
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (builder) =>
-                                                      SubscriptionPage(showCrossButton: false,)));
+                                                      SubscriptionPage(
+                                                        showCrossButton: false,
+                                                      )));
                                         } else {
                                           showDialog(
                                               context: context,
@@ -598,8 +601,9 @@ class _SettingPageState extends State<SettingPage>
                                     title: "Our other apps",
                                     trailing: trailingIcon,
                                     onPress: () async {
-                                      constants.openUrl(url: "https://play.google.com/store/apps/dev?id=6652795005413832872");
-
+                                      constants.openUrl(
+                                          url:
+                                              "https://play.google.com/store/apps/dev?id=6652795005413832872");
                                     },
                                   ),
                                 ],
@@ -766,7 +770,6 @@ class _SettingPageState extends State<SettingPage>
                             height: 40,
                           ),
                           SocialIcons(),
-
                           SizedBox(
                             height: 40,
                           ),
@@ -822,13 +825,12 @@ class SocialIcons extends StatefulWidget {
 }
 
 class _SocialIconsState extends State<SocialIcons> {
-
   @override
   Widget build(BuildContext context) {
     Constants constants = Constants();
     buildIcon({required String imgScr, required Function onTap}) {
       return InkWell(
-        onTap: (){
+        onTap: () {
           onTap();
         },
         child: Container(
@@ -851,30 +853,30 @@ class _SocialIconsState extends State<SocialIcons> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             buildIcon(
-                imgScr:
-                    "https://cdn-icons-png.flaticon.com/512/174/174855.png",
-            onTap: (){
-              constants.openUrl(url: "https://www.instagram.com/beast._.fitness");
-
-            }),
+                imgScr: "https://cdn-icons-png.flaticon.com/512/174/174855.png",
+                onTap: () {
+                  constants.openUrl(
+                      url: "https://www.instagram.com/beast._.fitness");
+                }),
             SizedBox(
               width: 22,
             ),
             buildIcon(
-                imgScr:
-                    "https://cdn-icons-png.flaticon.com/512/174/174848.png",  onTap: (){
-              constants.openUrl(url: "https://www.facebook.com/profile.php?id=100093072879042");
-
-            }),
+                imgScr: "https://cdn-icons-png.flaticon.com/512/174/174848.png",
+                onTap: () {
+                  constants.openUrl(
+                      url:
+                          "https://www.facebook.com/profile.php?id=100093072879042");
+                }),
             SizedBox(
               width: 22,
             ),
             buildIcon(
-                imgScr:
-                    "https://cdn-icons-png.flaticon.com/512/174/174857.png",  onTap: (){
-              constants.openUrl(url: "https://www.linkedin.com/company/feet-and-flex");
-
-            }),
+                imgScr: "https://cdn-icons-png.flaticon.com/512/174/174857.png",
+                onTap: () {
+                  constants.openUrl(
+                      url: "https://www.linkedin.com/company/feet-and-flex");
+                }),
           ],
         ),
       ],
@@ -897,6 +899,46 @@ class CustomTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // var generatedColor = Random(200).nextInt(
+    //   (title.length + Colors.primaries.length + 200) % Colors.primaries.length +
+    //       1,
+    // );
+    // var color = Colors.primaries[(title.length+200)  % Colors.primaries.length ];
+    // return InkWell(
+    //   onTap: () {
+    //     onPress();
+    //   },
+    //   child: Container(
+    //     padding: EdgeInsets.symmetric(vertical: 10,horizontal: 16),
+    //     child: Row(
+    //       children: [
+    //         Container(
+    //           padding: EdgeInsets.all(8),
+    //           decoration: BoxDecoration(
+    //               borderRadius: BorderRadius.circular(12),
+    //               color: color.withOpacity(.2)),
+    //           child: Icon(
+    //             icon,
+    //             size: 22,
+    //             color: color.withOpacity(.99),
+    //           ),
+    //         ),
+    //         SizedBox(
+    //           width: 12,
+    //         ),
+    //         Text(
+    //           title,
+    //           style: TextStyle(
+    //             fontSize: 15,
+    //             fontWeight: FontWeight.w500,
+    //           ),
+    //         ),
+    //         Spacer(),
+    //         trailing
+    //       ],
+    //     ),
+    //   ),
+    // );
 
     return ListTile(
       contentPadding: EdgeInsets.only(left: 18, right: 14, top: 2, bottom: 2),

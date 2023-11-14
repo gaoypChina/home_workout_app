@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sliding_sheet/sliding_sheet.dart';
 
 import '../../../../helper/sp_helper.dart';
 import '../../../../helper/sp_key_helper.dart';
@@ -85,7 +84,14 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage>
             .isRewarded;
 
     void getBottomSheet() async {
-      showSlidingBottomSheet(context, builder: (context) {
+
+      return showModalBottomSheet(context: context, builder: (context){
+      return  GetPrimeBottomSheet(
+          spKey: widget.workout.title,
+        );
+      });
+
+   /*   showSlidingBottomSheet(context, builder: (context) {
         return SlidingSheetDialog(
           elevation: 8,
           cornerRadius: 16,
@@ -101,7 +107,7 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage>
             );
           },
         );
-      });
+      });*/
     }
 
     List<int> rapList = widget.workout.getRapList;

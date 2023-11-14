@@ -2,7 +2,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+// import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class NotificationHelper {
   static final _notification = FlutterLocalNotificationsPlugin();
@@ -30,8 +30,8 @@ class NotificationHelper {
 
     if (initScheduled) {
       tz.initializeTimeZones();
-      final locationName = await FlutterNativeTimezone.getLocalTimezone();
-      tz.setLocalLocation(tz.getLocation(locationName));
+      // final locationName = await FlutterNativeTimezone.getLocalTimezone();
+      // tz.setLocalLocation(tz.getLocation(locationName));
     }
   }
 

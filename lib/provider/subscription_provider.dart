@@ -38,8 +38,8 @@ class SubscriptionProvider with ChangeNotifier {
 
       packageList.sort((p1, p2) {
         return Comparable.compare(
-          p2.product.price,
-          p1.product.price,
+          p2.storeProduct.price,
+          p1.storeProduct.price,
         );
       });
     } catch (e) {
@@ -65,12 +65,12 @@ class SubscriptionProvider with ChangeNotifier {
     try {
       isBuyBtnLoading = true;
       notifyListeners();
-      PurchaserInfo? info =
+      CustomerInfo? info =
           await SubscriptionHelper.purchasePackage(packageList[offerIndex]);
       if (info == null) {
         throw "subscription info is calling on null";
       }
-      String price = packageList[offerIndex].product.priceString;
+      String price = packageList[offerIndex].storeProduct.priceString;
       await SubscriptionHelper.savePurchaseDates(info: info, price: price);
       await setSubscriptionDetails();
       showDialog(
@@ -102,7 +102,7 @@ class SubscriptionProvider with ChangeNotifier {
       return;
     }
     try {
-      PurchaserInfo info = await Purchases.getPurchaserInfo();
+      CustomerInfo info = await Purchases.getCustomerInfo();
       if (info.activeSubscriptions.isEmpty) {
         _constants.getToast("No subscription found!");
         return;
@@ -111,12 +111,12 @@ class SubscriptionProvider with ChangeNotifier {
       String key = info.activeSubscriptions.first;
       int start = 0;
       for (start = 0; start < packageList.length; start++) {
-        if (packageList[start].product.identifier == key) {
+        if (packageList[start].storeProduct.identifier == key) {
           break;
         }
       }
 
-      String price = packageList[start].product.priceString;
+      String price = packageList[start].storeProduct.priceString;
 
       SubscriptionHelper.savePurchaseDates(info: info, price: price);
       await setSubscriptionDetails();
@@ -136,7 +136,7 @@ class SubscriptionProvider with ChangeNotifier {
     try {
       await SubscriptionHelper.init();
 
-      PurchaserInfo info = await Purchases.getPurchaserInfo();
+      CustomerInfo info = await Purchases.getCustomerInfo();
       if (info.activeSubscriptions.isNotEmpty) {
         isProUser = true;
       }

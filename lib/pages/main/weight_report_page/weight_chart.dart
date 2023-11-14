@@ -1,15 +1,14 @@
 import 'package:fl_chart/fl_chart.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import '../../../../constants/constant.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
+ import '../../../../constants/constant.dart';
 import '../../../helper/sp_helper.dart';
 import '../../../helper/sp_key_helper.dart';
 import '../../../helper/weight_db_helper.dart';
 import '../../../models/weight_list_model.dart';
 import '../../../models/weight_model.dart';
 import 'package:intl/intl.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../detail_input_page/user_detail_widget/weight_picker.dart';
 
@@ -91,7 +90,7 @@ class WeightChartState extends State<WeightChart> {
   }
 
   addWeight() async {
-    double? value = await showMaterialModalBottomSheet(
+    double? value = await showModalBottomSheet(
       context: context,
       builder: (context) => WeightPicker(),
     );
@@ -187,17 +186,15 @@ class WeightChartState extends State<WeightChart> {
                           foregroundColor: Colors.white, padding: EdgeInsets.only(left: 8)),
                       onPressed: () async {
                         DateTime? selectedMonth =
-                        await DatePicker.showPicker(
-                            context,
-                            pickerModel: CustomMonthPicker(
-                                minTime: DateTime(2020, 08, 1),
-                                maxTime: DateTime.now(),
-                                currentTime: DateTime.now()),theme: DatePickerTheme(
-                          backgroundColor: Theme.of(context).cardColor,
-                          cancelStyle: TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.8)),
-                          doneStyle: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.w700,),
-                          itemStyle: TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color),
-                        ));
+                        await
+
+                        showMonthPicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2020, 08, 1),
+                        );
+
+
 
                         // await showMonthYearPicker(locale:  Locale('fr', 'CH'),
                         //
@@ -354,16 +351,4 @@ class WeightChartState extends State<WeightChart> {
   }
 }
 
-class CustomMonthPicker extends DatePickerModel {
-  CustomMonthPicker({
-    required DateTime currentTime,
-    required DateTime minTime,
-    required DateTime maxTime,
-  }) : super(minTime: minTime, maxTime: maxTime, currentTime: currentTime);
-
-  @override
-  List<int> layoutProportions() {
-    return [1, 1, 0];
-  }
-}
 
