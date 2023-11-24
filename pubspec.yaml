@@ -1,7 +1,7 @@
 name: full_workout
 description: A new Flutter application.
 
-version: 2.1.5+37
+version: 2.1.6+38
 
 environment:
   sdk: '>=2.18.1 <3.0.0'
@@ -69,6 +69,8 @@ dependencies:
   dashed_circle: ^0.0.2
   timelines: ^0.1.0
   firebase_auth: ^4.12.1
+  slide_countdown: ^1.3.2
+ 
 
 
 

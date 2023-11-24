@@ -35,11 +35,11 @@ class StaticsSection extends StatelessWidget {
       color: Colors.blue.withOpacity(.1),
       child: Row(
         children: [
-          buildCard(title: "300+ ", subtitle: "5 Star Rating"),
+          buildCard(title: "1000+ ", subtitle: "5 Star Rating"),
           buildDivider(),
-          buildCard(title: "50000+ ", subtitle: "Active User"),
+          buildCard(title: "200000+ ", subtitle: "Active Users"),
           buildDivider(),
-          buildCard(title: "10000+ ", subtitle: "User Seen result"),
+          buildCard(title: "100000+ ", subtitle: "Users Seen Result"),
         ],
       ),
     );

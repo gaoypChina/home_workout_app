@@ -27,7 +27,7 @@ class _HeightPickerState extends State<HeightPicker> {
         child: Container(
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
-              color: isSelected ? Theme.of(context).primaryColor : Colors.white,
+              color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
               border: Border.all(
                   color: Theme.of(context).primaryColor, width: 1.5)),
           child: Text(

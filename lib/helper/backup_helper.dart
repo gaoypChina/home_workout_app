@@ -7,9 +7,18 @@ const String WorkoutCollection = "workouts";
 const String WeightCollection = "weights";
 const String UserCollection = "users";
 const String ProUserCollection = "pro_users";
+const String OfferCollection = "offer";
 
 class BackupHelper {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  ///---------------------------offer record ----------------------------
+  Future<void> getOffer() async {
+    var _snapshot = await _db.collection(OfferCollection).doc("CtLHf49k8Zy1pZRRqPmW").get();
+    print(_snapshot);
+    Map<String, dynamic>? _userData = _snapshot.data() as Map<String, dynamic>?;
+    print(_userData);
+  }
 
   /// --------------------------user record ------------------------------
   Future<void> saveUser(
