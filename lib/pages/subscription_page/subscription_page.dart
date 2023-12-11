@@ -12,10 +12,11 @@ import 'package:provider/provider.dart';
 import '../../widgets/loading_indicator.dart';
 
 class SubscriptionPage extends StatefulWidget {
-  final bool showCrossButton ;
+  final bool showCrossButton;
+
   static const routeName = "subscription-page";
 
-  SubscriptionPage({Key? key,required this.showCrossButton}) : super(key: key);
+  SubscriptionPage({Key? key, required this.showCrossButton}) : super(key: key);
 
   @override
   State<SubscriptionPage> createState() => _SubscriptionPageState();
@@ -138,7 +139,13 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       children: [
         Scaffold(
           appBar: AppBar(
-            leading: widget.showCrossButton ? IconButton(onPressed: (){Navigator.of(context).pop();}, icon: Icon(Icons.close)):null,
+            leading: widget.showCrossButton
+                ? IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: Icon(Icons.close))
+                : null,
             title: Text(
               "Get Premium",
             ),
@@ -153,14 +160,20 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         },
                         child: Row(
                           children: [
-                            Text("Restore",style: TextStyle(fontWeight: FontWeight.w700),),
+                            Text(
+                              "Restore",
+                              style: TextStyle(fontWeight: FontWeight.w700),
+                            ),
                           ],
                         ),
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: Theme.of(context).primaryColor.withOpacity(.8), side: BorderSide(
+                          foregroundColor:
+                              Theme.of(context).primaryColor.withOpacity(.8),
+                          side: BorderSide(
                               width: 1.5,
                               color: Theme.of(context)
-                                  .primaryColor.withOpacity(.7)),
+                                  .primaryColor
+                                  .withOpacity(.7)),
                         ),
                       ),
                     ),
@@ -176,7 +189,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                       child: Stack(
                         children: [
                           ListView(
-                      //      physics: BouncingScrollPhysics(),
+                            //      physics: BouncingScrollPhysics(),
                             children: [
                               SizedBox(
                                 height: 12,
