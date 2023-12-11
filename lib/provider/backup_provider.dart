@@ -11,7 +11,6 @@ import '../../../helper/sp_key_helper.dart';
 import '../../../helper/weight_db_helper.dart';
 
 import '../enums/app_conection_status.dart';
-import '../pages/subscription_page/subscription_page.dart';
 
 class BackupProvider extends ChangeNotifier {
   BackupHelper _dbHelper = BackupHelper();
@@ -92,6 +91,8 @@ class BackupProvider extends ChangeNotifier {
   _getUser({required User user}) async {
     var _snapshot = await _dbHelper.getUser(uid: user.uid);
     Map<String, dynamic>? _userData = _snapshot.data() as Map<String, dynamic>?;
+    print("user data");
+    print(_userData);
     if (_userData == null) return;
 
     String? name = await _spHelper.loadString(_spKey.name);

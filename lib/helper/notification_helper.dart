@@ -1,11 +1,17 @@
+import 'package:day_night_time_picker/lib/state/time.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+
+import '../main.dart';
+import '../pages/main_page.dart';
 // import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class NotificationHelper {
   static final _notification = FlutterLocalNotificationsPlugin();
+
 
   // ignore: close_sinks
   static final onNotifications = BehaviorSubject<String>();
@@ -19,14 +25,23 @@ class NotificationHelper {
     ));
   }
 
+  static void handleMessage(RemoteMessage? message) {
+    if (message == null) {
+      return;
+    }
+    navigatorKey.currentState?.pushNamed(MainPage.routeName, arguments: 0);
+  }
+
   static Future init({bool initScheduled = false}) async {
     final android = AndroidInitializationSettings("@mipmap/ic_launcher");
-    final ios = IOSInitializationSettings();
+    final ios =DarwinInitializationSettings();
     final settings = InitializationSettings(android: android, iOS: ios);
+
+
     await _notification.initialize(settings,
-        onSelectNotification: (payload) async {
-      onNotifications.add(payload ?? "");
-    });
+        onDidReceiveNotificationResponse: (payload) {
+          handleMessage(null);
+        });
 
     if (initScheduled) {
       tz.initializeTimeZones();

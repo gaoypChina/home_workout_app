@@ -39,7 +39,7 @@ class BackupDataCard extends StatelessWidget {
           Opacity(
             opacity: .3,
             child: Image.asset(
-              // 1 6 7
+
               "assets/home_cover/11.jpg",
               fit: BoxFit.fill,
               width: size.width,
@@ -167,18 +167,7 @@ class DataSyncModal extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                margin: EdgeInsets.only(top: 8),
-                child: InkWell(
-                    onTap: () => Navigator.of(context).pop(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.close),
-                    )),
-              ),
-            ),
+     SizedBox(height: 24,),
             Row(
               children: [
                 CircleAvatar(

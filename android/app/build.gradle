@@ -89,6 +89,7 @@ dependencies {
     implementation('com.google.firebase:firebase-auth') {
         exclude module: "play-services-safetynet"
     }
+    implementation 'com.google.firebase:firebase-messaging'
 }
 
 
