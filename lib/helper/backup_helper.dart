@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 const String UserActivityCollection = "user_activity";
 const String WorkoutCollection = "workouts";
@@ -14,7 +15,8 @@ class BackupHelper {
 
   ///---------------------------offer record ----------------------------
   Future<void> getOffer() async {
-    var _snapshot = await _db.collection(OfferCollection).doc("CtLHf49k8Zy1pZRRqPmW").get();
+    var _snapshot =
+        await _db.collection(OfferCollection).doc("CtLHf49k8Zy1pZRRqPmW").get();
     print(_snapshot);
     Map<String, dynamic>? _userData = _snapshot.data() as Map<String, dynamic>?;
     print(_userData);
@@ -36,6 +38,8 @@ class BackupHelper {
     /// weight: stored as kg(double)
 
     try {
+      String? token = await FirebaseMessaging.instance.getToken();
+      print(token);
       await _db.collection(UserCollection).doc(uid).set({
         "name": name,
         "dob": dob,
@@ -43,7 +47,8 @@ class BackupHelper {
         "height": height,
         "weight": weight,
         "unit": unit,
-        "email": email
+        "email": email,
+        "fcm_token": token,
       });
     } catch (e) {
       log(e.toString());

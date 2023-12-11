@@ -88,7 +88,7 @@ class _ReminderTabState extends State<ReminderTab> {
         id: 1,
         body:
             "Complete your daily workout task and move a step closer to your goal",
-        time: localNoti.Time(reminderTime.hour, reminderTime.minute));
+        time: Time(hour:reminderTime.hour,minute:  reminderTime.minute,));
   }
 
   @override

@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -27,10 +30,14 @@ import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 import 'constants/app_theme.dart';
+import 'helper/firebase_notification_helper.dart';
+final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseNotificationHelper.initNotifications();
+
   MobileAds.instance.initialize();
   tz.initializeTimeZones();
 
@@ -40,6 +47,11 @@ Future<void> main() async {
         statusBarColor: Colors.transparent,
         systemNavigationBarDividerColor: Colors.transparent,
         systemNavigationBarColor: Colors.black));
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
   runApp(Phoenix(child: MyApp()));
 }
@@ -92,6 +104,8 @@ class _MyAppState extends State<MyApp> {
                         : AdaptiveThemeMode.system,
                     builder: (lightThemeData, darkThemeData) {
                       return MaterialApp(
+                        navigatorKey: navigatorKey,
+
                         title: 'Home Workout',
                         darkTheme: darkThemeData,
                         theme: lightThemeData,

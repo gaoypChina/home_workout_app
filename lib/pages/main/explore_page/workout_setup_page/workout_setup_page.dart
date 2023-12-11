@@ -52,7 +52,6 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage>
     restTime = await spHelper.loadDouble(spKey.trainingRest) ?? 30;
   }
 
-
   checkProUser() async {
     Provider.of<AdsProvider>(context, listen: false).isRewarded = false;
     isUnlocked = await Provider.of<AdsProvider>(context, listen: false)
@@ -79,19 +78,23 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage>
   @override
   Widget build(BuildContext context) {
     bool isProUser = isUnlocked ||
-        Provider
-            .of<AdsProvider>(context, listen: true)
-            .isRewarded;
+        Provider.of<AdsProvider>(context, listen: true).isRewarded;
 
     void getBottomSheet() async {
+      return showModalBottomSheet(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(18), topRight: Radius.circular(18))),
+          isDismissible: true,
+          enableDrag: true,
+          context: context,
+          builder: (context) {
+            return GetPrimeBottomSheet(
+              spKey: widget.workout.title,
+            );
+          });
 
-      return showModalBottomSheet(context: context, builder: (context){
-      return  GetPrimeBottomSheet(
-          spKey: widget.workout.title,
-        );
-      });
-
-   /*   showSlidingBottomSheet(context, builder: (context) {
+      /*   showSlidingBottomSheet(context, builder: (context) {
         return SlidingSheetDialog(
           elevation: 8,
           cornerRadius: 16,
@@ -197,7 +200,8 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage>
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(32))), backgroundColor: Theme.of(context).primaryColor),
+                                  BorderRadius.all(Radius.circular(32))),
+                          backgroundColor: Theme.of(context).primaryColor),
                       onPressed: getBottomSheet,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -335,7 +339,7 @@ class _WorkoutSetupPageState extends State<WorkoutSetupPage>
                             height: 12,
                           ),
                           ListView.separated(
-                            padding: EdgeInsets.only(bottom: 12),
+                              padding: EdgeInsets.only(bottom: 12),
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: widget.workout.workoutList.length,

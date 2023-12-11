@@ -26,6 +26,7 @@ class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
   Widget build(BuildContext context) {
     return Consumer<AdsProvider>(builder: (context, provider, _) {
       return Container(
+        padding: EdgeInsets.symmetric(horizontal: 16),
         width: double.infinity,
         child: Material(
           color: Theme.of(context).cardColor,
@@ -122,6 +123,7 @@ class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
                           context: context, key: widget.spKey);
                     },
                     style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
                         backgroundColor: Theme.of(context).primaryColor),
                     icon: provider.isLoading
                         ? Container(
@@ -141,7 +143,7 @@ class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
                         : Text("Watch AD"),
                   )),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 24),
+                padding: EdgeInsets.symmetric(vertical: 24,horizontal: 18),
                 child: Row(
                   children: [
                     Expanded(
@@ -176,8 +178,10 @@ class _GetPrimeBottomSheetState extends State<GetPrimeBottomSheet> {
                   width: double.infinity,
                   height: 48,
                   child: ElevatedButton.icon(
+
                     style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.amberAccent),
+                        ElevatedButton.styleFrom(backgroundColor: Colors.amberAccent                  ,    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+      ),
                     onPressed: () async {
                       bool isConnected =
                           await Provider.of<ConnectivityProvider>(context,
