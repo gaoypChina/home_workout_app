@@ -10,6 +10,7 @@ import '../../../provider/subscription_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/loading_indicator.dart';
+import '../subscription_page_example/widget/feature_showcase.dart';
 
 class SubscriptionPage extends StatefulWidget {
   final bool showCrossButton;
@@ -56,48 +57,27 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 2, vertical: 6.5),
-                          color: Colors.blue.shade600,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  data.packageList[data.offerIndex].storeProduct
-                                      .priceString,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                SizedBox(
-                                  height: 2,
-                                ),
-                                Text(
-                                  "Only : " +
-                                      constants.getPerMonthPrice(
-                                        product: data
-                                            .packageList[data.offerIndex]
-                                            .storeProduct,
-                                      ) +
-                                      "/M",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ),
+                        child: Text(
+                          data.packageList[data.offerIndex].storeProduct
+                              .priceString,
+                          style: TextStyle(
+                              fontSize: 22,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600),
                         ),
+                      ),
+                      SizedBox(
+                        width: 12,
                       ),
                       Expanded(
                         child: Container(
                           padding:
                               EdgeInsets.symmetric(horizontal: 2, vertical: 12),
-                          color: Colors.blue.shade700,
+                       
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(28),
+                            color: Colors.blue.shade900,
+                          ),
                           child: Center(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -194,32 +174,36 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                               SizedBox(
                                 height: 12,
                               ),
+                              FeatureShowcaseSection(),
+                              SizedBox(
+                                height: 22,
+                              ),
                               SubscriptionPlan(),
 
-                              // SubscriptionTime(),
-                              //  SizedBox(
-                              //    height: 12,
-                              //  ),
-
-                              buildDivider(),
-                              SubscriptionHeader(),
-                              buildDivider(),
-
-                              UserReview(),
                               SizedBox(
-                                height: 28,
+                                height: 22,
                               ),
-                              // buildDivider(),
-                              // SubscriptionTime(),
-                              buildDivider(),
 
-                              SubscriptionFAQ(),
+                            
+                              Container(
+                                color: Colors.grey.withOpacity(.1),
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 18,),
+                                    UserReview(),
+                                    SizedBox(height: 28,
+                                    ),
 
-                              StaticsSection(),
-                              // SizedBox(height: 280, child: buildFAQ()),
-                              SizedBox(
-                                height: 60,
+                              //       StaticsSection(),
+                                    // SizedBox(height: 280, child: buildFAQ()),
+                                    SizedBox(
+                                      height: 60,
+                                    ),
+                                  ],
+                                ),
                               ),
+
+                           
                             ],
                           ),
                           buildButton()

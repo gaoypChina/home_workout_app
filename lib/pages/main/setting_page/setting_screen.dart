@@ -188,7 +188,9 @@ class _SettingPageState extends State<SettingPage>
                       name[0].toUpperCase(),
                       style: TextStyle(
                           fontSize: 30,
-                         color:isDark? Colors.white70: Colors.black.withOpacity(.8),
+                          color: isDark
+                              ? Colors.white70
+                              : Colors.black.withOpacity(.8),
                           fontWeight: FontWeight.w400),
                     ),
                   ),
@@ -349,11 +351,6 @@ class _SettingPageState extends State<SettingPage>
                   child: Column(
                     children: [
                       buildProfileCard(),
-                      TextButton(onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (builder){
-                        return  SubscriptionPageExample();
-                        }));
-                      }, child: Text("click me")),
                       Expanded(
                         child: SingleChildScrollView(
                           physics: isShrink ? BouncingScrollPhysics() : null,
