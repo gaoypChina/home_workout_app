@@ -39,7 +39,7 @@ class SubscriptionProvider with ChangeNotifier {
       packageList.sort((p1, p2) {
         return Comparable.compare(
           p2.storeProduct.price,
-          p1.storeProduct.price,
+          p1.storeProduct.price
         );
       });
     } catch (e) {

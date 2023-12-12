@@ -31,11 +31,6 @@ class FeatureShowcaseSection extends StatelessWidget {
           title: "100+ Workouts",
           iconImage: "assets/subscription_icon/unlock.png",
           subTitle: "100+ workouts for your all fitness goals"),
-      PremiumItem(
-          color: Colors.brown.shade400,
-          title: "Certificate",
-          iconImage: "assets/subscription_icon/certificate.png",
-          subTitle: "100+ workouts for your all fitness goals"),
     ];
     return Column(
       children: [

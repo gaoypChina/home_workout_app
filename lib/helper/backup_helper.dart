@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:full_workout/constants/constant.dart';
 
 const String UserActivityCollection = "user_activity";
 const String WorkoutCollection = "workouts";
@@ -18,7 +19,22 @@ class BackupHelper {
     var _snapshot =
         await _db.collection(OfferCollection).doc("CtLHf49k8Zy1pZRRqPmW").get();
     print(_snapshot);
-    Map<String, dynamic>? _userData = _snapshot.data() as Map<String, dynamic>?;
+    Map<String, dynamic>? _userData = _snapshot.data();
+    print(_userData);
+  }
+
+  Future<void> getAllUser() async {
+    var _snapshot = await _db
+        .collection(UserCollection)
+        .where('gender', isNull: false)
+        .get();
+    print(_snapshot);
+
+    var _userData = _snapshot.docs;
+    for (int i = 0; i < _userData.length; i++) {
+      print(_userData[i].data() as Map<String , dynamic>);
+
+    }
     print(_userData);
   }
 

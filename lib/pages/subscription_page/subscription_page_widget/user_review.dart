@@ -45,7 +45,7 @@ class _UserReviewState extends State<UserReview> {
           padding: const EdgeInsets.only(left: 18.0, bottom: 12),
           child: Text(
             "What People Say About Us",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
         ),
         Container(
@@ -58,7 +58,7 @@ class _UserReviewState extends State<UserReview> {
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
-                    color: reviewer.color,
+                    color: Colors.white,
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   margin: EdgeInsets.only(left: 18),

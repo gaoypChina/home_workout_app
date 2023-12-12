@@ -1,7 +1,6 @@
 
   import 'package:flutter/material.dart';
 import 'package:full_workout/pages/subscription_page_example/widget/feature_showcase.dart';
-import 'package:full_workout/pages/subscription_page_example/widget/price_card.dart';
 
 class SubscriptionPageExample extends StatelessWidget {
   const SubscriptionPageExample({super.key});
@@ -32,7 +31,7 @@ class SubscriptionPageExample extends StatelessWidget {
             SizedBox(
               height: 22,
             ),
-            PriceCardSection(),
+
             SizedBox(
               height: 30,
             ),

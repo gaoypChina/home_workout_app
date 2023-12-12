@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:full_workout/helper/backup_helper.dart';
-import 'package:full_workout/helper/mediaHelper.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 
 class SubscriptionOfferCard extends StatefulWidget {
@@ -14,10 +12,9 @@ class _SubscriptionOfferCardState extends State<SubscriptionOfferCard> {
   @override
   Widget build(BuildContext context) {
     buildTimer() {
-      return SlideCountdownSeparated(
-        duration: Duration(days: 2),
-
-        durationTitle: DurationTitle(days: "Day", hours:"Hr",seconds: "sec" ,minutes: "min"),
+      return SlideCountdown(
+        duration: DateTime(2024, 01, 01).difference(DateTime.now()),
+        separatorType: SeparatorType.symbol,
       );
     }
 
@@ -25,30 +22,57 @@ class _SubscriptionOfferCardState extends State<SubscriptionOfferCard> {
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(18),
-        child: Column(
+        child: Stack(
           children: [
             Image.asset("assets/image.jpeg"),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              color: Colors.amber.shade900,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Text(
-                    "Offer end in: ",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  Container(
-                    child: buildTimer(),
-                  ),
-                ],
+            Positioned(
+                right: 0,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text("End in : ",style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white
+                    ),),
+                    buildTimer(),
+                  ],
+                )),
+
+            Positioned(
+              bottom: 4,
+              right: 20,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text("Claim now"),
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)),
+                    backgroundColor: Colors.grey.shade900),
               ),
             )
+
+            // Container(
+            //   padding: EdgeInsets.symmetric(vertical: 8),
+            //   color: Colors.grey.shade900,
+            //   child: Row(
+            //     children: [
+            //       SizedBox(
+            //         width: 12,
+            //       ),
+            //       Text(
+            //         "Offer end in: ",
+            //         style: TextStyle(
+            //             color: Colors.white,
+            //             fontSize: 18,
+            //             fontWeight: FontWeight.w500),
+            //       ),
+            //       Container(
+            //         child: buildTimer(),
+            //       ),
+            //     ],
+            //   ),
+            // )
           ],
         ),
       ),
