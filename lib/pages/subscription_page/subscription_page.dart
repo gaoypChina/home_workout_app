@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:screenshot/screenshot.dart';
 import '../../../constants/constant.dart';
 import '../../../pages/subscription_page/subscription_page_widget/statics_section.dart';
 import '../../../pages/subscription_page/subscription_page_widget/subscription_faq.dart';
@@ -73,7 +74,6 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         child: Container(
                           padding:
                               EdgeInsets.symmetric(horizontal: 2, vertical: 12),
-                       
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(28),
                             color: Colors.blue.shade900,
@@ -168,42 +168,63 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   : SafeArea(
                       child: Stack(
                         children: [
-                          ListView(
-                            //      physics: BouncingScrollPhysics(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                height: 12,
-                              ),
-                              FeatureShowcaseSection(),
-                              SizedBox(
-                                height: 22,
-                              ),
-                              SubscriptionPlan(),
-
-                              SizedBox(
-                                height: 22,
-                              ),
-
-                            
                               Container(
-                                color: Colors.grey.withOpacity(.1),
-                                child: Column(
+                                width: double.infinity,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 16),
+                                decoration: BoxDecoration(
+                                    color: Colors.amber.withOpacity(.3)),
+                                child: Text(
+                                  "Offer end in: 12:12:00",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                              ),
+                              Expanded(
+                                child: ListView(
+                                  //      physics: BouncingScrollPhysics(),
                                   children: [
-                                    SizedBox(height: 18,),
-                                    UserReview(),
-                                    SizedBox(height: 28,
-                                    ),
-
-                              //       StaticsSection(),
-                                    // SizedBox(height: 280, child: buildFAQ()),
                                     SizedBox(
-                                      height: 60,
+                                      height: 12,
+                                    ),
+                                    FeatureShowcaseSection(),
+                                    SizedBox(
+                                      height: 22,
+                                    ),
+                                    SubscriptionPlan(),
+                                    SizedBox(
+                                      height: 22,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(.1),
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(18),topRight: Radius.circular(18))),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 18,
+                                          ),
+                                          UserReview(),
+                                          SizedBox(
+                                            height: 28,
+                                          ),
+
+                                          StaticsSection(),
+                                          // SizedBox(height: 280, child: buildFAQ()),
+                                          SizedBox(
+                                            height: 60,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-
-                           
                             ],
                           ),
                           buildButton()
