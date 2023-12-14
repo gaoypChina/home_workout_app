@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:full_workout/constants/constant.dart';
 
 import '../main.dart';
 import '../pages/main_page.dart';
@@ -46,6 +47,7 @@ class FirebaseNotificationHelper {
     FirebaseMessaging.onMessage.listen((message) {
       final notification = message.notification;
       if (notification == null) return;
+      Constants().getToast("new notification");
       _localNotifications.show(
           notification.hashCode,
           notification.title,
@@ -56,6 +58,8 @@ class FirebaseNotificationHelper {
                 _androidChannel.name,
                 channelDescription: _androidChannel.description,
                 icon: "@mipmap/ic_launcher",
+                priority: Priority.max,
+                importance: Importance.max
               )),
           payload: jsonEncode(message.toMap()));
     });

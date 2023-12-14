@@ -7,11 +7,9 @@ import 'package:timezone/timezone.dart' as tz;
 
 import '../main.dart';
 import '../pages/main_page.dart';
-// import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class NotificationHelper {
   static final _notification = FlutterLocalNotificationsPlugin();
-
 
   // ignore: close_sinks
   static final onNotifications = BehaviorSubject<String>();
@@ -34,14 +32,13 @@ class NotificationHelper {
 
   static Future init({bool initScheduled = false}) async {
     final android = AndroidInitializationSettings("@mipmap/ic_launcher");
-    final ios =DarwinInitializationSettings();
+    final ios = DarwinInitializationSettings();
     final settings = InitializationSettings(android: android, iOS: ios);
-
 
     await _notification.initialize(settings,
         onDidReceiveNotificationResponse: (payload) {
-          handleMessage(null);
-        });
+      handleMessage(null);
+    });
 
     if (initScheduled) {
       tz.initializeTimeZones();
@@ -78,7 +75,7 @@ class NotificationHelper {
       payload: payload,
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
+          UILocalNotificationDateInterpretation.wallClockTime,
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
     );
   }

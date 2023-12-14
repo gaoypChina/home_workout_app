@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_countdown.dart';
+import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_offer_card.dart';
+import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_timer.dart';
 import 'package:screenshot/screenshot.dart';
 import '../../../constants/constant.dart';
 import '../../../pages/subscription_page/subscription_page_widget/statics_section.dart';
@@ -35,11 +38,11 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   @override
   Widget build(BuildContext context) {
     var data = Provider.of<SubscriptionProvider>(context, listen: true);
-    Constants constants = Constants();
-    buildButton() {
+     buildButton() {
       return Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Spacer(),
+
           Container(
             color: Colors.grey,
             height: .2,
@@ -109,134 +112,110 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       );
     }
 
-    buildDivider() {
-      return Container(
-          padding: EdgeInsets.only(top: 8, bottom: 16),
-          child: Constants().getDivider(context: context));
-    }
 
-    return Stack(
-      children: [
-        Scaffold(
-          appBar: AppBar(
-            leading: widget.showCrossButton
-                ? IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icon(Icons.close))
-                : null,
-            title: Text(
-              "Get Premium",
-            ),
-            actions: [
-              data.isLoading
-                  ? Container()
-                  : Padding(
-                      padding: EdgeInsets.only(right: 12, top: 10, bottom: 10),
-                      child: OutlinedButton(
-                        onPressed: () {
-                          data.restoreSubscription(context: context);
-                        },
-                        child: Row(
-                          children: [
-                            Text(
-                              "Restore",
-                              style: TextStyle(fontWeight: FontWeight.w700),
-                            ),
-                          ],
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor:
-                              Theme.of(context).primaryColor.withOpacity(.8),
-                          side: BorderSide(
-                              width: 1.5,
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(.7)),
-                        ),
-                      ),
-                    ),
-            ],
-          ),
-          body: data.isLoading
+    return  Scaffold(
+      body: Stack(
+        children: [
+          data.isLoading
               ? Center(child: CircularProgressIndicator())
               : data.packageList.isEmpty
-                  ? Center(
-                      child: Text("Something went wrong..."),
-                    )
-                  : SafeArea(
-                      child: Stack(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+              ? Center(
+            child: Text("Something went wrong..."),
+          )
+              :    Scaffold(
+            bottomNavigationBar: buildButton(),
+            appBar: AppBar(
+              leading: widget.showCrossButton
+                  ? IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: Icon(Icons.close))
+                  : null,
+              title: Text(
+                "Get Premium",
+              ),
+              actions: [
+                data.isLoading
+                    ? Container()
+                    : Padding(
+                        padding: EdgeInsets.only(right: 12, top: 10, bottom: 10),
+                        child: OutlinedButton(
+                          onPressed: () {
+                            data.restoreSubscription(context: context);
+                          },
+                          child: Row(
                             children: [
-                              Container(
-                                width: double.infinity,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 12, horizontal: 16),
-                                decoration: BoxDecoration(
-                                    color: Colors.amber.withOpacity(.3)),
-                                child: Text(
-                                  "Offer end in: 12:12:00",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16),
-                                ),
-                              ),
-                              Expanded(
-                                child: ListView(
-                                  //      physics: BouncingScrollPhysics(),
-                                  children: [
-                                    SizedBox(
-                                      height: 12,
-                                    ),
-                                    FeatureShowcaseSection(),
-                                    SizedBox(
-                                      height: 22,
-                                    ),
-                                    SubscriptionPlan(),
-                                    SizedBox(
-                                      height: 22,
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey.withOpacity(.1),
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(18),topRight: Radius.circular(18))),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 18,
-                                          ),
-                                          UserReview(),
-                                          SizedBox(
-                                            height: 28,
-                                          ),
-
-                                          StaticsSection(),
-                                          // SizedBox(height: 280, child: buildFAQ()),
-                                          SizedBox(
-                                            height: 60,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              Text(
+                                "Restore",
+                                style: TextStyle(fontWeight: FontWeight.w700),
                               ),
                             ],
                           ),
-                          buildButton()
-                        ],
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor:
+                                Theme.of(context).primaryColor.withOpacity(.8),
+                            side: BorderSide(
+                                width: 1.5,
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(.7)),
+                          ),
+                        ),
                       ),
-                    ),
-        ),
-        if (data.isBuyBtnLoading)
-          CustomLoadingIndicator(
-            msg: "Loading...",
-          )
-      ],
+              ],
+            ),
+            body:  SafeArea(
+                        child: ListView(
+                          //      physics: BouncingScrollPhysics(),
+                          children: [
+                            SubscriptionCountdown(),
+
+                            SizedBox(
+                              height: 12,
+                            ),
+                            FeatureShowcaseSection(),
+                            SizedBox(
+                              height: 22,
+                            ),
+                            SubscriptionPlan(),
+                            SizedBox(
+                              height: 22,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.withOpacity(.1),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(18),
+                                      topRight: Radius.circular(18))),
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 18,
+                                  ),
+                                  UserReview(),
+                                  SizedBox(
+                                    height: 28,
+                                  ),
+
+                                  StaticsSection(),
+                                  // SizedBox(height: 280, child: buildFAQ()),
+                                  SizedBox(
+                                    height: 60,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+          ),
+          if (data.isBuyBtnLoading)
+            CustomLoadingIndicator(
+              msg: "Loading...",
+            )
+        ],
+      ),
     );
   }
 }
