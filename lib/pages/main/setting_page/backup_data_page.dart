@@ -198,15 +198,15 @@ class DataSyncModal extends StatelessWidget {
                       height: 2,
                     ),
                     Text(
-                      user?.email ?? "user@domail.com",
+                      user?.email ?? "user@mail.com",
                       style: TextStyle(
                           fontSize: 15,
                           color: Theme.of(context)
                               .textTheme
                               .bodyMedium!
                               .color!
-                              .withOpacity(.7),
-                          fontWeight: FontWeight.w500),
+                              .withOpacity(.8),
+                          fontWeight: FontWeight.w400),
                     )
                   ],
                 )
@@ -217,8 +217,9 @@ class DataSyncModal extends StatelessWidget {
             ),
             Container(
                 width: size.width - 36,
-                height: 45,
+                height: 48,
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28))),
                   onPressed: () {
                     Navigator.of(context).pop();
                     onSync();
@@ -226,12 +227,12 @@ class DataSyncModal extends StatelessWidget {
                   child: Text("Sync Data"),
                 )),
             SizedBox(
-              height: 12,
+              height: 16,
             ),
             Center(
               child: Container(
                   width: size.width - 36,
-                  height: 45,
+                  height: 48,
                   child: OutlinedButton(
                     child: Text(
                       "Close",
@@ -240,6 +241,7 @@ class DataSyncModal extends StatelessWidget {
                           fontWeight: FontWeight.w500),
                     ),
                     style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
                         side: BorderSide(
                       color: Colors.red.shade400.withOpacity(.5),
                       width: 1.5,
@@ -256,12 +258,12 @@ class DataSyncModal extends StatelessWidget {
               "Make a backup of your workout data so that you won't lose it if you switch devices. ",
               style: TextStyle(
                   fontSize: 13.5,
-                  letterSpacing: 1.2,
+                  letterSpacing: 1.0,
                   color: Theme.of(context)
                       .textTheme
                       .bodyLarge!
                       .color!
-                      .withOpacity(.6)),
+                      .withOpacity(.5)),
               textAlign: TextAlign.center,
             ),
             SizedBox(

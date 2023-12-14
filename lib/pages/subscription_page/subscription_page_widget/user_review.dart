@@ -15,6 +15,14 @@ class _UserReviewState extends State<UserReview> {
         color: Colors.green.withOpacity(.1),
         review:
             "One of the best home workout apps out there would recommend to anyone no matter what their fitness level is as the training can be adjusted to suit them."),
+
+    UserReviewModel(
+        imgSrc: "assets/other/max.jpeg",
+        name: "Max Bagga",
+        color: Colors.green.withOpacity(.1),
+        review:
+        "Home Workout is a game-changer! The variety of workouts keeps things exciting, and the personalized plans are a perfect fit for my schedule.🌟💪"),
+
     UserReviewModel(
         imgSrc: "assets/other/nayan.jpg",
         name: "Nayan Lodhi",

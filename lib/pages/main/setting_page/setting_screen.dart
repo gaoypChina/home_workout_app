@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:android_intent_plus/android_intent.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -364,6 +365,7 @@ class _SettingPageState extends State<SettingPage>
                                 ),
                               if (!subscriptionProvider.isProUser)
                                 buildProCard(),
+
                               getTitle("Workout"),
                               Container(
                                 color: cardColor,
