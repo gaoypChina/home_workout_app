@@ -43,125 +43,111 @@ class HomePage extends StatelessWidget {
       );
     }
 
-   List<Widget> sections = [
-
-     SizedBox(
-       height: 18,
-     ),
-
-     SubscriptionOfferCard(),
-     SizedBox(
-       height: 18,
-     ),
-
-    ActiveGoal(),
-
-     getTitle(exerciseName[0]),
-     for (int i = 0; i < 3; i++)
-       WorkoutCard(
-         title: chestExercise[i].title,
-         workoutList: chestExercise[i].workoutList,
-         tagValue: i,
-         imaUrl: chestExercise[i].imageUrl,
-         tag: chestExercise[i].title,
-         index: 1,
-       ),
-
-     getTitle(exerciseName[1]),
-     for (int i = 0; i < 3; i++)
-       WorkoutCard(
-         title: shoulderExercise[i].title,
-         workoutList: shoulderExercise[i].workoutList,
-         tagValue: i,
-         imaUrl: shoulderExercise[i].imageUrl,
-         tag: shoulderExercise[i].title,
-         index: 0,
-       ),
-
-     getTitle(exerciseName[2]),
-     for (int i = 0; i < 3; i++)
-       WorkoutCard(
-         title: absExercise[i].title,
-         workoutList: absExercise[i].workoutList,
-         tagValue: i,
-         imaUrl: absExercise[i].imageUrl,
-         tag: absExercise[i].title,
-         index: 0,
-       ),
-
-     getTitle(exerciseName[3]),
-
-
-     for (int i = 0; i < 3; i++)
-       WorkoutCard(
-         title: legsExercise[i].title,
-         workoutList: legsExercise[i].workoutList,
-         tagValue: i,
-         imaUrl: legsExercise[i].imageUrl,
-         tag: legsExercise[i].title,
-         index: 1,
-       ),
-
-     getTitle(exerciseName[4]),
-     for (int i = 0; i < 3; i++)
-       WorkoutCard(
-         title: armsExercise[i].title,
-         workoutList: armsExercise[i].workoutList,
-         tagValue: i,
-         imaUrl: armsExercise[i].imageUrl,
-         tag: armsExercise[i].title,
-         index: 0,
-       ),
-
-     SizedBox(height: 20),
-   ];
+    List<Widget> sections = [
+      SizedBox(
+        height: 18,
+      ),
+      ActiveGoal(),
+      getTitle(exerciseName[0]),
+      for (int i = 0; i < 3; i++)
+        WorkoutCard(
+          title: chestExercise[i].title,
+          workoutList: chestExercise[i].workoutList,
+          tagValue: i,
+          imaUrl: chestExercise[i].imageUrl,
+          tag: chestExercise[i].title,
+          index: 1,
+        ),
+      getTitle(exerciseName[1]),
+      for (int i = 0; i < 3; i++)
+        WorkoutCard(
+          title: shoulderExercise[i].title,
+          workoutList: shoulderExercise[i].workoutList,
+          tagValue: i,
+          imaUrl: shoulderExercise[i].imageUrl,
+          tag: shoulderExercise[i].title,
+          index: 0,
+        ),
+      getTitle(exerciseName[2]),
+      for (int i = 0; i < 3; i++)
+        WorkoutCard(
+          title: absExercise[i].title,
+          workoutList: absExercise[i].workoutList,
+          tagValue: i,
+          imaUrl: absExercise[i].imageUrl,
+          tag: absExercise[i].title,
+          index: 0,
+        ),
+      getTitle(exerciseName[3]),
+      for (int i = 0; i < 3; i++)
+        WorkoutCard(
+          title: legsExercise[i].title,
+          workoutList: legsExercise[i].workoutList,
+          tagValue: i,
+          imaUrl: legsExercise[i].imageUrl,
+          tag: legsExercise[i].title,
+          index: 1,
+        ),
+      getTitle(exerciseName[4]),
+      for (int i = 0; i < 3; i++)
+        WorkoutCard(
+          title: armsExercise[i].title,
+          workoutList: armsExercise[i].workoutList,
+          tagValue: i,
+          imaUrl: armsExercise[i].imageUrl,
+          tag: armsExercise[i].title,
+          index: 0,
+        ),
+      SizedBox(height: 20),
+    ];
 
     return WillPopScope(
         onWillPop: () => exitAppDialog(context: context),
         child: Scaffold(
-            backgroundColor: isDark
-                ? Colors.blueGrey.shade300.withOpacity(.05)
-                : Colors.blueGrey.shade300.withOpacity(.1),
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              actions: getLeading(context),
-              elevation: 0.2,
-              title: RichText(
-                  text: TextSpan(children: [
-                TextSpan(
-                    text: "Home ".toUpperCase(),
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Theme.of(context).textTheme.bodyLarge!.color,
-                        letterSpacing: 1,
-                     //  color: Theme.of(context).primaryColor,
-                        fontSize: 18)),
-                TextSpan(
-                    text: "Workout".toUpperCase(),
-                    style: TextStyle(
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.w700,
-                        color: Theme.of(context).textTheme.bodyLarge!.color,
-                        fontSize: 18))
-              ])),
-            ),
-            body: AnimationLimiter(
-              child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                itemCount: sections.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return AnimationConfiguration.staggeredList(
-                    position: index,
-                    duration: const Duration(milliseconds: 605),
-                    child: SlideAnimation(
-                      verticalOffset: 50.0,
-                      child: FadeInAnimation(
-                        child: sections[index],
-                      ),
+          backgroundColor: isDark
+              ? Colors.blueGrey.shade300.withOpacity(.05)
+              : Colors.blueGrey.shade300.withOpacity(.1),
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            actions: getLeading(context),
+            elevation: 0.2,
+            title: RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: "Home ".toUpperCase(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).textTheme.bodyLarge!.color,
+                      letterSpacing: 1,
+                      //  color: Theme.of(context).primaryColor,
+                      fontSize: 18)),
+              TextSpan(
+                  text: "Workout".toUpperCase(),
+                  style: TextStyle(
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).textTheme.bodyLarge!.color,
+                      fontSize: 18))
+            ])),
+          ),
+          body: AnimationLimiter(
+            child: ListView.builder(
+              physics: BouncingScrollPhysics(),
+              itemCount: sections.length,
+              itemBuilder: (BuildContext context, int index) {
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 605),
+                  child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                      child: sections[index],
                     ),
-                  );
-                },
-              ),
-            ),));
+                  ),
+                );
+              },
+            ),
+          ),
+        ));
   }
 }

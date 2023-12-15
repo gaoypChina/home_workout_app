@@ -30,26 +30,40 @@ class _SubscriptionCountdownState extends State<SubscriptionCountdown> {
                     "For new members upto 50% off",
                     style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400,
                         color: Theme.of(context)
                             .textTheme
                             .bodyMedium
                             ?.color!
-                            .withOpacity(.7)),
+                            .withOpacity(.8)),
+                  ),
+                  SizedBox(
+                    height: 2,
                   ),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Offer end: ",
-                        style: TextStyle(fontSize: 16),
+                        "Offer end : ",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.color!
+                                .withOpacity(.8)),
                       ),
                       TimeRemaining(
+                        onTimeOver: () {
+                          setState(() {});
+                        },
                         duration:
                             DateTime(today.year, today.month, today.day, 24)
                                 .difference(DateTime.now()),
                         style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w900,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
                             color: Colors.red.shade900),
                       ),
                     ],
@@ -59,34 +73,9 @@ class _SubscriptionCountdownState extends State<SubscriptionCountdown> {
             ),
             InkWell(
                 onTap: () async {
-                  bool? res = await showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: Container(
-                            child: Text(""),
-                          ),
-                          title: Text("Are you sure?"),
-                          actions: [
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context, true);
-                                },
-                                child: Text("Yes")),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context, false);
-                                },
-                                child: Text("No")),
-                          ],
-                        );
-                      });
-
-                  if (res == true) {
-                    setState(() {
-                      showBanner = !showBanner;
-                    });
-                  }
+                  setState(() {
+                    showBanner = !showBanner;
+                  });
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 8).copyWith(left: 8),
