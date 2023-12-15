@@ -15,14 +15,12 @@ class _UserReviewState extends State<UserReview> {
         color: Colors.green.withOpacity(.1),
         review:
             "One of the best home workout apps out there would recommend to anyone no matter what their fitness level is as the training can be adjusted to suit them."),
-
     UserReviewModel(
         imgSrc: "assets/other/max.jpeg",
         name: "Max Bagga",
         color: Colors.green.withOpacity(.1),
         review:
-        "Home Workout is a game-changer! The variety of workouts keeps things exciting, and the personalized plans are a perfect fit for my schedule.🌟💪"),
-
+            "Home Workout is a game-changer! The variety of workouts keeps things exciting, and the personalized plans are a perfect fit for my schedule.🌟💪"),
     UserReviewModel(
         imgSrc: "assets/other/nayan.jpg",
         name: "Nayan Lodhi",
@@ -45,15 +43,33 @@ class _UserReviewState extends State<UserReview> {
 
   @override
   Widget build(BuildContext context) {
+    var textColor = Theme.of(context).textTheme.bodyMedium!.color!;
     double width = MediaQuery.of(context).size.width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 18.0, bottom: 12),
-          child: Text(
-            "What People Say About Us",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          child: Row(
+            children: [
+              Container(
+                height: 18,
+                width: 6,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28),
+                    color: Colors.blue.shade700),
+              ),
+              SizedBox(
+                width: 12,
+              ),
+              Text(
+                "What People Say About Us",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: textColor),
+              ),
+            ],
           ),
         ),
         Container(
@@ -88,7 +104,8 @@ class _UserReviewState extends State<UserReview> {
                         style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
-                            letterSpacing: 1.5),
+                            letterSpacing: 1.5,
+                            color: textColor.withOpacity(.8)),
                       ),
                       Spacer(
                         flex: 2,
@@ -96,7 +113,9 @@ class _UserReviewState extends State<UserReview> {
                       Text(
                         reviewer.name,
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: textColor.withOpacity(.7)),
                       ),
                       Spacer(),
                     ],

@@ -32,7 +32,7 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
       subscriptionList.add(SubscriptionCardModal(
           title: "Go Pro",
           duration: "$duration \nMonth",
-          colors: [Colors.red, Colors.purple],
+          colors: [Colors.red, Colors.blue.shade900],
           perMonth: "${Constants().getPerMonthPrice(product: product)}",
           price: product.priceString,
           discount: discount));
@@ -44,7 +44,7 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = 240;
+    double height = 220;
     double radius = 12;
     var provider = Provider.of<SubscriptionProvider>(context, listen: false);
 
@@ -64,22 +64,33 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
             children: [
               Column(
                 children: [
-              offer.discount != 1 ?   Container(
-                    child: Text(
-                      offer.discount.toString() + "% OFF",
-                      style: TextStyle(
-                          color: isSelected ? Colors.white : Colors.black,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
-                        color: isSelected
-                            ? Colors.blue.shade900
-                            : Colors.grey.withOpacity(.2),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            topRight: Radius.circular(12))),
-                  ): SizedBox(height: 30,),
+                  offer.discount != 1
+                      ? Container(
+                          child: Text(
+                            offer.discount.toString() + "% OFF",
+                            style: TextStyle(
+                                color: isSelected ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          decoration: BoxDecoration(
+                              gradient: isSelected
+                                  ? LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [...offer.colors])
+                                  : null,
+                              color: isSelected
+                                  ? Colors.blue.shade900
+                                  : Colors.grey.withOpacity(.2),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12))),
+                        )
+                      : SizedBox(
+                          height: 30,
+                        ),
                   Expanded(
                     child: AnimatedContainer(
                       width: width * .35,
@@ -150,7 +161,7 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
                                           color: isSelected
                                               ? Colors.white
                                               : Colors.black.withOpacity(.7),
-                                          fontSize: 24,
+                                          fontSize: 22,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
@@ -173,7 +184,6 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
                   ),
                 ],
               ),
-
             ],
           ),
         ),

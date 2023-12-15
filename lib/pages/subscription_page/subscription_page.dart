@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_countdown.dart';
+import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_loading_page.dart';
 import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_offer_card.dart';
 import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_timer.dart';
 import 'package:screenshot/screenshot.dart';
@@ -38,11 +39,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   @override
   Widget build(BuildContext context) {
     var data = Provider.of<SubscriptionProvider>(context, listen: true);
-     buildButton() {
+    buildButton() {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-
           Container(
             color: Colors.grey,
             height: .2,
@@ -53,27 +53,26 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                 width: double.infinity,
                 height: 65,
-                child: ElevatedButton(
-                  onPressed: data.isBuyBtnLoading
-                      ? null
-                      : () => data.onBuyBtnClick(context: context),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          data.packageList[data.offerIndex].storeProduct
-                              .priceString,
-                          style: TextStyle(
-                              fontSize: 22,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600),
-                        ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        data.packageList[data.offerIndex].storeProduct
+                            .priceString,
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.w600),
                       ),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      Expanded(
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(28),
+                        onTap: data.isBuyBtnLoading
+                            ? null
+                            : () => data.onBuyBtnClick(context: context),
                         child: Container(
                           padding:
                               EdgeInsets.symmetric(horizontal: 2, vertical: 12),
@@ -81,102 +80,103 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                             borderRadius: BorderRadius.circular(28),
                             color: Colors.blue.shade900,
                           ),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "BUY",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Icon(Icons.arrow_forward),
-                              ],
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "BUY",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Icon(
+                                Icons.arrow_forward,
+                                color: Colors.white,
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      padding: EdgeInsets.zero),
+                    ),
+                  ],
                 )),
           ),
         ],
       );
     }
 
-
-    return  Scaffold(
+    return Scaffold(
       body: Stack(
         children: [
           data.isLoading
-              ? Center(child: CircularProgressIndicator())
+              ? SubscriptionLoadingPage()
               : data.packageList.isEmpty
-              ? Center(
-            child: Text("Something went wrong..."),
-          )
-              :    Scaffold(
-            bottomNavigationBar: buildButton(),
-            appBar: AppBar(
-              leading: widget.showCrossButton
-                  ? IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: Icon(Icons.close))
-                  : null,
-              title: Text(
-                "Get Premium",
-              ),
-              actions: [
-                data.isLoading
-                    ? Container()
-                    : Padding(
-                        padding: EdgeInsets.only(right: 12, top: 10, bottom: 10),
-                        child: OutlinedButton(
-                          onPressed: () {
-                            data.restoreSubscription(context: context);
-                          },
-                          child: Row(
-                            children: [
-                              Text(
-                                "Restore",
-                                style: TextStyle(fontWeight: FontWeight.w700),
-                              ),
-                            ],
-                          ),
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor:
-                                Theme.of(context).primaryColor.withOpacity(.8),
-                            side: BorderSide(
-                                width: 1.5,
-                                color: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(.7)),
-                          ),
+                  ? Center(
+                      child: Text("Something went wrong..."),
+                    )
+                  : Scaffold(
+                      bottomNavigationBar: buildButton(),
+                      appBar: AppBar(
+                        leading: widget.showCrossButton
+                            ? IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                icon: Icon(Icons.close))
+                            : null,
+                        title: Text(
+                          "Get Premium",
                         ),
+                        actions: [
+                          data.isLoading
+                              ? Container()
+                              : Padding(
+                                  padding: EdgeInsets.only(
+                                      right: 12, top: 10, bottom: 10),
+                                  child: OutlinedButton(
+                                    onPressed: () {
+                                      data.restoreSubscription(
+                                          context: context);
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "Restore",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ],
+                                    ),
+                                    style: OutlinedButton.styleFrom(
+                                      foregroundColor:
+                                          Theme.of(context).primaryColor,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(28)),
+                                      side: BorderSide(
+                                          width: 1.5,
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                  ),
+                                ),
+                        ],
                       ),
-              ],
-            ),
-            body:  SafeArea(
+                      body: SafeArea(
                         child: ListView(
                           //      physics: BouncingScrollPhysics(),
                           children: [
                             SubscriptionCountdown(),
-
                             SizedBox(
                               height: 12,
                             ),
                             FeatureShowcaseSection(),
                             SizedBox(
-                              height: 22,
+                              height: 12,
                             ),
                             SubscriptionPlan(),
                             SizedBox(
@@ -191,17 +191,17 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                               child: Column(
                                 children: [
                                   SizedBox(
-                                    height: 18,
+                                    height: 22,
                                   ),
                                   UserReview(),
                                   SizedBox(
-                                    height: 28,
+                                    height: 8,
                                   ),
 
                                   StaticsSection(),
                                   // SizedBox(height: 280, child: buildFAQ()),
                                   SizedBox(
-                                    height: 60,
+                                    height: 20,
                                   ),
                                 ],
                               ),
@@ -209,7 +209,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                           ],
                         ),
                       ),
-          ),
+                    ),
           if (data.isBuyBtnLoading)
             CustomLoadingIndicator(
               msg: "Loading...",

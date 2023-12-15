@@ -38,8 +38,8 @@ class FeatureShowcaseSection extends StatelessWidget {
             .map(
               (item) => ListTile(
                 leading: Container(
-                    width: 40,
-                    height: 40,
+                    width: 38,
+                    height: 38,
                     child: Image.asset(item.iconImage ?? "")),
                 subtitle: Text(
                   item.subTitle,
