@@ -37,10 +37,7 @@ class SubscriptionProvider with ChangeNotifier {
           .toList();
 
       packageList.sort((p1, p2) {
-        return Comparable.compare(
-          p2.storeProduct.price,
-          p1.storeProduct.price
-        );
+        return Comparable.compare(p2.storeProduct.price, p1.storeProduct.price);
       });
     } catch (e) {
       log("subscriptions fetching error : ${e.toString()}");
@@ -181,9 +178,11 @@ class SubscriptionProvider with ChangeNotifier {
           DateTime.now().difference(DateTime.parse(savedTime)).inDays > 7;
     }
 
-    if (savedTime == null || isNewDay) {
+    if (savedTime == null || isNewDay || true) {
       Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
-        return SubscriptionPage(showCrossButton: true,);
+        return SubscriptionPage(
+          showCrossButton: true,
+        );
       }));
 
       await SpHelper().saveString(

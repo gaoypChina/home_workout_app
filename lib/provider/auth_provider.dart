@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:full_workout/services/navigation_service.dart';
 import '../../../helper/sp_key_helper.dart';
 import '../../../provider/backup_provider.dart';
 import '../../../provider/subscription_provider.dart';
@@ -184,8 +185,6 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-
-
   Future logout({required BuildContext context}) async {
     authLoading = true;
     notifyListeners();
@@ -202,7 +201,10 @@ class AuthProvider with ChangeNotifier {
       var backupProvider = Provider.of<BackupProvider>(context, listen: false);
       await backupProvider.saveData(user: user);
 
+
+
       // logout user
+
       bool isAuthByGoogle =
           await SpHelper().loadBool(SpKey().authByGoogle) ?? false;
       FirebaseAuth.instance.signOut();
@@ -217,6 +219,14 @@ class AuthProvider with ChangeNotifier {
 
       _constants.getToast("User Logout Successfully");
       Phoenix.rebirth(context);
+
+      NavigationService.pushAndRemoveUntil(page: SplashPage());
+
+
+
+      print("before return");
+
+      return;
     } catch (e) {
       _constants.getToast("Something went wrong");
       log("error : ${e.toString()}");
