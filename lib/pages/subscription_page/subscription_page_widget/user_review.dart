@@ -45,6 +45,8 @@ class _UserReviewState extends State<UserReview> {
   Widget build(BuildContext context) {
     var textColor = Theme.of(context).textTheme.bodyMedium!.color!;
     double width = MediaQuery.of(context).size.width;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -63,7 +65,7 @@ class _UserReviewState extends State<UserReview> {
                 width: 12,
               ),
               Text(
-                "What People Say About Us",
+                "What people say about us",
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -82,7 +84,7 @@ class _UserReviewState extends State<UserReview> {
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
-                    color: Colors.white,
+                    color: isDark ? Colors.grey.shade900 : Colors.white,
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   margin: EdgeInsets.only(left: 18),

@@ -5,13 +5,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:full_workout/helper/backup_helper.dart';
-import 'package:full_workout/pages/subscription_page_example/subscription_page.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:toggle_switch/toggle_switch.dart';
-
 import '../../../constants/constant.dart';
 import '../../../helper/mediaHelper.dart';
 import '../../../helper/sp_helper.dart';

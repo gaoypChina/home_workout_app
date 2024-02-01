@@ -2,20 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_countdown.dart';
 import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_loading_page.dart';
-import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_offer_card.dart';
-import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_timer.dart';
-import 'package:screenshot/screenshot.dart';
-import '../../../constants/constant.dart';
 import '../../../pages/subscription_page/subscription_page_widget/statics_section.dart';
-import '../../../pages/subscription_page/subscription_page_widget/subscription_faq.dart';
-import '../../../pages/subscription_page/subscription_page_widget/subscription_hader.dart';
 import '../../../pages/subscription_page/subscription_page_widget/subsctiption_plan.dart';
 import '../../../pages/subscription_page/subscription_page_widget/user_review.dart';
 import '../../../provider/subscription_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants/constant.dart';
 import '../../widgets/loading_indicator.dart';
-import '../subscription_page_example/widget/feature_showcase.dart';
+import 'subscription_page_widget/feature_showcase.dart';
 
 class SubscriptionPage extends StatefulWidget {
   final bool showCrossButton;
@@ -57,11 +52,25 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
-                      child: Text(
-                        data.packageList[data.offerIndex].storeProduct
-                            .priceString,
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.w600),
+                      child: Column(
+                        children: [
+                          Text(
+                            data.packageList[data.offerIndex].storeProduct
+                                .priceString,
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.w600),
+                          ),
+                          Text(
+                            "${Constants().getPerMonthPrice(product: data.packageList[data.offerIndex].storeProduct)}/ Month",
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .color!
+                                    .withOpacity(.8),
+                                fontWeight: FontWeight.w500),
+                          )
+                        ],
                       ),
                     ),
                     SizedBox(

@@ -43,6 +43,8 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).textTheme.bodyMedium!.color == Colors.white;
+    var themeColor = Theme.of(context).textTheme.bodyMedium!.color!;
     double width = MediaQuery.of(context).size.width;
     double height = 220;
     double radius = 12;
@@ -69,12 +71,16 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
                           child: Text(
                             offer.discount.toString() + "% OFF",
                             style: TextStyle(
-                                color: isSelected ? Colors.white : Colors.black,
+                                color: isSelected ? Colors.white : null,
                                 fontWeight: FontWeight.w500),
                           ),
                           padding:
                               EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                           decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: isSelected
+                                      ? Colors.blue.shade900
+                                      : Colors.white.withOpacity(.1)),
                               gradient: isSelected
                                   ? LinearGradient(
                                       begin: Alignment.topLeft,
@@ -83,23 +89,27 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
                                   : null,
                               color: isSelected
                                   ? Colors.blue.shade900
-                                  : Colors.grey.withOpacity(.2),
+                                  : isDark
+                                      ? Colors.grey.shade800.withOpacity(.15)
+                                      : Colors.grey.withOpacity(.2),
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(12),
                                   topRight: Radius.circular(12))),
                         )
                       : SizedBox(
-                          height: 30,
+                          height: 33,
                         ),
                   Expanded(
                     child: AnimatedContainer(
                       width: width * .35,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: isDark
+                            ? Colors.grey.shade900.withOpacity(.8)
+                            : Colors.white,
                         border: Border.all(
                             color: isSelected
                                 ? Colors.blue.shade900
-                                : Colors.transparent),
+                                : Colors.white.withOpacity(.1)),
                         gradient: isSelected
                             ? LinearGradient(
                                 begin: Alignment.topLeft,
@@ -109,7 +119,9 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.15),
+                            color: isDark
+                                ? Colors.blue.withOpacity(.08)
+                                : Colors.grey.withOpacity(0.15),
                             spreadRadius: 1,
                             blurRadius: 2,
                             offset: Offset(-3, 3),
@@ -126,7 +138,9 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
                               padding: EdgeInsets.symmetric(horizontal: 8),
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                  color: Colors.grey.shade100,
+                                  color: isDark
+                                      ? Colors.grey.shade800.withOpacity(.15)
+                                      : Colors.grey.shade100,
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(radius),
                                       topRight: Radius.circular(radius))),
@@ -134,12 +148,13 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
                                 offer.duration,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: Colors.black.withOpacity(.7),
+                                    color: themeColor.withOpacity(.7),
                                     fontSize: 22,
                                     fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
+                          Container(height: 1,color: Colors.transparent,),
                           Expanded(
                             child: Container(
                               alignment: Alignment.center,
@@ -160,7 +175,10 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
                                       style: TextStyle(
                                           color: isSelected
                                               ? Colors.white
-                                              : Colors.black.withOpacity(.7),
+                                              : isDark
+                                                  ? Colors.white.withOpacity(.8)
+                                                  : Colors.black
+                                                      .withOpacity(.7),
                                           fontSize: 22,
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -172,7 +190,9 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
                                         fontWeight: FontWeight.w500,
                                         color: isSelected
                                             ? Colors.white
-                                            : Colors.black.withOpacity(.8)),
+                                            : isDark
+                                                ? Colors.white.withOpacity(.8)
+                                                : Colors.black.withOpacity(.8)),
                                   ),
                                 ],
                               ),

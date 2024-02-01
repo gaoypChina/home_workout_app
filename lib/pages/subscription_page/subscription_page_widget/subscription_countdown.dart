@@ -14,6 +14,8 @@ class _SubscriptionCountdownState extends State<SubscriptionCountdown> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
+
     final today = DateTime.now();
     return Visibility(
       visible: showBanner,
@@ -64,7 +66,7 @@ class _SubscriptionCountdownState extends State<SubscriptionCountdown> {
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
-                            color: Colors.red.shade900),
+                            color:isDark? Colors.white: Colors.red.shade900),
                       ),
                     ],
                   ),

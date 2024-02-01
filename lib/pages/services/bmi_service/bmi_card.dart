@@ -215,9 +215,9 @@ class _BmiCardState extends State<BmiCard> {
 
     getBmiStrip() {
       return InkWell(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (builder){
-          return BmiResultPage(bmi: bmi,);
-        })),
+        // onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (builder){
+        //   return BmiResultPage(bmi: bmi,);
+        // })),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

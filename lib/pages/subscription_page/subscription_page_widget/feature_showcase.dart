@@ -44,7 +44,11 @@ class FeatureShowcaseSection extends StatelessWidget {
                 subtitle: Text(
                   item.subTitle,
                   style: TextStyle(
-                    color: Colors.grey.shade700,
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .color!
+                        .withOpacity(.8),
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                   ),

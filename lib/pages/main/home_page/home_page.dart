@@ -4,7 +4,6 @@ import '../../../../models/main_page_item.dart';
 import '../../../widgets/active_goal.dart';
 import '../../../widgets/dialogs/exit_app_dialog.dart';
 import '../../../widgets/workout_card.dart';
-import '../../subscription_page/subscription_page_widget/subscription_offer_card.dart';
 import 'leading_widget.dart';
 
 class HomePage extends StatelessWidget {
