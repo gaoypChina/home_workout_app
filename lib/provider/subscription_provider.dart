@@ -178,7 +178,7 @@ class SubscriptionProvider with ChangeNotifier {
           DateTime.now().difference(DateTime.parse(savedTime)).inDays > 7;
     }
 
-    if (savedTime == null || isNewDay || true) {
+    if (savedTime == null || isNewDay ) {
       Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
         return SubscriptionPage(
           showCrossButton: true,

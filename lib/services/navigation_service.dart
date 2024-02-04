@@ -3,8 +3,9 @@
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class NavigationService {
+
   static push({required Widget page}) {
-    return navigatorKey.currentState
+     navigatorKey.currentState
         ?.push(MaterialPageRoute(builder: (builder) {
       return page;
     }));

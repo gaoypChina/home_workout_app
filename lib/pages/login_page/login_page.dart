@@ -367,8 +367,7 @@ class _HomePageState extends State<LoginPage> with TickerProviderStateMixin {
                     height: 40,
                     child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(18)),
-                        child: Image.asset(
-                            "assets/icons/google_icon.png"))),
+                        child: Image.asset("assets/icons/google_icon.png"))),
                 Spacer(),
                 Text(
                   "Continue with Google",

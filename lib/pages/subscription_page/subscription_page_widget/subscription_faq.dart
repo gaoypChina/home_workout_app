@@ -6,6 +6,9 @@ class SubscriptionFAQ extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var textColor = Theme.of(context).textTheme.bodyMedium!.color!;
+    bool isDark = Theme.of(context).textTheme.bodyLarge!.color == Colors.white;
+
     List<FAQ> faqList = [
       FAQ(
           question: "What does Home workout Pro include?",
@@ -27,56 +30,89 @@ class SubscriptionFAQ extends StatelessWidget {
     ];
 
     Widget getFAQTile() {
-      return Column(
-        children: faqList
-            .map((faq) => Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 0),
-                      child: Container(
-                          child: Theme(
-                        data: Theme.of(context)
-                            .copyWith(dividerColor: Colors.transparent),
-                        child: ExpansionTile(
-                          initiallyExpanded: false,
-                          title: Text(
-                            faq.question,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 15),
-                          ),
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 18.0, right: 18, bottom: 18),
-                              child: Text(
-                                faq.answer,
-                                style: TextStyle(letterSpacing: 1.5),
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(18),
+        child: Container(
+          color: isDark ? Colors.grey.shade900 : Colors.white,
+          child: Column(
+            children: faqList
+                .map((faq) => Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 0),
+                          child: Container(
+                              child: Theme(
+                            data: Theme.of(context)
+                                .copyWith(dividerColor: Colors.transparent),
+                            child: ExpansionTile(
+                              initiallyExpanded: false,
+                              title: Text(
+                                faq.question,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400, fontSize: 15),
                               ),
-                            )
-                          ],
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 18.0, right: 18, bottom: 18),
+                                  child: Text(
+                                    faq.answer,
+                                    style: TextStyle(letterSpacing: 1.5),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )),
                         ),
-                      )),
-                    ),
-                    Divider(),
-                  ],
-                ))
-            .toList(),
+                        if (faqList.indexOf(faq) < faqList.length - 1)
+                          Container(
+                            height: 1,
+                            margin: EdgeInsets.symmetric(vertical: 10),
+                            width: double.infinity,
+                            color:Colors.grey.shade500.withOpacity(.15),
+                          )
+                      ],
+                    ))
+                .toList(),
+          ),
+        ),
       );
     }
 
     return Container(
+        padding: EdgeInsets.symmetric(horizontal: 18),
         child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 18.0, bottom: 12),
-          child: Text(
-            "Frequently Asked Questions",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-          ),
-        ),
-        getFAQTile(),
-      ],
-    ));
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  height: 18,
+                  width: 6,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(28),
+                      color: Colors.blue.shade700),
+                ),
+                SizedBox(
+                  width: 12,
+                ),
+                Text(
+                  "Subscription FAQ",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: textColor),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            getFAQTile(),
+            SizedBox(
+              height: 30,
+            ),
+          ],
+        ));
   }
 }

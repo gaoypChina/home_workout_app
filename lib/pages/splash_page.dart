@@ -23,7 +23,6 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
   }
 
-
   init() async {
     await Future.delayed(Duration(seconds: 0));
     var user = FirebaseAuth.instance.currentUser;
@@ -38,11 +37,14 @@ class _SplashPageState extends State<SplashPage> {
 
   setSubscription() async {
     var provider = Provider.of<SubscriptionProvider>(context, listen: false);
-    await
-    provider.setSubscriptionDetails();
+    await provider.setSubscriptionDetails();
     var user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      await provider.showSubscriptionDialog(context: context);
+      try {
+        await provider.showSubscriptionDialog(context: context);
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
@@ -57,23 +59,21 @@ class _SplashPageState extends State<SplashPage> {
             children: [
               RichText(
                   text: TextSpan(children: [
-                    TextSpan(
-                        text: "Home ".toUpperCase(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 1,
-                            color: Theme
-                                .of(context)
-                                .primaryColor,
-                            fontSize: 32)),
-                    TextSpan(
-                        text: "Workout".toUpperCase(),
-                        style: TextStyle(
-                            letterSpacing: 1,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                            fontSize: 32))
-                  ])),
+                TextSpan(
+                    text: "Home ".toUpperCase(),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1,
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 32)),
+                TextSpan(
+                    text: "Workout".toUpperCase(),
+                    style: TextStyle(
+                        letterSpacing: 1,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 32))
+              ])),
               SizedBox(
                 height: 28,
               ),

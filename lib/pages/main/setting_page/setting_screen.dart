@@ -28,8 +28,10 @@ import '../../../provider/auth_provider.dart';
 import '../../../provider/backup_provider.dart';
 import '../../../provider/connectivity_provider.dart';
 import '../../../provider/subscription_provider.dart';
+import '../../../services/navigation_service.dart';
 import '../../../widgets/dialogs/connectivity_error_dialog.dart';
 import '../../../widgets/loading_indicator.dart';
+import '../../login_page/login_page.dart';
 import '../../rate_my_app/rate_dialog_page.dart';
 import '../../rate_my_app/rate_my_app.dart';
 import '../../subscription_page/subscribed_page.dart';
@@ -361,7 +363,6 @@ class _SettingPageState extends State<SettingPage>
                                 ),
                               if (!subscriptionProvider.isProUser)
                                 buildProCard(),
-
                               getTitle("Workout"),
                               Container(
                                 color: cardColor,
@@ -763,7 +764,8 @@ class _SettingPageState extends State<SettingPage>
                                         title: "Logout",
                                         trailing: trailingIcon,
                                         onPress: () async {
-                                          bool? res = await showDialog(
+
+                                           bool? res = await showDialog(
                                               context: context,
                                               builder: (context) {
                                                 return AlertDialog(
@@ -787,8 +789,10 @@ class _SettingPageState extends State<SettingPage>
                                                 );
                                               });
 
-                                          if (res == null || res == false)
+                                          if (res == null || res == false) {
                                             return;
+                                          }
+
                                           if (res == true) {
                                             bool isConnected =
                                                 await connectivityProvider
@@ -809,10 +813,12 @@ class _SettingPageState extends State<SettingPage>
                                                     msg: "Login out...",
                                                   );
                                                 });
+
                                             var authProvider =
                                                 Provider.of<AuthProvider>(
                                                     context,
                                                     listen: false);
+
                                             await authProvider.logout(
                                                 context: context);
                                             Navigator.of(context).pop();

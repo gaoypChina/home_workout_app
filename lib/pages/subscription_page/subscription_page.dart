@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_countdown.dart';
+import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_faq.dart';
 import 'package:full_workout/pages/subscription_page/subscription_page_widget/subscription_loading_page.dart';
 import '../../../pages/subscription_page/subscription_page_widget/statics_section.dart';
 import '../../../pages/subscription_page/subscription_page_widget/subsctiption_plan.dart';
@@ -210,8 +211,11 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                   StaticsSection(),
                                   // SizedBox(height: 280, child: buildFAQ()),
                                   SizedBox(
-                                    height: 20,
+                                    height: 8,
                                   ),
+                                  SubscriptionFAQ()
+
+
                                 ],
                               ),
                             ),
@@ -228,3 +232,6 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     );
   }
 }
+
+
+

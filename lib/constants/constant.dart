@@ -14,7 +14,7 @@ class Constants {
 
   // ToDo: Update version number
 
-  String versionNumber = "2.2.12";
+  String versionNumber = "2.2.14";
 
   TextStyle titleStyle =
       TextStyle(fontWeight: FontWeight.w500, fontSize: 16, letterSpacing: 1.2);

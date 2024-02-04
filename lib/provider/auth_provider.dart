@@ -2,8 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:full_workout/services/navigation_service.dart';
+import 'package:full_workout/pages/login_page/login_page.dart';
 import '../../../helper/sp_key_helper.dart';
 import '../../../provider/backup_provider.dart';
 import '../../../provider/subscription_provider.dart';
@@ -186,6 +185,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future logout({required BuildContext context}) async {
+
     authLoading = true;
     notifyListeners();
     try {
@@ -198,10 +198,9 @@ class AuthProvider with ChangeNotifier {
       WeightDatabaseHelper weightDatabaseHelper = WeightDatabaseHelper();
 
       // sync user data
+
       var backupProvider = Provider.of<BackupProvider>(context, listen: false);
-      await backupProvider.saveData(user: user);
-
-
+      // await backupProvider.saveData(user: user);
 
       // logout user
 
@@ -217,16 +216,14 @@ class AuthProvider with ChangeNotifier {
       await weightDatabaseHelper.deleteDataBase();
       await preferences.clear();
 
+      print("cp1");
+
       _constants.getToast("User Logout Successfully");
-      Phoenix.rebirth(context);
 
-      NavigationService.pushAndRemoveUntil(page: SplashPage());
-
-
-
-      print("before return");
-
-      return;
+      return Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (builder) {
+            return LoginPage();
+          }), (route) => route.isFirst);
     } catch (e) {
       _constants.getToast("Something went wrong");
       log("error : ${e.toString()}");
@@ -250,7 +247,7 @@ class AuthProvider with ChangeNotifier {
 
       // sync user data
       var backupProvider = Provider.of<BackupProvider>(context, listen: false);
-      await backupProvider.saveData(user: user);
+      // await backupProvider.saveData(user: user);
 
       // logout user
       await _dbHelper.deleteFirebaseDataBase(uid: user.uid);
@@ -266,7 +263,12 @@ class AuthProvider with ChangeNotifier {
       await weightDatabaseHelper.deleteDataBase();
       await preferences.clear();
       _constants.getToast("User Data Deleted Successfully");
-      Phoenix.rebirth(context);
+
+      return Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (builder) {
+            return LoginPage();
+          }), (route) => route.isFirst);
+
     } catch (e) {
       showDialog(
           context: context, builder: (builder) => DeleteAccountFailDialog());

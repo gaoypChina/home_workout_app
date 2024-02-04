@@ -5,7 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:full_workout/pages/subscription_page/subscription_page.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 import '../../helper/notification_helper.dart';
@@ -53,7 +52,7 @@ Future<void> main() async {
     return true;
   };
 
-  runApp(Phoenix(child: MyApp()));
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -95,7 +94,7 @@ class _MyAppState extends State<MyApp> {
                   Provider.of<ThemeProvider>(context, listen: false).getTheme(),
               initialData: AdaptiveThemeMode.system,
               builder: (context, snapShot) {
-                Provider.of<BackupProvider>(context, listen: false).dailyBackup();
+              //  Provider.of<BackupProvider>(context, listen: false).dailyBackup();
                 return AdaptiveTheme(
                     light: lightTheme,
                     dark: darkTheme,
