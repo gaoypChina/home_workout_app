@@ -15,7 +15,7 @@ class FirebaseNotificationHelper {
 
   static  final _androidChannel =  AndroidNotificationChannel(
       'high_importance_channel', 'High Importance Notifications',
-      description: 'This channel is used fro importnt notification',
+      description: 'This channel is used fro important notification',
       importance: Importance.defaultImportance);
 
   static final _localNotifications = FlutterLocalNotificationsPlugin();

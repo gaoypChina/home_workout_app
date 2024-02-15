@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:full_workout/pages/subscription_page/subscription_page.dart';
 import 'package:month_year_picker/month_year_picker.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import '../../helper/notification_helper.dart';
 import '../../pages/detail_input_page/detail_input_page.dart';
 import '../../pages/main/report_page/workout_report/workout_detail_report.dart';
@@ -39,6 +40,7 @@ Future<void> main() async {
 
   MobileAds.instance.initialize();
   tz.initializeTimeZones();
+  oneSignalSetup();
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
@@ -53,6 +55,14 @@ Future<void> main() async {
   };
 
   runApp(MyApp());
+}
+
+oneSignalSetup(){
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+
+  OneSignal.initialize("3c71a890-0ef2-4790-b946-0de8395649b0");
+
+  OneSignal.Notifications.requestPermission(true);
 }
 
 class MyApp extends StatefulWidget {
